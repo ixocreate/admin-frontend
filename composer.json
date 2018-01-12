@@ -1,7 +1,12 @@
 {
-    "name": "kiwi-suite/admin-frontend",
-    "description": "Kiwi Admin Application",
-    "type": "project",
-    "license": "MIT",
-    "require": {}
+  "name": "kiwi-suite/admin-frontend",
+  "description": "Kiwi Admin Application",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "kiwi suite"
+    }
+  ],
+  "require": {}
 }
