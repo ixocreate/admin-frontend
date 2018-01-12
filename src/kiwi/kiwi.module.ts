@@ -1,6 +1,7 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {Config, ConfigurationService} from './services';
+import {ConfigurationService} from './services';
 import {CommonModule} from '@angular/common';
+import {Config} from './models';
 
 @NgModule({
     imports: [CommonModule]

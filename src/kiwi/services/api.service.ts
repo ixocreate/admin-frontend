@@ -1,7 +1,8 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {Observable} from 'rxjs/Observable';
+import {ApiResponse} from '../models/api.model';
 
 export abstract class ApiService {
 
@@ -60,10 +61,4 @@ export abstract class ApiService {
             .map(ApiService.handleResponse)
             .catch(ApiService.handleError);
     }
-}
-
-export interface ApiResponse<T> {
-    success: boolean;
-    errorCode: string;
-    result: T;
 }

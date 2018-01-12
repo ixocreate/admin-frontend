@@ -1,14 +1,14 @@
-import { AppPage } from './app.po';
+import { DashboardPage } from './app.po';
 
-describe('init App', () => {
-  let page: AppPage;
+describe('start with Dashboard', () => {
+  let page: DashboardPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new DashboardPage();
   });
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('Dashboard');
   });
 });

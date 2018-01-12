@@ -7,7 +7,6 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {environment} from '../environments/environment';
 import {KiwiModule} from '../kiwi';
-import {Config} from '../kiwi/services';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app.routing';
 import {
@@ -16,6 +15,7 @@ import {
 } from './components';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
+import {Config} from '../kiwi/models';
 
 const APP_CONTAINERS = [
     FullLayoutComponent,
@@ -67,7 +67,7 @@ const APP_DIRECTIVES = [
         /**
          * per default it takes the value at window.__kiwi
          */
-        // KiwiModule.forRoot(),
+        KiwiModule.forRoot(),
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),
         ChartsModule,

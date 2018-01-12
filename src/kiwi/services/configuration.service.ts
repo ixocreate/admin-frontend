@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Config} from '../models';
 
 @Injectable()
 export class ConfigurationService extends ApiService {
@@ -54,18 +55,4 @@ export class ConfigurationService extends ApiService {
     load() {
 
     }
-}
-
-export class Config {
-    apiUrl = '/api/';
-    authPath = 'auth';
-    configPath = 'config';
-    project: ProjectConfig = <ProjectConfig>{};
-}
-
-export interface ProjectConfig {
-    copyright: string;
-    name: string;
-    poweredBy?: boolean;
-    version: string;
 }
