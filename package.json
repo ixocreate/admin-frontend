@@ -2,6 +2,12 @@
   "name": "@kiwi-suite/admin-frontend",
   "version": "1.0.0",
   "license": "MIT",
+  "author": "kiwi suite",
+  "contributors": [
+    {
+      "name": "Lucas Seinfeld (luchaos)"
+    }
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot",
