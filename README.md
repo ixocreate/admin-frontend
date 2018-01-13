@@ -1,5 +1,7 @@
 # Kiwi Admin Frontend
 
+[![Build Status](https://travis-ci.org/kiwi-suite/admin-frontend.svg?branch=develop)](https://travis-ci.org/kiwi-suite/admin-frontend)
+
 An Angluar 5 application that interacts with Kiwi's [Admin API](https://github.com/kiwi-suite/admin).
 It is added as Composer dependency in the Admin Project by default to ensure API client compatibility.
 
