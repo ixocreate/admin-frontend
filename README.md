@@ -42,7 +42,7 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 
 To specify the port the app should be served at (e.g. `4201` instead of the angular default `4200`) use:
 
-    $ npm start -- --port=42001
+    $ npm start -- --port=4201
 
 ### Update ngx-admin
 
