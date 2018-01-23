@@ -11,7 +11,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot",
-    "build": "ng build --prod --output-path=build/",
+    "build": "ng build --prod --output-path=build/ --deploy-url=assets/admin/",
     "test": "ng test",
     "test:once": "ng test --watch=false",
     "lint": "ng lint",

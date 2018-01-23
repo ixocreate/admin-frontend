@@ -13,7 +13,7 @@ export class KiwiModule {
             ngModule: KiwiModule,
             providers: [
                 ConfigurationService,
-                {provide: Config, useValue: options}
+                {provide: 'Config', useValue: options}
             ]
         };
     }

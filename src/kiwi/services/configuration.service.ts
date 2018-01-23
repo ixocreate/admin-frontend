@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Config} from '../models';
+import {Config, Navigation, Project, Routes} from '../models';
 
 @Injectable()
 export class ConfigurationService extends ApiService {
@@ -25,10 +25,9 @@ export class ConfigurationService extends ApiService {
         return window[key];
     }
 
-    constructor(baseConfig: Config, protected http: HttpClient) {
+    constructor(@Inject('Config') private baseConfig: Config, protected http: HttpClient) {
         super(http);
         this.bootstrap(baseConfig);
-        this.applyEnvironmentOptions();
     }
 
     /**
@@ -41,18 +40,27 @@ export class ConfigurationService extends ApiService {
         if (typeof baseConfig === 'string') {
             baseConfig = ConfigurationService.windowVar(baseConfig);
         }
-        this._params = Object.assign(new Config(), baseConfig);
+        this._params = <Config>Object.assign(<Config>{
+            apiUrl: '',
+            configUrl: '',
+            navigation: [],
+            project: <Project>{},
+            routes: <Routes>{}
+        }, baseConfig);
+
+        // TODO: validate config - throw error in case something's missing
+
         this.params$.next(this._params);
     }
 
-    /**
-     * applies environment settings from params
-     */
-    private applyEnvironmentOptions() {
-        // TODO
-    }
-
     load() {
-
+        this.get(this._params.configUrl).toPromise()
+            .then(response => {
+                console.log(response);
+                this._params = Object.assign(this._params, response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 }

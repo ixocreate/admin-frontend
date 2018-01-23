@@ -1,1 +1,2 @@
-export {Config, ProjectConfig} from './configuration.model';
+export * from './api.model';
+export * from './configuration.model';

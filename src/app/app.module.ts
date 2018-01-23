@@ -50,16 +50,16 @@ const APP_DIRECTIVES = [
         /**
          * you can hard code options (e.g. from environment files)...
          */
-        KiwiModule.forRoot(<Config>{
-            apiUrl: environment.production || 'myApiUrl',
-            authPath: 'myAuthPath',
-            configPath: 'myConfigPath',
-            project: {
-                name: 'My Kiwi Project',
-                copyright: '2018 Me',
-                poweredBy: true
-            }
-        }),
+        // KiwiModule.forRoot(<Config>{
+        //     apiUrl: environment.production || 'myApiUrl',
+        //     authPath: 'myAuthPath',
+        //     configPath: 'myConfigPath',
+        //     project: {
+        //         name: 'My Kiwi Project',
+        //         copyright: '2018 Me',
+        //         poweredBy: true
+        //     }
+        // }),
         /**
          * ... or set the key for the options that the window object provides
          */

@@ -14,7 +14,7 @@ describe('ConfigurationService', () => {
             ],
             providers: [
                 ConfigurationService,
-                {provide: Config, useValue: 'test'}
+                {provide: 'Config', useValue: 'test'}
             ]
         });
         service = TestBed.get(ConfigurationService);

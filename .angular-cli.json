@@ -8,7 +8,6 @@
     {
       "root": "src",
       "outDir": "dist",
-      "deployUrl": "/assets/admin/",
       "assets": [
         "assets"
       ],
