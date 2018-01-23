@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Config, Navigation, Project, Routes} from '../models';
+import {Config, Project, Routes} from '../models';
 
 @Injectable()
 export class ConfigurationService extends ApiService {
@@ -30,12 +30,16 @@ export class ConfigurationService extends ApiService {
         this.bootstrap(baseConfig);
     }
 
+    get params() {
+        return this._params;
+    }
+
     /**
      * @param baseConfig string|Config
      */
     private bootstrap(baseConfig: any = '__kiwi') {
         /**
-         * determined by window key
+         * check window key in case a base config string was given
          */
         if (typeof baseConfig === 'string') {
             baseConfig = ConfigurationService.windowVar(baseConfig);
@@ -43,12 +47,15 @@ export class ConfigurationService extends ApiService {
         this._params = <Config>Object.assign(<Config>{
             apiUrl: '',
             configUrl: '',
+            sessionUrl: '',
             navigation: [],
             project: <Project>{},
             routes: <Routes>{}
         }, baseConfig);
 
-        // TODO: validate config - throw error in case something's missing
+        /**
+         * TODO: validate config - throw error in case something's missing
+          */
 
         this.params$.next(this._params);
     }
@@ -56,11 +63,8 @@ export class ConfigurationService extends ApiService {
     load() {
         this.get(this._params.configUrl).toPromise()
             .then(response => {
-                console.log(response);
                 this._params = Object.assign(this._params, response);
             })
-            .catch(error => {
-                console.error(error);
-            });
+            .catch(ApiService.handleError);
     }
 }

@@ -5,17 +5,23 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
-import {environment} from '../environments/environment';
 import {KiwiModule} from '../kiwi';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app.routing';
 import {
-    APP_SIDEBAR_NAV, AppAsideComponent, AppBreadcrumbsComponent, AppFooterComponent, AppHeaderComponent, AppSidebarComponent,
-    AppSidebarFooterComponent, AppSidebarFormComponent, AppSidebarHeaderComponent, AppSidebarMinimizerComponent
+    APP_SIDEBAR_NAV,
+    AppAsideComponent,
+    AppBreadcrumbsComponent,
+    AppFooterComponent,
+    AppHeaderComponent,
+    AppSidebarComponent,
+    AppSidebarFooterComponent,
+    AppSidebarFormComponent,
+    AppSidebarHeaderComponent,
+    AppSidebarMinimizerComponent
 } from './components';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
-import {Config} from '../kiwi/models';
 
 const APP_CONTAINERS = [
     FullLayoutComponent,

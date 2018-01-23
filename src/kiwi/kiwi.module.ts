@@ -1,7 +1,9 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {ConfigurationService} from './services';
+import {ApiService, ConfigurationService, SessionService} from './services';
 import {CommonModule} from '@angular/common';
 import {Config} from './models';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {ApiInterceptor} from './http/api.interceptor';
 
 @NgModule({
     imports: [CommonModule]
@@ -13,12 +15,21 @@ export class KiwiModule {
             ngModule: KiwiModule,
             providers: [
                 ConfigurationService,
-                {provide: 'Config', useValue: options}
+                SessionService,
+                {
+                    provide: 'Config',
+                    useValue: options
+                },
+                [{
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: ApiInterceptor,
+                    multi: true,
+                }],
             ]
         };
     }
 
-    constructor(@Optional() @SkipSelf() parentModule: KiwiModule, private config: ConfigurationService) {
+    constructor(@Optional() @SkipSelf() parentModule: KiwiModule, private session: SessionService, private config: ConfigurationService) {
         if (parentModule) {
             throw new Error('KiwiModule is already loaded. Import it in the AppModule only');
         }
@@ -30,9 +41,16 @@ export class KiwiModule {
      */
     private bootstrap() {
         /**
-         * load project configuration
+         * grab a session
          */
-        this.config.load();
+        this.session.start()
+            .then(response => {
+                /**
+                 * load project configuration
+                 */
+                this.config.load();
+            })
+            .catch(ApiService.handleError);
     }
 }
 
