@@ -32,8 +32,10 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this.user.login(this.loginForm.getRawValue())
-            .subscribe(user => {
-                    console.log(user);
+            .subscribe(() => {
+                    this.user.fetch().subscribe(() => {
+                        this.router.navigateByUrl('/');
+                    });
                 },
                 error => {
                     console.log(error);

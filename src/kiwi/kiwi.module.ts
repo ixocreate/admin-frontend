@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import 'rxjs/add/operator/mergeMap';
 import {PermissionGuard} from './permission.guard';
+import {Router} from '@angular/router';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ export class KiwiModule {
                 private session: SessionService,
                 private config: ConfigurationService,
                 private logger: LoggerService,
+                private router: Router,
                 private user: UserService) {
         if (parentModule) {
             throw new Error('KiwiModule is already loaded. Import it in the AppModule only');
@@ -60,14 +62,10 @@ export class KiwiModule {
          * 3. load user - either redirects to login page or continues with application
          */
         this.session.fetch()
-            .flatMap(session => {
-                console.log(session);
-
-                return this.config.fetch();
-            })
+            .flatMap(() => this.config.fetch())
             .flatMap(() => this.user.fetch())
-            .subscribe(result => {
-                this.logger.log('bootstrapped', result);
+            .subscribe(() => {
+                this.router.navigateByUrl('/');
             }, error => {
                 // throw new BootstrapError();
             });
