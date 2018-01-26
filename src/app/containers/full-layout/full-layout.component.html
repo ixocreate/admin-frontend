@@ -14,3 +14,5 @@
     <app-aside></app-aside>
 </div>
 <app-footer></app-footer>
+
+<pre *ngIf="config$ | async as config">{{ config | json }}</pre>

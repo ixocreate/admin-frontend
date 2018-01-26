@@ -1,16 +1,17 @@
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpXsrfTokenExtractor} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
 import 'rxjs/add/operator/do';
+import {LoggerService} from './logger.service';
 
 // from: https://ryanchenkie.com/angular-authentication-using-the-http-client-and-http-interceptors
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private logger: LoggerService, private tokenExtractor: HttpXsrfTokenExtractor) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -30,12 +31,23 @@ export class ApiInterceptor implements HttpInterceptor {
          *
          * only apply content type json to post and put requests
          */
-        if (request.method === 'post' || request.method === 'put' ) {
+        if (request.method === 'post' || request.method === 'put') {
             request = request.clone({
                 setHeaders: {
                     'Content-Type': 'application/json'
                 }
             });
+        }
+
+        /**
+         * absolute urls will not have xsrf token injected automatically
+         * apply it manually
+         */
+        const headerName = 'X-XSRF-TOKEN';
+        const token = this.tokenExtractor.getToken() as string;
+        console.log(token);
+        if (token !== null && !request.headers.has(headerName)) {
+            request = request.clone({ headers: request.headers.set(headerName, token) });
         }
 
         return next.handle(request)
@@ -46,11 +58,12 @@ export class ApiInterceptor implements HttpInterceptor {
                     }
                 },
                 (err: any) => {
+                    // this.logger.logError(err);
                     if (err instanceof HttpErrorResponse) {
                         if (err.status === 401) {
                             // redirect to the login route
                             // or show a modal
-                            // this.router.navigateByUrl('login');
+                            this.router.navigateByUrl('auth/login');
                         }
                     }
                 }

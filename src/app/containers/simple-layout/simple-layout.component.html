@@ -1,1 +1,3 @@
+<pre id="debug" *ngIf="config$ | async as config">{{ config | json }}</pre>
 <router-outlet></router-outlet>
+

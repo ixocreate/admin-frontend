@@ -1,12 +1,15 @@
-import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {ApiService, ConfigurationService, SessionService} from './services';
+import {ErrorHandler, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {ApiInterceptor, ConfigurationService, ErrorHandlerService, LoggerService, SessionService, UserService} from './services';
 import {CommonModule} from '@angular/common';
-import {Config} from './models';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {ApiInterceptor} from './http/api.interceptor';
+import 'rxjs/add/operator/mergeMap';
+import {PermissionGuard} from './permission.guard';
 
 @NgModule({
-    imports: [CommonModule]
+    imports: [
+        CommonModule
+    ],
+    providers: [{provide: ErrorHandler, useClass: ErrorHandlerService}]
 })
 export class KiwiModule {
 
@@ -15,7 +18,14 @@ export class KiwiModule {
             ngModule: KiwiModule,
             providers: [
                 ConfigurationService,
+                LoggerService,
+                PermissionGuard,
                 SessionService,
+                UserService,
+                {
+                    provide: ErrorHandler,
+                    useClass: ErrorHandlerService
+                },
                 {
                     provide: 'Config',
                     useValue: options
@@ -29,7 +39,11 @@ export class KiwiModule {
         };
     }
 
-    constructor(@Optional() @SkipSelf() parentModule: KiwiModule, private session: SessionService, private config: ConfigurationService) {
+    constructor(@Optional() @SkipSelf() parentModule: KiwiModule,
+                private session: SessionService,
+                private config: ConfigurationService,
+                private logger: LoggerService,
+                private user: UserService) {
         if (parentModule) {
             throw new Error('KiwiModule is already loaded. Import it in the AppModule only');
         }
@@ -41,16 +55,22 @@ export class KiwiModule {
      */
     private bootstrap() {
         /**
-         * grab a session
+         * 1. grab a session
+         * 2. load project configuration
+         * 3. load user - either redirects to login page or continues with application
          */
-        this.session.start()
-            .then(response => {
-                /**
-                 * load project configuration
-                 */
-                this.config.load();
+        this.session.fetch()
+            .flatMap(session => {
+                console.log(session);
+
+                return this.config.fetch();
             })
-            .catch(ApiService.handleError);
+            .flatMap(() => this.user.fetch())
+            .subscribe(result => {
+                this.logger.log('bootstrapped', result);
+            }, error => {
+                // throw new BootstrapError();
+            });
     }
 }
 

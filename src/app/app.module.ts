@@ -1,5 +1,5 @@
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
@@ -53,13 +53,16 @@ const APP_DIRECTIVES = [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
+        HttpClientXsrfModule,
+        // .withOptions({
+        //     cookieName: 'XSRF-TOKEN', // this is optional
+        //     headerName: 'X-XSRF-TOKEN' // this is optional
+        // }),
+
         /**
          * you can hard code options (e.g. from environment files)...
          */
         // KiwiModule.forRoot(<Config>{
-        //     apiUrl: environment.production || 'myApiUrl',
-        //     authPath: 'myAuthPath',
-        //     configPath: 'myConfigPath',
         //     project: {
         //         name: 'My Kiwi Project',
         //         copyright: '2018 Me',
@@ -74,6 +77,7 @@ const APP_DIRECTIVES = [
          * per default it takes the value at window.__kiwi
          */
         KiwiModule.forRoot(),
+
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),
         ChartsModule,
@@ -88,7 +92,7 @@ const APP_DIRECTIVES = [
         {
             provide: LocationStrategy,
             useClass: PathLocationStrategy
-        }
+        },
     ],
     bootstrap: [AppComponent]
 })

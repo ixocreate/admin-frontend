@@ -45,9 +45,6 @@ export class ConfigurationService extends ApiService {
             baseConfig = ConfigurationService.windowVar(baseConfig);
         }
         this._params = <Config>Object.assign(<Config>{
-            apiUrl: '',
-            configUrl: '',
-            sessionUrl: '',
             navigation: [],
             project: <Project>{},
             routes: <Routes>{}
@@ -55,16 +52,15 @@ export class ConfigurationService extends ApiService {
 
         /**
          * TODO: validate config - throw error in case something's missing
-          */
+         */
 
         this.params$.next(this._params);
     }
 
-    load() {
-        this.get(this._params.configUrl).toPromise()
-            .then(response => {
+    fetch() {
+        return this.get<Config>(this._params.routes.config)
+            .map(response => {
                 this._params = Object.assign(this._params, response);
-            })
-            .catch(ApiService.handleError);
+            });
     }
 }

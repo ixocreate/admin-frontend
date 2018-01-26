@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from './containers/full-layout';
+import {SimpleLayoutComponent} from './containers/simple-layout';
+import {PermissionGuard} from '../kiwi';
 
 export const routes: Routes = [
     {
@@ -11,6 +13,7 @@ export const routes: Routes = [
     {
         path: '',
         component: FullLayoutComponent,
+        canActivate: [PermissionGuard],
         data: {
             title: 'Home'
         },
@@ -22,13 +25,27 @@ export const routes: Routes = [
                 // sync load module (will not work wth AoT)
                 // loadChildren: () => DashboardModule
             }
+            /**
+             * add you own...
+             */
+        ]
+    },
+    {
+        path: '',
+        component: SimpleLayoutComponent,
+        children: [
+            {
+                path: 'auth',
+                loadChildren: '../kiwi/views/auth/auth.module#AuthModule'
+            }
         ]
     }
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [PermissionGuard]
 })
 export class AppRoutingModule {
 }

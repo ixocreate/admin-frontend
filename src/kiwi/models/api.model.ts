@@ -3,3 +3,8 @@ export interface ApiResponse<T> {
     errorCode: string;
     result: T;
 }
+
+export interface LoginCredentials {
+    username: string;
+    password: string;
+}

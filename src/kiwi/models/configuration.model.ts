@@ -1,7 +1,4 @@
 export interface Config {
-    apiUrl: string;
-    configUrl: string;
-    sessionUrl: string;
     project: Project;
     navigation: Navigation[];
     routes: Routes;
@@ -26,5 +23,6 @@ export interface Routes {
     authLogout: string;
     authUser: string;
     config: string;
+    session: string;
 }
 

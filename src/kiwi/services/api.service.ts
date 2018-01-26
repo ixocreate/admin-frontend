@@ -23,8 +23,7 @@ export abstract class ApiService {
      * @param error
      * @returns {ErrorObservable}
      */
-    static handleError(error) {
-        // todo: send forward to global error handler service
+    handleError(error) {
         return Observable.throw(error);
     }
 
@@ -44,19 +43,19 @@ export abstract class ApiService {
         }
         return this.http.get(url, {params: httpParams})
             .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .catch(this.handleError);
     }
 
     protected post<T>(url: string, params?: any): Observable<T> {
         return this.http.post<ApiResponse<T>>(url, params, {})
             .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .catch(this.handleError);
     }
 
     protected put<T>(url: string, params?: any): Observable<T> {
         return this.http.put<ApiResponse<T>>(url, params, {})
             .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .catch(this.handleError);
     }
 
     protected delete<T>(url: string, params: any = {}): Observable<T> {
@@ -69,6 +68,6 @@ export abstract class ApiService {
         }
         return this.http.delete<ApiResponse<T>>(url, {params: httpParams})
             .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .catch(this.handleError);
     }
 }
