@@ -13,7 +13,7 @@ export class LoggerService {
         if (error instanceof HttpErrorResponse) {
             console.error(date, 'HTTP error.', error.message, 'Status code:', (<HttpErrorResponse>error).status);
         } else if (error instanceof KiwiAdminError) {
-            console.warn('[' + error.name + ']', error.code());
+            console.error('[' + error.name + ':' + error.code() + ']', error.message);
             // } else if (error instanceof TypeError) {
             // todo: log to api
             //     console.error(date, 'Type error.', error.message);
@@ -28,8 +28,8 @@ export class LoggerService {
     }
 
     log(message, ...params: any[]) {
-        if (params.length) {
-            console.log('[kiwi]', message, params);
+        if (params.length && params[0] !== undefined) {
+            console.log('[kiwi]', message, ...params);
         } else {
             console.log('[kiwi]', message);
         }

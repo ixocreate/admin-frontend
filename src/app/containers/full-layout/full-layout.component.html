@@ -8,7 +8,8 @@
             <app-breadcrumbs></app-breadcrumbs>
         </ol>
         <div class="container-fluid">
-            <pre id="debug" *ngIf="config$ | async as config">{{ config | json }}</pre>
+            <app-debug></app-debug>
+            <app-loader></app-loader>
             <router-outlet></router-outlet>
         </div><!-- /.conainer-fluid -->
     </main>

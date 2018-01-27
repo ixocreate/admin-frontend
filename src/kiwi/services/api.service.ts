@@ -21,9 +21,8 @@ export abstract class ApiService {
     /**
      * handle kiwi admin api error responses
      * @param error
-     * @returns {ErrorObservable}
      */
-    handleError(error) {
+    static handleError(error) {
         return Observable.throw(error);
     }
 
@@ -43,19 +42,19 @@ export abstract class ApiService {
         }
         return this.http.get(url, {params: httpParams})
             .map(ApiService.handleResponse)
-            .catch(this.handleError);
+            .catch(ApiService.handleError);
     }
 
     protected post<T>(url: string, params?: any): Observable<T> {
         return this.http.post<ApiResponse<T>>(url, params, {})
             .map(ApiService.handleResponse)
-            .catch(this.handleError);
+            .catch(ApiService.handleError);
     }
 
     protected put<T>(url: string, params?: any): Observable<T> {
         return this.http.put<ApiResponse<T>>(url, params, {})
             .map(ApiService.handleResponse)
-            .catch(this.handleError);
+            .catch(ApiService.handleError);
     }
 
     protected delete<T>(url: string, params: any = {}): Observable<T> {
@@ -68,6 +67,6 @@ export abstract class ApiService {
         }
         return this.http.delete<ApiResponse<T>>(url, {params: httpParams})
             .map(ApiService.handleResponse)
-            .catch(this.handleError);
+            .catch(ApiService.handleError);
     }
 }

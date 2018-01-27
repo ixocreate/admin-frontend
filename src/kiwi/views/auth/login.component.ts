@@ -9,9 +9,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-    password: any;
 
     loginForm: FormGroup;
+    password: any;
     email: string;
 
     constructor(private router: Router, private user: UserService, private config: ConfigurationService, private formBuilder: FormBuilder) {
@@ -30,19 +30,11 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    onSubmit() {
-        this.user.login(this.loginForm.getRawValue())
-            .subscribe(() => {
-                    this.user.fetch().subscribe(() => {
-                        this.router.navigateByUrl('/');
-                    });
-                },
-                error => {
-                    console.log(error);
-                });
+    get ready$() {
+        return this.config.ready$;
+    }
 
-        // this.hero = this.prepareSaveHero();
-        // this.heroService.updateHero(this.hero).subscribe(/* error handling */);
-        // this.ngOnChanges();
+    onSubmit() {
+        this.user.login(this.loginForm.getRawValue());
     }
 }

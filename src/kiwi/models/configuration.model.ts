@@ -1,4 +1,5 @@
 export interface Config {
+    assetsUrl: string;
     project: Project;
     navigation: Navigation[];
     routes: Routes;

@@ -7,8 +7,12 @@ import {PermissionGuard} from '../kiwi';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
+        component: SimpleLayoutComponent
+        /**
+         * the initial component to show
+         */
+        // redirectTo: 'dashboard',
+        // pathMatch: 'full',
     },
     {
         path: '',

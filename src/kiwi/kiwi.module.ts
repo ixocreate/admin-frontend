@@ -5,6 +5,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import 'rxjs/add/operator/mergeMap';
 import {PermissionGuard} from './permission.guard';
 import {Router} from '@angular/router';
+import {BootstrapError} from './models';
 
 @NgModule({
     imports: [
@@ -53,22 +54,37 @@ export class KiwiModule {
     }
 
     /**
-     *
+     *@
      */
     private bootstrap() {
-        /**
-         * 1. grab a session
-         * 2. load project configuration
-         * 3. load user - either redirects to login page or continues with application
-         */
-        this.session.fetch()
-            .flatMap(() => this.config.fetch())
-            .flatMap(() => this.user.fetch())
-            .subscribe(() => {
-                this.router.navigateByUrl('/');
-            }, error => {
-                // throw new BootstrapError();
-            });
+        this.logger.log('bootstrap module');
+
+        this.logger.log('initialize session');
+
+        this.session.session$.subscribe(
+            session => {
+                if (!session) {
+                    return;
+                }
+                this.config.load();
+            },
+            () => {
+                throw new BootstrapError('failed to initialize session');
+            }
+        );
+
+        this.user.user$.subscribe(user => {
+            if (!user) {
+                return;
+            }
+
+            this.logger.log('user', user);
+
+            /**
+             * TODO: redirect user to favourite/default view by setting
+             */
+            this.router.navigateByUrl('/dashboard');
+        });
     }
 }
 

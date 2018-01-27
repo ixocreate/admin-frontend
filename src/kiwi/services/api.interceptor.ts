@@ -45,7 +45,6 @@ export class ApiInterceptor implements HttpInterceptor {
          */
         const headerName = 'X-XSRF-TOKEN';
         const token = this.tokenExtractor.getToken() as string;
-        console.log(token);
         if (token !== null && !request.headers.has(headerName)) {
             request = request.clone({ headers: request.headers.set(headerName, token) });
         }

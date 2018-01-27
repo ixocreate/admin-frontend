@@ -20,7 +20,6 @@ export class ErrorHandlerService extends ErrorHandler {
     }
 
     handleError(error) {
-
         if (error instanceof KiwiAdminError) {
             this._errors.push(error);
             this.errors$.next(this._errors);

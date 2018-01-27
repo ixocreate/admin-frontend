@@ -1,20 +1,30 @@
 // Here you can add other styles
 
+#loader {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin: 0 auto 0 -80px;
+  width: 160px;
+  z-index: 100;
+  text-align: center;
+}
+
 #debug {
   position: absolute;
   top: 101px;
   right: 0;
   font-size: $font-size-base * 0.7;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   padding: 10px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   //height: 50px;
   //overflow: hidden;
   margin: 0;
 
   &:hover {
-    background: rgba(0,0,0,0.9);
-    color: rgba(255,255,255,1);
+    background: rgba(0, 0, 0, 0.9);
+    color: rgba(255, 255, 255, 1);
     //height: auto;
     //overflow: auto;
   }

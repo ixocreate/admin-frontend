@@ -4,27 +4,49 @@ import {HttpClient} from '@angular/common/http';
 import {LoginCredentials, User} from '../models';
 import {ConfigurationService} from './configuration.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 
 @Injectable()
 export class UserService extends ApiService {
 
     private _user: User;
-
-    user$: BehaviorSubject<User>;
+    private _user$: BehaviorSubject<User>;
+    private _userApi$: Observable<User>;
+    private _userApiSub: Subscription;
+    private _loginApi$: Observable<boolean>;
+    private _loginApiSub: Subscription;
 
     constructor(protected http: HttpClient, private config: ConfigurationService) {
         super(http);
-        this.user$ = new BehaviorSubject<User>(null);
+        this._user$ = new BehaviorSubject<User>(null);
     }
 
-    fetch() {
-        return this.get<User>(this.config.params.routes.authUser).map(user => {
-            this._user = user;
-            this.user$.next(this._user);
+    get user$() {
+        this.config.ready$.subscribe(configReady => {
+            if (!configReady) {
+                return;
+            }
+            if (!this._userApiSub) {
+                this.fetch();
+            }
         });
+        return this._user$;
     }
 
     login(credentials: LoginCredentials) {
-        return this.post(this.config.params.routes.authLogin, credentials);
+        this._loginApi$ = this.post<boolean>(this.config.params.routes.authLogin, credentials);
+        this._loginApiSub = this._loginApi$.subscribe(user => {
+            this.fetch();
+        });
+    }
+
+    private fetch() {
+        this._userApi$ = this.get<User>(this.config.params.routes.authUser);
+        this._userApiSub = this._userApi$.subscribe(user => {
+            this._user = user;
+            this._user$.next(this._user);
+            return this._user;
+        });
     }
 }
