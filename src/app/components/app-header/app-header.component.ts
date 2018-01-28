@@ -8,4 +8,8 @@ import {UserService} from '../../../kiwi/services';
 export class AppHeaderComponent {
     constructor(public user: UserService) {
     }
+
+    logout() {
+        this.user.logout();
+    }
 }

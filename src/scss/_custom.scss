@@ -8,11 +8,15 @@
   width: 160px;
   z-index: 100;
   text-align: center;
+  .message {
+    font-weight: bold;
+    font-size: 80%;
+  }
 }
 
 #debug {
   position: absolute;
-  top: 101px;
+  bottom: 50px;
   right: 0;
   font-size: $font-size-base * 0.7;
   background: rgba(0, 0, 0, 0.7);

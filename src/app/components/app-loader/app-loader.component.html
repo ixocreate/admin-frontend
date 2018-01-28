@@ -2,12 +2,12 @@
     <div>
         <img src="{{ assetsUrl }}/assets/img/icon.svg" alt="">
     </div>
-    <div>
-        <small class="text-muted text-uppercase" *ngIf="loading">
+    <div class="message">
+        <span class="text-muted text-uppercase" *ngIf="loading">
             Initializing&hellip;
-        </small>
-        <small class="text-muted text-uppercase" *ngIf="!loading">
-            Bootstrap error
-        </small>
+        </span>
+        <span class="text-danger text-uppercase" *ngIf="!loading">
+            Initialization error
+        </span>
     </div>
 </div>

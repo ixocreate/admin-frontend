@@ -35,8 +35,14 @@ export class UserService extends ApiService {
     }
 
     login(credentials: LoginCredentials) {
-        this._loginApi$ = this.post<boolean>(this.config.params.routes.authLogin, credentials);
-        this._loginApiSub = this._loginApi$.subscribe(user => {
+        this._loginApi$ = this.post(this.config.params.routes.authLogin, credentials);
+        this._loginApiSub = this._loginApi$.subscribe(() => {
+            this.fetch();
+        });
+    }
+
+    logout() {
+        this.post(this.config.params.routes.authLogout).subscribe(() => {
             this.fetch();
         });
     }
