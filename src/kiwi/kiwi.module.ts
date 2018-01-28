@@ -83,7 +83,7 @@ export class KiwiModule {
             /**
              * TODO: redirect user to favourite/default view by setting
              */
-            this.router.navigateByUrl('/dashboard');
+            this.router.navigateByUrl('dashboard');
         });
     }
 }

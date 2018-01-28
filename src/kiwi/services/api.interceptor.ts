@@ -1,4 +1,12 @@
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpXsrfTokenExtractor} from '@angular/common/http';
+import {
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+    HttpResponse,
+    HttpXsrfTokenExtractor
+} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
@@ -46,7 +54,7 @@ export class ApiInterceptor implements HttpInterceptor {
         const headerName = 'X-XSRF-TOKEN';
         const token = this.tokenExtractor.getToken() as string;
         if (token !== null && !request.headers.has(headerName)) {
-            request = request.clone({ headers: request.headers.set(headerName, token) });
+            request = request.clone({headers: request.headers.set(headerName, token)});
         }
 
         return next.handle(request)

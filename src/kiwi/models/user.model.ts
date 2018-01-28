@@ -1,4 +1,4 @@
 export interface User {
-    id: boolean;
-    name: boolean;
+    id: number;
+    email: string;
 }

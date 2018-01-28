@@ -1,11 +1,11 @@
-import { browser, by, element } from 'protractor';
+import {browser, by, element} from 'protractor';
 
 export class DashboardPage {
-  navigateTo() {
-    return browser.get('/');
-  }
+    navigateTo() {
+        return browser.get('/');
+    }
 
-  getParagraphText() {
-    return element(by.css('app-dashboard .nav-link.active')).getText();
-  }
+    getActiveNavLinkText() {
+        return element(by.css('app-dashboard .nav-link.active')).getText();
+    }
 }

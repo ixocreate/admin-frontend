@@ -9,7 +9,9 @@ export class PermissionGuard implements CanActivate {
     }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        return true;
-        // return this.user.user$.map(user => !!user);
+        // return true;
+        // TODO: check session was bootstrapped as well instead of allowing not-yet exsting users to activate
+        // returning false when user was not yet set results in immediate redirect to root
+        return this.user.user$.map(user => !user ? true : user.id === 1);
     }
 }

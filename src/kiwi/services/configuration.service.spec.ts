@@ -2,6 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {ConfigurationService} from './configuration.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Config} from '../models';
+import {LoggerService} from './index';
 
 describe('ConfigurationService', () => {
     let service: ConfigurationService;
@@ -14,7 +15,8 @@ describe('ConfigurationService', () => {
             ],
             providers: [
                 ConfigurationService,
-                {provide: 'Config', useValue: 'test'}
+                {provide: 'Config', useValue: 'test'},
+                LoggerService,
             ]
         });
         service = TestBed.get(ConfigurationService);
