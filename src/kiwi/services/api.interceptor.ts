@@ -26,7 +26,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
         /**
          * in non-production environments, set the withCredentials flag to true for all requests
-         * this allows to develop the admin application on a different local domain and make calls to a local kiwi admin api
+         * this allows to develop the admin application on a different local domain and make calls to a local admin api
          */
         if (!environment.production) {
             request = request.clone({withCredentials: true});

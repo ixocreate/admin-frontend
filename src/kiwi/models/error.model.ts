@@ -1,12 +1,12 @@
-export class KiwiAdminError extends Error {
-    name = 'KiwiAdminError';
+export class AdminError extends Error {
+    readonly name = 'AdminError';
     protected _code = 'kiwi';
 
     constructor(message?: string) {
         super(message);
 
         // Set the prototype explicitly.
-        Object.setPrototypeOf(this, KiwiAdminError.prototype);
+        Object.setPrototypeOf(this, AdminError.prototype);
     }
 
     code() {
@@ -14,6 +14,6 @@ export class KiwiAdminError extends Error {
     }
 }
 
-export class BootstrapError extends KiwiAdminError {
+export class BootstrapError extends AdminError {
     protected _code = 'kiwi.bootstrap';
 }

@@ -13,11 +13,11 @@ import {BootstrapError} from './models';
     ],
     providers: [{provide: ErrorHandler, useClass: ErrorHandlerService}]
 })
-export class KiwiModule {
+export class AdminModule {
 
     static forRoot(options?: any): ModuleWithProviders {
         return {
-            ngModule: KiwiModule,
+            ngModule: AdminModule,
             providers: [
                 ConfigurationService,
                 LoggerService,
@@ -41,14 +41,14 @@ export class KiwiModule {
         };
     }
 
-    constructor(@Optional() @SkipSelf() parentModule: KiwiModule,
+    constructor(@Optional() @SkipSelf() parentModule: AdminModule,
                 private session: SessionService,
                 private config: ConfigurationService,
                 private logger: LoggerService,
                 private router: Router,
                 private user: UserService) {
         if (parentModule) {
-            throw new Error('KiwiModule is already loaded. Import it in the AppModule only');
+            throw new Error('AdminModule is already loaded. Import it in the AppModule only');
         }
         this.bootstrap();
     }

@@ -1,6 +1,6 @@
 import {ErrorHandler, Injectable} from '@angular/core';
 import {LoggerService} from './logger.service';
-import {KiwiAdminError} from '../models';
+import {AdminError} from '../models';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
@@ -8,19 +8,19 @@ export class ErrorHandlerService extends ErrorHandler {
 
     _errors = [];
 
-    errors$: BehaviorSubject<KiwiAdminError[]>;
+    errors$: BehaviorSubject<AdminError[]>;
 
     private reportErrors = [
-        KiwiAdminError,
+        AdminError,
     ];
 
     constructor(private logger: LoggerService) {
         super();
-        this.errors$ = new BehaviorSubject(<KiwiAdminError[]>[]);
+        this.errors$ = new BehaviorSubject(<AdminError[]>[]);
     }
 
     handleError(error) {
-        if (error instanceof KiwiAdminError) {
+        if (error instanceof AdminError) {
             this._errors.push(error);
             this.errors$.next(this._errors);
         }

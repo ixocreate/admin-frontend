@@ -5,7 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
-import {KiwiModule} from '../kiwi';
+import {AdminModule} from '../kiwi';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app.routing';
 import {
@@ -66,7 +66,7 @@ const APP_DIRECTIVES = [
         /**
          * you can hard code options (e.g. from environment files)...
          */
-        // KiwiModule.forRoot(<Config>{
+        // AdminModule.forRoot(<Config>{
         //     project: {
         //         name: 'My Kiwi Project',
         //         copyright: '2018 Me',
@@ -76,11 +76,11 @@ const APP_DIRECTIVES = [
         /**
          * ... or set the key for the options that the window object provides
          */
-        // KiwiModule.forRoot('__myOptionsKey'),
+        // AdminModule.forRoot('__myOptionsKey'),
         /**
          * per default it takes the value at window.__kiwi
          */
-        KiwiModule.forRoot(),
+        AdminModule.forRoot(),
 
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),

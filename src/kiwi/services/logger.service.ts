@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
-import {KiwiAdminError} from '../models';
+import {AdminError} from '../models';
 
 @Injectable()
 export class LoggerService {
@@ -11,8 +11,8 @@ export class LoggerService {
     logError(error: any) {
         const date = new Date().toISOString();
         if (error instanceof HttpErrorResponse) {
-            console.error(date, 'HTTP error.', error.message, 'Status code:', (<HttpErrorResponse>error).status);
-        } else if (error instanceof KiwiAdminError) {
+            // console.error(date, 'HTTP error.', error.message, 'Status code:', (<HttpErrorResponse>error).status);
+        } else if (error instanceof AdminError) {
             console.error('[' + error.name + ':' + error.code() + ']', error.message);
             // } else if (error instanceof TypeError) {
             // todo: log to api

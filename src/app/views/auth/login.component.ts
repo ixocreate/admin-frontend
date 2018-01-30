@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ConfigurationService, UserService} from '../../services';
+import {ConfigurationService, UserService} from '../../../kiwi/services/index';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({

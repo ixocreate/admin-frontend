@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/kiwi-suite/admin-frontend.svg?branch=master)](https://travis-ci.org/kiwi-suite/admin-frontend)
 
 Angular 5 application that interacts with [Kiwi's Admin API](https://github.com/kiwi-suite/admin).
-It is added as Composer dependency in the [Admin package](https://github.com/kiwi-suite/admin) Project by default to ensure API client compatibility.
+It is added as Composer dependency in the [Admin package](https://github.com/kiwi-suite/admin) by default to ensure API client compatibility.
 
 Services to consume the Admin API as well as base components, directives, etc. are provided by the Kiwi Angular module included in the [ngx-admin package](https://github.com/kiwi-suite/ngx-admin).
 
@@ -52,7 +52,7 @@ To update the core library run
 
 **Note:** make sure the updated library version is compatible with the current Admin API version that is used in your project.
 
-For change requests and/or bug fixes for ngx-admin please refer to the according [ngx-admin package project](https://github.com/kiwi-suite/ngx-admin/issues).
+For change requests and/or bug fixes for ngx-admin please refer to the [ngx-admin package](https://github.com/kiwi-suite/ngx-admin/issues).
 
 ### Code scaffolding
 

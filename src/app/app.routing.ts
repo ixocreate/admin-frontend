@@ -40,7 +40,7 @@ export const routes: Routes = [
         children: [
             {
                 path: 'auth',
-                loadChildren: '../kiwi/views/auth/auth.module#AuthModule'
+                loadChildren: './views/auth/auth.module#AuthModule'
             }
         ]
     }
