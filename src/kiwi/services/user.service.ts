@@ -31,7 +31,7 @@ export class UserService extends ApiService {
                 this.fetch();
             }
         });
-        return this._user$;
+        return this._user$.asObservable();
     }
 
     login(credentials: LoginCredentials) {

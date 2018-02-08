@@ -8,7 +8,7 @@ export class ErrorHandlerService extends ErrorHandler {
 
     _errors = [];
 
-    errors$: BehaviorSubject<AdminError[]>;
+    private _errors$: BehaviorSubject<AdminError[]>;
 
     private reportErrors = [
         AdminError,
@@ -16,13 +16,17 @@ export class ErrorHandlerService extends ErrorHandler {
 
     constructor(private logger: LoggerService) {
         super();
-        this.errors$ = new BehaviorSubject(<AdminError[]>[]);
+        this._errors$ = new BehaviorSubject(<AdminError[]>[]);
+    }
+
+    get errors$() {
+        return this._errors$.asObservable();
     }
 
     handleError(error) {
         if (error instanceof AdminError) {
             this._errors.push(error);
-            this.errors$.next(this._errors);
+            this._errors$.next(this._errors);
         }
 
         this.logger.logError(error);

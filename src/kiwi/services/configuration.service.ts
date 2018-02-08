@@ -36,15 +36,15 @@ export class ConfigurationService extends ApiService {
     }
 
     get ready$() {
-        return this._ready$;
+        return this._ready$.asObservable();
+    }
+
+    get params$() {
+        return this._params$.asObservable();
     }
 
     get params() {
         return this._params;
-    }
-
-    get params$() {
-        return this._params$;
     }
 
     /**
