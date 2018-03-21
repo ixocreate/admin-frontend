@@ -7,5 +7,15 @@ export const navigation = [
         //     variant: 'info',
         //     text: 'NEW'
         // }
-    }
+    },
+    {
+        name: 'Users',
+        url: '/user',
+        icon: 'fa fa-users',
+        permissions: [
+        ],
+        roles: [
+            'admin',
+        ],
+    },
 ];

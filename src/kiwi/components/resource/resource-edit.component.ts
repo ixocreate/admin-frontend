@@ -6,11 +6,11 @@ import 'rxjs/add/observable/of';
 import {AsyncSubject} from 'rxjs/AsyncSubject';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
-import {ResourceModelControl, ResourceModelSchema} from '../../../app/models/resource.model';
 import {SchemaFormArray, SchemaFormBuilder} from '../../forms/schema-form-builder';
 import {AccountService} from '../../services';
 import {ResourceService} from '../../services/resource.service';
 import {ResourceDetailComponent} from './resource-detail.component';
+import {ResourceModelControl, ResourceModelSchema} from '../../models';
 
 @Component({
     selector: 'app-resource-edit',
