@@ -1,19 +1,18 @@
 import {Inject, Injectable} from '@angular/core';
-import {ApiService} from './api.service';
-import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Subscription} from 'rxjs/Subscription';
 import {BootstrapError, Config, Project, Routes} from '../models';
+import {ApiService} from './api.service';
+import {DataService} from './data.service';
 import {LoggerService} from './logger.service';
 
 @Injectable()
-export class ConfigurationService extends ApiService {
+export class ConfigurationService extends DataService {
 
-    private _api$;
-    private _apiSub: Promise<PushSubscription>;
-    private _ready$ = new BehaviorSubject<boolean>(false);
     private _params: Config;
     private _params$ = new BehaviorSubject<Config>(<Config>{});
-    loading = true;
+
+    private _subscription: Subscription;
 
     /**
      * @param {string} key
@@ -29,14 +28,10 @@ export class ConfigurationService extends ApiService {
     }
 
     constructor(@Inject('Config') private baseConfig: Config,
-                protected http: HttpClient,
+                protected api: ApiService,
                 private logger: LoggerService) {
-        super(http);
+        super(api);
         this.bootstrap(baseConfig);
-    }
-
-    get ready$() {
-        return this._ready$.asObservable();
     }
 
     get params$() {
@@ -75,31 +70,30 @@ export class ConfigurationService extends ApiService {
         this._params$.next(this._params);
     }
 
+    /**
+     * @returns {Observable<Config>}
+     */
     load() {
         this.logger.log('load configuration', this._params.routes.config);
 
-        this._api$ = this.get<Config>(this._params.routes.config)
-            .map(params => {
-                this._params = Object.assign(this._params, params);
-                this._params$.next(this._params);
-                // if (!this._params.routes.authLogin || !this._params.routes.authUser || !this._params.routes.authLogout) {
-                //     throw new BootstrapError('missing auth routes');
-                // }
-            });
+        const observable = this.api.get<Config>(this._params.routes.config);
 
-        this._apiSub = this._api$.subscribe(
+        this._subscription = observable.map(params => {
+            this._params = Object.assign(this._params, params);
+            this._params$.next(this._params);
+            // if (!this._params.routes.authLogin || !this._params.routes.authUser || !this._params.routes.authLogout) {
+            //     throw new BootstrapError('missing auth routes');
+            // }
+        }).subscribe(
             () => {
-                this._ready$.next(true);
             },
             () => {
-                this._ready$.next(false);
-                this.loading = false;
                 throw new BootstrapError('failed to initialize configuration');
             },
             () => {
-                this.loading = false;
+                this.ready();
             });
 
-        return this._api$;
+        return observable;
     }
 }

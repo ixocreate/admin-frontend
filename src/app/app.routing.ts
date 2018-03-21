@@ -1,39 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {PermissionGuard} from '../kiwi';
 import {FullLayoutComponent} from './containers/full-layout';
 import {SimpleLayoutComponent} from './containers/simple-layout';
-import {PermissionGuard} from '../kiwi';
+import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: SimpleLayoutComponent
-        /**
-         * the initial component to show
-         */
-        // redirectTo: 'dashboard',
-        // pathMatch: 'full',
-    },
-    {
-        path: '',
-        component: FullLayoutComponent,
-        canActivate: [PermissionGuard],
-        data: {
-            title: 'Home'
-        },
-        children: [
-            {
-                path: 'dashboard',
-                // lazy load module
-                loadChildren: './views/dashboard/dashboard.module#DashboardModule'
-                // sync load module (will not work wth AoT)
-                // loadChildren: () => DashboardModule
-            }
-            /**
-             * add you own...
-             */
-        ]
-    },
     {
         path: '',
         component: SimpleLayoutComponent,
@@ -41,9 +13,60 @@ export const routes: Routes = [
             {
                 path: 'auth',
                 loadChildren: './views/auth/auth.module#AuthModule'
-            }
-        ]
-    }
+            },
+            {
+                path: '',
+                component: FullLayoutComponent,
+                // canActivateChild: [PermissionGuard],
+                data: {
+                    title: 'Home',
+
+                },
+                children: [
+                    /**
+                     * Default routes
+                     */
+                    {
+                        path: 'user',
+                        // lazy load module
+                        // sync load module (will not work wth AoT)
+                        // loadChildren: () => DashboardModule
+                        loadChildren: './views/user/user.module#UserModule',
+                        // canActivate: [PermissionGuard],
+                    },
+                    {
+                        path: 'account',
+                        loadChildren: './views/account/account.module#AccountModule'
+                    },
+                    {
+                        path: 'dashboard',
+                        loadChildren: './views/dashboard/dashboard.module#DashboardModule',
+                        // canActivate: [PermissionGuard],
+                    },
+                    /**
+                     * App routes
+                     */
+                    /**
+                     * TODO: wildcard for resources
+                     */
+                    // {
+                    //     path: '**',
+                    //     loadChildren: '../../kiwi/views/resource/resource.module#ResourceModule',
+                    //     canActivate: [PermissionGuard],
+                    // },
+                    // {
+                    //     path: 'resource/:type/',
+                    //     loadChildren: './views/tag/tags.module#ResourceModule',
+                    //     canActivate: [PermissionGuard],
+                    // },
+                ]
+            },
+            {
+                path: '**',
+                component: PageNotFoundComponent,
+            },
+        ],
+    },
 ];
 
 @NgModule({

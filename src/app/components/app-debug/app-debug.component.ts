@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ConfigurationService} from '../../../kiwi/services';
+import {AccountService, ConfigurationService, SessionService} from '../../../kiwi/services';
 
 @Component({
     selector: 'app-debug',
@@ -7,11 +7,39 @@ import {ConfigurationService} from '../../../kiwi/services';
 })
 export class AppDebugComponent {
 
-    constructor(private config: ConfigurationService) {
+    show = false;
+
+    constructor(private config: ConfigurationService,
+                private session: SessionService,
+                private account: AccountService) {
 
     }
 
     get config$() {
         return this.config.params$;
+    }
+
+    loadSession() {
+        this.session.load();
+    }
+
+    loadUser() {
+        this.account.load();
+    }
+
+    loadConfig() {
+        this.config.load();
+    }
+
+    toggle() {
+        this.show = !this.show;
+    }
+
+    configReady(ready) {
+        this.config.nextReady(ready);
+    }
+
+    sessionReady(ready) {
+        this.session.nextReady(ready);
     }
 }

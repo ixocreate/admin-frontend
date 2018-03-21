@@ -1,0 +1,41 @@
+<div class="app flex-row align-items-center" *ngIf="ready$ | async">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <h1>Reset Password</h1>
+                            <p class="text-muted">Send a password reset email</p>
+                            <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon-envelope"></i>
+                                        </div>
+                                    </div>
+                                    <input formControlName="email" type="text" class="form-control"
+                                           placeholder="Email" autocomplete="email"
+                                           [ngClass]="{'is-invalid': form.get('email').invalid}">
+                                    <div class="invalid-feedback ml-5"
+                                         *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)">
+                                        <div *ngIf="form.get('email').errors">
+                                            Email is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary px-4">
+                                            Send
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

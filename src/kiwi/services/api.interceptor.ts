@@ -8,10 +8,10 @@ import {
     HttpXsrfTokenExtractor
 } from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import 'rxjs/add/operator/do';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
-import 'rxjs/add/operator/do';
 import {LoggerService} from './logger.service';
 
 // from: https://ryanchenkie.com/angular-authentication-using-the-http-client-and-http-interceptors
@@ -19,7 +19,10 @@ import {LoggerService} from './logger.service';
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router, private logger: LoggerService, private tokenExtractor: HttpXsrfTokenExtractor) {
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private logger: LoggerService,
+                private tokenExtractor: HttpXsrfTokenExtractor) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -65,12 +68,15 @@ export class ApiInterceptor implements HttpInterceptor {
                     }
                 },
                 (err: any) => {
-                    // this.logger.logError(err);
                     if (err instanceof HttpErrorResponse) {
                         if (err.status === 401) {
-                            // redirect to the login route
-                            // or show a modal
-                            this.router.navigateByUrl('auth/login');
+                            let extras = {};
+                            if (this.router.url.indexOf('intended=') === -1
+                                && this.router.url !== '/'
+                                && this.router.url !== '/auth/login') {
+                                extras = {queryParams: {intended: this.router.url}};
+                            }
+                            this.router.navigate(['/auth/login'], extras);
                         }
                     }
                 }

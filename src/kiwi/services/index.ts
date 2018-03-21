@@ -1,3 +1,4 @@
+export * from './account.service';
 export * from './api.interceptor';
 export * from './api.service';
 export * from './configuration.service';

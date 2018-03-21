@@ -1,6 +1,8 @@
 import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 // Import navigation elements
 import {Router} from '@angular/router';
+import {User} from '../../../kiwi/models';
+import {AccountService} from '../../../kiwi/services';
 import {navigation} from '../../_nav';
 
 @Component({
@@ -13,7 +15,7 @@ import {navigation} from '../../_nav';
                     <ng-template [ngIf]="isTitle(navitem)">
                         <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
                     </ng-template>
-                    <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)">
+                    <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)&&hasPermission(navitem)">
                         <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
                     </ng-template>
                 </ng-template>
@@ -23,6 +25,7 @@ import {navigation} from '../../_nav';
 export class AppSidebarNavComponent {
 
     public navigation = navigation;
+    private user: User;
 
     public isDivider(item) {
         return item.divider ? true : false;
@@ -32,7 +35,12 @@ export class AppSidebarNavComponent {
         return item.title ? true : false;
     }
 
-    constructor() {
+    public hasPermission(item) {
+        return !item.roles || !item.roles.length || (this.user && item.roles.indexOf(this.user.role) > -1);
+    }
+
+    constructor(private accountService: AccountService) {
+        this.accountService.user$.subscribe(user => this.user = user);
     }
 }
 

@@ -1,1 +1,21 @@
-<pre id="debug" *ngIf="config$ | async as config">{{ config | json }}</pre>
+<div id="debug">
+    <!--<div>-->
+        <!--<button type="button" (click)="sessionReady(true)">Session Ready</button>-->
+        <!--<button type="button" (click)="sessionReady(false)">Session Not Ready</button>-->
+        <!--<button type="button" (click)="configReady(true)">Config Ready</button>-->
+        <!--<button type="button" (click)="configReady(false)">Config Not Ready</button>-->
+    <!--</div>-->
+    <pre *ngIf="show && (config$ | async) as config">{{ config | json }}</pre>
+    <div>
+        <div>
+            <button type="button" (click)="toggle()">Toggle</button>
+        </div>
+        <!--<button type="button" (click)="loadSession()">Load Session</button>-->
+        <div>
+            <button type="button" (click)="loadConfig()">Load Config</button>
+        </div>
+        <div>
+            <button type="button" (click)="loadUser()">Load User</button>
+        </div>
+    </div>
+</div>

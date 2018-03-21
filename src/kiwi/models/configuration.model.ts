@@ -20,10 +20,35 @@ export interface Project {
 }
 
 export interface Routes {
+    /**
+     * config & session
+     */
+    config: string;
+    session: string;
+    /**
+     * account (auth user context)
+     */
+    accountAvatar: string;
+    accountEmail: string;
+    accountPassword: string;
+    /**
+     * auth
+     */
     authLogin: string;
     authLogout: string;
     authUser: string;
-    config: string;
-    session: string;
+    /**
+     * password
+     */
+    passwordEmail: string;
+    passwordReset: string;
+    /**
+     * users crud
+     */
+    userIndex: string;
+    userDetail: string;
+    userUpdate: string;
+    userCreate: string;
+    userDelete: string;
+    userEmail: string;
 }
-

@@ -1,17 +1,31 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {ApiResponse} from '../models';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
+import {ApiResponse} from '../models';
+import {LoggerService} from './logger.service';
 
-export abstract class ApiService {
+export class ApiService {
+
+    protected _loading$ = new BehaviorSubject<boolean>(false);
+
+    constructor(protected http: HttpClient, public logger: LoggerService) {
+    }
+
+    get loading$() {
+        return this._loading$.asObservable();
+    }
 
     /**
      * handle kiwi admin api responses
      * @param response
      */
-    private static handleResponse(response) {
+    private handleResponse(response) {
+        if (this._loading$) {
+            this._loading$.next(false);
+        }
         if (response.success === true) {
             return response.result;
         }
@@ -22,14 +36,17 @@ export abstract class ApiService {
      * handle kiwi admin api error responses
      * @param error
      */
-    static handleError(error) {
+    private handleError(error) {
+        if (this._loading$) {
+            this._loading$.next(false);
+        }
         return Observable.throw(error);
     }
 
-    constructor(protected http: HttpClient) {
-    }
+    get<T>(url: string, params: any = {}): Observable<T> {
 
-    protected get<T>(url: string, params: any = {}): Observable<T> {
+        this._loading$.next(true);
+
         let httpParams = new HttpParams();
         /**
          * omit empty params
@@ -41,23 +58,33 @@ export abstract class ApiService {
             httpParams = httpParams.set(<string>key, <string>params[key]);
         }
         return this.http.get(url, {params: httpParams})
-            .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .map(response => this.handleResponse(response))
+            .catch(error => this.handleError(error));
     }
 
-    protected post<T>(url: string, params?: any): Observable<T> {
+    post<T>(url: string, params?: any): Observable<T> {
+        this._loading$.next(true);
         return this.http.post<ApiResponse<T>>(url, params, {})
-            .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .map(response => this.handleResponse(response))
+            .catch(error => this.handleError(error));
     }
 
-    protected put<T>(url: string, params?: any): Observable<T> {
+    put<T>(url: string, params?: any): Observable<T> {
+        this._loading$.next(true);
         return this.http.put<ApiResponse<T>>(url, params, {})
-            .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .map(response => this.handleResponse(response))
+            .catch(error => this.handleError(error));
     }
 
-    protected delete<T>(url: string, params: any = {}): Observable<T> {
+    patch<T>(url: string, params?: any): Observable<{}> {
+        this._loading$.next(true);
+        return this.http.patch<ApiResponse<T>>(url, params, {})
+            .map(response => this.handleResponse(response))
+            .catch(error => this.handleError(error));
+    }
+
+    delete<T>(url: string, params: any = {}): Observable<T> {
+        this._loading$.next(true);
         let httpParams = new HttpParams();
         for (const key of Object.keys(params)) {
             if (params[key] === null) {
@@ -66,7 +93,7 @@ export abstract class ApiService {
             httpParams = httpParams.set(<string>key, <string>params[key]);
         }
         return this.http.delete<ApiResponse<T>>(url, {params: httpParams})
-            .map(ApiService.handleResponse)
-            .catch(ApiService.handleError);
+            .map(response => this.handleResponse(response))
+            .catch(error => this.handleError(error));
     }
 }

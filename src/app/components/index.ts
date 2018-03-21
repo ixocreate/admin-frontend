@@ -1,4 +1,5 @@
 export * from './app-aside';
+export * from './app-background';
 export * from './app-breadcrumbs';
 export * from './app-debug';
 export * from './app-footer';

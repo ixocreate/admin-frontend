@@ -1,58 +1,18 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from './api.service';
-import {HttpClient} from '@angular/common/http';
-import {LoginCredentials, User} from '../models';
-import {ConfigurationService} from './configuration.service';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {User} from '../models';
+import {ResourceService} from './resource.service';
 
 @Injectable()
-export class UserService extends ApiService {
+export class UserService extends ResourceService {
 
-    private _user: User;
-    private _user$: BehaviorSubject<User>;
-    private _userApi$: Observable<User>;
-    private _userApiSub: Subscription;
-    private _loginApi$: Observable<boolean>;
-    private _loginApiSub: Subscription;
+    protected resource = 'user';
 
-    constructor(protected http: HttpClient, private config: ConfigurationService) {
-        super(http);
-        this._user$ = new BehaviorSubject<User>(null);
+    updateAvatar(model: User, values) {
+        // TODO
+        console.log(this.detailLink + '/avatar', model);
     }
 
-    get user$() {
-        this.config.ready$.subscribe(configReady => {
-            if (!configReady) {
-                return;
-            }
-            if (!this._userApiSub) {
-                this.fetch();
-            }
-        });
-        return this._user$.asObservable();
-    }
-
-    login(credentials: LoginCredentials) {
-        this._loginApi$ = this.post(this.config.params.routes.authLogin, credentials);
-        this._loginApiSub = this._loginApi$.subscribe(() => {
-            this.fetch();
-        });
-    }
-
-    logout() {
-        this.post(this.config.params.routes.authLogout).subscribe(() => {
-            this.fetch();
-        });
-    }
-
-    private fetch() {
-        this._userApi$ = this.get<User>(this.config.params.routes.authUser);
-        this._userApiSub = this._userApi$.subscribe(user => {
-            this._user = user;
-            this._user$.next(this._user);
-            return this._user;
-        });
+    updateEmail(model: User, values) {
+        return this.api.patch(this.config.params.routes['userEmail'].replace('{id}', model.id), values);
     }
 }

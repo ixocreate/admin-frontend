@@ -1,13 +1,15 @@
 <div id="loader" *ngIf="!(ready$ | async)">
     <div>
-        <img src="{{ assetsUrl }}/assets/img/kiwi-icon.svg" alt="">
-    </div>
-    <div class="message">
-        <span class="text-muted text-uppercase" *ngIf="loading">
-            Initializing&hellip;
-        </span>
-        <span class="text-danger text-uppercase" *ngIf="!loading">
-            Initialization error
-        </span>
+        <div>
+            <img src="{{ assetsUrl }}/assets/img/kiwi-icon.svg" alt="">
+        </div>
+        <div class="message">
+            <span class="text-muted text-uppercase" *ngIf="(loading$ | async)">
+                Initializing&hellip;
+            </span>
+            <span class="text-danger text-uppercase" *ngIf="!(loading$ | async)">
+                Initialization error
+            </span>
+        </div>
     </div>
 </div>

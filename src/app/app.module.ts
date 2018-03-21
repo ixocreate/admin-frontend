@@ -2,15 +2,18 @@ import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {AdminModule} from '../kiwi';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app.routing';
+
 import {
     APP_SIDEBAR_NAV,
     AppAsideComponent,
+    AppBackgroundComponent,
     AppBreadcrumbsComponent,
     AppDebugComponent,
     AppFooterComponent,
@@ -24,6 +27,7 @@ import {
 } from './components';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
+import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
 
 const APP_CONTAINERS = [
     FullLayoutComponent,
@@ -32,6 +36,7 @@ const APP_CONTAINERS = [
 
 const APP_COMPONENTS = [
     AppAsideComponent,
+    AppBackgroundComponent,
     AppBreadcrumbsComponent,
     AppFooterComponent,
     AppHeaderComponent,
@@ -42,7 +47,8 @@ const APP_COMPONENTS = [
     AppSidebarFormComponent,
     AppSidebarHeaderComponent,
     AppSidebarMinimizerComponent,
-    APP_SIDEBAR_NAV
+    APP_SIDEBAR_NAV,
+    PageNotFoundComponent
 ];
 
 const APP_DIRECTIVES = [
@@ -84,13 +90,14 @@ const APP_DIRECTIVES = [
 
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),
-        ChartsModule,
+        BrowserAnimationsModule,
+        ChartsModule
     ],
     declarations: [
         AppComponent,
         ...APP_CONTAINERS,
         ...APP_COMPONENTS,
-        ...APP_DIRECTIVES
+        ...APP_DIRECTIVES,
     ],
     providers: [
         {

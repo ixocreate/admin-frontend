@@ -1,43 +1,44 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from './api.service';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {DomSanitizer} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
-import {ConfigurationService} from './configuration.service';
 import {environment} from '../../environments/environment';
+import {ApiService} from './api.service';
+import {ConfigurationService} from './configuration.service';
+import {DataService} from './data.service';
+import {LoggerService} from './logger.service';
 
 @Injectable()
-export class SessionService extends ApiService {
+export class SessionService extends DataService {
 
-    private _session$ = new BehaviorSubject<boolean>(false);
-    private _api$: Observable<boolean>;
-    private _apiSub: Subscription;
+    private _subscription: Subscription;
 
-    constructor(protected http: HttpClient, private config: ConfigurationService) {
-        super(http);
+    constructor(protected api: ApiService,
+                protected config: ConfigurationService,
+                private logger: LoggerService) {
+        super(api);
+        this.load();
     }
 
-    get session$() {
+    load() {
+        /**
+         * load session only once
+         */
+        if (this._subscription) {
+            return new Observable();
+        }
+
         /**
          * in a production build there is no need to initialize the session by calling the session route
          * validate session immediately
          */
         if (environment.production) {
-            this._session$.next(true);
-            return this._session$;
+            this._subscription = new Subscription();
+            this.ready();
         }
-
-        if (!this._apiSub) {
-            this.fetch();
-        }
-        return this._session$;
-    }
-
-    private fetch() {
-        this._api$ = this.get<boolean>(this.config.params.routes.session);
-        this._apiSub = this._api$.subscribe(() => {
-            this._session$.next(true);
-        });
+        this.logger.log('load session', this.config.params.routes.session);
+        const observable = this.api.get<boolean>(this.config.params.routes.session);
+        this._subscription = observable.subscribe(() => this.ready());
+        return observable;
     }
 }
