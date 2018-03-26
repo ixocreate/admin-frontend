@@ -1,21 +1,17 @@
-<div id="debug">
-    <!--<div>-->
+<div id="debug" *ngIf="show">
+    <button class="btn btn-secondary pull-right" type="button" (click)="toggle()">
+        <strong style="font-size: 1.3em">
+            &times;
+        </strong>
+    </button>
+    <div class="mb-3">
         <!--<button type="button" (click)="sessionReady(true)">Session Ready</button>-->
         <!--<button type="button" (click)="sessionReady(false)">Session Not Ready</button>-->
         <!--<button type="button" (click)="configReady(true)">Config Ready</button>-->
         <!--<button type="button" (click)="configReady(false)">Config Not Ready</button>-->
-    <!--</div>-->
-    <pre *ngIf="show && (config$ | async) as config">{{ config | json }}</pre>
-    <div>
-        <div>
-            <button type="button" (click)="toggle()">Toggle</button>
-        </div>
         <!--<button type="button" (click)="loadSession()">Load Session</button>-->
-        <div>
-            <button type="button" (click)="loadConfig()">Load Config</button>
-        </div>
-        <div>
-            <button type="button" (click)="loadUser()">Load User</button>
-        </div>
+        <button class="btn btn-success" type="button" (click)="loadConfig()">Load Config</button>
+        <button class="btn btn-success" type="button" (click)="loadUser()">Load User</button>
     </div>
+    <pre *ngIf="(config$ | async) as config">{{ config | json }}</pre>
 </div>

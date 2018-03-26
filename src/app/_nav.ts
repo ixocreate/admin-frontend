@@ -12,8 +12,7 @@ export const navigation = [
         name: 'Users',
         url: '/user',
         icon: 'fa fa-users',
-        permissions: [
-        ],
+        permissions: [],
         roles: [
             'admin',
         ],

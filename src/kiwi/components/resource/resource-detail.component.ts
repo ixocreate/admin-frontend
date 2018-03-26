@@ -50,14 +50,15 @@ export class ResourceDetailComponent extends BaseComponent implements OnInit, On
     onDelete() {
         this.dataService.delete(this.model)
             .subscribe(() => {
-                this.models$.subscribe(() => {
-                    this.toastr.success('The item was successfully deleted ', 'Success');
-                    this.dataService.load();
-                    this.router.navigateByUrl(this.dataService.resourceKey);
-                }, () => {
-                    this.toastr.error('There was an error in deleting the item', 'Error', {
-                        timeOut: 0,
-                    });
+                this.toastr.success('The item was successfully deleted ', 'Success');
+                /**
+                 * navigating to index reloads models
+                 */
+                // this.dataService.load();
+                this.router.navigateByUrl(this.dataService.resourceKey);
+            }, () => {
+                this.toastr.error('There was an error in deleting the item', 'Error', {
+                    timeOut: 0,
                 });
             });
     }

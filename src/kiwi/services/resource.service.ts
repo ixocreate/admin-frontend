@@ -29,6 +29,9 @@ export abstract class ResourceService extends DataService {
     }
 
     get models$() {
+        if (!this._subscription) {
+            this.loadModels();
+        }
         return this._models$.asObservable();
     }
 
@@ -83,11 +86,16 @@ export abstract class ResourceService extends DataService {
                 return;
             }
             this._loading$.next(true);
+
+            if (this._subscription) {
+                this._subscription.unsubscribe();
+            }
+
             this._subscription = this.api.get<any[]>(this.indexLink, params)
                 .subscribe(
                     models => {
                         this._models = models;
-                        this._models$.next(this._models);
+                        this._models$.next([...this._models]);
                         return this._models;
                     },
                     () => {

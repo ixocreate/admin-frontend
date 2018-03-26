@@ -32,7 +32,7 @@ export const routes: Routes = [
                         // sync load module (will not work wth AoT)
                         // loadChildren: () => DashboardModule
                         loadChildren: './views/user/user.module#UserModule',
-                        // canActivate: [PermissionGuard],
+                        canActivate: [PermissionGuard],
                     },
                     {
                         path: 'account',
@@ -41,10 +41,10 @@ export const routes: Routes = [
                     {
                         path: 'dashboard',
                         loadChildren: './views/dashboard/dashboard.module#DashboardModule',
-                        // canActivate: [PermissionGuard],
+                        canActivate: [PermissionGuard],
                     },
                     /**
-                     * App routes
+                     * Register your custom routes here
                      */
                     /**
                      * TODO: wildcard for resources

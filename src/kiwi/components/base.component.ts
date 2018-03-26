@@ -12,7 +12,7 @@ import {ResourceService} from '../services/resource.service';
  */
 export abstract class BaseComponent implements OnInit, OnDestroy {
 
-    protected ngUnsubscribe: Subject<boolean> = new Subject();
+    protected unsubscribeOnDestroy: Subject<boolean> = new Subject();
 
     constructor(protected dataService: ResourceService,
                 protected accountService: AccountService,
@@ -26,16 +26,16 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.ngUnsubscribe.next(true);
-        this.ngUnsubscribe.complete();
+        this.unsubscribeOnDestroy.next(true);
+        this.unsubscribeOnDestroy.complete();
     }
 
     get model$() {
-        return this.dataService.model$.takeUntil(this.ngUnsubscribe);
+        return this.dataService.model$.takeUntil(this.unsubscribeOnDestroy);
     }
 
     get models$() {
-        return this.dataService.models$.takeUntil(this.ngUnsubscribe);
+        return this.dataService.models$.takeUntil(this.unsubscribeOnDestroy);
     }
 
     can$(ability) {

@@ -1,7 +1,7 @@
 import {ErrorHandler, Injectable} from '@angular/core';
-import {LoggerService} from './logger.service';
-import {AdminError} from '../models';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {AdminError} from '../models';
+import {LoggerService} from './logger.service';
 
 @Injectable()
 export class ErrorHandlerService extends ErrorHandler {

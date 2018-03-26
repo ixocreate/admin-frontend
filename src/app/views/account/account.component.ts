@@ -19,15 +19,14 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
     passwordFormModel = {password: '', passwordRepeat: '', passwordOld: ''};
 
     emailForm: FormGroup;
-    emailFormModel = { email: '', emailRepeat: '' };
+    emailFormModel = {email: '', emailRepeat: ''};
 
     constructor(protected dataService: AccountService,
                 protected accountService: AccountService,
                 protected route: ActivatedRoute,
                 protected router: Router,
                 protected formBuilder: SchemaFormBuilder,
-                protected toastr: ToastrService
-    ) {
+                protected toastr: ToastrService) {
         super(dataService, accountService, formBuilder, route, router, toastr);
     }
 

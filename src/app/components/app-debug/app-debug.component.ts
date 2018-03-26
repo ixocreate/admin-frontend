@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
+import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {AccountService, ConfigurationService, SessionService} from '../../../kiwi/services';
 
 @Component({
     selector: 'app-debug',
-    templateUrl: './app-debug.component.html'
+    templateUrl: './app-debug.component.html',
+    styleUrls: ['./app-debug.component.scss']
 })
 export class AppDebugComponent {
 
@@ -11,8 +13,12 @@ export class AppDebugComponent {
 
     constructor(private config: ConfigurationService,
                 private session: SessionService,
-                private account: AccountService) {
-
+                private account: AccountService,
+                private _hotkeysService: HotkeysService) {
+        this._hotkeysService.add(new Hotkey('alt+shift+d', (event: KeyboardEvent): boolean => {
+            this.toggle();
+            return false; // Prevent bubbling
+        }));
     }
 
     get config$() {

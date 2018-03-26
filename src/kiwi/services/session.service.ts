@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {environment} from '../../environments/environment';

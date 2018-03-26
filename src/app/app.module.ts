@@ -3,6 +3,7 @@ import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HotkeyModule} from 'angular2-hotkeys';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
@@ -28,6 +29,7 @@ import {
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
 import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
+import {MyResourceService} from './services/my-resource.service';
 
 const APP_CONTAINERS = [
     FullLayoutComponent,
@@ -56,6 +58,14 @@ const APP_DIRECTIVES = [
     NAV_DROPDOWN_DIRECTIVES,
     ReplaceDirective,
     SIDEBAR_TOGGLE_DIRECTIVES
+];
+
+/**
+ * Register your custom data services here if you want them to be singletons
+ * see: https://stackoverflow.com/a/39085113/580651
+ */
+const DATA_SERVICES = [
+    MyResourceService
 ];
 
 @NgModule({
@@ -91,7 +101,8 @@ const APP_DIRECTIVES = [
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),
         BrowserAnimationsModule,
-        ChartsModule
+        ChartsModule,
+        HotkeyModule.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -104,6 +115,7 @@ const APP_DIRECTIVES = [
             provide: LocationStrategy,
             useClass: PathLocationStrategy
         },
+        ...DATA_SERVICES
     ],
     bootstrap: [AppComponent]
 })

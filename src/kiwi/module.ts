@@ -52,7 +52,7 @@ export class AdminModule {
                 PermissionGuard,
                 SessionService,
                 SchemaFormBuilder,
-                UserService,
+                UserService
             ]
         };
     }

@@ -87,7 +87,7 @@ export class UserEditComponent extends ResourceEditComponent implements OnInit, 
     onSubmitEmail() {
         this.dataService.updateEmail(this.model, this.emailForm.getRawValue())
             .subscribe((result) => {
-                this.dataService.load(),
+                this.dataService.load();
                 this.toastr.success('The email was successfully updated ', 'Success');
             }, () => {
                 this.toastr.error('There was an error in updating the email', 'Error', {
@@ -106,6 +106,5 @@ export class UserEditComponent extends ResourceEditComponent implements OnInit, 
                     timeOut: 0,
                 });
             });
-        ;
     }
 }

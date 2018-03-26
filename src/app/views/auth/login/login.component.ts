@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        this.account.login(this.form.getRawValue())
-            .subscribe(() => {
+        this.account.login(this.form.getRawValue()).subscribe(
+            () => {
                 this.route.queryParams.subscribe(query => {
                     this.router.navigate([query.intended || '']);
                 });

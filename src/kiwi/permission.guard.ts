@@ -14,11 +14,14 @@ export class PermissionGuard implements CanActivate {
         // TODO: get from routes definition
         // this.config.route
 
+        /**
+         * subscribe to async object to only have this triggered once
+         */
         return this.account.user$.map(user => this.can(user, '*'));
     }
 
     can(user, ability) {
-        console.warn('CAN', user, ability, user.permissions.indexOf(ability) > -1);
+        console.warn('CAN', user.permissions, ability, user.permissions.indexOf(ability) > -1);
         return user.permissions.indexOf(ability) > -1;
     }
 }
