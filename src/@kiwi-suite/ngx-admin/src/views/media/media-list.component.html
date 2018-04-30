@@ -1,0 +1,74 @@
+<div class="card card-accent-primary">
+    <div class="card-header">
+        <b class="text-muted">{{ resourceNamePlural }}</b>
+    </div>
+    <div class="card-body">
+        <div class="row text-center text-lg-left" *ngIf="uploader">
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                <div class="d-block mb-4 h-100" ng2FileDrop [uploader]="uploader">
+                    <div class="upload-container">
+                        <div class="drop-box">
+                            <div class="upload-center">
+                                <button class="btn btn-primary" type="button">Choose a file</button>
+                                <p>or drag it here</p>
+                            </div>
+                            <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple />
+                        </div>
+                   </div>
+
+                </div>
+            </div>
+
+            <div *ngFor="let item of uploader.queue" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="d-block mb-4 h-100">
+                    <div *ngIf="isImage(item?.file?.type)" class="media-container">
+                        <div class="media-icon">
+                            <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(item?.file?.type)"></span>
+                        </div>
+                        <!--
+                        <div *ngIf="(base64Image() | async) as base64Image" class="media-image" [ngStyle]="{backgroundImage: 'url('+ base64Image +')'}"></div>
+                        -->
+                        <div class="media-image-title p-1 text-nowrap text-truncate">
+                            <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress" type="info"></progressbar>
+                            <div>
+                                <small>{{ item?.file?.name }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!isImage(item?.file?.type)" class="media-container">
+                        <div class="media-icon">
+                            <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(item?.file?.type)"></span>
+                        </div>
+                        <div class="media-image-title p-1 text-nowrap text-truncate">
+                            <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress" type="info"></progressbar>
+                            <div>
+                                <small>{{ item?.file?.name }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngFor="let media of (models$ | async)" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="d-block mb-4 h-100">
+                    <div *ngIf="isImage(media.mimeType)" class="media-container">
+                        <div class="media-image" [ngStyle]="{backgroundImage: 'url(http://localhost/beerlovers-app-api/media/img/admin-thumb/' + media.basePath + media.filename + ')'}"></div>
+                        <div class="media-image-title p-1 text-nowrap text-truncate">
+                            <small>{{ media.filename }}</small>
+                        </div>
+                    </div>
+                    <div *ngIf="!isImage(media.mimeType)" class="media-container">
+                        <div class="media-icon">
+                            <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
+                        </div>
+                        <div class="media-image-title p-1 text-nowrap text-truncate">
+                            <small>{{ media.filename }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,28 +1,6 @@
-/*!
- * CoreUI - Open Source Bootstrap Admin Template
- * @version v1.0.6
- * @link http://coreui.io
- * Copyright (c) 2017 creativeLabs Łukasz Holeczek
- * @license MIT
- */
-// Override Boostrap variables
-@import "bootstrap-variables";
-// Import Bootstrap source files
-@import "~bootstrap/scss/bootstrap";
-// Override core variables
-@import "core-variables";
-// Import core styles
-@import "core/core";
-// Import datatable styles
-@import '~@swimlane/ngx-datatable/release/index.css';
-//@import '~@swimlane/ngx-datatable/release/themes/material.css';
-//@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
-@import '~@swimlane/ngx-datatable/release/assets/icons.css';
-@import "~@ng-select/ng-select/themes/default.theme.css";
-@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
-@import 'datatable';
+// Override variables
+@import "variables";
+// Import admin styles
+@import "../@kiwi-suite/ngx-admin/src/scss/ngx-admin";
 // Custom styles
 @import "custom";
-@import "floating-labels";
-
-@import "~ngx-toastr/toastr-bs4-alert";

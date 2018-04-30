@@ -1,84 +1,32 @@
-import {LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HotkeyModule} from 'angular2-hotkeys';
-import {ChartsModule} from 'ng2-charts/ng2-charts';
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
-import {TabsModule} from 'ngx-bootstrap/tabs';
-import {AdminModule} from '../kiwi';
-import {AppComponent} from './app.component';
+import {AdminModule} from '../@kiwi-suite/ngx-admin/src';
+import {AdminComponent} from '../@kiwi-suite/ngx-admin/src/admin.component';
+import {environment} from '../environments/environment';
+import {navigation} from './_nav';
 import {AppRoutingModule} from './app.routing';
 
-import {
-    APP_SIDEBAR_NAV,
-    AppAsideComponent,
-    AppBackgroundComponent,
-    AppBreadcrumbsComponent,
-    AppDebugComponent,
-    AppFooterComponent,
-    AppHeaderComponent,
-    AppLoaderComponent,
-    AppSidebarComponent,
-    AppSidebarFooterComponent,
-    AppSidebarFormComponent,
-    AppSidebarHeaderComponent,
-    AppSidebarMinimizerComponent
-} from './components';
-import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
-import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
-import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
-import {MyResourceService} from './services/my-resource.service';
-
-const APP_CONTAINERS = [
-    FullLayoutComponent,
-    SimpleLayoutComponent
-];
-
-const APP_COMPONENTS = [
-    AppAsideComponent,
-    AppBackgroundComponent,
-    AppBreadcrumbsComponent,
-    AppFooterComponent,
-    AppHeaderComponent,
-    AppLoaderComponent,
-    AppDebugComponent,
-    AppSidebarComponent,
-    AppSidebarFooterComponent,
-    AppSidebarFormComponent,
-    AppSidebarHeaderComponent,
-    AppSidebarMinimizerComponent,
-    APP_SIDEBAR_NAV,
-    PageNotFoundComponent
-];
-
-const APP_DIRECTIVES = [
-    AsideToggleDirective,
-    NAV_DROPDOWN_DIRECTIVES,
-    ReplaceDirective,
-    SIDEBAR_TOGGLE_DIRECTIVES
-];
-
 /**
- * Register your custom data services here if you want them to be singletons
+ * register your custom data services here
  * see: https://stackoverflow.com/a/39085113/580651
  */
 const DATA_SERVICES = [
-    MyResourceService
+    // MyResourceService,
+];
+
+/**
+ * register your custom components here
+ */
+const APP_COMPONENTS = [
+    // MyResourceListComponent,
+    // MyResourceEditComponent,
+    // MyResourceDetailComponent,
 ];
 
 @NgModule({
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule,
-        HttpClientXsrfModule,
-        // .withOptions({
-        //     cookieName: 'XSRF-TOKEN', // this is optional
-        //     headerName: 'X-XSRF-TOKEN' // this is optional
-        // }),
-
         /**
          * you can hard code options (e.g. from environment files)...
          */
@@ -94,30 +42,20 @@ const DATA_SERVICES = [
          */
         // AdminModule.forRoot('__myOptionsKey'),
         /**
-         * per default it takes the value at window.__kiwi
+         * per default it takes the value at window.__kiwi and merges with given object
          */
-        AdminModule.forRoot(),
-
-        BsDropdownModule.forRoot(),
-        TabsModule.forRoot(),
-        BrowserAnimationsModule,
-        ChartsModule,
-        HotkeyModule.forRoot()
+        AdminModule.forRoot({
+            navigation: navigation,
+            environment: environment
+        }),
     ],
     declarations: [
-        AppComponent,
-        ...APP_CONTAINERS,
         ...APP_COMPONENTS,
-        ...APP_DIRECTIVES,
     ],
     providers: [
-        {
-            provide: LocationStrategy,
-            useClass: PathLocationStrategy
-        },
         ...DATA_SERVICES
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AdminComponent]
 })
 export class AppModule {
 }

@@ -1,4 +1,4 @@
-import {Config, Routes} from '../../kiwi/models';
+import {Config, Routes} from '../../@kiwi-suite/ngx-admin/src/models';
 
 export interface AppConfig extends Config {
     routes: AppRoutes;

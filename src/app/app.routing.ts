@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PermissionGuard} from '../kiwi';
-import {FullLayoutComponent} from './containers/full-layout';
-import {SimpleLayoutComponent} from './containers/simple-layout';
-import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
+import {PermissionGuard} from '../@kiwi-suite/ngx-admin/src';
+import {FullLayoutComponent} from '../@kiwi-suite/ngx-admin/src/containers/full-layout';
+import {SimpleLayoutComponent} from '../@kiwi-suite/ngx-admin/src/containers/simple-layout';
 
 export const routes: Routes = [
     {
@@ -11,59 +10,54 @@ export const routes: Routes = [
         component: SimpleLayoutComponent,
         children: [
             {
-                path: 'auth',
-                loadChildren: './views/auth/auth.module#AuthModule'
-            },
-            {
                 path: '',
                 component: FullLayoutComponent,
                 // canActivateChild: [PermissionGuard],
                 data: {
                     title: 'Home',
-
                 },
                 children: [
-                    /**
-                     * Default routes
-                     */
                     {
-                        path: 'user',
-                        // lazy load module
-                        // sync load module (will not work wth AoT)
-                        // loadChildren: () => DashboardModule
-                        loadChildren: './views/user/user.module#UserModule',
-                        canActivate: [PermissionGuard],
+                        path: 'resource',
+                        children: [
+                            /**
+                             * Resource routes
+                             */
+                            // {
+                            //     path: 'category',
+                            //     canLoad: [PermissionGuard],
+                            //     data: {
+                            //         title: 'Categories'
+                            //     },
+                            //     children: [
+                            //         {
+                            //             path: '',
+                            //             component: CategoryListComponent,
+                            //             data: {
+                            //                 title: 'Categories',
+                            //             },
+                            //         },
+                            //         {
+                            //             path: 'create',
+                            //             component: CategoryEditComponent,
+                            //             data: {
+                            //                 title: 'Category',
+                            //                 action: 'create',
+                            //             },
+                            //         },
+                            //         {
+                            //             path: ':id/edit',
+                            //             component: CategoryEditComponent,
+                            //             data: {
+                            //                 title: 'Category',
+                            //                 action: 'edit',
+                            //             },
+                            //         },
+                            //     ]
+                            // },
+                        ]
                     },
-                    {
-                        path: 'account',
-                        loadChildren: './views/account/account.module#AccountModule'
-                    },
-                    {
-                        path: 'dashboard',
-                        loadChildren: './views/dashboard/dashboard.module#DashboardModule',
-                        canActivate: [PermissionGuard],
-                    },
-                    /**
-                     * Register your custom routes here
-                     */
-                    /**
-                     * TODO: wildcard for resources
-                     */
-                    // {
-                    //     path: '**',
-                    //     loadChildren: '../../kiwi/views/resource/resource.module#ResourceModule',
-                    //     canActivate: [PermissionGuard],
-                    // },
-                    // {
-                    //     path: 'resource/:type/',
-                    //     loadChildren: './views/tag/tags.module#ResourceModule',
-                    //     canActivate: [PermissionGuard],
-                    // },
                 ]
-            },
-            {
-                path: '**',
-                component: PageNotFoundComponent,
             },
         ],
     },

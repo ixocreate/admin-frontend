@@ -1,4 +1,4 @@
-import {ResourceModelControl, ResourceModelSchema} from '../../kiwi/models';
+import {ResourceModelControl, ResourceModelSchema} from '../../@kiwi-suite/ngx-admin/src/models';
 
 export class ModelSchemas {
 
@@ -19,6 +19,30 @@ export class ModelSchemas {
                     name: 'address',
                     label: 'Address',
                     schema: 'address',
+                },
+                /**
+                 * enable repeatable controls of different types ("blocks" in kiwi v3)
+                 */
+                // <ResourceModelControl>{
+                //     name: 'blocks',
+                //     repeatable: true,
+                //     options: <ResourceModelRelation>[
+                //         {
+                //             key: '',
+                //             name: '',
+                //         }
+                //     ],
+                // },
+            ]
+        },
+        <ResourceModelSchema>{
+            name: 'category',
+            label: 'Category',
+            labelPlural: 'Category',
+            controls: [
+                <ResourceModelControl>{
+                    name: 'name',
+                    label: 'Name',
                 },
                 /**
                  * enable repeatable controls of different types ("blocks" in kiwi v3)

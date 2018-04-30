@@ -1,0 +1,29 @@
+#debug {
+    z-index: 99999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 0.9em;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    //height: 50px;
+    overflow: auto;
+    margin: 0;
+
+    &:after {
+        content: " ";
+        position: absolute;
+        background: url('../../assets/img/kiwi-icon.svg') bottom right no-repeat;
+        width: 100px;
+        height: 100px;
+        right: 20px;
+        bottom: 40px;
+    }
+
+    pre {
+        color: #000;
+    }
+}
