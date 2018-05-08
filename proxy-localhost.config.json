@@ -1,0 +1,8 @@
+{
+  "/kiwi-v4/admin/*": {
+    "target": "http://localhost",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+}

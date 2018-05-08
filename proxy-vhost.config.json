@@ -1,0 +1,8 @@
+{
+  "/admin/*": {
+    "target": "http://kiwi-v4.test",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}
