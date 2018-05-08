@@ -40,6 +40,7 @@ import {MediaModalListComponent} from './components/media-selector/media-modal-l
 import {MediaSelectorComponent} from './components/media-selector/media-selector.component';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
+import {SchemaFormBuilder} from './forms/schema-form-builder';
 import {RepeatTypeComponent} from './forms';
 import {BootstrapError} from './models';
 import {PermissionGuard} from './permission.guard';
@@ -195,6 +196,7 @@ export class AdminModule {
                 LoggerService,
                 MediaService,
                 PermissionGuard,
+                SchemaFormBuilder,
                 SessionService,
                 UserService
             ],
