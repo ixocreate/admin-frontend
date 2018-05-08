@@ -1,0 +1,14 @@
+{
+  "/session": {
+    "target": "http://kiwi-v4.test",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/api/*": {
+    "target": "http://kiwi-v4.test",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

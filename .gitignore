@@ -42,4 +42,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/src/ngx-admin
+proxy.config.json
