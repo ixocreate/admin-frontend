@@ -162,6 +162,7 @@ const APP_DIRECTIVES = [
         RouterModule,
         TabsModule,
         ToastrModule,
+        APP_COMPONENTS
     ]
 })
 export class AdminModule {
