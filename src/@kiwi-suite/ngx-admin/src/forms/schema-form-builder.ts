@@ -8,7 +8,7 @@ import {ResourceModelSchema} from '../models';
  * @deprecated use formly forms
  */
 @Injectable()
-export class SchemaFormBuilder extends FormBuilder {
+export class SchemaFormBuilder {
 
     array(controlsConfig: any[],
           controlSchema?: any,

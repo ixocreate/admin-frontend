@@ -80,8 +80,8 @@ const APP_COMPONENTS = [
     APP_SIDEBAR_NAV,
     PageNotFoundComponent,
     RepeatTypeComponent,
-    // MediaModalListComponent,
-    // MediaSelectorComponent
+    MediaModalListComponent,
+    MediaSelectorComponent
 ];
 
 const APP_DIRECTIVES = [
