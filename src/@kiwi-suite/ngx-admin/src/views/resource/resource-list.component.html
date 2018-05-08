@@ -62,9 +62,11 @@
                 <ng-template let-column="column" ngx-datatable-header-template>
                 </ng-template>
                 <ng-template let-value="value" ngx-datatable-cell-template>
-                    <a routerLink="/resource/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary">
-                        <i class="fa fa-pencil"></i>
-                    </a>
+                    <div class="text-right">
+                        <a routerLink="/resource/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </div>
                 </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>

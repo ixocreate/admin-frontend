@@ -1,45 +1,38 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AccountService} from '../../../@kiwi-suite/ngx-admin/src/services';
+import {FileLikeObject, FileUploader} from "ng2-file-upload";
 import {DomSanitizer, SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
-import {ActivatedRoute} from '@angular/router';
-import {FileUploader} from 'ng2-file-upload';
-import {ConfigurationService, MediaService} from '../../services';
-import {ResourceListComponent} from '../resource/resource-list.component';
+import {ResourceListComponent} from '../../../@kiwi-suite/ngx-admin/src/views/resource/resource-list.component';
 
 @Component({
     selector: 'app-media-list',
     templateUrl: './media-list.component.html',
-    styleUrls: ['./media-list.component.scss'],
 })
 export class MediaListComponent extends ResourceListComponent implements OnInit {
 
     protected pathPrefix = '';
 
-    public uploader: FileUploader;
-
-    constructor(protected config: ConfigurationService,
-                protected dataService: MediaService,
-                protected domSanitizer: DomSanitizer,
-                protected route: ActivatedRoute) {
-        super(route);
-    }
+    public uploader:FileUploader;
 
     ngOnInit() {
         super.ngOnInit();
-        this.config.params$.subscribe(config => {
+        this.dataService.models$.subscribe(() => {
             this.uploader = new FileUploader({
                 url: this.dataService.uploadLink,
                 removeAfterUpload: true,
                 autoUpload: true,
                 headers: [
                     {
-                        name: 'X-XSRF-TOKEN',
-                        value: getDOM().getCookie('XSRF-TOKEN')
+                        name: "X-XSRF-TOKEN",
+                        value: getDOM().getCookie("XSRF-TOKEN")
                     }
                 ]
             });
             this.uploader.onCompleteAll = () => {
                 this.dataService.load();
-            };
+            }
         });
     }
 
@@ -47,12 +40,12 @@ export class MediaListComponent extends ResourceListComponent implements OnInit 
         return 'Media';
     }
 
-    isImage(mimeType: string): boolean {
+    isImage(mimeType:string): boolean {
         if (!mimeType || mimeType.length < 6) {
             return false;
         }
 
-        if (mimeType.substr(0, 6) !== 'image/') {
+        if (mimeType.substr(0, 6) !== "image/") {
             return false;
         }
 
@@ -64,15 +57,16 @@ export class MediaListComponent extends ResourceListComponent implements OnInit 
             return false;
         }
 
-        if (mimeType.indexOf('svg') === -1) {
+        if (mimeType.indexOf("svg") === -1) {
             return false;
         }
 
         return true;
     }
 
-    mimeTypeIcon(mimeType: string): string {
-        return 'fa-file';
+    mimeTypeIcon(mimeType: string) : string
+    {
+        return "fa-file";
     }
 
     base64Image(file?: File | Blob): Promise<SafeUrl> {
@@ -84,7 +78,8 @@ export class MediaListComponent extends ResourceListComponent implements OnInit 
                         reject(reader.error);
                         return;
                     }
-                    resolve(this.domSanitizer.bypassSecurityTrustUrl(reader.result));
+
+                    resolve(this.sanitizer.bypassSecurityTrustUrl(reader.result));
                 };
                 reader.readAsDataURL(file);
             },

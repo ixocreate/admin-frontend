@@ -4,6 +4,9 @@ import {AsyncValidatorFn, ValidatorFn} from '@angular/forms/src/directives/valid
 import {AbstractControl, AbstractControlOptions} from '@angular/forms/src/model';
 import {ResourceModelSchema} from '../models';
 
+/**
+ * @deprecated use formly forms
+ */
 @Injectable()
 export class SchemaFormBuilder extends FormBuilder {
 
@@ -29,6 +32,9 @@ export class SchemaFormBuilder extends FormBuilder {
 
 }
 
+/**
+ * @deprecated use formly forms
+ */
 export class SchemaFormArray extends FormArray {
 
     private _controlSchema: ResourceModelSchema;
@@ -54,6 +60,9 @@ export class SchemaFormArray extends FormArray {
     }
 }
 
+/**
+ * @deprecated use formly forms
+ */
 export class SchemaFormControl extends FormControl {
 
     private _controlSchema: ResourceModelSchema;

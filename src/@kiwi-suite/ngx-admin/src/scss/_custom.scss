@@ -3,3 +3,8 @@
 .card {
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
 }
+
+input[type="color"] {
+    height: $input-height;
+    padding: 2px 4px;
+}

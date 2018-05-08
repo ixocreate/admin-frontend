@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import 'rxjs/add/operator/takeUntil';
 import {Subject} from 'rxjs/Subject';
-import {AccountService, DataStoreService} from '../../services';
+import {AccountService, ApiService, ConfigurationService, DataStoreService} from '../../services';
 import {AppInjector} from '../../services/app-injector.service';
 import {ResourceService} from '../../services/resource/resource.service';
 
@@ -24,16 +24,20 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
 
     protected _resourceKey: string;
 
+    protected apiService: ApiService;
+    protected config: ConfigurationService;
     protected dataStore: DataStoreService;
-    protected accountService: AccountService;
-    protected toastr: ToastrService;
-    // protected route: ActivatedRoute;
-    protected router: Router;
     protected dataService: ResourceService;
     protected domSanitizer: DomSanitizer;
+    protected accountService: AccountService;
+    // protected route: ActivatedRoute;
+    protected router: Router;
+    protected toastr: ToastrService;
 
     constructor(protected route: ActivatedRoute) {
+        this.apiService = AppInjector.get(ApiService);
         this.accountService = AppInjector.get(AccountService);
+        this.config = AppInjector.get(ConfigurationService);
         this.dataStore = AppInjector.get(DataStoreService);
         this.domSanitizer = AppInjector.get(DomSanitizer);
         this.router = AppInjector.get(Router);

@@ -7,7 +7,6 @@ import {AccountComponent} from './views/account/account.component';
 import {LoginComponent} from './views/auth/login/login.component';
 import {ResetComponent} from './views/auth/reset/reset.component';
 import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
-import {MediaEditComponent} from './views/media/media-edit.component';
 import {MediaListComponent} from './views/media/media-list.component';
 import {ResourceEditComponent} from './views/resource/resource-edit.component';
 import {ResourceListComponent} from './views/resource/resource-list.component';
@@ -80,22 +79,22 @@ export const routes: Routes = [
                                     title: 'Media',
                                 },
                             },
-                            {
-                                path: 'create',
-                                component: MediaEditComponent,
-                                data: {
-                                    title: 'Media',
-                                    action: 'create',
-                                },
-                            },
-                            {
-                                path: ':id/edit',
-                                component: MediaEditComponent,
-                                data: {
-                                    title: 'Media',
-                                    action: 'edit',
-                                },
-                            },
+                            // {
+                            //     path: 'create',
+                            //     component: MediaEditComponent,
+                            //     data: {
+                            //         title: 'Media',
+                            //         action: 'create',
+                            //     },
+                            // },
+                            // {
+                            //     path: ':id/edit',
+                            //     component: MediaEditComponent,
+                            //     data: {
+                            //         title: 'Media',
+                            //         action: 'edit',
+                            //     },
+                            // },
                         ]
                     },
                     {
@@ -131,15 +130,12 @@ export const routes: Routes = [
                             }
                         ]
                     },
+                    /**
+                     * Resource routes
+                     */
                     {
                         path: 'resource',
                         children: [
-                            /**
-                             * Resource routes
-                             */
-                            /**
-                             * TODO: wildcard for resources
-                             */
                             {
                                 path: ':type/create',
                                 component: ResourceEditComponent,

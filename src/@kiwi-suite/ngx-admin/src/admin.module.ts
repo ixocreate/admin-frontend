@@ -8,6 +8,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 import {FormlyModule} from '@ngx-formly/core';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {NgxDnDModule} from '@swimlane/ngx-dnd';
 import {HotkeyModule} from 'angular2-hotkeys';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {FileUploadModule} from 'ng2-file-upload';
@@ -35,9 +36,11 @@ import {
     AppSidebarHeaderComponent,
     AppSidebarMinimizerComponent
 } from './components';
+import {MediaModalListComponent} from './components/media-selector/media-modal-list.component';
+import {MediaSelectorComponent} from './components/media-selector/media-selector.component';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
-import {SchemaFormBuilder} from './forms/schema-form-builder';
+import {RepeatTypeComponent} from './forms';
 import {BootstrapError} from './models';
 import {PermissionGuard} from './permission.guard';
 import {
@@ -54,7 +57,6 @@ import {
 } from './services';
 import {setAppInjector} from './services/app-injector.service';
 import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
-import {ResourceModule} from './views/resource/resource.module';
 
 const APP_CONTAINERS = [
     FullLayoutComponent,
@@ -75,7 +77,10 @@ const APP_COMPONENTS = [
     AppSidebarHeaderComponent,
     AppSidebarMinimizerComponent,
     APP_SIDEBAR_NAV,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RepeatTypeComponent,
+    MediaSelectorComponent,
+    MediaModalListComponent,
 ];
 
 const APP_DIRECTIVES = [
@@ -95,7 +100,12 @@ const APP_DIRECTIVES = [
         ChartsModule,
         ClipboardModule,
         CommonModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+                types: [
+                    {name: 'repeat', component: RepeatTypeComponent},
+                ],
+            }
+        ),
         FormlyBootstrapModule,
         FormsModule,
         HotkeyModule.forRoot(),
@@ -108,6 +118,7 @@ const APP_DIRECTIVES = [
         FileUploadModule,
         NgSelectModule,
         NgxDatatableModule,
+        NgxDnDModule,
         PopoverModule.forRoot(),
         ProgressbarModule.forRoot(),
         ReactiveFormsModule,
@@ -143,6 +154,7 @@ const APP_DIRECTIVES = [
         HttpClientModule,
         NgSelectModule,
         NgxDatatableModule,
+        NgxDnDModule,
         PopoverModule,
         ReactiveFormsModule,
         // ResourceModule,
@@ -184,7 +196,6 @@ export class AdminModule {
                 MediaService,
                 PermissionGuard,
                 SessionService,
-                SchemaFormBuilder,
                 UserService
             ]
         };

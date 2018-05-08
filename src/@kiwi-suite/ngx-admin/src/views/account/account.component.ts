@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {AccountService} from '../../services';
 import {AppInjector} from '../../services/app-injector.service';
@@ -22,7 +22,7 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
     emailForm: FormGroup;
     emailFormModel = {email: '', emailRepeat: ''};
 
-    constructor(protected route: ActivatedRoute,) {
+    constructor(protected route: ActivatedRoute) {
         super(route);
         this.dataService = AppInjector.get(AccountService);
     }

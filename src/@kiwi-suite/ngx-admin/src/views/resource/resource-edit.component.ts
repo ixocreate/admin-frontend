@@ -1,12 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import 'rxjs/add/observable/of';
 import {AsyncSubject} from 'rxjs/AsyncSubject';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
-import {ModelSchemas} from '../../../../../app/models/resource.model';
 import {SchemaFormArray, SchemaFormBuilder} from '../../forms/schema-form-builder';
 import {ResourceModelControl, ResourceModelSchema} from '../../models';
 import {AppInjector} from '../../services/app-injector.service';
@@ -25,7 +24,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     private _routeParamsSub: Subscription;
 
     protected action: string;
-    protected formBuilder: SchemaFormBuilder;
+    protected formBuilder: FormBuilder;
 
     form: FormGroup;
     model: any;
@@ -33,6 +32,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
 
     constructor(protected route: ActivatedRoute) {
         super(route);
+        // this.formBuilder = AppInjector.get(FormBuilder);
         this.formBuilder = AppInjector.get(SchemaFormBuilder);
     }
 
@@ -96,10 +96,8 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     }
 
     initForm() {
-
         this.form = new FormGroup({});
-
-        this.dataService.schema$.subscribe(schema => this.fields = schema.form);
+        this.dataService.schema$.takeUntil(this.unsubscribeOnDestroy).subscribe(schema => this.fields = schema.form);
 
         // this.fields = [{
         //     key: 'name',
@@ -155,6 +153,9 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         }
     }
 
+    /**
+     * @deprecated use formly forms
+     */
     getDirtyState(form: FormGroup): Object {
         return Object.keys(form.controls).reduce<Object>((dirtyState, controlKey) => {
             const control = form.controls[controlKey];
@@ -177,51 +178,66 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         }, {});
     }
 
-    // protected buildFormFromSchemas(schemas: ResourceModelSchema[], schemaName: string) {
-    //     this._schemas = schemas;
-    //     const schema = this._schemas.find(_schema => _schema.name === schemaName);
-    //     this.form = this.formBuilder.group(this.buildControls(schema, this.model), schema);
-    // }
+    /**
+     * @deprecated
+     */
+    protected buildFormFromSchemas(schemas: ResourceModelSchema[], schemaName: string) {
+        this._schemas = schemas;
+        const schema = this._schemas.find(_schema => _schema.name === schemaName);
+        this.form = this.formBuilder.group(this.buildControls(schema, this.model), schema);
+    }
 
-    // buildControls(schema: ResourceModelSchema, data: any) {
-    //     const controls = {};
-    //     schema.controls.forEach(control => {
-    //         const entryData = data[control.name] || null;
-    //         if (control.repeatable) {
-    //             const formArray = this.formBuilder.array([], control);
-    //             if (entryData && Object.prototype.toString.call(entryData) === '[object Array]') {
-    //                 entryData.forEach(_data => formArray.push(this.buildControl(control, _data)));
-    //             } else {
-    //                 /**
-    //                  * TODO: check if an initial entry should be created
-    //                  */
-    //                 // formArray.push(this.buildControl(control.name, schema[0], null));
-    //             }
-    //             controls[control.name] = formArray;
-    //         } else {
-    //             controls[control.name] = this.buildControl(control, entryData);
-    //         }
-    //     });
-    //     return controls;
-    // }
+    /**
+     * @deprecated use formly forms
+     */
+    buildControls(schema: ResourceModelSchema, data: any) {
+        const controls = {};
+        schema.controls.forEach(control => {
+            const entryData = data[control.name] || null;
+            if (control.repeatable) {
+                const formArray = this.formBuilder.array([], control);
+                if (entryData && Object.prototype.toString.call(entryData) === '[object Array]') {
+                    entryData.forEach(_data => formArray.push(this.buildControl(control, _data)));
+                } else {
+                    /**
+                     * TODO: check if an initial entry should be created
+                     */
+                    // formArray.push(this.buildControl(control.name, schema[0], null));
+                }
+                controls[control.name] = formArray;
+            } else {
+                controls[control.name] = this.buildControl(control, entryData);
+            }
+        });
+        return controls;
+    }
 
-    // buildControl(control: ResourceModelControl, data: any) {
-    //     let schema = control.schema;
-    //     if (typeof schema === 'string') {
-    //         schema = this._schemas.find(_schema => _schema.name === schema);
-    //     }
-    //     if (schema && data) {
-    //         return this.formBuilder.group(this.buildControls(<ResourceModelSchema>schema, data), control);
-    //     }
-    //     return this.formBuilder.control(data, control);
-    // }
+    /**
+     * @deprecated use formly forms
+     */
+    buildControl(control: ResourceModelControl, data: any) {
+        let schema = control.schema;
+        if (typeof schema === 'string') {
+            schema = this._schemas.find(_schema => _schema.name === schema);
+        }
+        if (schema && data) {
+            return this.formBuilder.group(this.buildControls(<ResourceModelSchema>schema, data), control);
+        }
+        return this.formBuilder.control(data, control);
+    }
 
-    // addControl(control: SchemaFormArray, data: any) {
-    //     console.log('schema', control.controlSchema);
-    //     control.push(this.buildControl(control.controlSchema, data));
-    // }
+    /**
+     * @deprecated use formly forms
+     */
+    addControl(control: SchemaFormArray, data: any) {
+        console.log('schema', control.controlSchema);
+        control.push(this.buildControl(control.controlSchema, data));
+    }
 
-    // removeControl(control: FormArray, index) {
-    //     control.removeAt(index);
-    // }
+    /**
+     * @deprecated use formly forms
+     */
+    removeControl(control: FormArray, index) {
+        control.removeAt(index);
+    }
 }
