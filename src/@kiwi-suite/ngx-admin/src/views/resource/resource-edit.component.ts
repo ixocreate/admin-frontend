@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import 'rxjs/add/observable/of';
@@ -24,7 +24,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     private _routeParamsSub: Subscription;
 
     protected action: string;
-    protected formBuilder: FormBuilder;
+    protected formBuilder: SchemaFormBuilder;
 
     form: FormGroup;
     model: any;

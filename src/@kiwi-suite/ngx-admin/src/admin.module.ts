@@ -79,8 +79,8 @@ const APP_COMPONENTS = [
     APP_SIDEBAR_NAV,
     PageNotFoundComponent,
     RepeatTypeComponent,
-    MediaSelectorComponent,
-    MediaModalListComponent,
+    // MediaModalListComponent,
+    // MediaSelectorComponent
 ];
 
 const APP_DIRECTIVES = [
@@ -197,7 +197,7 @@ export class AdminModule {
                 PermissionGuard,
                 SessionService,
                 UserService
-            ]
+            ],
         };
     }
 
