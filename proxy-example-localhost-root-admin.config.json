@@ -1,0 +1,20 @@
+{
+  "/session": {
+    "target": "http://localhost/kiwi-v4",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/api/*": {
+    "target": "http://localhost/kiwi-v4",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/media/img/*": {
+    "target": "http://localhost/kiwi-v4",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}
