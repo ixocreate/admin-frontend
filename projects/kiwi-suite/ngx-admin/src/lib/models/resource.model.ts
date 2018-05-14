@@ -4,6 +4,7 @@ export interface Media {
     description: string;
     filename: string;
     mimeType: string;
+    size: number;
     title: string;
     type: string;
     url: string;
@@ -38,7 +39,7 @@ export interface ResourceModelControl {
     label?: string;
     multiple?: boolean; // default false
     name: string;
-    schema?: ResourceModelSchema|string; // can be either a nested schema or the key for another schema listed
+    schema?: ResourceModelSchema | string; // can be either a nested schema or the key for another schema listed
     options?: ResourceModelRelation[];
     repeatable?: boolean; // default false
     repeatMin?: number; // default 0

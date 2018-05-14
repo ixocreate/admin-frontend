@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {Media} from '../../models';
-import {MediaListComponent} from '../../views/media/media-list.component';
+import {MediaListComponent} from '../../views/media';
 
 @Component({
     selector: 'media-modal-list',

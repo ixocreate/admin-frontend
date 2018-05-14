@@ -18,8 +18,10 @@ import {Media} from '../../models';
 export class MediaSelectorComponent implements ControlValueAccessor {
     media: Media;
     modalRef: BsModalRef;
-    onChange = (media: Media) => {};
-    onTouched = () => {};
+    onChange = (media: Media) => {
+    };
+    onTouched = () => {
+    };
 
     constructor(
         private modalService: BsModalService,

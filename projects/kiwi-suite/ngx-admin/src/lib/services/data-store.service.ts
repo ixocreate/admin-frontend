@@ -8,7 +8,7 @@ export class DataStoreService {
      * collection of data/resource services used in this component
      * @type {any[]}
      */
-    protected dataServices: {[index: string]: ResourceService} = {};
+    protected dataServices: { [index: string]: ResourceService } = {};
 
     /**
      * if a dataService: ResourceService was passed, add it to list of this component's dataservices right away

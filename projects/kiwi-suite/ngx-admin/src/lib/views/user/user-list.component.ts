@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services';
-import {ResourceListComponent} from '../resource/resource-list.component';
+import {ResourceListComponent} from '../resource';
 
 @Component({
     selector: 'app-user-list',

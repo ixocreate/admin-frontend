@@ -6,9 +6,14 @@ import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {AccountService, ApiService, ConfigurationService, DataStoreService} from '../../services';
-import {AppInjector} from '../../services/app-injector.service';
-import {ResourceService} from '../../services/resource/resource.service';
+import {
+    AccountService,
+    ApiService,
+    AppInjector,
+    ConfigurationService,
+    DataStoreService,
+    ResourceService
+} from '../../services';
 
 /**
  * from: https://stackoverflow.com/a/42490431/580651
@@ -23,7 +28,7 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
      *
      * @type {Subject<any>}
      */
-    protected destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+    private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected _resourceKey: string;
 
@@ -58,13 +63,17 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
         }
     }
 
+    get destroyed$() {
+        return this._destroyed$.asObservable();
+    }
+
     ngOnInit() {
         this.dataService.load();
     }
 
     ngOnDestroy(): void {
-        this.destroyed$.next(true);
-        this.destroyed$.complete();
+        this._destroyed$.next(true);
+        this._destroyed$.complete();
     }
 
     can$(ability) {

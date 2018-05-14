@@ -1,14 +1,13 @@
-
-import {map, takeUntil} from 'rxjs/operators';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
-import {AsyncSubject, Subscription, of} from 'rxjs';
+import {AsyncSubject, of, Subscription} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
 import {SchemaFormArray, SchemaFormBuilder} from '../../forms/schema-form-builder';
 import {ResourceModelControl, ResourceModelSchema} from '../../models';
-import {AppInjector} from '../../services/app-injector.service';
+import {AppInjector} from '../../services';
 import {ResourceDetailComponent} from './resource-detail.component';
 
 @Component({

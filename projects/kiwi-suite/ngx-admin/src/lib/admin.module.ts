@@ -12,7 +12,7 @@ import {NgxDnDModule} from '@swimlane/ngx-dnd';
 import {HotkeyModule} from 'angular2-hotkeys';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {FileUploadModule} from 'ng2-file-upload';
-import {AlertModule, BsDatepickerModule, BsModalService, ModalModule, PopoverModule, ProgressbarModule} from 'ngx-bootstrap';
+import {AlertModule, BsDatepickerModule, ModalModule, PopoverModule, ProgressbarModule} from 'ngx-bootstrap';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ClipboardModule} from 'ngx-clipboard';
@@ -34,10 +34,10 @@ import {
     AppSidebarFooterComponent,
     AppSidebarFormComponent,
     AppSidebarHeaderComponent,
-    AppSidebarMinimizerComponent
+    AppSidebarMinimizerComponent,
+    MediaModalListComponent,
+    MediaSelectorComponent
 } from './components';
-import {MediaModalListComponent} from './components/media-selector/media-modal-list.component';
-import {MediaSelectorComponent} from './components/media-selector/media-selector.component';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
 import {MediaTypeComponent, RepeatTypeComponent} from './forms';
@@ -54,16 +54,16 @@ import {
     LoggerService,
     MediaService,
     SessionService,
+    setAppInjector,
     UserService
 } from './services';
-import {setAppInjector} from './services/app-injector.service';
-import {AccountModule} from './views/account/account.module';
-import {AuthModule} from './views/auth/auth.module';
-import {DashboardModule} from './views/dashboard/dashboard.module';
-import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
-import {MediaModule} from './views/media/media.module';
-import {ResourceModule} from './views/resource/resource.module';
-import {UserModule} from './views/user/user.module';
+import {AccountModule} from './views/account';
+import {AuthModule} from './views/auth';
+import {DashboardModule} from './views/dashboard';
+import {PageNotFoundComponent} from './views/errors';
+import {MediaModule} from './views/media';
+import {ResourceModule} from './views/resource';
+import {UserModule} from './views/user';
 
 const APP_CONTAINERS = [
     FullLayoutComponent,

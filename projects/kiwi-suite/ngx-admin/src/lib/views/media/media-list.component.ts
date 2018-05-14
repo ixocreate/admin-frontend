@@ -3,9 +3,8 @@ import {SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload';
 import {takeUntil} from 'rxjs/operators';
-import {MediaService} from '../../services';
-import {AppInjector} from '../../services/app-injector.service';
-import {ResourceListComponent} from '../resource/resource-list.component';
+import {AppInjector, MediaService} from '../../services';
+import {ResourceListComponent} from '../resource';
 
 @Component({
     selector: 'app-media-list',

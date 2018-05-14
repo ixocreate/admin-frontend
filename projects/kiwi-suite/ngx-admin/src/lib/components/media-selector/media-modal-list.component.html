@@ -1,4 +1,3 @@
-
 <div class="row text-center text-lg-left" *ngIf="uploader">
 
     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -9,9 +8,9 @@
                         <button class="btn btn-primary" type="button">Choose a file</button>
                         <p>or drag it here</p>
                     </div>
-                    <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple />
+                    <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple/>
                 </div>
-           </div>
+            </div>
 
         </div>
     </div>
@@ -26,7 +25,8 @@
                 <div *ngIf="(base64Image() | async) as base64Image" class="media-image" [ngStyle]="{backgroundImage: 'url('+ base64Image +')'}"></div>
                 -->
                 <div class="media-image-title p-1 text-nowrap text-truncate">
-                    <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress" type="info"></progressbar>
+                    <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress"
+                                 type="info"></progressbar>
                     <div>
                         <small>{{ item?.file?.name }}</small>
                     </div>
@@ -37,7 +37,8 @@
                     <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(item?.file?.type)"></span>
                 </div>
                 <div class="media-image-title p-1 text-nowrap text-truncate">
-                    <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress" type="info"></progressbar>
+                    <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress"
+                                 type="info"></progressbar>
                     <div>
                         <small>{{ item?.file?.name }}</small>
                     </div>
@@ -49,7 +50,8 @@
     <div *ngFor="let media of (models$ | async)" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
         <div class="d-block mb-4 h-100" (click)="select(media)">
             <div *ngIf="isImage(media.mimeType)" class="media-container">
-                <div class="media-image" [ngStyle]="{backgroundImage: 'url(/media/img/admin-thumb/' + media.basePath + media.filename + ')'}"></div>
+                <div class="media-image"
+                     [ngStyle]="{backgroundImage: 'url(/media/img/admin-thumb/' + media.basePath + media.filename + ')'}"></div>
                 <div class="media-image-title p-1 text-nowrap text-truncate">
                     <small>{{ media.filename }}</small>
                 </div>

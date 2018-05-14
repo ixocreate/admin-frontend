@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
-import {AccountService} from '../../services';
-import {AppInjector} from '../../services/app-injector.service';
-import {ResourceEditComponent} from '../resource/resource-edit.component';
+import {AccountService, AppInjector} from '../../services';
+import {ResourceEditComponent} from '../resource';
 
 @Component({
     selector: 'app-account',

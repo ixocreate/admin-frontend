@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {Media} from '../../models';
-import {ResourceEditComponent} from '../resource/resource-edit.component';
+import {ResourceEditComponent} from '../resource';
 
 @Component({
     selector: 'app-media-edit',

@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-
-
 import {AccountService, ConfigurationService} from '../../services';
 
 @Component({

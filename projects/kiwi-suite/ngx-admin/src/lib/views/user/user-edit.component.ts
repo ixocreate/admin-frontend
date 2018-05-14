@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {User} from '../../models';
 import {AccountService, UserService} from '../../services';
-import {ResourceEditComponent} from '../resource/resource-edit.component';
+import {ResourceEditComponent} from '../resource';
 
 @Component({
     selector: 'app-user-edit',

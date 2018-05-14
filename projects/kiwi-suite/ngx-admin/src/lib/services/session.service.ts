@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {ApiService} from './api.service';
 import {ConfigurationService} from './configuration.service';
 import {DataService} from './data.service';

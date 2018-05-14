@@ -9,9 +9,9 @@ import {
 } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
 
 import {tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 import {ConfigurationService} from './configuration.service';
 import {LoggerService} from './logger.service';
 

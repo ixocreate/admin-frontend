@@ -52,10 +52,10 @@ export class ResourceListComponent extends ResourceComponent implements OnInit {
     }
 
     onPage(event) {
-    //     clearTimeout(this.timeout);
-    //     this.timeout = setTimeout(() => {
-    //         console.log('paged!', event);
-    //     }, 100);
+        //     clearTimeout(this.timeout);
+        //     this.timeout = setTimeout(() => {
+        //         console.log('paged!', event);
+        //     }, 100);
     }
 
     onDetailToggle(event) {
