@@ -122,6 +122,13 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     }
 
     onSubmit(action) {
+        if (this.form.valid === false) {
+            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error', {
+                timeOut: 0,
+            });
+            return;
+        }
+
         switch (action) {
             case 'create':
                 this.dataService.create(this.model, this.form.getRawValue())
