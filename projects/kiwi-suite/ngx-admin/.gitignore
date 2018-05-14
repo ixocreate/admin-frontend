@@ -1,0 +1,16 @@
+.DS_STORE
+dist/
+engine.io-client/
+node_modules/
+out-tsc/
+tmp/
+debug.log
+npm-debug.log
+angular-quickstart-lib-master/src/demo/systemjs.config.js
+!src/demo/systemjs.config.js
+!src/demo/systemjs.config.lib.js
+!**/*systemjs-angular-loader.js
+*.js.map
+e2e/**/*.js
+e2e/**/*.js.map
+coverage

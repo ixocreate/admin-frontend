@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PermissionGuard} from '../@kiwi-suite/ngx-admin/src';
-import {FullLayoutComponent} from '../@kiwi-suite/ngx-admin/src/containers/full-layout';
-import {SimpleLayoutComponent} from '../@kiwi-suite/ngx-admin/src/containers/simple-layout';
+import {FullLayoutComponent, SimpleLayoutComponent} from '@kiwi-suite/ngx-admin';
+import {PermissionGuard} from '@kiwi-suite/ngx-admin';
 
 export const routes: Routes = [
     {
