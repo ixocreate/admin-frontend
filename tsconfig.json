@@ -17,8 +17,8 @@
       "dom"
     ],
     "paths": {
-      "ngx-admin": [
-        "dist/ngx-admin"
+      "@kiwi-suite/ngx-admin": [
+        "dist/@kiwi-suite/ngx-admin"
       ]
     }
   }
