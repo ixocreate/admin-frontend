@@ -43,4 +43,3 @@ testem.log
 Thumbs.db
 
 proxy.config.json
-src/app/index.html
