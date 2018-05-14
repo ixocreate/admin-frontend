@@ -4,5 +4,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/media/img/*": {
+    "target": "http://kiwi-v4.test",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
