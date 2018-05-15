@@ -71,10 +71,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="card d-none d-lg-block">
-                        <div class="card-body text-center h-100 d-flex flex-column justify-content-center p-5">
+                    <div class="card p-4 d-none d-lg-block">
+                        <div class="card-body text-center h-100 d-flex flex-column justify-content-center">
                             <div *ngIf="(config$ | async) as config">
-                                <img *ngIf="config.logo" [src]="config.logo">
+                                <img class="img-fluid" *ngIf="config.logo" [src]="config.logo">
                             </div>
                         </div>
                     </div>
