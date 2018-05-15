@@ -9,7 +9,7 @@ import {AccountService, ConfigurationService} from '../../services';
     template: `
         <nav class="sidebar-nav">
             <ul class="nav" *ngIf="navigation$ | async as navigation">
-                <div *ngFor="let navitem of navigation">
+                <ng-template ngFor let-navitem [ngForTrackBy]="trackByFn" [ngForOf]="navigation">
                     <li *ngIf="isDivider(navitem)" class="nav-divider"></li>
                     <ng-template [ngIf]="isTitle(navitem)">
                         <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
@@ -17,7 +17,7 @@ import {AccountService, ConfigurationService} from '../../services';
                     <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)&&hasPermission(navitem)">
                         <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
                     </ng-template>
-                </div>
+                </ng-template>
             </ul>
         </nav>`
 })
@@ -31,6 +31,10 @@ export class AppSidebarNavComponent {
 
     public isTitle(item) {
         return item.title ? true : false;
+    }
+
+    trackByFn(index, item) {
+        return item.url;
     }
 
     public hasPermission(item) {
