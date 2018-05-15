@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Router} from '@angular/router';
-import {AccountService, ApiService} from '../../services';
+import {map} from 'rxjs/operators';
+import {AccountService, ApiService, ConfigurationService} from '../../services';
 
 @Component({
     selector: 'app-header',
@@ -9,9 +10,14 @@ import {AccountService, ApiService} from '../../services';
 })
 export class AppHeaderComponent {
     constructor(private api: ApiService,
+                private config: ConfigurationService,
                 private account: AccountService,
                 private router: Router,
                 private domSanitizer: DomSanitizer) {
+    }
+
+    get config$() {
+        return this.config.params$.pipe(map(config => config.project));
     }
 
     get loading$() {

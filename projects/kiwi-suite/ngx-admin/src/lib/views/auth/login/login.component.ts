@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {map} from 'rxjs/operators';
 import {AccountService, ConfigurationService} from '../../../services';
 
 @Component({
@@ -37,6 +38,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     get ready$() {
         return this.config.ready$;
+    }
+
+    get config$() {
+        return this.config.params$.pipe(map(config => config.project));
     }
 
     onSubmit() {

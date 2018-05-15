@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AdminModule} from '@kiwi-suite/ngx-admin';
 import {AdminComponent} from '@kiwi-suite/ngx-admin';
 import {environment} from '../environments/environment';
-import {navigation} from './_nav';
 import {AppRoutingModule} from './app.routing';
 
 /**
@@ -45,7 +44,6 @@ const APP_COMPONENTS = [
          * per default it takes the value at window.__kiwi and merges with given object
          */
         AdminModule.forRoot({
-            navigation: navigation,
             environment: environment
         }),
     ],

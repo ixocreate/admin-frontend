@@ -8,8 +8,8 @@ import {AccountService, ConfigurationService} from '../../services';
     selector: 'app-sidebar-nav',
     template: `
         <nav class="sidebar-nav">
-            <ul class="nav">
-                <ng-template ngFor let-navitem [ngForOf]="navigation">
+            <ul class="nav" *ngIf="navigation$ | async as navigation">
+                <div *ngFor="let navitem of navigation">
                     <li *ngIf="isDivider(navitem)" class="nav-divider"></li>
                     <ng-template [ngIf]="isTitle(navitem)">
                         <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
@@ -17,13 +17,12 @@ import {AccountService, ConfigurationService} from '../../services';
                     <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)&&hasPermission(navitem)">
                         <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
                     </ng-template>
-                </ng-template>
+                </div>
             </ul>
         </nav>`
 })
 export class AppSidebarNavComponent {
 
-    public navigation;
     private user: User;
 
     public isDivider(item) {
@@ -40,7 +39,10 @@ export class AppSidebarNavComponent {
 
     constructor(private accountService: AccountService, private config: ConfigurationService) {
         this.accountService.user$.subscribe(user => this.user = user);
-        this.navigation = this.config.navigation;
+    }
+
+    get navigation$() {
+        return this.config.navigation$;
     }
 }
 

@@ -37,16 +37,16 @@ export class ConfigurationService extends DataService {
         return this._params$.asObservable();
     }
 
+    get navigation$() {
+        return this._params$.pipe(map(config => config.navigation));
+    }
+
     get params() {
         return this._params;
     }
 
     get environment() {
         return this._params.environment;
-    }
-
-    get navigation() {
-        return this._params.navigation;
     }
 
     /**

@@ -1,10 +1,46 @@
 // Here you can add other styles
 
 .card {
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
 }
 
 input[type="color"] {
-    height: $input-height;
-    padding: 2px 4px;
+  height: $input-height;
+  padding: 2px 4px;
+}
+
+.app-header.navbar {
+  .navbar-brand {
+    .navbar-brand-icon, .navbar-brand-logo {
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      height: 100%;
+      width: 100%;
+    }
+    .navbar-brand-icon {
+      display: none;
+      background-color: $navbar-brand-minimized-bg;
+    }
+    .navbar-brand-logo {
+      display: inline-block;
+      background-color: $navbar-brand-bg;
+    }
+  }
+
+}
+
+@include media-breakpoint-up(lg) {
+  .brand-minimized {
+    .app-header.navbar {
+      .navbar-brand {
+        .navbar-brand-icon {
+          display: inline-block;
+        }
+        .navbar-brand-logo {
+          display: none;
+        }
+      }
+    }
+  }
 }

@@ -264,7 +264,7 @@ export class AdminModule {
             })
         ).subscribe(
             user => {
-                console.error('user?', user);
+                // console.log('user', user);
             },
             () => {
                 throw new BootstrapError('failed to initialize session');

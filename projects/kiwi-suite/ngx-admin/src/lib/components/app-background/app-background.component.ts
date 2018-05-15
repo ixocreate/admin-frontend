@@ -4,8 +4,8 @@ import {ConfigurationService} from '../../services';
 @Component({
     selector: 'app-background',
     template: `
-        <div [ngStyle]="{opacity: opacity, 'background-color': color, 'background-position': position, 'background-size': size, 'background-image': url}"
-             style="position: fixed; top:0; left:0; right: 0; bottom: 0; z-index:-1;">
+        <div class="background"
+             [ngStyle]="{opacity: opacity, 'background-color': color, 'background-position': position, 'background-size': size, 'background-image': url}">
         </div>`
 })
 export class AppBackgroundComponent {

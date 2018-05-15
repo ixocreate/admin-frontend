@@ -2,7 +2,14 @@
     <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href=""></a>
+    <a class="navbar-brand" href="">
+        <ng-container *ngIf="config$ | async as config">
+            <div class="navbar-brand-logo" *ngIf="config.logo"
+                 [ngStyle]="{'background-image': 'url('+config.logo+')'}"></div>
+            <div class="navbar-brand-icon" *ngIf="config.icon"
+                 [ngStyle]="{'background-image': 'url('+config.icon+')'}"></div>
+        </ng-container>
+    </a>
     <!--<a class="navbar-brand" href="" routerLink=""></a>-->
     <button class="navbar-toggler d-md-down-none mr-auto" type="button" appSidebarToggler>
         <span class="navbar-toggler-icon"></span>

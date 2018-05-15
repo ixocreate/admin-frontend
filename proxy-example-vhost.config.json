@@ -10,5 +10,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/assets/*": {
+    "target": "http://kiwi-v4.test",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
