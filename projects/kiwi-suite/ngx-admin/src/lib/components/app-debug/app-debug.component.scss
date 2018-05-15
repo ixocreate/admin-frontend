@@ -10,7 +10,8 @@
     background: rgba(255, 255, 255, 0.8);
     padding: 10px;
     //height: 50px;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     margin: 0;
 
     &:after {

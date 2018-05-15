@@ -71,8 +71,8 @@
                             </form>
                         </div>
                     </div>
-                    <div class="card py-5 d-md-down-none">
-                        <div class="card-body text-center">
+                    <div class="card d-none d-lg-block">
+                        <div class="card-body text-center h-100 d-flex flex-column justify-content-center p-5">
                             <div *ngIf="(config$ | async) as config">
                                 <img *ngIf="config.logo" [src]="config.logo">
                             </div>
