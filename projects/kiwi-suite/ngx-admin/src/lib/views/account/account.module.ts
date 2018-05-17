@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 
 import {RouterModule} from '@angular/router';
-import {ToastrModule} from 'ngx-toastr';
 import {AccountRoutingModule} from './account-routing.module';
 import {AccountComponent} from './account.component';
 
@@ -13,7 +12,6 @@ import {AccountComponent} from './account.component';
         AccountRoutingModule,
         RouterModule,
         ReactiveFormsModule,
-        ToastrModule.forRoot(),
     ],
     declarations: [AccountComponent]
 })

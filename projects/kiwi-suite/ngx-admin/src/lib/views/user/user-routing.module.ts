@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {PermissionGuard} from '../../permission.guard';
 import {UserEditComponent} from './user-edit.component';
 import {UserListComponent} from './user-list.component';
 
 const routes: Routes = [
     {
         path: '',
+        canLoad: [PermissionGuard],
         data: {
             title: 'Users'
         },
@@ -13,23 +15,26 @@ const routes: Routes = [
             {
                 path: '',
                 component: UserListComponent,
+                canLoad: [PermissionGuard],
                 data: {
-                    title: 'Users',
+                    title: ''
                 },
             },
             {
                 path: 'create',
                 component: UserEditComponent,
+                canLoad: [PermissionGuard],
                 data: {
-                    title: 'User',
+                    title: 'Create User',
                     action: 'create',
                 }
             },
             {
                 path: ':id/edit',
                 component: UserEditComponent,
+                canLoad: [PermissionGuard],
                 data: {
-                    title: 'User',
+                    title: 'Edit User',
                     action: 'edit',
                 }
             }

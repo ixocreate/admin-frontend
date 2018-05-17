@@ -7,48 +7,63 @@ import {ResourceListComponent} from './resource-list.component';
 
 const routes: Routes = [
     {
-        path: ':type/create',
-        component: ResourceEditComponent,
-        canLoad: [PermissionGuard],
-        data: {
-            action: 'create',
-            title: 'Create'
-        },
-        // resolve: {
-        //     tag: ResourceResolver,
-        // },
-    },
-    {
-        path: ':type/:id/edit',
-        component: ResourceEditComponent,
-        canLoad: [PermissionGuard],
-        data: {
-            action: 'edit',
-            title: 'Edit'
-        },
-        // resolve: {
-        //     tag: ResourceResolver,
-        // },
-    },
-    {
-        path: ':type/:id',
-        component: ResourceDetailComponent,
-        canLoad: [PermissionGuard],
-        data: {
-            title: 'Detail'
-        },
-        // resolve: {
-        //     tag: ResourceResolver,
-        // },
-    },
-    {
         path: ':type',
-        component: ResourceListComponent,
         canLoad: [PermissionGuard],
-        data: {
-            title: 'Resources'
-        },
-    },
+        children: [
+            {
+                path: '',
+                canLoad: [PermissionGuard],
+                data: {
+                    title: 'Resources'
+                },
+                children: [
+                    {
+                        path: '',
+                        component: ResourceListComponent,
+                        canLoad: [PermissionGuard],
+                        data: {
+                            title: ''
+                        },
+                    },
+                    {
+                        path: 'create',
+                        component: ResourceEditComponent,
+                        canLoad: [PermissionGuard],
+                        data: {
+                            action: 'create',
+                            title: 'Create Resource'
+                        },
+                        // resolve: {
+                        //     tag: ResourceResolver,
+                        // },
+                    },
+                    {
+                        path: ':id/edit',
+                        component: ResourceEditComponent,
+                        canLoad: [PermissionGuard],
+                        data: {
+                            action: 'edit',
+                            title: 'Edit Resource'
+                        },
+                        // resolve: {
+                        //     tag: ResourceResolver,
+                        // },
+                    },
+                    {
+                        path: ':id',
+                        component: ResourceDetailComponent,
+                        canLoad: [PermissionGuard],
+                        data: {
+                            title: 'Resource Detail'
+                        },
+                        // resolve: {
+                        //     tag: ResourceResolver,
+                        // },
+                    },
+                ],
+            },
+        ],
+    }
 ];
 
 @NgModule({

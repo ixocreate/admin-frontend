@@ -1,5 +1,3 @@
-import {MediaModalListComponent} from '../views/media/components/media';
-
 export interface Media {
     basePath: string;
     id: string;

@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {PermissionGuard} from '../../permission.guard';
 import {MediaEditComponent} from './media-edit.component';
 import {MediaListComponent} from './media-list.component';
 
 const routes: Routes = [
     {
         path: '',
+        canLoad: [PermissionGuard],
         data: {
             title: 'Media'
         },
@@ -14,7 +16,7 @@ const routes: Routes = [
                 path: '',
                 component: MediaListComponent,
                 data: {
-                    title: 'Media',
+                    title: '',
                 },
             },
             {

@@ -3,19 +3,28 @@ import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from './containers/full-layout';
 import {SimpleLayoutComponent} from './containers/simple-layout';
 import {PermissionGuard} from './permission.guard';
-import {AccountComponent} from './views/account/account.component';
-import {LoginComponent} from './views/auth/login/login.component';
-import {ResetComponent} from './views/auth/reset/reset.component';
-import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
-import {MediaListComponent} from './views/media/media-list.component';
+import {AuthModule} from './views/auth';
+import {PageNotFoundComponent} from './views/errors';
+import {MediaModule} from './views/media';
 import {ResourceModule} from './views/resource';
-import {UserEditComponent} from './views/user/user-edit.component';
-import {UserListComponent} from './views/user/user-list.component';
+import {UserModule} from './views/user';
 
 // Do not delete. Used to ensure Module is loaded in the same bundle.
 // Referencing the function directly in `loadChildren` breaks AoT compiler.
+export function loadAuthModule() {
+    return AuthModule;
+}
+
+export function loadMediaModule() {
+    return MediaModule;
+}
+
 export function loadResourceModule() {
     return ResourceModule;
+}
+
+export function loadUserModule() {
+    return UserModule;
 }
 
 export const routes: Routes = [
@@ -25,26 +34,14 @@ export const routes: Routes = [
         children: [
             {
                 path: 'auth',
-                // lazy load module
-                // sync load module (will not work wth AoT)
-                // loadChildren: () => AuthModule
-                // loadChildren: '../@kiwi-suite/ngx-admin/views/auth/auth.module#AuthModule'
-                children: [
-                    {
-                        path: 'login',
-                        component: LoginComponent,
-                        data: {
-                            title: 'Login'
-                        }
-                    },
-                    {
-                        path: 'reset',
-                        component: ResetComponent,
-                        data: {
-                            title: 'Reset Password'
-                        }
-                    }
-                ]
+                /**
+                 * sync load module will not work wth AoT:
+                 * loadChildren: () => AuthModule
+                 * instead write as string literal as if it was lazy loaded but include it in here to be bundled
+                 * see load*Module() above
+                 * from: https://github.com/angular/angular-cli/issues/4192#issuecomment-274775116
+                 */
+                loadChildren: './views/auth/auth.module#AuthModule',
             },
             {
                 path: '',
@@ -58,82 +55,19 @@ export const routes: Routes = [
                      */
                     {
                         path: 'account',
-                        // loadChildren: './views/account/account.module#AccountModule',
-                        canLoad: [PermissionGuard],
-                        component: AccountComponent,
-                        data: {
-                            title: 'Account'
-                        },
+                        loadChildren: './views/account/account.module#AccountModule'
                     },
                     // {
                     //     path: 'dashboard',
                     //     loadChildren: './views/dashboard/dashboard.module#DashboardModule',
-                    //     canActivate: [PermissionGuard],
                     // },
                     {
                         path: 'media',
-                        canLoad: [PermissionGuard],
-                        data: {
-                            title: 'Media'
-                        },
-                        children: [
-                            {
-                                path: '',
-                                component: MediaListComponent,
-                                data: {
-                                    title: 'Media',
-                                },
-                            },
-                            // {
-                            //     path: 'create',
-                            //     component: MediaEditComponent,
-                            //     data: {
-                            //         title: 'Media',
-                            //         action: 'create',
-                            //     },
-                            // },
-                            // {
-                            //     path: ':id/edit',
-                            //     component: MediaEditComponent,
-                            //     data: {
-                            //         title: 'Media',
-                            //         action: 'edit',
-                            //     },
-                            // },
-                        ]
+                        loadChildren: './views/media/media.module#MediaModule'
                     },
                     {
                         path: 'user',
-                        // loadChildren: './views/user/user.module#UserModule',
-                        canLoad: [PermissionGuard],
-                        data: {
-                            title: 'Users'
-                        },
-                        children: [
-                            {
-                                path: '',
-                                component: UserListComponent,
-                                // data: {
-                                //     title: 'Users',
-                                // },
-                            },
-                            {
-                                path: 'create',
-                                component: UserEditComponent,
-                                data: {
-                                    title: 'User',
-                                    action: 'create',
-                                }
-                            },
-                            {
-                                path: ':id/edit',
-                                component: UserEditComponent,
-                                data: {
-                                    title: 'User',
-                                    action: 'edit',
-                                }
-                            }
-                        ]
+                        loadChildren: './views/user/user.module#UserModule'
                     },
                     /**
                      * Resource routes
@@ -141,29 +75,6 @@ export const routes: Routes = [
                     {
                         path: 'resource',
                         loadChildren: './views/resource/resource.module#ResourceModule'
-                        //     children: [
-                        //         {
-                        //             path: ':type/create',
-                        //             component: ResourceEditComponent,
-                        //             canLoad: [PermissionGuard],
-                        //             data: {
-                        //                 action: 'create',
-                        //             },
-                        //         },
-                        //         {
-                        //             path: ':type/:id/edit',
-                        //             component: ResourceEditComponent,
-                        //             canLoad: [PermissionGuard],
-                        //             data: {
-                        //                 action: 'edit',
-                        //             },
-                        //         },
-                        //         {
-                        //             path: ':type',
-                        //             component: ResourceListComponent,
-                        //             canLoad: [PermissionGuard],
-                        //         },
-                        //     ]
                     }
                 ]
             },

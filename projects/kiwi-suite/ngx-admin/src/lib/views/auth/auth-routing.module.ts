@@ -17,7 +17,7 @@ const routes: Routes = [
         data: {
             title: 'Reset Password'
         }
-    }
+    },
 ];
 
 @NgModule({
