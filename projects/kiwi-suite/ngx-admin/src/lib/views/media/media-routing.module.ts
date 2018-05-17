@@ -1,40 +1,57 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PermissionGuard} from '../../permission.guard';
+import {FullLayoutComponent} from '../../containers/full-layout';
+import {PermissionGuard} from '../auth/guards';
 import {MediaEditComponent} from './media-edit.component';
 import {MediaListComponent} from './media-list.component';
 
 const routes: Routes = [
     {
         path: '',
-        canLoad: [PermissionGuard],
+        component: FullLayoutComponent,
         data: {
-            title: 'Media'
+            title: 'Home',
         },
         children: [
             {
-                path: '',
-                component: MediaListComponent,
-                data: {
-                    title: '',
-                },
+                path: 'media',
+                children: [
+                    {
+                        path: '',
+                        data: {
+                            title: 'Media'
+                        },
+                        children: [
+                            {
+                                path: '',
+                                component: MediaListComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'List',
+                                },
+                            },
+                            {
+                                path: 'create',
+                                component: MediaEditComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Media',
+                                    action: 'create',
+                                }
+                            },
+                            {
+                                path: ':id/edit',
+                                component: MediaEditComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Media',
+                                    action: 'edit',
+                                }
+                            }
+                        ]
+                    },
+                ]
             },
-            {
-                path: 'create',
-                component: MediaEditComponent,
-                data: {
-                    title: 'Media',
-                    action: 'create',
-                }
-            },
-            {
-                path: ':id/edit',
-                component: MediaEditComponent,
-                data: {
-                    title: 'Media',
-                    action: 'edit',
-                }
-            }
         ]
     },
 ];

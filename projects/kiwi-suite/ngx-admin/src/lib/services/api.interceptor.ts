@@ -61,7 +61,7 @@ export class ApiInterceptor implements HttpInterceptor {
         if (token !== null && !request.headers.has(headerName)) {
             request = request.clone({headers: request.headers.set(headerName, token)});
         }
-
+        
         return next.handle(request).pipe(
             tap(
                 (event: HttpEvent<any>) => {
@@ -71,7 +71,7 @@ export class ApiInterceptor implements HttpInterceptor {
                 },
                 (err: any) => {
                     if (err instanceof HttpErrorResponse) {
-                        if (err.status === 401) {
+                        if (err.status === 403 || err.status === 401) {
                             let extras = {};
                             if (this.router.url.indexOf('intended=') === -1
                                 && this.router.url !== '/'

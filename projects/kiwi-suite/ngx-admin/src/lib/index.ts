@@ -11,8 +11,6 @@ export * from './views/errors';
 export * from './views/media';
 export * from './views/resource';
 export * from './views/user';
-export * from './permission.guard';
 export {AdminModule} from './admin.module';
 export {AdminComponent} from './admin.component';
 export {AdminRoutingModule} from './admin.routing';
-export {PermissionGuard} from './permission.guard';

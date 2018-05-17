@@ -3,8 +3,11 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {AlertModule} from 'ngx-bootstrap';
+import {AccountService, LoggerService} from '../../services';
 
 import {AuthRoutingModule} from './auth-routing.module';
+import {PermissionDirective} from './directives/permission';
+import {PermissionGuard} from './guards';
 import {LoginComponent} from './login/login.component';
 import {ResetComponent} from './reset/reset.component';
 
@@ -18,8 +21,17 @@ import {ResetComponent} from './reset/reset.component';
     ],
     declarations: [
         LoginComponent,
-        ResetComponent
-    ]
+        ResetComponent,
+        PermissionDirective,
+    ],
+    providers: [
+        AccountService,
+        LoggerService,
+        PermissionGuard,
+    ],
+    exports: [
+        PermissionDirective,
+    ],
 })
 export class AuthModule {
     constructor() {

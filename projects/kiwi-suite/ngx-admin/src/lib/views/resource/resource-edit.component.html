@@ -14,17 +14,19 @@
                         <span *ngIf="action === 'create'">Create</span>
                         <span *ngIf="action === 'edit'">Update</span>
                     </button>
-                    <button type="button" class="btn btn-outline-danger pull-right"
-                            [disabled]="(loading$ | async)"
-                            (click)="onDelete()"
-                            *ngIf="action === 'edit'">
-                        <i class="fa fa-trash"></i>
-                    </button>
+                    <ng-template [ngIf]="action === 'edit'">
+                        <button type="button" class="btn btn-outline-danger pull-right"
+                                [disabled]="(loading$ | async)"
+                                (click)="onDelete()"
+                                *can="['admin.api.'+resourceKey+'.delete']">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </ng-template>
                 </div>
             </div>
         </form>
     </div>
     <!--<div class="col-md-4 col-lg-5 col-xl-6">-->
-        <!--<pre>{{ this.form.getRawValue() | json }}</pre>-->
+    <!--<pre>{{ this.form.getRawValue() | json }}</pre>-->
     <!--</div>-->
 </div>

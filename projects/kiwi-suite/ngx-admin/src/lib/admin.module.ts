@@ -40,7 +40,6 @@ import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR
 import {FormlyBootstrapModule} from './forms/bootstrap';
 import {SchemaFormBuilder} from './forms/schema-form-builder';
 import {BootstrapError} from './models';
-import {PermissionGuard} from './permission.guard';
 import {
     AccountService,
     ApiInterceptor,
@@ -84,7 +83,7 @@ const APP_COMPONENTS = [
     PageNotFoundComponent,
 ];
 
-const APP_VIEWS_MODULES = [
+const APP_FEATURE_MODULES = [
     AccountModule,
     AuthModule,
     DashboardModule,
@@ -97,10 +96,9 @@ const APP_DIRECTIVES = [
     AsideToggleDirective,
     NAV_DROPDOWN_DIRECTIVES,
     ReplaceDirective,
-    SIDEBAR_TOGGLE_DIRECTIVES
+    SIDEBAR_TOGGLE_DIRECTIVES,
 ];
 
-// @dynamic
 @NgModule({
     imports: [
         AdminRoutingModule,
@@ -142,7 +140,7 @@ const APP_DIRECTIVES = [
             progressBar: true,
             timeOut: 2400,
         }),
-        APP_VIEWS_MODULES
+        APP_FEATURE_MODULES
     ],
     declarations: [
         ...APP_CONTAINERS,
@@ -182,7 +180,7 @@ const APP_DIRECTIVES = [
         TabsModule,
         ToastrModule,
         APP_COMPONENTS,
-        APP_VIEWS_MODULES
+        APP_FEATURE_MODULES
     ]
 })
 export class AdminModule {
@@ -216,7 +214,6 @@ export class AdminModule {
                 DataStoreService,
                 LoggerService,
                 MediaService,
-                PermissionGuard,
                 SchemaFormBuilder,
                 SessionService,
                 UserService

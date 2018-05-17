@@ -1,8 +1,6 @@
 import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
-// Import navigation elements
 import {Router} from '@angular/router';
-import {User} from '../../models';
-import {AccountService, ConfigurationService} from '../../services';
+import {ConfigurationService} from '../../services';
 
 @Component({
     selector: 'app-sidebar-nav',
@@ -14,16 +12,18 @@ import {AccountService, ConfigurationService} from '../../services';
                     <ng-template [ngIf]="isTitle(navitem)">
                         <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
                     </ng-template>
-                    <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)&&hasPermission(navitem)">
-                        <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
+                    <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)">
+                        <div *can="navitem.permissions">
+                            <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
+                        </div>
                     </ng-template>
                 </ng-template>
             </ul>
         </nav>`
 })
 export class AppSidebarNavComponent {
-
-    private user: User;
+    constructor(private config: ConfigurationService) {
+    }
 
     public isDivider(item) {
         return item.divider ? true : false;
@@ -35,14 +35,6 @@ export class AppSidebarNavComponent {
 
     trackByFn(index, item) {
         return item.url;
-    }
-
-    public hasPermission(item) {
-        return !item.roles || !item.roles.length || (this.user && item.roles.indexOf(this.user.role) > -1);
-    }
-
-    constructor(private accountService: AccountService, private config: ConfigurationService) {
-        this.accountService.user$.subscribe(user => this.user = user);
     }
 
     get navigation$() {

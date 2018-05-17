@@ -1,43 +1,57 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PermissionGuard} from '../../permission.guard';
+import {FullLayoutComponent} from '../../containers/full-layout';
+import {PermissionGuard} from '../auth/guards';
 import {UserEditComponent} from './user-edit.component';
 import {UserListComponent} from './user-list.component';
 
 const routes: Routes = [
     {
         path: '',
-        canLoad: [PermissionGuard],
+        component: FullLayoutComponent,
         data: {
-            title: 'Users'
+            title: 'Home',
         },
         children: [
             {
-                path: '',
-                component: UserListComponent,
-                canLoad: [PermissionGuard],
-                data: {
-                    title: ''
-                },
+                path: 'user',
+                children: [
+                    {
+                        path: '',
+                        data: {
+                            title: 'Users'
+                        },
+                        children: [
+                            {
+                                path: '',
+                                component: UserListComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'List'
+                                },
+                            },
+                            {
+                                path: 'create',
+                                component: UserEditComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Create User',
+                                    action: 'create',
+                                }
+                            },
+                            {
+                                path: ':id/edit',
+                                component: UserEditComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Edit User',
+                                    action: 'edit',
+                                }
+                            }
+                        ]
+                    },
+                ]
             },
-            {
-                path: 'create',
-                component: UserEditComponent,
-                canLoad: [PermissionGuard],
-                data: {
-                    title: 'Create User',
-                    action: 'create',
-                }
-            },
-            {
-                path: ':id/edit',
-                component: UserEditComponent,
-                canLoad: [PermissionGuard],
-                data: {
-                    title: 'Edit User',
-                    action: 'edit',
-                }
-            }
         ]
     },
 ];

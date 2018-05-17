@@ -1,16 +1,37 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PermissionGuard} from '../../permission.guard';
+import {FullLayoutComponent} from '../../containers/full-layout';
 import {AccountComponent} from './account.component';
 
 const routes: Routes = [
     {
         path: '',
-        canLoad: [PermissionGuard],
-        component: AccountComponent,
+        component: FullLayoutComponent,
         data: {
-            title: 'Account'
+            title: 'Home',
         },
+        children: [
+            {
+                path: 'account',
+                children: [
+                    {
+                        path: '',
+                        data: {
+                            title: 'Account'
+                        },
+                        children: [
+                            {
+                                path: '',
+                                component: AccountComponent,
+                                data: {
+                                    title: 'Settings',
+                                },
+                            }
+                        ],
+                    },
+                ],
+            },
+        ],
     },
 ];
 

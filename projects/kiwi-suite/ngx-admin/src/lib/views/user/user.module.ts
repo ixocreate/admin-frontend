@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {AuthModule} from '../auth';
 import {UserEditComponent} from './user-edit.component';
 import {UserListComponent} from './user-list.component';
 import {UserRoutingModule} from './user-routing.module';
@@ -10,6 +11,7 @@ import {UserRoutingModule} from './user-routing.module';
 @NgModule({
     imports: [
         CommonModule,
+        AuthModule,
         NgxDatatableModule,
         ReactiveFormsModule,
         UserRoutingModule,
@@ -21,7 +23,7 @@ import {UserRoutingModule} from './user-routing.module';
     ],
     providers: [
         // UserResolver
-    ]
+    ],
 })
 export class UserModule {
 }

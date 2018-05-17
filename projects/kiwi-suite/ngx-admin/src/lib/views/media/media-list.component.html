@@ -5,7 +5,8 @@
     <div class="card-body">
         <div class="row text-center text-lg-left" *ngIf="uploader">
 
-            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12"
+                 *can="['admin.api.'+resourceKey+'.upload']">
                 <div class="d-block mb-4 h-100" ng2FileDrop [uploader]="uploader">
                     <div class="upload-container">
                         <div class="drop-box">

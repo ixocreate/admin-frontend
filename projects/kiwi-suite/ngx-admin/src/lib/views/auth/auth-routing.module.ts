@@ -5,18 +5,23 @@ import {ResetComponent} from './reset/reset.component';
 
 const routes: Routes = [
     {
-        path: 'login',
-        component: LoginComponent,
-        data: {
-            title: 'Login'
-        }
-    },
-    {
-        path: 'reset',
-        component: ResetComponent,
-        data: {
-            title: 'Reset Password'
-        }
+        path: 'auth',
+        children: [
+            {
+                path: 'login',
+                component: LoginComponent,
+                data: {
+                    title: 'Login'
+                }
+            },
+            {
+                path: 'reset',
+                component: ResetComponent,
+                data: {
+                    title: 'Reset Password'
+                }
+            },
+        ]
     },
 ];
 
