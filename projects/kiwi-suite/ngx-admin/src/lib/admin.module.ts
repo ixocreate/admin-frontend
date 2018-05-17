@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Router, RouterModule} from '@angular/router';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 import {FormlyModule} from '@ngx-formly/core';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {NgxDnDModule} from '@swimlane/ngx-dnd';
@@ -35,12 +34,10 @@ import {
     AppSidebarFormComponent,
     AppSidebarHeaderComponent,
     AppSidebarMinimizerComponent,
-    MediaModalListComponent,
-    MediaSelectorComponent
 } from './components';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
-import {MediaTypeComponent, RepeatTypeComponent} from './forms';
+import {FormlyBootstrapModule} from './forms/bootstrap';
 import {SchemaFormBuilder} from './forms/schema-form-builder';
 import {BootstrapError} from './models';
 import {PermissionGuard} from './permission.guard';
@@ -70,13 +67,6 @@ const APP_CONTAINERS = [
     SimpleLayoutComponent
 ];
 
-const APP_FORM = [
-    MediaTypeComponent,
-    MediaModalListComponent,
-    MediaSelectorComponent,
-    RepeatTypeComponent,
-];
-
 const APP_COMPONENTS = [
     AppAsideComponent,
     AppBackgroundComponent,
@@ -92,7 +82,6 @@ const APP_COMPONENTS = [
     AppSidebarMinimizerComponent,
     APP_SIDEBAR_NAV,
     PageNotFoundComponent,
-    APP_FORM,
 ];
 
 const APP_VIEWS_MODULES = [
@@ -122,13 +111,7 @@ const APP_DIRECTIVES = [
         ChartsModule,
         ClipboardModule,
         CommonModule,
-        FormlyModule.forRoot({
-                types: [
-                    {name: 'media', component: MediaTypeComponent},
-                    {name: 'repeat', component: RepeatTypeComponent},
-                ],
-            }
-        ),
+        FormlyModule,
         FormlyBootstrapModule,
         FormsModule,
         HotkeyModule.forRoot(),
@@ -176,6 +159,7 @@ const APP_DIRECTIVES = [
         ChartsModule,
         ClipboardModule,
         FormsModule,
+        FormlyModule,
         HotkeyModule,
         HttpClientModule,
         ModalModule,
@@ -275,11 +259,10 @@ export class AdminModule {
          * reload configuration each time user is loaded as it is user context sensitive
          */
         this.account.model$.subscribe(user => {
-            if (!user) {
+            if (!user || !user.id) {
                 return;
             }
-            this.logger.log('account User', user);
-            this.logger.log('reload config');
+            this.logger.log('[User] account %c[' + user.id + '] ' + user.email + ' ' + user.role, 'color: #bb5555');
             this.config.load();
         });
     }

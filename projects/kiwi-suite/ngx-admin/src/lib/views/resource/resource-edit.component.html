@@ -3,7 +3,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit(action)" *ngIf="form && (action$ | async) as action">
             <div class="card card-accent-primary">
                 <div class="card-header">
-                    {{ resourceName }}
+                    <b class="text-muted">{{ resourceName | async }}</b>
                 </div>
                 <div class="card-body">
                     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
@@ -17,5 +17,8 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="col-md-4 col-lg-5 col-xl-6">
+        <pre>{{ this.form.getRawValue() | json }}</pre>
     </div>
 </div>

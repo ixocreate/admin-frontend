@@ -2,7 +2,7 @@ import {Component, forwardRef, TemplateRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {Media} from '../../models';
+import {Media} from '../../../../models';
 
 @Component({
     selector: 'media-selector',

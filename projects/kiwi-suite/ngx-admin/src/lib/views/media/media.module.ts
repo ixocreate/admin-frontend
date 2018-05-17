@@ -5,6 +5,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {FileUploadModule} from 'ng2-file-upload';
 import {ProgressbarModule} from 'ngx-bootstrap';
+import {MediaModalListComponent, MediaSelectorComponent} from './components/media';
 import {MediaEditComponent} from './media-edit.component';
 import {MediaListComponent} from './media-list.component';
 import {MediaRoutingModule} from './media-routing.module';
@@ -22,9 +23,15 @@ import {MediaRoutingModule} from './media-routing.module';
     declarations: [
         MediaEditComponent,
         MediaListComponent,
+        MediaModalListComponent,
+        MediaSelectorComponent
     ],
     providers: [
         // UserResolver
+    ],
+    exports: [
+        MediaModalListComponent,
+        MediaSelectorComponent,
     ]
 })
 export class MediaModule {

@@ -186,7 +186,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     }
 
     /**
-     * @deprecated
+     * @deprecated use formly forms
      */
     protected buildFormFromSchemas(schemas: ResourceModelSchema[], schemaName: string) {
         this._schemas = schemas;
