@@ -29,9 +29,9 @@ export class LoggerService {
 
     log(message, ...params: any[]) {
         if (params.length && params[0] !== undefined) {
-            console.log('[kiwi]', message, ...params);
+            console.log('%c[kiwi] %c' + message, 'color: #88bb55', 'color: #5588bb', ...params);
         } else {
-            console.log('[kiwi]', message);
+            console.log('%c[kiwi] %c' + message, 'color: #88bb55', 'color: #5588bb');
         }
     }
 }

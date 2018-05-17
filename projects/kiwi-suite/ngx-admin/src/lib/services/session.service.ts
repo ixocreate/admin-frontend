@@ -25,7 +25,7 @@ export class SessionService extends DataService {
         if (this.config.environment.production) {
             this.ready();
         } else {
-            this.logger.log('load session', this.config.params.routes.session);
+            this.logger.log('[Session] load', this.config.params.routes.session);
             this.api.get<boolean>(this.config.params.routes.session).subscribe(() => this.ready());
         }
         return this.ready$;

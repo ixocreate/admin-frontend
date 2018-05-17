@@ -53,7 +53,7 @@ export class ConfigurationService extends DataService {
      * @param baseConfig string|Config
      */
     private bootstrap(baseConfig: any = '__kiwi') {
-        this.logger.log('bootstrap configuration', baseConfig);
+        this.logger.log('[Config] bootstrap', baseConfig);
         if (typeof baseConfig === 'string') {
             /**
              * check window key in case a base config string was given
@@ -82,7 +82,7 @@ export class ConfigurationService extends DataService {
     }
 
     load() {
-        this.logger.log('load configuration', this._params.routes.config);
+        this.logger.log('[Config] load', this._params.routes.config);
 
         this.api.get<Config>(this._params.routes.config).pipe(
             map(params => {

@@ -1,3 +1,4 @@
+import {LoggerService} from '@kiwi-suite/ngx-admin';
 import {ApiService} from './api.service';
 import {AppInjector} from './app-injector.service';
 import {ConfigurationService} from './configuration.service';
@@ -28,7 +29,7 @@ export class DataStoreService {
     //         });
     // }
 
-    constructor() {
+    constructor(private logger: LoggerService) {
         // this.dataServices.push(mediaService);
         // this.dataServices.push(userService);
     }
@@ -47,7 +48,7 @@ export class DataStoreService {
 
     register(resourceService: ResourceService) {
         this.dataServices[resourceService.resourceKey] = resourceService;
-        console.warn('registered ' + resourceService.resourceKey);
-        console.log(this.dataServices);
+        this.logger.log('[DataStore] register %c'+resourceService.resourceKey, 'color: #8855bb;');
+        // console.log(this.dataServices);
     }
 }
