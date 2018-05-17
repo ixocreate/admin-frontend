@@ -34,6 +34,10 @@ export class DataStoreService {
         // this.dataServices.push(userService);
     }
 
+    get services() {
+        return this.dataServices;
+    }
+
     resource(resourceKey: string): ResourceService {
         let dataService = this.dataServices[resourceKey];
 

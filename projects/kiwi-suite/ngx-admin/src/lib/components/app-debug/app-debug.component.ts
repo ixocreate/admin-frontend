@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
+import {map} from 'rxjs/operators';
 import {AccountService, ConfigurationService, DataStoreService, SessionService} from '../../services';
 
 @Component({
@@ -26,8 +27,28 @@ export class AppDebugComponent {
         return this.config.params$;
     }
 
-    get dataStore$() {
-        return this.dataStore;
+    get routes$() {
+        return this.config.params$.pipe(map(params => {
+            let keys = Object.keys(params.routes),
+                target = {};
+            keys.sort();
+            keys.forEach(function (key) {
+                target[key] = params.routes[key];
+            });
+            return target;
+        }));
+    }
+
+    get dataStoreServices() {
+        return Object.keys(this.dataStore.services);
+    }
+
+    get session$() {
+        return this.session.ready$;
+    }
+
+    get user$() {
+        return this.account.user$;
     }
 
     loadSession() {
