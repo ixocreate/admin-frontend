@@ -65,3 +65,29 @@ input[type="color"] {
     }
   }
 }
+
+
+// == toastr
+
+.toast-bottom-right {
+  bottom: $footer-height !important;
+  right: 0 !important;
+  border-left: 1px solid $gray-300;
+  border-top: 1px solid $gray-300;
+}
+
+.toast-top-right {
+  top: $navbar-height !important;
+  right: 0 !important;
+  border-left: 1px solid $gray-300;
+  border-bottom: 1px solid $gray-300;
+}
+
+.toast-container {
+  max-width: 100% !important;
+  .toast {
+    box-shadow: none !important;
+    max-width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+}

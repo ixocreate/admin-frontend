@@ -132,7 +132,16 @@ const APP_DIRECTIVES = [
         ReactiveFormsModule,
         RouterModule,
         TabsModule.forRoot(),
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot({
+            positionClass: 'toast-top-right',
+            easeTime: 80,
+            autoDismiss: true,
+            closeButton: false,
+            maxOpened: 1,
+            newestOnTop: false,
+            progressBar: true,
+            timeOut: 2400,
+        }),
         APP_VIEWS_MODULES
     ],
     declarations: [
