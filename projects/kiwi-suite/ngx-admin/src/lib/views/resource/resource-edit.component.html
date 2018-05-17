@@ -3,7 +3,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit(action)" *ngIf="form && (action$ | async) as action">
             <div class="card card-accent-primary">
                 <div class="card-header">
-                    <b class="text-muted">{{ resourceName | async }}</b>
+                    <b class="text-muted">{{ resourceName$ | async }}</b>
                 </div>
                 <div class="card-body">
                     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>

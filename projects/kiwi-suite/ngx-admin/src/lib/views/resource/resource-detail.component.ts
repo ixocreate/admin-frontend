@@ -9,7 +9,6 @@ import {ResourceComponent} from './resource.component';
 export class ResourceDetailComponent extends ResourceComponent implements OnInit, OnDestroy {
 
     protected action: string;
-    protected pathPrefix = 'resource/';
 
     model: any;
 
@@ -34,18 +33,6 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
 
     get loading$() {
         return this.dataService.loading$;
-    }
-
-    get resourceKey() {
-        return this.dataService.resourceKey;
-    }
-
-    get resourceName() {
-        return this.dataService.resourceName;
-    }
-
-    get resourcePath() {
-        return this.pathPrefix;
     }
 
     protected initModel() {

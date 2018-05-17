@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {
     AccountService,
@@ -31,6 +31,8 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
     private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected _resourceKey: string;
+
+    protected pathPrefix = 'resource/';
 
     protected apiService: ApiService;
     protected config: ConfigurationService;
@@ -65,6 +67,26 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
 
     get destroyed$() {
         return this._destroyed$.asObservable();
+    }
+
+    get resourceName$() {
+        return this.schema$.pipe(map(schema => schema.name));
+    }
+
+    get resourceNamePlural$() {
+        return this.schema$.pipe(map(schema => schema.namePlural));
+    }
+
+    get resourceKey() {
+        return this.dataService.resourceKey;
+    }
+
+    get resourcePath() {
+        return this.pathPrefix;
+    }
+
+    get schema$() {
+        return this.dataService.schema$.pipe(takeUntil(this.destroyed$));
     }
 
     ngOnInit() {

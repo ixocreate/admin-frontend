@@ -1,54 +1,54 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {PermissionGuard} from '../../permission.guard';
+import {ResourceDetailComponent} from './resource-detail.component';
+import {ResourceEditComponent} from './resource-edit.component';
+import {ResourceListComponent} from './resource-list.component';
 
 const routes: Routes = [
-    // {
-    //     path: '',
-    //     data: {
-    //         title: 'Resources'
-    //     },
-    //     children: [
-    //         {
-    //             path: '',
-    //             component: ResourceListComponent,
-    //             data: {
-    //                 title: 'Resources',
-    //             },
-    //         },
-    //         {
-    //             path: 'create',
-    //             component: ResourceEditComponent,
-    //             data: {
-    //                 title: 'Resource',
-    //                 action: 'create',
-    //             },
-    //             // resolve: {
-    //             //     tag: ResourceResolver,
-    //             // },
-    //         },
-    //         {
-    //             path: ':id/edit',
-    //             component: ResourceEditComponent,
-    //             data: {
-    //                 title: 'Resource',
-    //                 action: 'edit',
-    //             },
-    //             // resolve: {
-    //             //     tag: ResourceResolver,
-    //             // },
-    //         },
-    //         {
-    //             path: ':id',
-    //             component: ResourceDetailComponent,
-    //             data: {
-    //                 title: 'Resource'
-    //             },
-    //             // resolve: {
-    //             //     tag: ResourceResolver,
-    //             // },
-    //         }
-    //     ]
-    // },
+    {
+        path: ':type/create',
+        component: ResourceEditComponent,
+        canLoad: [PermissionGuard],
+        data: {
+            action: 'create',
+            title: 'Create'
+        },
+        // resolve: {
+        //     tag: ResourceResolver,
+        // },
+    },
+    {
+        path: ':type/:id/edit',
+        component: ResourceEditComponent,
+        canLoad: [PermissionGuard],
+        data: {
+            action: 'edit',
+            title: 'Edit'
+        },
+        // resolve: {
+        //     tag: ResourceResolver,
+        // },
+    },
+    {
+        path: ':type/:id',
+        component: ResourceDetailComponent,
+        canLoad: [PermissionGuard],
+        data: {
+            title: 'Detail'
+        },
+        // resolve: {
+        //     tag: ResourceResolver,
+        // },
+    },
+    {
+        path: ':type',
+        component: ResourceListComponent,
+        canLoad: [PermissionGuard],
+        data: {
+            title: 'Resources'
+        },
+    },
 ];
 
 @NgModule({

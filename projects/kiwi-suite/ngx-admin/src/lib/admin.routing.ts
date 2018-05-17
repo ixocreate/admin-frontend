@@ -8,10 +8,15 @@ import {LoginComponent} from './views/auth/login/login.component';
 import {ResetComponent} from './views/auth/reset/reset.component';
 import {PageNotFoundComponent} from './views/errors/page-not-found/page-not-found.component';
 import {MediaListComponent} from './views/media/media-list.component';
-import {ResourceEditComponent} from './views/resource/resource-edit.component';
-import {ResourceListComponent} from './views/resource/resource-list.component';
+import {ResourceModule} from './views/resource';
 import {UserEditComponent} from './views/user/user-edit.component';
 import {UserListComponent} from './views/user/user-list.component';
+
+// Do not delete. Used to ensure Module is loaded in the same bundle.
+// Referencing the function directly in `loadChildren` breaks AoT compiler.
+export function loadResourceModule() {
+    return ResourceModule;
+}
 
 export const routes: Routes = [
     {
@@ -108,9 +113,9 @@ export const routes: Routes = [
                             {
                                 path: '',
                                 component: UserListComponent,
-                                data: {
-                                    title: 'Users',
-                                },
+                                // data: {
+                                //     title: 'Users',
+                                // },
                             },
                             {
                                 path: 'create',
@@ -135,29 +140,30 @@ export const routes: Routes = [
                      */
                     {
                         path: 'resource',
-                        children: [
-                            {
-                                path: ':type/create',
-                                component: ResourceEditComponent,
-                                canLoad: [PermissionGuard],
-                                data: {
-                                    action: 'create',
-                                },
-                            },
-                            {
-                                path: ':type/:id/edit',
-                                component: ResourceEditComponent,
-                                canLoad: [PermissionGuard],
-                                data: {
-                                    action: 'edit',
-                                },
-                            },
-                            {
-                                path: ':type',
-                                component: ResourceListComponent,
-                                canLoad: [PermissionGuard],
-                            },
-                        ]
+                        loadChildren: './views/resource/resource.module#ResourceModule'
+                        //     children: [
+                        //         {
+                        //             path: ':type/create',
+                        //             component: ResourceEditComponent,
+                        //             canLoad: [PermissionGuard],
+                        //             data: {
+                        //                 action: 'create',
+                        //             },
+                        //         },
+                        //         {
+                        //             path: ':type/:id/edit',
+                        //             component: ResourceEditComponent,
+                        //             canLoad: [PermissionGuard],
+                        //             data: {
+                        //                 action: 'edit',
+                        //             },
+                        //         },
+                        //         {
+                        //             path: ':type',
+                        //             component: ResourceListComponent,
+                        //             canLoad: [PermissionGuard],
+                        //         },
+                        //     ]
                     }
                 ]
             },

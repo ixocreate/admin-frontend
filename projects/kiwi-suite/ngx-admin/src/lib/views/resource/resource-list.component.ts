@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {takeUntil} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import {ResourceComponent} from './resource.component';
 
 @Component({
@@ -22,24 +22,12 @@ export class ResourceListComponent extends ResourceComponent implements OnInit {
         return this.dataService.models$.pipe(takeUntil(this.destroyed$));
     }
 
-    get schema$() {
-        return this.dataService.schema$.pipe(takeUntil(this.destroyed$));
-    }
-
     get loading$() {
         return this.dataService.loading$;
     }
 
     get resourceKey() {
         return this.dataService.resourceKey;
-    }
-
-    get resourceName() {
-        return this.dataService.resourceName;
-    }
-
-    get resourceNamePlural() {
-        return this.dataService.resourceName + 's';
     }
 
     get resourcePath() {

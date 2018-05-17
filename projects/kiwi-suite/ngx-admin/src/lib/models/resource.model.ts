@@ -1,3 +1,5 @@
+import {MediaModalListComponent} from '../views/media/components/media';
+
 export interface Media {
     basePath: string;
     id: string;
@@ -24,6 +26,10 @@ export interface User {
 /**
  * TODO: remove those below after refactoring to formly
  */
+
+/**
+ * @deprecated use formly forms
+ */
 export interface ResourceModelSchema {
     label: string; // 'Resource';
     labelPlural?: string; // 'Resources'
@@ -31,6 +37,9 @@ export interface ResourceModelSchema {
     controls?: ResourceModelControl[];
 }
 
+/**
+ * @deprecated use formly forms
+ */
 export interface ResourceModelControl {
     controls?: ResourceModelControl[];
     controlType?: string; // default text - checkbox, radio, file, image, textarea
@@ -47,6 +56,9 @@ export interface ResourceModelControl {
     validators?: any[];
 }
 
+/**
+ * @deprecated use formly forms
+ */
 export interface ResourceModelRelation extends ResourceModelSchema {
     async?: { index?: string, create?: string }; // needed to display options
     createNew?: boolean; // default false

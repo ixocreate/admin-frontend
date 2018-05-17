@@ -120,10 +120,6 @@ export class ResourceService extends DataService {
         this.resource = resourceKey;
     }
 
-    get resourceName() {
-        return this.resource.charAt(0).toUpperCase() + this.resource.substr(1);
-    }
-
     get loading$() {
         return this._loading$.asObservable();
     }

@@ -5,7 +5,7 @@
                 <form [formGroup]="form" (ngSubmit)="onSubmit(action)" *ngIf="form" novalidate>
                     <div class="card card-accent-primary">
                         <div class="card-header">
-                            <b class="text-muted">User</b>
+                            <b class="text-muted">{{ resourceName$ | async }}</b>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
@@ -48,7 +48,7 @@
             <div class="col-lg-4 col-xl-6 order-lg-2">
                 <div class="card card-accent-primary">
                     <div class="card-header">
-                        <b class="text-muted">User</b>
+                        <b class="text-muted">{{ resourceName$ | async }}</b>
                     </div>
                     <div class="card-body">
                         <div class="row">

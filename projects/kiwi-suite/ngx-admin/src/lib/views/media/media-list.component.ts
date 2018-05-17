@@ -45,10 +45,6 @@ export class MediaListComponent extends ResourceListComponent implements OnInit 
                 });
     }
 
-    get resourceNamePlural() {
-        return 'Media';
-    }
-
     isImage(mimeType: string): boolean {
         if (!mimeType || mimeType.length < 6) {
             return false;
