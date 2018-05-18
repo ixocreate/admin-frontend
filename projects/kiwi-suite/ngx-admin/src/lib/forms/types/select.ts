@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FieldType} from '@ngx-formly/core';
 import {Observable, of} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -37,19 +37,13 @@ export class SelectOption {
         </ng-select>
     `,
 })
-export class FormlyFieldSelect extends FieldType {
+export class FormlyFieldSelect extends FieldType implements OnInit, OnDestroy {
 
-    selectOptions$: Observable;
+    selectOptions$: Observable<any>;
     private destroyed$ = new ReplaySubject<boolean>(1);
 
     public constructor(private dataStore: DataStoreService) {
         super();
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        this.destroyed$.next(true);
-        this.destroyed$.complete();
     }
 
     ngOnInit() {
@@ -58,6 +52,12 @@ export class FormlyFieldSelect extends FieldType {
             this.dataStore.resource(this.to.resource).load();
         }
         this.selectOptions$ = this.getSelectOptions();
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.destroyed$.next(true);
+        this.destroyed$.complete();
     }
 
     // ngOnChanges(changes: SimpleChanges) {
@@ -69,10 +69,13 @@ export class FormlyFieldSelect extends FieldType {
     }
 
     get valueProp(): string {
-        if(this.to.valueProp === false) {
+        /**
+         * ng-select allows null to use object as value -> allow false as valueProp binding
+         */
+        if (this.to.valueProp === false) {
             return null;
         }
-        return this.to.valueProp || 'value'; // has to be explicitly set
+        return this.to.valueProp || 'value';
     }
 
     get groupProp(): string {

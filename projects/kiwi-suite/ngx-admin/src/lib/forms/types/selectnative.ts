@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FieldType} from '@ngx-formly/core';
 import {Observable, of} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -59,8 +59,9 @@ export class SelectOption {
         </ng-template>
     `,
 })
-export class FormlyFieldSelectNative extends FieldType implements OnInit {
+export class FormlyFieldSelectNative extends FieldType implements OnInit, OnDestroy {
 
+    selectOptions$: Observable<any>;
     private destroyed$ = new ReplaySubject<boolean>(1);
 
     public constructor(private dataStore: DataStoreService) {
@@ -72,6 +73,7 @@ export class FormlyFieldSelectNative extends FieldType implements OnInit {
         if (this.to.resource) {
             this.dataStore.resource(this.to.resource).load();
         }
+        this.selectOptions$ = this.getSelectOptions();
     }
 
     ngOnDestroy() {
@@ -92,7 +94,7 @@ export class FormlyFieldSelectNative extends FieldType implements OnInit {
         return this.to.groupProp || 'group';
     }
 
-    get selectOptions(): Observable<any[]> {
+    private getSelectOptions(): Observable<any[]> {
         if (this.to.resource) {
             return this.dataStore.resource(this.to.resource).models$.pipe(takeUntil(this.destroyed$));
         } if (!(this.to.options instanceof Observable)) {
