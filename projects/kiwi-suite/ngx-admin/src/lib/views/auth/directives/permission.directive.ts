@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Input, TemplateRef, ViewContainerRef} from '@angular/core';
-import {AccountService} from '../../../../services';
-import {PermissionGuard} from '../../guards';
+import {AccountService} from '../../../services';
+import {PermissionGuard} from '../guards';
 
 @Directive({
     selector: '[can]'

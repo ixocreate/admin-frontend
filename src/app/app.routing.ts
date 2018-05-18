@@ -1,64 +1,57 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {FullLayoutComponent, SimpleLayoutComponent} from '@kiwi-suite/ngx-admin';
-import {PermissionGuard} from '@kiwi-suite/ngx-admin';
+import {FullLayoutComponent, PermissionGuard} from '@kiwi-suite/ngx-admin';
 
 export const routes: Routes = [
     {
         path: '',
-        component: SimpleLayoutComponent,
+        component: FullLayoutComponent,
+        // canActivateChild: [PermissionGuard],
+        data: {
+            title: 'Home',
+        },
         children: [
             {
-                path: '',
-                component: FullLayoutComponent,
-                // canActivateChild: [PermissionGuard],
-                data: {
-                    title: 'Home',
-                },
+                path: 'resource',
                 children: [
-                    {
-                        path: 'resource',
-                        children: [
-                            /**
-                             * Resource routes
-                             */
-                            // {
-                            //     path: 'category',
-                            //     canLoad: [PermissionGuard],
-                            //     data: {
-                            //         title: 'Categories'
-                            //     },
-                            //     children: [
-                            //         {
-                            //             path: '',
-                            //             component: CategoryListComponent,
-                            //             data: {
-                            //                 title: 'Categories',
-                            //             },
-                            //         },
-                            //         {
-                            //             path: 'create',
-                            //             component: CategoryEditComponent,
-                            //             data: {
-                            //                 title: 'Category',
-                            //                 action: 'create',
-                            //             },
-                            //         },
-                            //         {
-                            //             path: ':id/edit',
-                            //             component: CategoryEditComponent,
-                            //             data: {
-                            //                 title: 'Category',
-                            //                 action: 'edit',
-                            //             },
-                            //         },
-                            //     ]
-                            // },
-                        ]
-                    },
+                    /**
+                     * Resource routes
+                     */
+                    // {
+                    //     path: 'category',
+                    //     canLoad: [PermissionGuard],
+                    //     data: {
+                    //         title: 'Categories'
+                    //     },
+                    //     children: [
+                    //         {
+                    //             path: '',
+                    //             component: CategoryListComponent,
+                    //             data: {
+                    //                 title: 'List',
+                    //             },
+                    //         },
+                    //         {
+                    //             path: 'create',
+                    //             component: CategoryEditComponent,
+                    //             data: {
+                    //                 title: 'Create Category',
+                    //                 action: 'create',
+                    //             },
+                    //         },
+                    //         {
+                    //             path: ':id/edit',
+                    //             component: CategoryEditComponent,
+                    //             data: {
+                    //                 title: 'Edit Category',
+                    //                 action: 'edit',
+                    //             },
+                    //         },
+                    //     ]
+                    // },
                 ]
             },
-        ],
+        ]
     },
 ];
 

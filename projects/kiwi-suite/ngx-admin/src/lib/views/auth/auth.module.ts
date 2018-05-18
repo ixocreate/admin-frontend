@@ -6,7 +6,7 @@ import {AlertModule} from 'ngx-bootstrap';
 import {AccountService, LoggerService} from '../../services';
 
 import {AuthRoutingModule} from './auth-routing.module';
-import {PermissionDirective} from './directives/permission';
+import {PermissionDirective} from './directives';
 import {PermissionGuard} from './guards';
 import {LoginComponent} from './login/login.component';
 import {ResetComponent} from './reset/reset.component';

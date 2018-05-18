@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {AsyncSubject, BehaviorSubject} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {map, skipWhile} from 'rxjs/operators';
 import {LoginCredentials, User} from '../../models';
 import {ApiService} from '../api.service';
 import {ConfigurationService} from '../configuration.service';
@@ -9,7 +9,6 @@ import {UserService} from './user.service';
 @Injectable()
 export class AccountService extends UserService {
 
-    protected _user$ = new AsyncSubject<User>();
     protected _model$: BehaviorSubject<User>;
     protected _model: User;
 
@@ -19,7 +18,12 @@ export class AccountService extends UserService {
     }
 
     get user$() {
-        return this._user$.asObservable();
+        return this._model$.asObservable().pipe(
+            /**
+             * skip as long as there is an empty object
+             */
+            skipWhile(user => user && !user.id)
+        );
     }
 
     load() {
@@ -29,11 +33,10 @@ export class AccountService extends UserService {
                 user => {
                     this._model = user;
                     this._model$.next(this._model);
-                    this._user$.next(this._model);
-                    this._user$.complete();
                     return this._model;
                 },
                 () => {
+                    this._model$.next(null);
                 },
                 () => {
                     this._loading$.next(false);

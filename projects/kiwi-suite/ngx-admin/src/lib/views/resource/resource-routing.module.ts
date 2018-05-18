@@ -20,7 +20,7 @@ const routes: Routes = [
                     {
                         path: '',
                         data: {
-                            title: 'Resources'
+                            title: '%resources'
                         },
                         children: [
                             {
@@ -37,10 +37,10 @@ const routes: Routes = [
                                 canActivate: [PermissionGuard],
                                 data: {
                                     action: 'create',
-                                    title: 'Create Resource'
+                                    title: 'Create %resource'
                                 },
                                 // resolve: {
-                                //     tag: ResourceResolver,
+                                //     model: ResourceResolver,
                                 // },
                             },
                             {
@@ -49,10 +49,10 @@ const routes: Routes = [
                                 canActivate: [PermissionGuard],
                                 data: {
                                     action: 'edit',
-                                    title: 'Edit Resource'
+                                    title: 'Edit %resource'
                                 },
                                 // resolve: {
-                                //     tag: ResourceResolver,
+                                //     model: ResourceResolver,
                                 // },
                             },
                             {
@@ -60,10 +60,10 @@ const routes: Routes = [
                                 component: ResourceDetailComponent,
                                 canActivate: [PermissionGuard],
                                 data: {
-                                    title: 'Resource Detail'
+                                    title: '%resource Detail'
                                 },
                                 // resolve: {
-                                //     tag: ResourceResolver,
+                                //     model: ResourceResolver,
                                 // },
                             },
                         ],

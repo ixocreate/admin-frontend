@@ -39,7 +39,6 @@ export class MediaListComponent extends ResourceListComponent implements OnInit 
                         ]
                     });
                     this.uploader.onCompleteAll = () => {
-                        console.log('uploader ready');
                         this.dataService.load();
                     };
                 });

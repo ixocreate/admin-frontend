@@ -24,7 +24,7 @@ export class PermissionGuard implements CanActivate, CanLoad {
         // if there's no user yet let them see the component until it was verified that the user has the permission to be there
 
         const urlParts = state.url.replace('/resource/', '/').split('/');
-        let resource = urlParts[1];
+        const resource = urlParts[1];
         let action = 'index';
 
         if (state.url.indexOf('/edit') > -1) {
@@ -50,6 +50,16 @@ export class PermissionGuard implements CanActivate, CanLoad {
          */
         return this.account.user$.pipe(
             map(user => {
+                if (!user) {
+                    let extras = {};
+                    if (state.url.indexOf('intended=') === -1
+                        && state.url !== '/'
+                        && state.url !== '/auth/login') {
+                        extras = {queryParams: {intended: state.url}};
+                    }
+                    this.router.navigate(['/auth/login'], extras);
+                    return false;
+                }
                 const can = this.can(user, [ability], true);
                 if (!can) {
                     /**
@@ -65,7 +75,7 @@ export class PermissionGuard implements CanActivate, CanLoad {
 
     can(user: User, abilities: string[], log = false) {
         let can = true;
-        if (!user) {
+        if (!user || !user.id) {
             can = false;
         } else {
             abilities.map(ability => {

@@ -1,1 +1,1 @@
-export * from './permission/index';
+export * from './permission.directive';

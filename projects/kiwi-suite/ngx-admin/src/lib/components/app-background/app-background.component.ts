@@ -9,7 +9,8 @@ import {ConfigurationService} from '../../services';
         </div>`
 })
 export class AppBackgroundComponent {
-    @Input('color') color = '#e4e5e6';
+    // @Input('color') color = '#e4e5e6';
+    @Input('color') color = 'transparent';
     // @Input('color') color = '#e4F5e6';
     // @Input('color') color = '#f4e5f6';
     @Input('position') position = 'center center';

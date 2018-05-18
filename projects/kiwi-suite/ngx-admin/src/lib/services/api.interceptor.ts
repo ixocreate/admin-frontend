@@ -61,7 +61,7 @@ export class ApiInterceptor implements HttpInterceptor {
         if (token !== null && !request.headers.has(headerName)) {
             request = request.clone({headers: request.headers.set(headerName, token)});
         }
-        
+
         return next.handle(request).pipe(
             tap(
                 (event: HttpEvent<any>) => {
@@ -83,6 +83,6 @@ export class ApiInterceptor implements HttpInterceptor {
                     }
                 }
             )
-        )
+        );
     }
 }
