@@ -4,13 +4,16 @@ import {TemplateDescription} from './run/description';
 import {TemplateValidation} from './run/validation';
 import {
     FormlyFieldCheckbox,
+    FormlyFieldDateTime,
     FormlyFieldDynamic,
     FormlyFieldInput,
     FormlyFieldMedia,
     FormlyFieldMultiCheckbox,
+    FormlyFieldQuill,
     FormlyFieldRadio,
     FormlyFieldRepeatable,
     FormlyFieldSelect,
+    FormlyFieldSelectNative,
     FormlyFieldTextArea,
 } from './types/types';
 import {FormlyWrapperAddons} from './wrappers/addons';
@@ -23,17 +26,18 @@ import {
 
 export const FIELD_TYPE_COMPONENTS = [
     // types
-    FormlyFieldInput,
     FormlyFieldCheckbox,
+    FormlyFieldDateTime,
+    FormlyFieldDynamic,
+    FormlyFieldInput,
+    FormlyFieldMedia,
+    FormlyFieldMultiCheckbox,
     FormlyFieldRadio,
+    FormlyFieldRepeatable,
+    FormlyFieldSelectNative,
     FormlyFieldSelect,
     FormlyFieldTextArea,
-    FormlyFieldMultiCheckbox,
-
-    // custom
-    FormlyFieldDynamic,
-    FormlyFieldMedia,
-    FormlyFieldRepeatable,
+    FormlyFieldQuill,
 
     // wrappers
     FormlyWrapperLabel,
@@ -81,6 +85,16 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
             },
         },
         {
+            name: 'selectnative',
+            component: FormlyFieldSelectNative,
+            wrappers: ['fieldset', 'label'],
+            defaultOptions: {
+                templateOptions: {
+                    options: [],
+                },
+            },
+        },
+        {
             name: 'textarea',
             component: FormlyFieldTextArea,
             wrappers: ['fieldset', 'label'],
@@ -103,16 +117,57 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         },
         // custom
         {
+            name: 'datetime',
+            component: FormlyFieldDateTime,
+            wrappers: ['fieldset', 'label'],
+            defaultOptions: {
+                templateOptions: {
+                    /**
+                     * bsConfig
+                     */
+                    config: {
+                        dateInputFormat: 'YYYY-MM-DD HH:mm'
+                    }
+                }
+            },
+        },
+        {
             name: 'dynamic',
-            component: FormlyFieldDynamic
+            component: FormlyFieldDynamic,
         },
         {
             name: 'media',
-            component: FormlyFieldMedia
+            component: FormlyFieldMedia,
+            wrappers: ['fieldset', 'label'],
         },
         {
             name: 'repeat',
-            component: FormlyFieldRepeatable
+            component: FormlyFieldRepeatable,
+        },
+        {
+            name: 'wysiwyg',
+            component: FormlyFieldQuill,
+            wrappers: ['fieldset', 'label'],
+            defaultOptions: {
+                templateOptions: {
+                    height: 200,
+                    /**
+                     * quill config
+                     */
+                    modules: {
+                        toolbar: [
+                            // ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                            // [{'list': 'ordered'}, {'list': 'bullet'}],
+                            // [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+                            // [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+                            // [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                            // [{'align': []}],
+                            // ['clean'], // remove formatting button
+                            // ['link'],
+                        ]
+                    }
+                },
+            },
         },
     ],
     wrappers: [

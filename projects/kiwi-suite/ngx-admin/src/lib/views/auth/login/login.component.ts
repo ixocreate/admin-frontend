@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             () => {
                 this.account.ready$.subscribe(user => {
                     this.route.queryParams.subscribe(query => {
-                        console.log('navigate?', query.intended);
                         this.router.navigate([query.intended || '/']);
                     });
                 });

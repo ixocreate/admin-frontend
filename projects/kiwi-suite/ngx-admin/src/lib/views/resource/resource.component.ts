@@ -70,11 +70,11 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
     }
 
     get resourceName$() {
-        return this.schema$.pipe(map(schema => schema.name));
+        return this.schema$.pipe(map(schema => schema.name || '...'));
     }
 
     get resourceNamePlural$() {
-        return this.schema$.pipe(map(schema => schema.namePlural));
+        return this.schema$.pipe(map(schema => schema.namePlural || '...'));
     }
 
     get resourceKey() {

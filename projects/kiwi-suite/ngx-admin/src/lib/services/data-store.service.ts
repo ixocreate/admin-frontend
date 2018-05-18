@@ -1,7 +1,7 @@
-import {LoggerService} from '@kiwi-suite/ngx-admin';
 import {ApiService} from './api.service';
 import {AppInjector} from './app-injector.service';
 import {ConfigurationService} from './configuration.service';
+import {LoggerService} from './logger.service';
 import {ResourceService} from './resource/resource.service';
 
 export class DataStoreService {
