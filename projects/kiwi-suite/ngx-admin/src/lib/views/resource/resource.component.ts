@@ -20,7 +20,7 @@ import {
  * from: https://gist.github.com/pgiemza/1b81188e56ff24c977e605f9feb1d2f2
  * read: https://stackoverflow.com/a/41177163/580651
  */
-export abstract class ResourceComponent implements OnInit, OnDestroy {
+export abstract class ResourceComponent implements OnDestroy, OnInit {
 
     /**
      * "kill switch" for subscriptions
@@ -30,7 +30,8 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
      */
     private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-    protected _resourceKey: string;
+    private currentType: string;
+    protected type: string;
 
     protected pathPrefix = 'resource/';
 
@@ -52,17 +53,6 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
         this.domSanitizer = AppInjector.get(DomSanitizer);
         this.router = AppInjector.get(Router);
         this.toastr = AppInjector.get(ToastrService);
-
-        if (this._resourceKey) {
-            this.dataService = this.dataStore.resource(this._resourceKey);
-        } else {
-            this.route.params.pipe(takeUntil(this.destroyed$))
-                .subscribe(params => {
-                    if (params.type) {
-                        this.dataService = this.dataStore.resource(params.type);
-                    }
-                });
-        }
     }
 
     get destroyed$() {
@@ -89,8 +79,34 @@ export abstract class ResourceComponent implements OnInit, OnDestroy {
         return this.dataService.schema$.pipe(takeUntil(this.destroyed$));
     }
 
-    ngOnInit() {
-        this.dataService.load();
+    ngOnInit(): void {
+        this.route.params.pipe(takeUntil(this.destroyed$))
+            .subscribe(params => {
+                /**
+                 * get type either from route param or from component
+                 * @type {string}
+                 */
+                let type = params.type || this.type;
+                if (type) {
+                    this.dataService = this.dataStore.resource(type);
+                }
+
+                /**
+                 * injected dataServices need their type extracted and manually registered in dataStore
+                 */
+                if(this.dataService) {
+                    this.dataStore.register(this.dataService);
+                    type = this.dataService.resourceKey;
+                }
+
+                /**
+                 * reload the data service if navigation happened within resource component
+                 */
+                if (this.currentType !== type) {
+                    this.dataService.load();
+                }
+                this.currentType = type;
+            });
     }
 
     ngOnDestroy(): void {

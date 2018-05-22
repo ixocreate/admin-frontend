@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {map, takeUntil} from 'rxjs/operators';
+import {Component, ViewChild} from '@angular/core';
+import {takeUntil} from 'rxjs/operators';
 import {ResourceComponent} from './resource.component';
 
 @Component({
     selector: 'app-resource',
     templateUrl: './resource-list.component.html',
 })
-export class ResourceListComponent extends ResourceComponent implements OnInit {
+export class ResourceListComponent extends ResourceComponent {
 
     @ViewChild('dataTable') dataTable: any;
 

@@ -51,8 +51,9 @@ export class DataStoreService {
     }
 
     register(resourceService: ResourceService) {
-        this.dataServices[resourceService.resourceKey] = resourceService;
-        this.logger.log('[DataStore] register %c'+resourceService.resourceKey, 'color: #8855bb;');
-        // console.log(this.dataServices);
+        if(!this.dataServices[resourceService.resourceKey]) {
+            this.dataServices[resourceService.resourceKey] = resourceService;
+            this.logger.log('[DataStore] register %c'+resourceService.resourceKey, 'color: #8855bb;');
+        }
     }
 }

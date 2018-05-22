@@ -3,7 +3,7 @@ import {SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload';
 import {takeUntil} from 'rxjs/operators';
-import {AppInjector, MediaService} from '../../services';
+import {MediaService} from '../../services';
 import {ResourceListComponent} from '../resource';
 
 @Component({
@@ -12,14 +12,14 @@ import {ResourceListComponent} from '../resource';
 })
 export class MediaListComponent extends ResourceListComponent implements OnInit {
 
-    protected dataService: MediaService;
+    protected type = 'media';
     protected pathPrefix = '';
 
     public uploader: FileUploader;
 
-    constructor(protected route: ActivatedRoute) {
+    constructor(protected dataService: MediaService,
+                protected route: ActivatedRoute) {
         super(route);
-        this.dataService = AppInjector.get(MediaService);
     }
 
     ngOnInit() {

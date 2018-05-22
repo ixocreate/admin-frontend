@@ -35,6 +35,7 @@ export class UserEditComponent extends ResourceEditComponent implements OnInit {
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this.accountService.model$.pipe(takeUntil(this.destroyed$))
             .subscribe(account => {
                 this.account = account;
