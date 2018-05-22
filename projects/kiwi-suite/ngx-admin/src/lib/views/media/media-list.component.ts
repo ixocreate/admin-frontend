@@ -12,7 +12,6 @@ import {ResourceListComponent} from '../resource';
 })
 export class MediaListComponent extends ResourceListComponent implements OnInit {
 
-    protected type = 'media';
     protected pathPrefix = '';
 
     public uploader: FileUploader;
