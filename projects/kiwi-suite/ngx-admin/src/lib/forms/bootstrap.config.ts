@@ -134,6 +134,7 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         {
             name: 'dynamic',
             component: FormlyFieldDynamic,
+            wrappers: ['fieldset', 'label'],
         },
         {
             name: 'media',
@@ -143,6 +144,7 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         {
             name: 'repeat',
             component: FormlyFieldRepeatable,
+            wrappers: ['fieldset', 'label'],
         },
         {
             name: 'wysiwyg',
