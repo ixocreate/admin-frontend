@@ -6,14 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {
-    AccountService,
-    ApiService,
-    AppInjector,
-    ConfigurationService,
-    DataStoreService,
-    ResourceService
-} from '../../services';
+import {AccountService, ApiService, AppInjector, ConfigurationService, DataStoreService, ResourceService} from '../../services';
 
 /**
  * from: https://stackoverflow.com/a/42490431/580651
@@ -94,7 +87,7 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
                 /**
                  * injected dataServices need their type extracted and manually registered in dataStore
                  */
-                if(this.dataService) {
+                if (this.dataService) {
                     this.dataStore.register(this.dataService);
                     type = this.dataService.resourceKey;
                 }
