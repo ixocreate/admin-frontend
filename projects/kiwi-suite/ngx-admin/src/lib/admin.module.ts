@@ -60,6 +60,7 @@ import {PageNotFoundComponent} from './views/errors';
 import {MediaModule} from './views/media';
 import {ResourceModule} from './views/resource';
 import {UserModule} from './views/user';
+import {SitemapModule} from "./views/sitemap";
 
 const APP_CONTAINERS = [
     FullLayoutComponent,
@@ -90,6 +91,7 @@ const APP_FEATURE_MODULES = [
     MediaModule,
     ResourceModule,
     UserModule,
+    SitemapModule,
 ];
 
 const APP_DIRECTIVES = [

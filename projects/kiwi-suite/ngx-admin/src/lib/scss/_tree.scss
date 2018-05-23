@@ -1,0 +1,115 @@
+.sitemap-container {
+    background-color: #f0f9fc;
+    transition: opacity 0.4s ease-in-out;
+    border: 1px solid #daf1f8;
+    margin-bottom: 5px;
+}
+
+.sitemap-drag-handle {
+    border-right: 1px solid #c5e9f3;
+    background-color: #daf1f8;
+    padding: 12px 14px;
+    color: #6aa3d5;
+}
+
+.sitemap-label {
+    padding: 8px 0 8px 10px;
+    color: #6aa3d5;
+}
+
+.sitemap-toolbar {
+    border-left: 1px solid #c5e9f3;
+    background-color: #daf1f8;
+    padding: 8px 12px;
+}
+
+.ngx-dnd-container {
+    margin: 0 !important;
+    padding: 0 0 0 20px !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.ngx-dnd-container.gu-empty {
+    border: none !important;
+}
+.ngx-dnd-container:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.ngx-dnd-container .ex-moved {
+    background-color: #e74c3c;
+}
+
+.ngx-dnd-container .ex-over {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.ngx-dnd-container .handle {
+    padding: 0 5px;
+    margin-right: 5px;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: move;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -khtml-user-select: none;
+    /* Konqueror */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE/Edge */
+    user-select: none;
+    /* non-prefixed version, currently
+                                    not supported by any browser */ }
+
+.ngx-dnd-item {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block;
+    background-color: transparent !important;
+    border: none !important;
+}
+.ngx-dnd-item:not(.has-handle):not(.move-disabled),
+.ngx-dnd-item.has-handle [ngxdraghandle],
+.ngx-dnd-item.has-handle [ngxDragHandle] {
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+.ngx-dnd-item .ngx-dnd-content {
+    user-select: none;
+}
+.ngx-dnd-item:hover {
+    border: 1px solid blue;
+
+    &.gu-empty {
+        border: 2px dotted red !important;
+        min-height: 50px;
+    }
+}
+
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80); }
+
+.gu-hide {
+    display: none !important; }
+
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important; }
+
+.gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20); }
