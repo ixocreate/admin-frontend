@@ -8,9 +8,9 @@ import {FieldArrayType, FormlyFormBuilder} from '@ngx-formly/core';
         <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
             <!--<div (drop)="onDrop($event)">-->
             <div class="card mb-3"
-                 *ngFor="let field of field.fieldGroup; let i = index;"
+                 *ngFor="let fieldGroup of field.fieldGroup; let i = index;"
                  ngxDraggable
-                 [model]="field">
+                 [model]="fieldGroup">
                 <!--<div *ngFor="let field of field.fieldGroup; let i = index;">-->
                 <!--<div class="d-flex justify-content-between align-items-start">-->
                 <div class="card-header p-0">
@@ -30,7 +30,7 @@ import {FieldArrayType, FormlyFormBuilder} from '@ngx-formly/core';
                 <div class="card-body p-3">
                     <formly-group class="flex-grow-1"
                                   [model]="model[i]"
-                                  [field]="field"
+                                  [field]="fieldGroup"
                                   [options]="options"
                                   [form]="formControl">
                     </formly-group>
