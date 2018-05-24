@@ -21,7 +21,7 @@ import {FormlyFieldRepeatable} from './repeatable';
                         <i class="fa fa-bars"></i>
                     </button>
                     <span class="card-title">
-                        {{ fieldGroup.templateOptions.label || fieldGroup._type }}
+                        {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup._type }}
                     </span>
                 </div>
                 <div class="card-body p-3">
@@ -38,7 +38,7 @@ import {FormlyFieldRepeatable} from './repeatable';
             <div class="input-group">
                 <select class="custom-select" (change)="selectFieldGroup($event)">
                     <option *ngFor="let fieldGroup of fieldGroups" [value]="fieldGroup._type">
-                        {{ fieldGroup.templateOptions.label || fieldGroup._type }}
+                        {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup._type }}
                     </option>
                 </select>
                 <div class="input-group-append">
