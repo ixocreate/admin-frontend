@@ -1,28 +1,36 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray} from '@angular/forms';
-import {FieldArrayType, FormlyFormBuilder} from '@ngx-formly/core';
-import {LoggerService} from '../../services';
+import {FormlyFieldRepeatable} from './repeatable';
 
 @Component({
     selector: 'formly-field-dynamic',
     template: `
-        <div>
-            <div class="card mb-3" *ngFor="let fieldGroup of field.fieldGroup; let i = index;">
+        <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
+            <div class="card mb-3"
+                 *ngFor="let fieldGroup of field.fieldGroup; let i = index;"
+                 ngxDraggable
+                 [model]="fieldGroup">
                 <div class="card-header p-0">
-                    <span class="d-inline-block card-title mt-2 mb-0 ml-3">
-                        {{ fieldGroup._type }}
-                    </span>
                     <button class="btn btn-link text-danger float-right" type="button" (click)="remove(i)"
                             title="Remove">
                         <i class="fa fa-times"></i>
                     </button>
+                    <button class="btn btn-link text-muted" type="button"
+                            ngxDragHandle
+                            title="Remove">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <span class="card-title">
+                        {{ fieldGroup.templateOptions.label || fieldGroup._type }}
+                    </span>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-3">
                     <formly-group [model]="model[i]"
                                   [field]="fieldGroup"
                                   [options]="options"
                                   [form]="formControl">
                     </formly-group>
+                    <!--{{ model[i] | json }}-->
                 </div>
             </div>
         </div>
@@ -30,7 +38,7 @@ import {LoggerService} from '../../services';
             <div class="input-group">
                 <select class="custom-select" (change)="selectFieldGroup($event)">
                     <option *ngFor="let fieldGroup of fieldGroups" [value]="fieldGroup._type">
-                        {{ fieldGroup.label || fieldGroup._type }}
+                        {{ fieldGroup.templateOptions.label || fieldGroup._type }}
                     </option>
                 </select>
                 <div class="input-group-append">
@@ -44,16 +52,10 @@ import {LoggerService} from '../../services';
         </div>
     `,
 })
-export class FormlyFieldDynamic extends FieldArrayType implements OnInit {
+export class FormlyFieldDynamic extends FormlyFieldRepeatable implements OnInit {
 
-    private formBuilder: FormlyFormBuilder;
     selectedFieldGroupType: string;
-
-    constructor(builder: FormlyFormBuilder,
-                private logger: LoggerService) {
-        super(builder);
-        this.formBuilder = builder;
-    }
+    removeControls = [];
 
     ngOnInit() {
         /**
@@ -66,99 +68,21 @@ export class FormlyFieldDynamic extends FieldArrayType implements OnInit {
          */
 
         /**
-         * field form by existing model
+         * disregard everything formly did until now as it does not understand our dynamic, repeatable formGroups
          */
-        this.model = [
-            {
-                images: [
-                    {
-                        image: {
-                            basePath: '54/80/04/',
-                            createdAt: '2018-05-18T16:20:00+00:00',
-                            filename: '04b5fd2aa211f9eb92e880444f944114-i-love-beards-beard-love.png',
-                            id: 'e6acbbf3-f3e7-4552-ba66-abdab94eba5a',
-                            mimeType: 'image/png',
-                            size: 100208,
-                        },
-                        description: '<p><em>argaergaerg</em></p>',
-                    },
-                    {
-                        image: {
-                            basePath: '54/80/04/',
-                            createdAt: '2018-05-18T16:20:00+00:00',
-                            filename: '04b5fd2aa211f9eb92e880444f944114-i-love-beards-beard-love.png',
-                            id: 'e6acbbf3-f3e7-4552-ba66-abdab94eba5a',
-                            mimeType: 'image/png',
-                            size: 100208,
-                        },
-                    },
-                ],
-                name: 'Test simple 1',
-                _type: 'simple',
-            },
-            {
-                images: [
-                    {
-                        image: {
-                            basePath: '54/80/04/',
-                            createdAt: '2018-05-18T16:20:00+00:00',
-                            filename: '04b5fd2aa211f9eb92e880444f944114-i-love-beards-beard-love.png',
-                            id: 'e6acbbf3-f3e7-4552-ba66-abdab94eba5a',
-                            mimeType: 'image/png',
-                            size: 100208,
-                        },
-                    },
-                ],
-                name: 'Test simple 2',
-                _type: 'simple',
-            },
-            {
-                image: 'test',
-                name: 'test',
-                _type: 'teaser',
-            },
-            {
-                images: [{media: "Image 1"}, {media: "Image 2"}],
-                _type: 'slideshow',
-            },
-        ];
+        this.field.fieldGroup = [];
 
+        /**
+         * and refill it by our own model
+         */
         this.model.map(model => {
-            this.add(model);
+            this.add(null, model);
         });
 
-        // :
-        //     {_type: "", name: "test", image: "test"}
-        //     image
-        //         :
-        //         "test"
-        //     name
-        //         :
-        //         ""
-        //     _type
-        //         :
-        //         "teaser"
-        //     2
-        // :
-        //     {_type: "slideshow", images: [{media: "Image 1"}, {media: "Image 2"}]}
-        //     images
-        //         :
-        //         [{media: "Image 1"}, {media: "Image 2"}]
-        //     0
-        // :
-        //     {media: "Image 1"}
-        //     media
-        //         :
-        //         "Image 1"
-        //     1
-        // :
-        //     {media: "Image 2"}
-        //     media
-        //         :
-        //         "Image 2"
-        //     _type
-        //         :
-        //         "slideshow"
+        /**
+         * cleanup - remove controls that are marked for removal
+         */
+        this.removeControls.forEach(index => this.remove(index));
     }
 
     get fieldGroups() {
@@ -169,12 +93,8 @@ export class FormlyFieldDynamic extends FieldArrayType implements OnInit {
         this.selectedFieldGroupType = $event.target.value;
     }
 
-    add(initialModel ?: any) {
-
-        console.log(initialModel);
-
-        const i = this.field.fieldGroup.length;
-
+    add(i?: number, initialModel ?: any) {
+        i = i || this.field.fieldGroup.length;
         let model = initialModel;
         if (!model) {
             model = {
@@ -185,17 +105,20 @@ export class FormlyFieldDynamic extends FieldArrayType implements OnInit {
 
         let typeDefinition = null;
         this.fieldGroups.map(fieldGroup => {
-            if (fieldGroup._type == model._type) {
+            if (fieldGroup._type === model._type) {
                 typeDefinition = fieldGroup;
             }
         });
 
+        /**
+         * if there is no type defintion remove control
+         * might be from a stored element which was removed since then
+         */
         if (!typeDefinition) {
-            this.logger.logError('No valid FieldGroup selected');
-            return;
+            this.removeControls.push(i);
         }
 
-        const typeCopy = JSON.parse(JSON.stringify(typeDefinition));
+        const typeCopy = typeDefinition ? JSON.parse(JSON.stringify(typeDefinition)) : {fieldGroup: []};
 
         typeCopy.fieldGroup.unshift({
             key: '_type',
@@ -216,29 +139,6 @@ export class FormlyFieldDynamic extends FieldArrayType implements OnInit {
         this.formBuilder.buildForm(form, [this.field.fieldGroup[i]], this.model, this.options);
         this.formControl.push(form.at(0));
 
-        console.log(this.model);
-
         (<any> this.options).resetTrackModelChanges();
-    }
-
-    clone(value
-              :
-              any
-    ):
-        any {
-        value = Object.assign({}, value);
-        Object.keys(value).forEach(k => value[k] = this.clone(value[k]));
-        return value;
-    }
-
-    onDrop(event) {
-        console.log(event);
-    }
-
-    getSchema(_type
-                  :
-                  string
-    ) {
-        console.log(_type);
     }
 }

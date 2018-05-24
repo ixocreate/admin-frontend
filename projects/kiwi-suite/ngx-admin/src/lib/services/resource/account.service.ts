@@ -9,6 +9,8 @@ import {UserService} from './user.service';
 @Injectable()
 export class AccountService extends UserService {
 
+    protected resource = 'account';
+
     protected _model$: BehaviorSubject<User>;
     protected _model: User;
 

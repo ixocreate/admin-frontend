@@ -2,14 +2,14 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from '../../containers/full-layout';
 import {PermissionGuard} from '../auth/guards';
-import {SitemapListComponent} from "./sitemap-list.component";
+import {SitemapListComponent} from './sitemap-list.component';
 
 const routes: Routes = [
     {
         path: '',
         component: FullLayoutComponent,
         data: {
-            title: 'Sitemap',
+            title: 'Home',
         },
         children: [
             {

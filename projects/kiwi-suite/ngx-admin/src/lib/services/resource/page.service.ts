@@ -3,6 +3,5 @@ import {ResourceService} from './resource.service';
 
 @Injectable()
 export class PageService extends ResourceService {
-
     protected resource = 'page';
 }

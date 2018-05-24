@@ -1,13 +1,17 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {SitemapListComponent} from "./sitemap-list.component";
-import {NgxDnDModule} from "@swimlane/ngx-dnd";
-import {SitemapListItemComponent} from "./sitemap-list-item.component";
+import {NgxDnDModule} from '@swimlane/ngx-dnd';
+import {AuthModule} from '../auth';
+import {SitemapListItemComponent} from './sitemap-list-item.component';
+import {SitemapListComponent} from './sitemap-list.component';
+import {SitemapRoutingModule} from './sitemap-routing.module';
 
 @NgModule({
     imports: [
         CommonModule,
+        AuthModule,
         NgxDnDModule,
+        SitemapRoutingModule,
     ],
     declarations: [
         SitemapListComponent,

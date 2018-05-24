@@ -228,9 +228,9 @@ export class ResourceService extends DataService {
      */
     find(id: number | string) {
 
-        if (!this._subscription) {
-            this.load();
-        }
+        // if (!this._subscription) {
+        //     this.load();
+        // }
 
         this._model$.next(null);
 

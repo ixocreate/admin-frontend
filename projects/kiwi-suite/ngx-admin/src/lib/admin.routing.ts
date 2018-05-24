@@ -7,8 +7,8 @@ import {DashboardRoutingModule} from './views/dashboard';
 import {PageNotFoundComponent} from './views/errors';
 import {MediaRoutingModule} from './views/media';
 import {ResourceRoutingModule} from './views/resource';
+import {SitemapRoutingModule} from './views/sitemap/sitemap-routing.module';
 import {UserRoutingModule} from './views/user';
-import {SitemapRoutingModule} from "./views/sitemap/sitemap-routing.module";
 
 export const routes: Routes = [
     {

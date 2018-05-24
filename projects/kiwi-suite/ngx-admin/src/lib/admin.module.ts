@@ -15,7 +15,6 @@ import {AlertModule, BsDatepickerModule, ModalModule, PopoverModule, Progressbar
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ClipboardModule} from 'ngx-clipboard';
-import {QuillModule} from 'ngx-quill';
 import {ToastrModule} from 'ngx-toastr';
 import {flatMap} from 'rxjs/operators';
 import {AdminComponent} from './admin.component';
@@ -49,6 +48,7 @@ import {
     ErrorHandlerService,
     LoggerService,
     MediaService,
+    PageService,
     SessionService,
     setAppInjector,
     UserService
@@ -59,8 +59,8 @@ import {DashboardModule} from './views/dashboard';
 import {PageNotFoundComponent} from './views/errors';
 import {MediaModule} from './views/media';
 import {ResourceModule} from './views/resource';
+import {SitemapModule} from './views/sitemap';
 import {UserModule} from './views/user';
-import {SitemapModule} from "./views/sitemap";
 
 const APP_CONTAINERS = [
     FullLayoutComponent,
@@ -214,6 +214,7 @@ export class AdminModule {
                 DataStoreService,
                 LoggerService,
                 MediaService,
+                PageService,
                 SchemaFormBuilder,
                 SessionService,
                 UserService

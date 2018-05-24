@@ -12,9 +12,12 @@
     </div>
     <div class="clearfix"></div>
 </div>
-<div *ngIf="item.children.length > 0" class="ngx-dnd-container" ngxDroppable [model]="item.children" (drop)="drop($event)" (drag)="drag($event)" [dropZone]="dropZone">
-    <div class="ngx-dnd-item has-handle" ngxDraggable *ngFor="let item of item.children" [model]="item" [dropZones]="['page']">
+<div *ngIf="item.children.length > 0" class="ngx-dnd-container" ngxDroppable [model]="item.children"
+     (drop)="drop($event)" (drag)="drag($event)" [dropZone]="dropZone">
+    <div class="ngx-dnd-item has-handle" ngxDraggable *ngFor="let item of item.children" [model]="item"
+         [dropZones]="['page']">
         <app-sitemap-list-item [item]="item" (dropped)="drop($event)" (dragged)="drag($event)"></app-sitemap-list-item>
     </div>
 </div>
-<ngx-dnd-container *ngIf="item.children.length === 0" [model]="item.children" [dropZones]="['page']" [dropZone]="dropZone" (drop)="drop($event)" (drag)="drag($event)"></ngx-dnd-container>
+<ngx-dnd-container *ngIf="item.children.length === 0" [model]="item.children" [dropZones]="['page']"
+                   [dropZone]="dropZone" (drop)="drop($event)" (drag)="drag($event)"></ngx-dnd-container>

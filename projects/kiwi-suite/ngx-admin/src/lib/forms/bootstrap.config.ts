@@ -17,12 +17,7 @@ import {
     FormlyFieldTextArea,
 } from './types/types';
 import {FormlyWrapperAddons} from './wrappers/addons';
-import {
-    FormlyWrapperDescription,
-    FormlyWrapperFieldset,
-    FormlyWrapperLabel,
-    FormlyWrapperValidationMessages,
-} from './wrappers/wrappers';
+import {FormlyWrapperDescription, FormlyWrapperFieldset, FormlyWrapperLabel, FormlyWrapperValidationMessages} from './wrappers/wrappers';
 
 export const FIELD_TYPE_COMPONENTS = [
     // types

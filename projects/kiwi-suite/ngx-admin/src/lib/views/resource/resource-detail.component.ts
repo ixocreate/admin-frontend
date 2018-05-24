@@ -14,9 +14,8 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
 
     ngOnInit() {
         super.ngOnInit();
-        this.model = {};
 
-        this.route.data.subscribe((data: { action: string }) => {
+        this.route.data.pipe(takeUntil(this.destroyed$)).subscribe((data: { action: string }) => {
             this.action = data.action;
             this.initModel();
         });

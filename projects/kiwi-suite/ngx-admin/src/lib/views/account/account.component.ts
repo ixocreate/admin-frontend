@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
-import {AccountService, AppInjector} from '../../services';
+import {AccountService} from '../../services';
 import {ResourceEditComponent} from '../resource';
 
 @Component({
@@ -10,8 +10,6 @@ import {ResourceEditComponent} from '../resource';
     templateUrl: './account.component.html',
 })
 export class AccountComponent extends ResourceEditComponent implements OnInit {
-
-    protected dataService: AccountService;
 
     avatarForm: FormGroup;
     avatar: FileList;
@@ -22,17 +20,30 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
     emailForm: FormGroup;
     emailFormModel = {email: '', emailRepeat: ''};
 
-    constructor(protected route: ActivatedRoute) {
+    constructor(protected route: ActivatedRoute,
+                protected dataService: AccountService) {
         super(route);
-        this.dataService = AppInjector.get(AccountService);
     }
 
-    ngOnInit() {
+    protected initModel() {
         this.dataService.model$.pipe(takeUntil(this.destroyed$))
             .subscribe(user => {
+                if (!user) {
+                    return;
+                }
                 this.model = user;
                 this.initForm();
             });
+        // this.route.params.pipe(takeUntil(this.destroyed$))
+        //     .subscribe(params => {
+        //         this.dataService.find(params['id']).pipe(takeUntil(this.destroyed$)).subscribe(model => {
+        //             if (!model) {
+        //                 this.model = {};
+        //                 return;
+        //             }
+        //             this.model = model;
+        //         });
+        //     });
     }
 
     initForm() {

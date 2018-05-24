@@ -3,7 +3,7 @@ import {FormArray, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
-import {AsyncSubject, of, Subscription} from 'rxjs';
+import {AsyncSubject, of} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {SchemaFormArray, SchemaFormBuilder} from '../../forms/schema-form-builder';
 import {ResourceModelControl, ResourceModelSchema} from '../../models';
@@ -18,9 +18,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
 
     private _formReady$ = new AsyncSubject();
     private _model: any;
-    private _modelSub: Subscription;
     private _schemas: ResourceModelSchema[];
-    private _routeParamsSub: Subscription;
 
     protected action: string;
     protected formBuilder: SchemaFormBuilder;
@@ -31,17 +29,10 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
 
     constructor(protected route: ActivatedRoute) {
         super(route);
-        // this.formBuilder = AppInjector.get(FormBuilder);
         this.formBuilder = AppInjector.get(SchemaFormBuilder);
     }
 
     ngOnDestroy() {
-        // if (this._modelSub) {
-        //     this._modelSub.unsubscribe();
-        // }
-        // if (this._routeParamsSub) {
-        //     this._routeParamsSub.unsubscribe();
-        // }
         super.ngOnDestroy();
         this.model = null;
         this.form = null;
@@ -72,17 +63,18 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
             this.resetForm();
         }
         if (this.action === 'edit') {
-            this._routeParamsSub = this.route.params.subscribe(params => {
-                this._modelSub = this.dataService.find(params['id'])
-                    .pipe(takeUntil(this.destroyed$))
-                    .subscribe(model => {
-                        if (!model) {
-                            return;
-                        }
-                        this._model = model;
-                        this.resetForm();
-                    });
-            });
+            this.route.params.pipe(takeUntil(this.destroyed$))
+                .subscribe(params => {
+                    this.dataService.find(params['id'])
+                        .pipe(takeUntil(this.destroyed$))
+                        .subscribe(model => {
+                            if (!model) {
+                                return;
+                            }
+                            this._model = model;
+                            this.resetForm();
+                        });
+                });
         }
     }
 
@@ -145,7 +137,11 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                     .subscribe(
                         (result) => {
                             this.toastr.success('The item was successfully updated ', 'Success');
-                            this.dataService.load();
+                            /**
+                             * loading the dataservice here causes the form to reinitialise
+                             * which results in unexpected results (duplicating items in the form raw model)
+                             */
+                            // this.dataService.load(this.model.id);
                         }, () => {
                             this.toastr.error('There was an error in updating the item', 'Error', {
                                 timeOut: 0,
