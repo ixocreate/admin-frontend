@@ -1,23 +1,38 @@
-<div class="sitemap-container">
-    <div class="sitemap-drag-handle pull-left">
-        <i class="fa fa-list" ngxDragHandle></i>
+<div class="sitemap-container d-flex mb-2">
+    <div class="btn btn-sm btn-outline-secondary px-2 d-flex flex-column justify-content-center"
+         ngxDragHandle>
+        <i class="fa fa-fw fa-bars text-muted"></i>
     </div>
-    <div class="sitemap-label pull-left">
-        {{ item.label }}
+    <div class="sitemap-label flex-grow-1 py-2 px-3">
+        <div>
+            {{ item.label }}
+        </div>
     </div>
-    <div class="sitemap-toolbar pull-right">
-        <a class="btn btn-sm btn-primary" href="">
-            <i class="fa fa-pencil"></i>
-        </a>
-    </div>
-    <div class="clearfix"></div>
+    <button class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
+            type="button"
+            routerLink="">
+        <i class="fa fa-fw fa-pencil"></i>
+    </button>
 </div>
-<div *ngIf="item.children.length > 0" class="ngx-dnd-container" ngxDroppable [model]="item.children"
-     (drop)="drop($event)" (drag)="drag($event)" [dropZone]="dropZone">
-    <div class="ngx-dnd-item has-handle" ngxDraggable *ngFor="let item of item.children" [model]="item"
+<div *ngIf="item.children.length > 0" class="ngx-dnd-container" ngxDroppable
+     [model]="item.children"
+     [dropZone]="dropZone"
+     (drop)="drop($event)"
+     (drag)="drag($event)">
+    <div class="ngx-dnd-item has-handle" ngxDraggable
+         *ngFor="let item of item.children"
+         [model]="item"
          [dropZones]="['page']">
-        <app-sitemap-list-item [item]="item" (dropped)="drop($event)" (dragged)="drag($event)"></app-sitemap-list-item>
+        <app-sitemap-list-item [item]="item"
+                               (dropped)="drop($event)"
+                               (dragged)="drag($event)">
+        </app-sitemap-list-item>
     </div>
 </div>
-<ngx-dnd-container *ngIf="item.children.length === 0" [model]="item.children" [dropZones]="['page']"
-                   [dropZone]="dropZone" (drop)="drop($event)" (drag)="drag($event)"></ngx-dnd-container>
+<ngx-dnd-container *ngIf="item.children.length === 0"
+                   [model]="item.children"
+                   [dropZones]="['page']"
+                   [dropZone]="dropZone"
+                   (drop)="drop($event)"
+                   (drag)="drag($event)">
+</ngx-dnd-container>

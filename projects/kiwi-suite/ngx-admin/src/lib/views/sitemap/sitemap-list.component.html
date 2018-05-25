@@ -9,12 +9,19 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="ngx-dnd-container" ngxDroppable [model]="items" (drop)="drop($event)" (drag)="drag($event)"
-             [dropZone]="dropZone">
-            <div class="ngx-dnd-item has-handle" ngxDraggable *ngFor="let item of items" [model]="item"
+        <div class="ngx-dnd-container" ngxDroppable
+             [model]="items"
+             [dropZone]="dropZone"
+             (drop)="drop($event)"
+             (drag)="drag($event)">
+            <div class="ngx-dnd-item has-handle" ngxDraggable
+                 *ngFor="let item of items"
+                 [model]="item"
                  [dropZones]="['page']">
-                <app-sitemap-list-item [item]="item" (dropped)="drop($event)"
-                                       (dragged)="drag($event)"></app-sitemap-list-item>
+                <app-sitemap-list-item [item]="item"
+                                       (dropped)="drop($event)"
+                                       (dragged)="drag($event)">
+                </app-sitemap-list-item>
             </div>
         </div>
     </div>
