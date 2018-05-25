@@ -1,30 +1,25 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ContainerComponent, DraggableDirective, ItemComponent} from "@swimlane/ngx-dnd";
 
 @Component({
     selector: 'app-sitemap-list-item',
     templateUrl: './sitemap-list-item.component.html',
+    providers: [ContainerComponent, DraggableDirective],
 })
-export class SitemapListItemComponent implements OnInit {
-    @Input() item: any;
-    @Output() dropped = new EventEmitter<any>();
-    @Output() dragged = new EventEmitter<any>();
+export class SitemapListItemComponent extends ItemComponent {
 
-    dropZone: string;
+  @Output()
+  drop: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor() {
-    }
 
-    ngOnInit() {
+  constructor(
+    public container: ContainerComponent,
+    public draggableDirective: DraggableDirective
+  ) {
+      super(container, draggableDirective);
+  }
 
-    }
-
-    drop(event: any) {
-        this.dropZone = null;
-        this.dropped.emit(event);
-    }
-
-    drag(event: any) {
-        this.dropZone = event.value.pageType;
-        this.dragged.emit(event);
-    }
+  onDrop(event) {
+    this.drop.emit(event);
+  }
 }

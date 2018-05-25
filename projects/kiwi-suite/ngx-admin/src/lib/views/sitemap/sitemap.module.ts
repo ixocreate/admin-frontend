@@ -5,6 +5,7 @@ import {AuthModule} from '../auth';
 import {SitemapListItemComponent} from './sitemap-list-item.component';
 import {SitemapListComponent} from './sitemap-list.component';
 import {SitemapRoutingModule} from './sitemap-routing.module';
+import {SitemapListContainerComponent} from "./sitemap-list-container.component";
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import {SitemapRoutingModule} from './sitemap-routing.module';
     declarations: [
         SitemapListComponent,
         SitemapListItemComponent,
+        SitemapListContainerComponent,
     ],
     providers: [
         // UserResolver

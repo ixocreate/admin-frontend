@@ -10,8 +10,6 @@ import {ResourceListComponent} from '../resource';
 export class SitemapListComponent extends ResourceListComponent implements OnInit {
     items = [];
 
-    dropZone: string;
-
     constructor(protected route: ActivatedRoute,
                 protected dataService: PageService) {
         super(route);
@@ -98,12 +96,11 @@ export class SitemapListComponent extends ResourceListComponent implements OnIni
     }
 
     drop(event: any) {
-        this.dropZone = null;
         console.log(this.getInfo(event.value.id, this.items, null));
+        this.dataService.saveSort(this.getInfo(event.value.id, this.items, null)).subscribe();
     }
 
     drag(event: any) {
-        this.dropZone = event.value.pageType;
     }
 
     protected getInfo(searchId: string, items: { id, children }[], parent: string): { parent: string, prevSibling: string } {

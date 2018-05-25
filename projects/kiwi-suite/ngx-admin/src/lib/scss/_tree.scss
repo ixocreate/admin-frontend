@@ -1,8 +1,10 @@
 .sitemap-container {
-    transition: opacity 0.4s ease-in-out;
+
+    margin-top: 10px;
 }
 
 .sitemap-label {
+    transition: opacity 0.4s ease-in-out;
     border-top: 1px solid $gray-200;
     border-bottom: 1px solid $gray-200;
     background-color: lighten($primary, 49%);
@@ -21,6 +23,8 @@
 
 .ngx-dnd-container.gu-empty {
     border: none !important;
+    min-height: 6px;
+    margin: 0 0 0 20px !important;
 }
 
 .ngx-dnd-container:nth-child(odd) {

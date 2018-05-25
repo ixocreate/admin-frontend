@@ -1,0 +1,26 @@
+<div
+        ngxDroppable
+        [dropZone]="dropZone"
+        [model]="model"
+        [copy]="copy"
+        [ngClass]="{ 'gu-empty': !model?.length }"
+        [removeOnSpill]="removeOnSpill"
+        class='ngx-dnd-container'>
+    <ng-container *ngIf="model">
+        <ng-container *ngFor="let item of model">
+            <app-sitemap-list-item
+                    ngxDraggable
+                    [model]="item"
+                    [dropZone]="dropZone"
+                    [dropZones]="dropZones"
+                    [copy]="copy"
+                    [moves]="moves"
+                    [removeOnSpill]="removeOnSpill"
+                    [droppableItemClass]="droppableItemClass"
+                    (drop)="onDrop($event)"
+            >
+            </app-sitemap-list-item>
+        </ng-container>
+    </ng-container>
+    <ng-content *ngIf="!model"></ng-content>
+</div>

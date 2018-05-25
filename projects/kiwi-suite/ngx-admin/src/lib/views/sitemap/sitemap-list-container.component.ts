@@ -1,0 +1,13 @@
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ContainerComponent} from "@swimlane/ngx-dnd";
+
+@Component({
+    selector: 'app-sitemap-list-container',
+    templateUrl: './sitemap-list-container.component.html',
+})
+export class SitemapListContainerComponent extends ContainerComponent {
+
+    onDrop(event) {
+        this.drop.emit(event);
+    }
+}
