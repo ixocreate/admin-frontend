@@ -9,6 +9,7 @@
                 [removeOnSpill]="removeOnSpill"
                 [droppableItemClass]="droppableItemClass"
                 [copy]="copy"
+                [locale]="locale"
                 (drop)="onDrop($event)">
         </app-sitemap-list-container>
     </ng-container>
@@ -27,9 +28,23 @@
                 </div>
                 <div class="sitemap-label flex-grow-1 py-2 px-3">
                     <div>
-                        {{ model.label }}
+                        <ng-container *ngIf="model.pages[locale] && model.pages[locale].name">
+                            {{ model.pages[locale].name }}
+                        </ng-container>
+                        <ng-container *ngIf="!model.pages[locale] || !model.pages[locale].name ">
+                            <small *ngFor="let locale of objectKeys(model.pages)" style="text-decoration: line-through;">
+                                <ng-container *ngIf="model.pages[locale].name">
+                                    [{{ model.pages[locale].name }}]
+                                </ng-container>
+                            </small>
+                        </ng-container>
                     </div>
                 </div>
+                <button class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
+                        type="button"
+                        [routerLink]="['create', locale, model.sitemap.id]">
+                    <i class="fa fa-fw fa-plus"></i>
+                </button>
                 <button class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
                         type="button"
                         routerLink="">
@@ -45,6 +60,7 @@
                     [removeOnSpill]="removeOnSpill"
                     [droppableItemClass]="droppableItemClass"
                     [copy]="copy"
+                    [locale]="locale"
                    (drop)="onDrop($event)">
             </app-sitemap-list-container>
         </ng-container>

@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from '../../containers/full-layout';
 import {PermissionGuard} from '../auth/guards';
 import {SitemapListComponent} from './sitemap-list.component';
+import {SitemapCreateComponent} from "./sitemap-create.component";
 
 const routes: Routes = [
     {
@@ -27,6 +28,24 @@ const routes: Routes = [
                                 canActivate: [PermissionGuard],
                                 data: {
                                     title: 'List',
+                                },
+                            },
+                            {
+                                path: 'create/:locale',
+                                component: SitemapCreateComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Create',
+                                    action: 'create',
+                                },
+                            },
+                            {
+                                path: 'create/:locale/:parentSitemapId',
+                                component: SitemapCreateComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Create',
+                                    action: 'create',
                                 },
                             }
                         ]

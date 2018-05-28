@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-8 col-lg-7 col-xl-6">
+        <form [formGroup]="form" (ngSubmit)="onSubmit('create')" *ngIf="form && fields && (action$ | async) as action">
+            <div class="card card-accent-primary">
+                <div class="card-header">
+                    <b class="text-muted">{{ resourceName$ | async }}</b>
+                </div>
+                <div class="card-body">
+                    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-fw fa-save"></i>
+                        <span *ngIf="action === 'create'">Create</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--<div class="col-md-4 col-lg-5 col-xl-6">-->
+    <!--<pre *ngIf="this.form">{{ this.form.getRawValue() | json }}</pre>-->
+    <!--</div>-->
+</div>

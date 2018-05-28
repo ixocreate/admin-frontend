@@ -5,6 +5,7 @@ export interface Config {
     project: Project;
     navigation: Navigation[];
     routes: Routes;
+    intl: {default: string, locales: Locale[]};
 }
 
 export interface Navigation {
@@ -59,4 +60,10 @@ export interface Routes {
     userCreate: string;
     userDelete: string;
     userEmail: string;
+}
+
+export interface Locale {
+    locale: string;
+    name: string;
+    active: boolean;
 }

@@ -6,6 +6,8 @@ import {ContainerComponent} from "@swimlane/ngx-dnd";
     templateUrl: './sitemap-list-container.component.html',
 })
 export class SitemapListContainerComponent extends ContainerComponent {
+    @Input()
+    locale:string;
 
     onDrop(event) {
         this.drop.emit(event);

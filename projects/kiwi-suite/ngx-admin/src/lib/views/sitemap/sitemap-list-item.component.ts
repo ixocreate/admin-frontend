@@ -7,19 +7,23 @@ import {ContainerComponent, DraggableDirective, ItemComponent} from "@swimlane/n
     providers: [ContainerComponent, DraggableDirective],
 })
 export class SitemapListItemComponent extends ItemComponent {
+    objectKeys = Object.keys;
 
-  @Output()
-  drop: EventEmitter<any> = new EventEmitter<any>();
+    @Input()
+    locale:string;
+
+    @Output()
+    drop: EventEmitter<any> = new EventEmitter<any>();
 
 
-  constructor(
-    public container: ContainerComponent,
-    public draggableDirective: DraggableDirective
-  ) {
-      super(container, draggableDirective);
-  }
+    constructor(
+        public container: ContainerComponent,
+        public draggableDirective: DraggableDirective
+    ) {
+        super(container, draggableDirective);
+    }
 
-  onDrop(event) {
-    this.drop.emit(event);
-  }
+    onDrop(event) {
+        this.drop.emit(event);
+    }
 }

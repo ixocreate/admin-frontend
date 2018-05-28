@@ -8,7 +8,7 @@ import {ResourceListComponent} from '../resource';
     templateUrl: './sitemap-list.component.html',
 })
 export class SitemapListComponent extends ResourceListComponent implements OnInit {
-    items = [];
+    selectedLocale: string = "de_AT";
 
     constructor(protected route: ActivatedRoute,
                 protected dataService: PageService) {
@@ -16,108 +16,41 @@ export class SitemapListComponent extends ResourceListComponent implements OnIni
     }
 
     ngOnInit() {
-        this.items = [
-            {
-                'id': '1',
-                'label': 'Item 1',
-                'pageType': 'page',
-                'children': []
-            },
-            {
-                'id': '2',
-                'label': 'Item 2',
-                'pageType': 'page',
-                'children': [
-                    {
-                        'id': '4',
-                        'label': 'Item 2a',
-                        'pageType': 'page',
-                        'children': [
-                            {
-                                'id': '10',
-                                'label': 'Item x1',
-                                'pageType': 'page',
-                                'children': []
-                            },
-                            {
-                                'id': '11',
-                                'label': 'Item x2',
-                                'pageType': 'page',
-                                'children': []
-                            },
-                            {
-                                'id': '12',
-                                'label': 'Item x3',
-                                'pageType': 'page',
-                                'children': []
-                            }
-                        ]
-                    },
-                    {
-                        'id': '5',
-                        'label': 'Item 2b',
-                        'pageType': 'page',
-                        'children': []
-                    },
-                    {
-                        'id': '6',
-                        'label': 'Item 2c',
-                        'pageType': 'page',
-                        'children': []
-                    }
-                ]
-            },
-            {
-                'id': '3',
-                'label': 'Item 3',
-                'pageType': 'page',
-                'children': [
-                    {
-                        'id': '7',
-                        'label': 'Item 3a',
-                        'pageType': 'page',
-                        'children': []
-                    },
-                    {
-                        'id': '8',
-                        'label': 'Item 3b',
-                        'pageType': 'page',
-                        'children': []
-                    },
-                    {
-                        'id': '9',
-                        'label': 'Item 3c',
-                        'pageType': 'page',
-                        'children': []
-                    }
-                ]
-            }
-        ];
+        super.ngOnInit();
+        this.selectedLocale = this.config.params.intl.default;
+    }
+
+    get locales() {
+        return this.config.params.intl.locales;
     }
 
     drop(event: any) {
-        console.log(this.getInfo(event.value.id, this.items, null));
-        this.dataService.saveSort(this.getInfo(event.value.id, this.items, null)).subscribe();
+        this.models$.subscribe(
+            (items) => {
+                this.dataService.saveSort(this.getInfo(event.value.sitemap.id, items, null)).subscribe();
+            }
+        )
     }
 
     drag(event: any) {
     }
 
-    protected getInfo(searchId: string, items: { id, children }[], parent: string): { parent: string, prevSibling: string } {
+    protected getInfo(searchId: string, items: any, parent: string): { id: string, parent: string, prevSibling: string } {
         let prevSibling: string = null;
         for (let item of items) {
-            if (item.id === searchId) {
+            if (item.sitemap.id === searchId) {
                 return {
                     parent: parent,
-                    prevSibling: prevSibling
+                    prevSibling: prevSibling,
+                    id: searchId,
                 };
             }
-            prevSibling = item.id;
+            prevSibling = item.sitemap.id;
         }
 
-        let result: { parent: string, prevSibling: string } = null;
+        let result: { id: string, parent: string, prevSibling: string } = null;
         for (let item of items) {
-            result = this.getInfo(searchId, item.children, item.id);
+            result = this.getInfo(searchId, item.children, item.sitemap.id);
             if (result !== null) {
                 return result;
             }
