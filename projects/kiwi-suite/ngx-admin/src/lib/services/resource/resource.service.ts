@@ -11,7 +11,7 @@ export class ResourceService extends DataService {
     protected _subscription: Subscription;
 
     protected _schema: any;
-    protected _schema$ = new BehaviorSubject<any>({});
+    protected _schema$ = new BehaviorSubject<any>(null);
     protected _model$ = new BehaviorSubject<any>({});
     protected _model: any;
     protected _models$ = new BehaviorSubject<any[]>([]);

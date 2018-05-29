@@ -31,19 +31,20 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
     }
 
     get loading$() {
-        return this.dataService.loading$;
+        return this.dataService.loading$.pipe(takeUntil(this.destroyed$));
     }
 
     protected initModel() {
         this.route.params.pipe(takeUntil(this.destroyed$))
             .subscribe(params => {
-                this.dataService.find(params['id']).pipe(takeUntil(this.destroyed$)).subscribe(model => {
-                    if (!model) {
-                        this.model = {};
-                        return;
-                    }
-                    this.model = model;
-                });
+                this.dataService.find(params['id']).pipe(takeUntil(this.destroyed$)).subscribe(
+                    model => {
+                        if (!model) {
+                            this.model = {};
+                            return;
+                        }
+                        this.model = model;
+                    });
             });
     }
 

@@ -1,11 +1,10 @@
-<div
-        ngxDroppable
-        [dropZone]="dropZone"
-        [model]="model"
-        [copy]="copy"
-        [ngClass]="{ 'gu-empty': !model?.length }"
-        [removeOnSpill]="removeOnSpill"
-        class='ngx-dnd-container'>
+<div ngxDroppable
+     [dropZone]="dropZone"
+     [model]="model"
+     [copy]="copy"
+     [ngClass]="{ 'gu-empty': !model?.length }"
+     [removeOnSpill]="removeOnSpill"
+     class='ngx-dnd-container'>
     <ng-container *ngIf="model">
         <ng-container *ngFor="let item of model">
             <app-sitemap-list-item

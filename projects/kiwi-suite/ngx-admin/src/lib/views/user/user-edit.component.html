@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div *ngIf="action === 'edit'">
+    <div *ngIf="action === 'edit' && formReady$ | async">
         <div class="row">
             <div class="col-lg-4 col-xl-6 order-lg-2">
                 <div class="card card-accent-primary">

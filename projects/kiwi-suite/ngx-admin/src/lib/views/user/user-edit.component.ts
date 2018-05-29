@@ -32,15 +32,16 @@ export class UserEditComponent extends ResourceEditComponent implements OnInit {
                 protected dataService: UserService,
                 protected route: ActivatedRoute) {
         super(route);
-    }
 
-    ngOnInit() {
-        super.ngOnInit();
         this.accountService.model$.pipe(takeUntil(this.destroyed$))
             .subscribe(account => {
                 this.account = account;
                 super.ngOnInit();
             });
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
     }
 
     initForm() {

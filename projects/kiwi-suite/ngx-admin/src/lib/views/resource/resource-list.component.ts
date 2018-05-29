@@ -10,8 +10,6 @@ export class ResourceListComponent extends ResourceComponent {
 
     @ViewChild('dataTable') dataTable: any;
 
-    protected pathPrefix = 'resource/';
-
     loadingIndicator = true;
     reorderable = true;
     limit = 10;
@@ -28,10 +26,6 @@ export class ResourceListComponent extends ResourceComponent {
 
     get resourceKey() {
         return this.dataService.resourceKey;
-    }
-
-    get resourcePath() {
-        return this.pathPrefix;
     }
 
     toggleExpandRow(row) {

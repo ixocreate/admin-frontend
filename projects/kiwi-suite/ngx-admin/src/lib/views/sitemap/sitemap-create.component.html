@@ -1,17 +1,21 @@
-<div class="row">
+<div class="row" *ngIf="formReady$ | async">
     <div class="col-md-8 col-lg-7 col-xl-6">
-        <form [formGroup]="form" (ngSubmit)="onSubmit('create')" *ngIf="form && fields && (action$ | async) as action">
+        <form [formGroup]="form" (ngSubmit)="onSubmit('create')">
             <div class="card card-accent-primary">
                 <div class="card-header">
                     <b class="text-muted">{{ resourceName$ | async }}</b>
                 </div>
                 <div class="card-body">
-                    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+                    <formly-form
+                            [form]="form"
+                            [fields]="fields"
+                            [model]="model"
+                    ></formly-form>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-fw fa-save"></i>
-                        <span *ngIf="action === 'create'">Create</span>
+                        <span>Create</span>
                     </button>
                 </div>
             </div>

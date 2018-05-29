@@ -32,7 +32,8 @@
                             {{ model.pages[locale].name }}
                         </ng-container>
                         <ng-container *ngIf="!model.pages[locale] || !model.pages[locale].name ">
-                            <small *ngFor="let locale of objectKeys(model.pages)" style="text-decoration: line-through;">
+                            <small *ngFor="let locale of objectKeys(model.pages)"
+                                   style="text-decoration: line-through;">
                                 <ng-container *ngIf="model.pages[locale].name">
                                     [{{ model.pages[locale].name }}]
                                 </ng-container>
@@ -45,9 +46,13 @@
                         [routerLink]="['create', locale, model.sitemap.id]">
                     <i class="fa fa-fw fa-plus"></i>
                 </button>
+
+                <!--{{ model | json }}-->
+
                 <button class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
                         type="button"
-                        routerLink="">
+                        [routerLink]="['edit', model.pages[locale].id]"
+                        *ngIf="model.pages[locale]">
                     <i class="fa fa-fw fa-pencil"></i>
                 </button>
             </div>
@@ -61,7 +66,7 @@
                     [droppableItemClass]="droppableItemClass"
                     [copy]="copy"
                     [locale]="locale"
-                   (drop)="onDrop($event)">
+                    (drop)="onDrop($event)">
             </app-sitemap-list-container>
         </ng-container>
     </ng-container>
@@ -70,14 +75,12 @@
     </ng-container>
 
     <ng-container *ngSwitchDefault>
-        <ng-template
-                *ngIf="container.template"
-                [ngTemplateOutlet]="container.template"
-                [ngTemplateOutletContext]="data">
+        <ng-template *ngIf="container.template"
+                     [ngTemplateOutlet]="container.template"
+                     [ngTemplateOutletContext]="data">
         </ng-template>
-        <div
-                *ngIf="!container.template"
-                class="ngx-dnd-content">
+        <div *ngIf="!container.template"
+             class="ngx-dnd-content">
             {{model}}
         </div>
     </ng-container>

@@ -23,11 +23,25 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
      */
     private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
+    /**
+     * comparison type after routing to determine if dataService should reload
+     */
     private currentType: string;
+
+    /**
+     * set a type on a component to receive a generic resource data service
+     * to use a specialized data service inject it in the component's constructor
+     */
     protected type: string;
 
+    /**
+     * override this if building components that are routed somewhere else
+     */
     protected pathPrefix = 'resource/';
 
+    /**
+     * manually injected services
+     */
     protected apiService: ApiService;
     protected config: ConfigurationService;
     protected dataStore: DataStoreService;
@@ -53,19 +67,15 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
     }
 
     get resourceName$() {
-        return this.schema$.pipe(map(schema => schema.name || '...'));
+        return this.schema$.pipe(map(schema => schema ? schema.name : '...'));
     }
 
     get resourceNamePlural$() {
-        return this.schema$.pipe(map(schema => schema.namePlural || '...'));
+        return this.schema$.pipe(map(schema => schema ? schema.namePlural : '...'));
     }
 
     get resourceKey() {
         return this.dataService.resourceKey;
-    }
-
-    get resourcePath() {
-        return this.pathPrefix;
     }
 
     get schema$() {
@@ -91,7 +101,7 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
                     this.dataStore.register(this.dataService);
                     type = this.dataService.resourceKey;
                 }
-
+                
                 /**
                  * reload the data service if navigation happened within resource component
                  */

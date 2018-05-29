@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from '../../containers/full-layout';
 import {PermissionGuard} from '../auth/guards';
+import {SitemapEditComponent} from './sitemap-edit.component';
 import {SitemapListComponent} from './sitemap-list.component';
 import {SitemapCreateComponent} from "./sitemap-create.component";
 
@@ -46,6 +47,15 @@ const routes: Routes = [
                                 data: {
                                     title: 'Create',
                                     action: 'create',
+                                },
+                            },
+                            {
+                                path: 'edit/:id',
+                                component: SitemapEditComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Edit',
+                                    action: 'edit',
                                 },
                             }
                         ]

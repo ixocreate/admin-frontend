@@ -17,14 +17,14 @@ import {ResourceDetailComponent} from './resource-detail.component';
 export class ResourceEditComponent extends ResourceDetailComponent implements OnDestroy {
 
     private _formReady$ = new AsyncSubject();
-    private _model: any;
     private _schemas: ResourceModelSchema[];
 
     protected action: string;
     protected formBuilder: SchemaFormBuilder;
 
-    form: FormGroup;
+    protected _model: any;
     model: any;
+    form: FormGroup;
     fields: FormlyFieldConfig[];
 
     constructor(protected route: ActivatedRoute) {
@@ -34,9 +34,12 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.model = null;
-        this.form = null;
         this._formReady$ = null;
+        this._model = null;
+        this._schemas = null;
+        this.form = null;
+        this.model = null;
+        this.fields = null;
     }
 
     get action$() {
@@ -82,7 +85,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         this.model = Object.assign({}, this._model);
     }
 
-    initForm() {
+    protected initForm() {
         this.form = new FormGroup({});
         this.dataService.schema$.pipe(takeUntil(this.destroyed$))
             .subscribe(schema => this.fields = schema.form);
@@ -101,7 +104,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         // this.buildFormFromSchemas(ModelSchemas.all, this.dataService.resourceKey);
     }
 
-    resetForm() {
+    protected resetForm() {
         this.resetModel();
         this.initForm();
         this._formReady$.next(true);

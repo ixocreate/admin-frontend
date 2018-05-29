@@ -1,4 +1,4 @@
-<div class="card card-accent-primary">
+<div class="card card-accent-primary" *ngIf="schema$ | async as schema">
     <div class="card-header">
         <b class="text-muted">{{ resourceNamePlural$ | async }}</b>
         <div class="card-actions">

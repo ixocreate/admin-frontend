@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ContainerComponent, DraggableDirective, ItemComponent} from "@swimlane/ngx-dnd";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ContainerComponent, DraggableDirective, ItemComponent} from '@swimlane/ngx-dnd';
 
 @Component({
     selector: 'app-sitemap-list-item',
@@ -10,7 +10,7 @@ export class SitemapListItemComponent extends ItemComponent {
     objectKeys = Object.keys;
 
     @Input()
-    locale:string;
+    locale: string;
 
     @Output()
     drop: EventEmitter<any> = new EventEmitter<any>();

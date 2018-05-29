@@ -50,6 +50,9 @@ export class AppBreadcrumbsComponent implements OnDestroy {
                                         takeUntil(this._destroyed$),
                                         map(schema => {
                                             let title = route.snapshot.data.title;
+                                            if(!schema) {
+                                                return title;
+                                            }
                                             if (schema.namePlural) {
                                                 title = title.replace('%resources', schema.namePlural);
                                             }

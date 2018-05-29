@@ -1,4 +1,4 @@
-<div class="card card-accent-primary">
+<div class="card card-accent-primary" *ngIf="schema$ | async as schema">
     <div class="card-header">
         <b class="text-muted">{{ resourceNamePlural$ | async }}</b>
         <div class="card-actions">
@@ -48,8 +48,8 @@
             <!--</ng-template>-->
             <!--</ngx-datatable-column>-->
 
-            <div *ngIf="(schema$ | async)?.list as schema">
-                <ngx-datatable-column *ngFor="let schemaColumn of schema" [prop]="schemaColumn.key">
+            <div *ngIf="schema.list">
+                <ngx-datatable-column *ngFor="let schemaColumn of schema.list" [prop]="schemaColumn.key">
                     <ng-template let-column="column" ngx-datatable-header-template>
                         {{ schemaColumn.name }}
                     </ng-template>

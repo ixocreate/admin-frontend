@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PageService} from '../../services/resource/page.service';
+import {PageService} from '../../services';
 import {ResourceListComponent} from '../resource';
 
 @Component({
@@ -8,7 +8,7 @@ import {ResourceListComponent} from '../resource';
     templateUrl: './sitemap-list.component.html',
 })
 export class SitemapListComponent extends ResourceListComponent implements OnInit {
-    selectedLocale: string = "de_AT";
+    selectedLocale: string = 'de_AT';
 
     constructor(protected route: ActivatedRoute,
                 protected dataService: PageService) {

@@ -1,86 +1,44 @@
-import {Component, Inject} from '@angular/core';
-import {ResourceEditComponent} from "../resource/resource-edit.component";
-import {FormGroup} from "@angular/forms";
-import {BehaviorSubject} from "rxjs/Rx";
-import {ActivatedRoute} from "@angular/router";
-import {ApiService} from "../../services/api.service";
+import {Component} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
+import {PageService} from '../../services';
+import {ResourceEditComponent} from '../resource';
 
 @Component({
     selector: 'app-sitemap-create',
     templateUrl: './sitemap-create.component.html',
 })
-export class SitemapCreateComponent extends ResourceEditComponent{
-    protected type: string = "page";
-    protected _schema: any;
-    protected _schema$ = new BehaviorSubject<any>({});
-    protected _loading$ = new BehaviorSubject<boolean>(false);
-
+export class SitemapCreateComponent extends ResourceEditComponent {
     private locale: string;
     private parentSitemapId: string;
 
-    constructor(@Inject(ApiService) protected api: ApiService, protected route: ActivatedRoute)
-    {
+    constructor(protected dataService: PageService,
+                protected route: ActivatedRoute) {
         super(route);
+
+        this.route.params.pipe(takeUntil(this.destroyed$)).subscribe(
+            params => {
+                this.locale = params.locale;
+                if (params.parentSitemapId) {
+                    this.parentSitemapId = params.parentSitemapId;
+                }
+            });
     }
 
-    get createSchemaLink() {
-        return this.config.params.routes['pageCreateSchema'];
+    get createSchema$() {
+        return this.dataService.createSchema$;
     }
 
-    get schema$() {
-        return this._schema$.asObservable();
-    }
-
-    ngOnInit() {
-        this.route.params.pipe(takeUntil(this.destroyed$)).subscribe((params) => {
-            this.locale = params.locale;
-            if (params.parentSitemapId) {
-                this.parentSitemapId = params.parentSitemapId;
-            }
-            super.ngOnInit();
-        });
-    }
-
-    protected loadSchema() {
-        this.config.ready$.subscribe(() => {
-            if (!this.createSchemaLink) {
-                return;
-            }
-            this._loading$.next(true);
-            this.api.get<any[]>(this.createSchemaLink)
-                .subscribe(
-                    schema => {
-                        this._schema = schema;
-                        this._schema$.next(this._schema);
-                    },
-                    () => {
-                    },
-                    () => {
-                        this._loading$.next(false);
-                    }
-                );
-        });
-    }
-
-    initForm() {
+    protected initForm() {
         this.form = new FormGroup({});
-        this.loadSchema();
-        this.schema$.pipe(takeUntil(this.destroyed$))
+        this.createSchema$.pipe(takeUntil(this.destroyed$))
             .subscribe(schema => this.fields = schema);
+    }
 
-        // this.fields = [{
-        //     key: 'name',
-        //     type: 'input',
-        //     templateOptions: {
-        //         type: 'text',
-        //         label: 'Name',
-        //         placeholder: 'Name',
-        //         required: true,
-        //     }
-        // }];
-
-        // this.buildFormFromSchemas(ModelSchemas.all, this.dataService.resourceKey);
+    protected initModel() {
+        this._model = {};
+        this.resetForm();
     }
 
     onSubmit(action) {
@@ -98,7 +56,6 @@ export class SitemapCreateComponent extends ResourceEditComponent{
                 if (this.parentSitemapId) {
                     values['parentSitemapId'] = this.parentSitemapId;
                 }
-
                 this.dataService.create(this.model, values)
                     .subscribe(result => {
                         this.toastr.success('The item was successfully created ', 'Success');

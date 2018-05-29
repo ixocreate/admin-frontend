@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ContainerComponent} from "@swimlane/ngx-dnd";
+import {Component, Input} from '@angular/core';
+import {ContainerComponent} from '@swimlane/ngx-dnd';
 
 @Component({
     selector: 'app-sitemap-list-container',
@@ -7,7 +7,7 @@ import {ContainerComponent} from "@swimlane/ngx-dnd";
 })
 export class SitemapListContainerComponent extends ContainerComponent {
     @Input()
-    locale:string;
+    locale: string;
 
     onDrop(event) {
         this.drop.emit(event);
