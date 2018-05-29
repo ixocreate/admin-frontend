@@ -7,6 +7,7 @@ export * from './data.service';
 export * from './error.service';
 export * from './logger.service';
 export * from './session.service';
+export * from './aside.service';
 export * from './resource/account.service';
 export * from './resource/media.service';
 export * from './resource/page.service';

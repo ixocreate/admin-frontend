@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {AsideService} from "../../services/aside.service";
 
 @Component({
     selector: 'app-aside',
@@ -6,6 +7,6 @@ import {Component} from '@angular/core';
 })
 export class AppAsideComponent {
 
-    constructor() {
+    constructor(public asideService: AsideService) {
     }
 }

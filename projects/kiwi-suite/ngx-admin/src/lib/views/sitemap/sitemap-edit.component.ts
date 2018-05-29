@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {takeUntil} from 'rxjs/operators';
-import {PageService} from '../../services';
+import {AsideService, PageService} from '../../services';
 import {ResourceEditComponent} from '../resource';
 
 @Component({
@@ -11,6 +11,11 @@ import {ResourceEditComponent} from '../resource';
     templateUrl: './sitemap-edit.component.html',
 })
 export class SitemapEditComponent extends ResourceEditComponent implements OnInit {
+    public editName = false;
+
+    @ViewChild('asideTemplate')
+    private asideTemplateTpl: TemplateRef<any>;
+
 
     /**
      * not a standard resource that needs to be prefixed in url (resource/)
@@ -23,15 +28,18 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     contentFields: FormlyFieldConfig[];
 
     constructor(protected dataService: PageService,
+                protected asideService: AsideService,
                 protected route: ActivatedRoute) {
         super(route);
     }
 
     ngOnInit() {
+        this.asideService.enable(this.asideTemplateTpl);
         super.ngOnInit();
     }
 
     ngOnDestroy() {
+        this.asideService.disable();
         super.ngOnDestroy();
         this.contentModel = null;
         this.contentForm = null;

@@ -1,5 +1,5 @@
 <div class="row" *ngIf="(pageTypeSchema$ | async) as schema">
-    <div class="col-md-8 col-lg-7 col-xl-6">
+    <div class="col-md-12 col-lg-12 col-xl-12">
         <!--<form [formGroup]="form" (ngSubmit)="onSubmit('edit')">-->
         <!--<div class="card card-accent-primary">-->
         <!--<div class="card-header">-->
@@ -17,11 +17,20 @@
         <!--</div>-->
         <!--</form>-->
 
-        <form [formGroup]="contentForm" (ngSubmit)="onSubmitContent()"
-              *ngIf="contentForm && contentFields">
+        <form [formGroup]="contentForm" (ngSubmit)="onSubmitContent()" *ngIf="contentForm && contentFields">
             <div class="card card-accent-primary">
                 <div class="card-header">
-                    <b class="text-muted">{{ resourceName$ | async }}</b>
+                    <ng-container *ngIf="editName === false">
+                        <button type="button" class="btn btn-sm btn-link" (click)="editName = true"><i class="fa fa-edit"></i></button> <b class="text-muted">{{ contentModel.name }}</b>
+                    </ng-container>
+                    <ng-container *ngIf="editName === true">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button" (click)="editName = false"><i class="fa fa-check"></i></button>
+                            </div>
+                            <input type="text" class="form-control" value="{{ contentModel.name }}">
+                        </div>
+                    </ng-container>
                 </div>
                 <div class="card-body">
                     <formly-form [form]="contentForm" [fields]="contentFields" [model]="contentModel"></formly-form>
@@ -41,3 +50,69 @@
         <pre *ngIf="this.contentForm">{{ this.contentForm.getRawValue() | json }}</pre>
     </div>
 </div>
+
+<ng-template #asideTemplate>
+    <tabset>
+        <tab>
+            <ng-template tabHeading><i class="icon-settings"></i></ng-template>
+            <div class="p-3">
+                <h6>Scheduling</h6>
+                <div class="form-group">
+                    <label for="publishedFrom">Published From</label>
+                    <input type="text" class="form-control form-control-sm" id="publishedFrom" placeholder="Published From">
+                </div>
+
+                <div class="form-group">
+                    <label for="publishedUntil">Published Until</label>
+                    <input type="text" class="form-control form-control-sm" id="publishedUntil" placeholder="Published Until">
+                </div>
+                <hr>
+                <h6>Status</h6>
+                <label class="switch switch-label switch-pill switch-outline-success-alt"><input checked="" class="switch-input" type="checkbox"><span class="switch-slider" data-checked="On" data-unchecked="Off"></span></label>
+                <hr>
+                <h6>Navigation</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                    <label class="form-check-label" for="defaultCheck2">
+                        Default checkbox
+                    </label>
+                </div>
+            </div>
+        </tab>
+        <tab>
+            <ng-template tabHeading><i class="icon-list"></i></ng-template>
+            <div class="list-group list-group-accent">
+                <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                    <div>#3 by <strong>Lucas</strong></div>
+                    <div><small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small></div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                    <div>#2 by <strong>Lucas</strong></div>
+                    <div><small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small></div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                    <div>#1 by <strong>Lucas</strong></div>
+                    <div><small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small></div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</ng-template>
