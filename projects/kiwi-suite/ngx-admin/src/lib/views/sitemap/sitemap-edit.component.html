@@ -20,17 +20,7 @@
         <form [formGroup]="contentForm" (ngSubmit)="onSubmitContent()" *ngIf="contentForm && contentFields">
             <div class="card card-accent-primary">
                 <div class="card-header">
-                    <ng-container *ngIf="editName === false">
-                        <button type="button" class="btn btn-sm btn-link" (click)="editName = true"><i class="fa fa-edit"></i></button> <b class="text-muted">{{ contentModel.name }}</b>
-                    </ng-container>
-                    <ng-container *ngIf="editName === true">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button" (click)="editName = false"><i class="fa fa-check"></i></button>
-                            </div>
-                            <input type="text" class="form-control" value="{{ contentModel.name }}">
-                        </div>
-                    </ng-container>
+                    <b class="text-muted">{{ resourceName$ | async }}</b>
                 </div>
                 <div class="card-body">
                     <formly-form [form]="contentForm" [fields]="contentFields" [model]="contentModel"></formly-form>
@@ -56,6 +46,12 @@
         <tab>
             <ng-template tabHeading><i class="icon-settings"></i></ng-template>
             <div class="p-3">
+                <h6>General</h6>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control form-control-sm" id="name" placeholder="Name">
+                </div>
+                <hr>
                 <h6>Scheduling</h6>
                 <div class="form-group">
                     <label for="publishedFrom">Published From</label>

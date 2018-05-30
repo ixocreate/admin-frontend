@@ -11,8 +11,6 @@ import {ResourceEditComponent} from '../resource';
     templateUrl: './sitemap-edit.component.html',
 })
 export class SitemapEditComponent extends ResourceEditComponent implements OnInit {
-    public editName = false;
-
     @ViewChild('asideTemplate')
     private asideTemplateTpl: TemplateRef<any>;
 
