@@ -58,9 +58,7 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
                 // this.dataService.load();
                 this.router.navigateByUrl(this.pathPrefix + this.dataService.resourceKey);
             }, () => {
-                this.toastr.error('There was an error in deleting the item', 'Error', {
-                    timeOut: 0,
-                });
+                this.toastr.error('There was an error in deleting the item', 'Error');
             });
     }
 }

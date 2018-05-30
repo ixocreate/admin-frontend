@@ -1,39 +1,24 @@
-<div class="row" *ngIf="(pageTypeSchema$ | async) as schema">
-    <div class="col-md-12 col-lg-12 col-xl-12">
-        <!--<form [formGroup]="form" (ngSubmit)="onSubmit('edit')">-->
-        <!--<div class="card card-accent-primary">-->
-        <!--<div class="card-header">-->
-        <!--<b class="text-muted">{{ resourceName$ | async }}</b>-->
-        <!--</div>-->
-        <!--<div class="card-body">-->
-        <!--<formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>-->
-        <!--</div>-->
-        <!--<div class="card-footer">-->
-        <!--<button type="submit" class="btn btn-primary">-->
-        <!--<i class="fa fa-fw fa-save"></i>-->
-        <!--<span>Update</span>-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</form>-->
-
-        <form [formGroup]="contentForm" (ngSubmit)="onSubmitContent()" *ngIf="contentForm && contentFields">
-            <div class="card card-accent-primary">
-                <div class="card-header">
-                    <b class="text-muted">{{ resourceName$ | async }}</b>
+<div class="row">
+    <div class="col-md-4 col-lg-5 col-xl-6">
+        <div *ngIf="(contentSchema$ | async) as contentSchema">
+            <form [formGroup]="contentForm" (ngSubmit)="onSubmit()"
+                  *ngIf="contentForm && contentFields">
+                <div class="card card-accent-primary">
+                    <div class="card-header">
+                        <b class="text-muted">{{ resourceName$ | async }}</b>
+                    </div>
+                    <div class="card-body">
+                        <formly-form [form]="contentForm" [fields]="contentFields" [model]="contentModel"></formly-form>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-fw fa-save"></i>
+                            <span>Update</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <formly-form [form]="contentForm" [fields]="contentFields" [model]="contentModel"></formly-form>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-fw fa-save"></i>
-                        <span>Update</span>
-                    </button>
-                </div>
-            </div>
-        </form>
-
+            </form>
+        </div>
     </div>
     <div class="col-md-4 col-lg-5 col-xl-6">
         <pre *ngIf="this.contentModel">{{ this.contentModel | json }}</pre>
@@ -45,40 +30,11 @@
     <tabset>
         <tab>
             <ng-template tabHeading><i class="icon-settings"></i></ng-template>
-            <div class="p-3">
-                <h6><i class="fa fa-gear"></i> General</h6>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control form-control-sm" id="name" placeholder="Name">
-                </div>
-                <hr>
-                <h6><i class="fa fa-calendar"></i> Scheduling</h6>
-                <div class="form-group">
-                    <label for="publishedFrom">Published From</label>
-                    <input type="text" class="form-control form-control-sm" id="publishedFrom" placeholder="Published From">
-                </div>
-
-                <div class="form-group">
-                    <label for="publishedUntil">Published Until</label>
-                    <input type="text" class="form-control form-control-sm" id="publishedUntil" placeholder="Published Until">
-                </div>
-                <hr>
-                <h6><i class="fa fa-power-off"></i> Status</h6>
-                <label class="switch switch-label switch-pill switch-outline-success-alt"><input checked="" class="switch-input" type="checkbox"><span class="switch-slider" data-checked="On" data-unchecked="Off"></span></label>
-                <hr>
-                <h6><i class="fa fa-navicon"></i> Navigation</h6>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        Default checkbox
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                    <label class="form-check-label" for="defaultCheck2">
-                        Default checkbox
-                    </label>
-                </div>
+            <div class="p-3" *ngIf="(schema$ | async) as schema">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form">
+                    <formly-form [form]="form" [fields]="fields" [model]="model">
+                    </formly-form>
+                </form>
             </div>
         </tab>
         <tab>
@@ -86,7 +42,9 @@
             <div class="list-group list-group-accent">
                 <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
                     <div>#3 by <strong>Lucas</strong></div>
-                    <div><small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small></div>
+                    <div>
+                        <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
+                    </div>
                     <div>
                         <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
                         <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
@@ -94,7 +52,9 @@
                 </div>
                 <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
                     <div>#2 by <strong>Lucas</strong></div>
-                    <div><small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small></div>
+                    <div>
+                        <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
+                    </div>
                     <div>
                         <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
                         <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
@@ -102,7 +62,9 @@
                 </div>
                 <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
                     <div>#1 by <strong>Lucas</strong></div>
-                    <div><small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small></div>
+                    <div>
+                        <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
+                    </div>
                     <div>
                         <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
                         <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>

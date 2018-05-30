@@ -32,6 +32,7 @@ export class SelectOption {
         <ng-select [items]="selectOptions$ | async"
                    [bindValue]="valueProp"
                    [bindLabel]="labelProp"
+                   [clearable]="clearable"
                    [multiple]="multiple"
                    [formControl]="formControl">
         </ng-select>
@@ -80,6 +81,10 @@ export class FormlyFieldSelect extends FieldType implements OnInit, OnDestroy {
 
     get groupProp(): string {
         return this.to.groupProp || 'group';
+    }
+
+    get clearable() {
+        return this.to.clearable;
     }
 
     get multiple() {

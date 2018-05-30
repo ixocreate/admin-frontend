@@ -65,28 +65,25 @@ export class MediaModalListComponent implements OnInit, OnDestroy {
         if (!mimeType || mimeType.length < 6) {
             return false;
         }
-
-        if (mimeType.substr(0, 6) !== 'image/') {
-            return false;
-        }
-
-        return true;
+        return mimeType.substr(0, 6) === 'image/';
     }
 
     isSVG(mimeType: string): boolean {
         if (!mimeType || mimeType.length < 6) {
             return false;
         }
-
-        if (mimeType.indexOf('svg') === -1) {
-            return false;
-        }
-
-        return true;
+        return mimeType.indexOf('svg') !== -1;
     }
 
     mimeTypeIcon(mimeType: string): string {
-        return 'fa-file';
+        let icon = 'fa-file';
+        if(mimeType.indexOf('pdf') > -1) {
+            icon = 'fa-file-pdf-o';
+        }
+        if(mimeType.indexOf('image') > -1) {
+            icon = 'fa-file-image-o';
+        }
+        return icon;
     }
 
     base64Image(file?: File | Blob): Promise<SafeUrl> {

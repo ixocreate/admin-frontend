@@ -111,11 +111,9 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         this._formReady$.complete();
     }
 
-    onSubmit(action) {
+    onSubmit(action = null) {
         if (this.form.valid === false) {
-            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error', {
-                timeOut: 0,
-            });
+            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error');
             return;
         }
 
@@ -130,9 +128,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                         this.dataService.load();
                         this.router.navigate([this.pathPrefix + this.dataService.resourceKey]);
                     }, () => {
-                        this.toastr.error('There was an error in creating the item', 'Error', {
-                            timeOut: 0,
-                        });
+                        this.toastr.error('There was an error in creating the item', 'Error');
                     });
                 break;
             case 'edit':
@@ -146,9 +142,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                              */
                             // this.dataService.load(this.model.id);
                         }, () => {
-                            this.toastr.error('There was an error in updating the item', 'Error', {
-                                timeOut: 0,
-                            });
+                            this.toastr.error('There was an error in updating the item', 'Error');
                         }
                     );
                 break;

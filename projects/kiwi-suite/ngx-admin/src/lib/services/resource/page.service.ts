@@ -16,8 +16,35 @@ export class PageService extends ResourceService {
         return this.config.params.routes['pageSort'];
     }
 
+    get pageVersionDetailLink() {
+        if (!this._model) {
+            console.warn('No model to generate resource link with [' + this.resource + ']');
+            return '';
+        }
+        const url = this.config.params.routes['pageVersionDetail'];
+        if (!url) {
+            console.warn('No route configuration for model [' + this.resource + ']');
+            return '';
+        }
+        return url.replace('{id}', this._model.id);
+    }
+
     get createSchemaLink() {
         return this.config.params.routes['pageCreateSchema'];
+    }
+
+    get updateContentLink() {
+
+        if (!this._model) {
+            console.warn('No model to generate resource link with [' + this.resource + ']');
+            return '';
+        }
+        const url = this.config.params.routes['pageCreateVersion'];
+        if (!url) {
+            console.warn('No route configuration for model [' + this.resource + ']');
+            return '';
+        }
+        return url.replace('{id}', this._model.id);
     }
 
     get pageTypeSchemaLink() {
@@ -95,5 +122,13 @@ export class PageService extends ResourceService {
         });
 
         return this.pageTypeSchema$;
+    }
+
+    updateContent(model: any, values) {
+        return this.api.post(this.updateContentLink, {content: values});
+    }
+
+    content(id: number | string) {
+        return this.api.get(this.pageVersionDetailLink);
     }
 }

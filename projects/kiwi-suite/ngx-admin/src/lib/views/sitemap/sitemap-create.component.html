@@ -1,4 +1,4 @@
-<div class="row" *ngIf="formReady$ | async">
+<div class="row" *ngIf="createSchema$ | async">
     <div class="col-md-8 col-lg-7 col-xl-6">
         <form [formGroup]="form" (ngSubmit)="onSubmit('create')">
             <div class="card card-accent-primary">

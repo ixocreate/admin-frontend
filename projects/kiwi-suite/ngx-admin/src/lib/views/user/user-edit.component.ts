@@ -92,9 +92,7 @@ export class UserEditComponent extends ResourceEditComponent implements OnInit {
                 this.dataService.load();
                 this.toastr.success('The email was successfully updated ', 'Success');
             }, () => {
-                this.toastr.error('There was an error in updating the email', 'Error', {
-                    timeOut: 0,
-                });
+                this.toastr.error('There was an error in updating the email', 'Error');
             });
     }
 
@@ -104,9 +102,7 @@ export class UserEditComponent extends ResourceEditComponent implements OnInit {
                 this.dataService.load();
                 this.toastr.success('The user was successfully updated ', 'Success');
             }, () => {
-                this.toastr.error('There was an error in updating the user', 'Error', {
-                    timeOut: 0,
-                });
+                this.toastr.error('There was an error in updating the user', 'Error');
             });
     }
 }

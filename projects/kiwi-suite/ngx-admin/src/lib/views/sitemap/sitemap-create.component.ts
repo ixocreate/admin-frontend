@@ -41,11 +41,9 @@ export class SitemapCreateComponent extends ResourceEditComponent {
         this.resetForm();
     }
 
-    onSubmit(action) {
+    onSubmit(action = null) {
         if (this.form.valid === false) {
-            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error', {
-                timeOut: 0,
-            });
+            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error');
             return;
         }
 
@@ -65,9 +63,7 @@ export class SitemapCreateComponent extends ResourceEditComponent {
                         this.dataService.load();
                         this.router.navigate(['sitemap']);
                     }, () => {
-                        this.toastr.error('There was an error in creating the item', 'Error', {
-                            timeOut: 0,
-                        });
+                        this.toastr.error('There was an error in creating the item', 'Error');
                     });
                 break;
         }

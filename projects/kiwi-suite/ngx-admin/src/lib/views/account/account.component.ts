@@ -94,9 +94,7 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
                 this.dataService.load();
                 this.toastr.success('The email was successfully updated ', 'Success');
             }, () => {
-                this.toastr.error('There was an error in updating the email', 'Error', {
-                    timeOut: 0,
-                });
+                this.toastr.error('There was an error in updating the email', 'Error');
             });
     }
 
@@ -106,9 +104,7 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
                 this.dataService.load();
                 this.toastr.success('The password was successfully updated ', 'Success');
             }, () => {
-                this.toastr.error('There was an error in updating the password', 'Error', {
-                    timeOut: 0,
-                });
+                this.toastr.error('There was an error in updating the password', 'Error');
             });
     }
 }

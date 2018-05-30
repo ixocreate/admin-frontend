@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray} from '@angular/forms';
+import {clone, isNullOrUndefined} from '../utils';
 import {FormlyFieldRepeatable} from './repeatable';
 
 @Component({
@@ -72,11 +73,17 @@ export class FormlyFieldDynamic extends FormlyFieldRepeatable implements OnInit 
          */
         this.field.fieldGroup = [];
 
+        const modelClone = clone(this.model);
+
+        for (let i = modelClone.length - 1; i >= 0; i--) {
+            this.remove(i);
+        }
+
         /**
          * and refill it by our own model
          */
-        this.model.map(model => {
-            this.add(null, model);
+        modelClone.map((model, index) => {
+            this.add(index, model);
         });
 
         /**
@@ -94,14 +101,16 @@ export class FormlyFieldDynamic extends FormlyFieldRepeatable implements OnInit 
     }
 
     add(i?: number, initialModel ?: any) {
-        i = i || this.field.fieldGroup.length;
-        let model = initialModel;
+        i = isNullOrUndefined(i) ? this.field.fieldGroup.length : i;
+
+        let model = clone(initialModel);
         if (!model) {
             model = {
                 _type: this.selectedFieldGroupType,
             };
-            this.model.splice(i, 0, {...model});
+            // this.model.splice(i, 0, {...model});
         }
+        this.model.splice(i, 0, model);
 
         let typeDefinition = null;
         this.fieldGroups.map(fieldGroup => {
@@ -137,7 +146,7 @@ export class FormlyFieldDynamic extends FormlyFieldRepeatable implements OnInit 
 
         const form = new FormArray([]);
         this.formBuilder.buildForm(form, [this.field.fieldGroup[i]], this.model, this.options);
-        this.formControl.push(form.at(0));
+        this.formControl.insert(i ,form.at(0));
 
         (<any> this.options).resetTrackModelChanges();
     }

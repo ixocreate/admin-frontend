@@ -16,8 +16,14 @@ import {
     FormlyFieldSelectNative,
     FormlyFieldTextArea,
 } from './types/types';
-import {FormlyWrapperAddons} from './wrappers/addons';
-import {FormlyWrapperDescription, FormlyWrapperFieldset, FormlyWrapperLabel, FormlyWrapperValidationMessages} from './wrappers/wrappers';
+import {
+    FormlyWrapperAddons,
+    FormlyWrapperDescription,
+    FormlyWrapperFieldset,
+    FormlyWrapperLabel,
+    FormlyWrapperSection,
+    FormlyWrapperValidationMessages
+} from './wrappers/wrappers';
 
 export const FIELD_TYPE_COMPONENTS = [
     // types
@@ -40,6 +46,7 @@ export const FIELD_TYPE_COMPONENTS = [
     FormlyWrapperValidationMessages,
     FormlyWrapperFieldset,
     FormlyWrapperAddons,
+    FormlyWrapperSection,
 ];
 
 export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
@@ -173,6 +180,7 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         {name: 'validation-message', component: FormlyWrapperValidationMessages},
         {name: 'fieldset', component: FormlyWrapperFieldset},
         {name: 'addons', component: FormlyWrapperAddons},
+        {name: 'section', component: FormlyWrapperSection},
     ],
     manipulators: [
         {class: TemplateDescription, method: 'run'},

@@ -14,7 +14,6 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     @ViewChild('asideTemplate')
     private asideTemplateTpl: TemplateRef<any>;
 
-
     /**
      * not a standard resource that needs to be prefixed in url (resource/)
      */
@@ -39,11 +38,12 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     ngOnDestroy() {
         this.asideService.disable();
         super.ngOnDestroy();
+        this._contentModel = null;
         this.contentModel = null;
         this.contentForm = null;
     }
 
-    get pageTypeSchema$() {
+    get contentSchema$() {
         return this.dataService.pageTypeSchema$;
     }
 
@@ -59,15 +59,27 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     protected initModel() {
         this.route.params.pipe(takeUntil(this.destroyed$))
             .subscribe(params => {
+
                 this.dataService.find(params['id'])
                     .pipe(takeUntil(this.destroyed$))
                     .subscribe(model => {
                         if (!model) {
                             return;
                         }
-                        this._contentModel = model;
-                        this.resetForm();
+                        this._model = model;
+
+                        this.dataService.content(params['id'])
+                            .pipe(takeUntil(this.destroyed$))
+                            .subscribe(model => {
+                                if (!model) {
+                                    return;
+                                }
+                                this._contentModel = model;
+                                this.resetForm();
+                            });
+                        // this.resetForm();
                     });
+
             });
     }
 
@@ -76,14 +88,28 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
         this.contentModel = Object.assign({}, this._contentModel);
     }
 
-    onSubmitContent() {
+    onSubmit(action = null) {
+        /**
+         * TODO: check if respective form is dirty before sending it
+         */
+
+        /**
+         * submit page metadata (default resource here)
+         */
+        super.onSubmit('edit');
+
+        /**
+         * submit content
+         */
+        this.onSubmitContent();
+    }
+
+    private onSubmitContent() {
         if (this.contentForm.valid === false) {
-            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error', {
-                timeOut: 0,
-            });
+            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error');
             return;
         }
-        this.dataService.update(this.model, this.contentForm.getRawValue())
+        this.dataService.updateContent(this.contentModel, this.contentForm.getRawValue())
             .subscribe(
                 (result) => {
                     this.toastr.success('The item was successfully updated ', 'Success');
@@ -93,9 +119,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                      */
                     // this.dataService.load(this.model.id);
                 }, () => {
-                    this.toastr.error('There was an error in updating the item', 'Error', {
-                        timeOut: 0,
-                    });
+                    this.toastr.error('There was an error in updating the item', 'Error');
                 }
             );
     }

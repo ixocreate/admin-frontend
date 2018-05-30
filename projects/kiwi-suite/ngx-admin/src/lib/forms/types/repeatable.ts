@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormArray} from '@angular/forms';
 import {FieldArrayType, FormlyFormBuilder} from '@ngx-formly/core';
+import {clone} from '../utils';
 
 @Component({
     selector: 'formly-field-repeat',
@@ -65,33 +66,14 @@ export class FormlyFieldRepeatable extends FieldArrayType {
             sortedModels.push(currentModel);
         });
 
-        /**
-         * ... then change the key on the model ...
-         */
-        this.field.fieldGroup.forEach((field, index) => {
-            field['key'] = `${index}`;
+        for (let i = sortedModels.length - 1; i >= 0; i--) {
+            this.remove(i);
+        }
+
+        sortedModels.forEach((model, index) => {
+            this.add(index, model);
         });
 
-        /**
-         * ... and apply new model
-         */
-        this.model = sortedModels;
-
-        /**
-         * rebuild the whole form...
-         */
-        const form = new FormArray([]);
-        this.formBuilder.buildForm(form, this.field.fieldGroup, this.model, this.options);
-
-        /**
-         * ... and re-apply each control to the current control
-         */
-        form.controls.forEach((item, index) => {
-            this.formControl.setControl(index, item);
-        });
-
-        /**
-         * now, go to sleep happily and hope to never have to touch this again
-         */
+        (<any> this.options).resetTrackModelChanges();
     }
 }
