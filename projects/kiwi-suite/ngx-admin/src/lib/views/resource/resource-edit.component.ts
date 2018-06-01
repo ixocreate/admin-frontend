@@ -128,7 +128,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                         this.dataService.load();
                         this.router.navigate([this.pathPrefix + this.dataService.resourceKey]);
                     }, () => {
-                        this.toastr.error('There was an error in creating the item', 'Error');
+                        this.toastr.error('There was an error in creating the ' + this.resourceKey, 'Error');
                     });
                 break;
             case 'edit':
