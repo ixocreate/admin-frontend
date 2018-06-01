@@ -6,9 +6,9 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {FileUploadModule} from 'ng2-file-upload';
 import {ProgressbarModule} from 'ngx-bootstrap';
 import {AuthModule} from '../auth';
-import {MediaModalListComponent, MediaSelectorComponent} from './components';
+import {MediaListComponent, MediaSelectorComponent} from './components';
 import {MediaEditComponent} from './media-edit.component';
-import {MediaListComponent} from './media-list.component';
+import {MediaIndexComponent} from './media-index.component';
 import {MediaRoutingModule} from './media-routing.module';
 
 @NgModule({
@@ -24,15 +24,15 @@ import {MediaRoutingModule} from './media-routing.module';
     ],
     declarations: [
         MediaEditComponent,
+        MediaIndexComponent,
         MediaListComponent,
-        MediaModalListComponent,
         MediaSelectorComponent,
     ],
     providers: [
         // UserResolver
     ],
     exports: [
-        MediaModalListComponent,
+        MediaListComponent,
         MediaSelectorComponent,
     ]
 })

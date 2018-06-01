@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
@@ -11,10 +11,10 @@ import {AppInjector} from '../../services';
 import {ResourceDetailComponent} from './resource-detail.component';
 
 @Component({
-    selector: 'app-resource-edit',
+    selector: 'resource-edit',
     templateUrl: './resource-edit.component.html',
 })
-export class ResourceEditComponent extends ResourceDetailComponent implements OnDestroy {
+export class ResourceEditComponent extends ResourceDetailComponent implements OnInit, OnDestroy {
 
     private _formReady$ = new AsyncSubject();
     private _schemas: ResourceModelSchema[];

@@ -1,28 +1,34 @@
-import {Component, OnInit} from '@angular/core';
-import {SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {DomSanitizer, SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload';
 import {takeUntil} from 'rxjs/operators';
-import {MediaService} from '../../services';
-import {ResourceListComponent} from '../resource';
+import {Media} from '../../../models';
+import {ConfigurationService, MediaService} from '../../../services';
+import {ResourceComponent} from '../../resource';
 
 @Component({
-    selector: 'app-media-list',
+    selector: 'media-list',
     templateUrl: './media-list.component.html',
 })
-export class MediaListComponent extends ResourceListComponent implements OnInit {
+export class MediaListComponent extends ResourceComponent implements OnInit {
 
-    protected pathPrefix = '';
+    uploader: FileUploader;
 
-    public uploader: FileUploader;
+    @Output() onSelect = new EventEmitter<Media>();
+
+    select(media: Media) {
+        this.onSelect.emit(media);
+    }
 
     constructor(protected dataService: MediaService,
+                protected config: ConfigurationService,
+                protected domSanitizer: DomSanitizer,
                 protected route: ActivatedRoute) {
         super(route);
     }
 
     ngOnInit() {
-        super.ngOnInit();
         this.config.ready$.pipe(takeUntil(this.destroyed$))
             .subscribe(
                 () => {
@@ -47,28 +53,25 @@ export class MediaListComponent extends ResourceListComponent implements OnInit 
         if (!mimeType || mimeType.length < 6) {
             return false;
         }
-
-        if (mimeType.substr(0, 6) !== 'image/') {
-            return false;
-        }
-
-        return true;
+        return mimeType.substr(0, 6) === 'image/';
     }
 
     isSVG(mimeType: string): boolean {
         if (!mimeType || mimeType.length < 6) {
             return false;
         }
-
-        if (mimeType.indexOf('svg') === -1) {
-            return false;
-        }
-
-        return true;
+        return mimeType.indexOf('svg') !== -1;
     }
 
     mimeTypeIcon(mimeType: string): string {
-        return 'fa-file';
+        let icon = 'fa-file';
+        if (mimeType.indexOf('pdf') > -1) {
+            icon = 'fa-file-pdf-o';
+        }
+        if (mimeType.indexOf('image') > -1) {
+            icon = 'fa-file-image-o';
+        }
+        return icon;
     }
 
     base64Image(file?: File | Blob): Promise<SafeUrl> {

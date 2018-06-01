@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from '../../containers/full-layout';
 import {PermissionGuard} from '../auth/guards';
+import {SitemapCreateComponent} from './sitemap-create.component';
 import {SitemapEditComponent} from './sitemap-edit.component';
-import {SitemapListComponent} from './sitemap-list.component';
-import {SitemapCreateComponent} from "./sitemap-create.component";
+import {SitemapIndexComponent} from './sitemap-index.component';
 
 const routes: Routes = [
     {
@@ -25,7 +25,7 @@ const routes: Routes = [
                         children: [
                             {
                                 path: '',
-                                component: SitemapListComponent,
+                                component: SitemapIndexComponent,
                                 canActivate: [PermissionGuard],
                                 data: {
                                     title: 'List',

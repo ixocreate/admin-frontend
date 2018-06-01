@@ -4,7 +4,7 @@ import {FullLayoutComponent} from '../../containers/full-layout';
 import {PermissionGuard} from '../auth/guards';
 import {ResourceDetailComponent} from './resource-detail.component';
 import {ResourceEditComponent} from './resource-edit.component';
-import {ResourceListComponent} from './resource-list.component';
+import {ResourceIndexComponent} from './resource-index.component';
 
 const routes: Routes = [
     {
@@ -25,7 +25,7 @@ const routes: Routes = [
                         children: [
                             {
                                 path: '',
-                                component: ResourceListComponent,
+                                component: ResourceIndexComponent,
                                 canActivate: [PermissionGuard],
                                 data: {
                                     title: 'List'

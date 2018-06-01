@@ -1,33 +1,28 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {DomSanitizer, SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+import {SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload';
 import {takeUntil} from 'rxjs/operators';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {Media} from '../../../models';
-import {ConfigurationService, MediaService} from '../../../services';
+import {MediaService} from '../../services';
+import {ResourceIndexComponent} from '../resource';
 
 @Component({
-    selector: 'media-modal-list',
-    templateUrl: './media-modal-list.component.html',
+    selector: 'app-media-list',
+    templateUrl: './media-index.component.html',
 })
-export class MediaModalListComponent implements OnInit, OnDestroy {
-    private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+export class MediaIndexComponent extends ResourceIndexComponent implements OnInit {
 
-    @Output() onSelect = new EventEmitter<Media>();
-
-    select(media: Media) {
-        this.onSelect.emit(media);
-    }
+    protected pathPrefix = '';
 
     public uploader: FileUploader;
 
     constructor(protected dataService: MediaService,
-                protected config: ConfigurationService,
-                protected domSanitizer: DomSanitizer) {
-        this.dataService.load();
+                protected route: ActivatedRoute) {
+        super(route);
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this.config.ready$.pipe(takeUntil(this.destroyed$))
             .subscribe(
                 () => {
@@ -48,42 +43,32 @@ export class MediaModalListComponent implements OnInit, OnDestroy {
                 });
     }
 
-    ngOnDestroy(): void {
-        this._destroyed$.next(true);
-        this._destroyed$.complete();
-    }
-
-    get models$() {
-        return this.dataService.models$;
-    }
-
-    get destroyed$() {
-        return this._destroyed$.asObservable();
-    }
-
     isImage(mimeType: string): boolean {
         if (!mimeType || mimeType.length < 6) {
             return false;
         }
-        return mimeType.substr(0, 6) === 'image/';
+
+        if (mimeType.substr(0, 6) !== 'image/') {
+            return false;
+        }
+
+        return true;
     }
 
     isSVG(mimeType: string): boolean {
         if (!mimeType || mimeType.length < 6) {
             return false;
         }
-        return mimeType.indexOf('svg') !== -1;
+
+        if (mimeType.indexOf('svg') === -1) {
+            return false;
+        }
+
+        return true;
     }
 
     mimeTypeIcon(mimeType: string): string {
-        let icon = 'fa-file';
-        if(mimeType.indexOf('pdf') > -1) {
-            icon = 'fa-file-pdf-o';
-        }
-        if(mimeType.indexOf('image') > -1) {
-            icon = 'fa-file-image-o';
-        }
-        return icon;
+        return 'fa-file';
     }
 
     base64Image(file?: File | Blob): Promise<SafeUrl> {

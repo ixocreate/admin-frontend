@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ContainerComponent, DraggableDirective, ItemComponent} from '@swimlane/ngx-dnd';
 
 @Component({
-    selector: 'app-sitemap-list-item',
+    selector: 'sitemap-list-item',
     templateUrl: './sitemap-list-item.component.html',
     providers: [ContainerComponent, DraggableDirective],
 })

@@ -18,12 +18,12 @@ export class PageService extends ResourceService {
 
     get pageVersionDetailLink() {
         if (!this._model) {
-            console.warn('No model to generate resource link with [' + this.resource + ']');
+            console.warn('No model to generate version detail link with [' + this.resource + ']');
             return '';
         }
         const url = this.config.params.routes['pageVersionDetail'];
         if (!url) {
-            console.warn('No route configuration for model [' + this.resource + ']');
+            console.warn('No version detail route configuration for model [' + this.resource + ']');
             return '';
         }
         return url.replace('{id}', this._model.id);

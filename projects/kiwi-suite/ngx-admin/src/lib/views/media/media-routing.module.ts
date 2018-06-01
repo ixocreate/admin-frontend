@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from '../../containers/full-layout';
 import {PermissionGuard} from '../auth/guards';
 import {MediaEditComponent} from './media-edit.component';
-import {MediaListComponent} from './media-list.component';
+import {MediaIndexComponent} from './media-index.component';
 
 const routes: Routes = [
     {
@@ -24,7 +24,7 @@ const routes: Routes = [
                         children: [
                             {
                                 path: '',
-                                component: MediaListComponent,
+                                component: MediaIndexComponent,
                                 canActivate: [PermissionGuard],
                                 data: {
                                     title: 'List',

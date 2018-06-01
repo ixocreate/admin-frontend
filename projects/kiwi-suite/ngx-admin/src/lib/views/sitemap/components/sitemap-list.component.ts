@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PageService} from '../../services';
-import {ResourceListComponent} from '../resource';
+import {PageService} from '../../../services';
+import {ResourceComponent} from '../../resource';
 
 @Component({
-    selector: 'app-sitemap-list',
+    selector: 'sitemap-list',
     templateUrl: './sitemap-list.component.html',
 })
-export class SitemapListComponent extends ResourceListComponent implements OnInit {
-    selectedLocale: string = 'de_AT';
+export class SitemapListComponent extends ResourceComponent implements OnInit {
+
+    selectedLocale = 'de_AT';
 
     constructor(protected route: ActivatedRoute,
                 protected dataService: PageService) {
@@ -29,7 +30,7 @@ export class SitemapListComponent extends ResourceListComponent implements OnIni
             (items) => {
                 this.dataService.saveSort(this.getInfo(event.value.sitemap.id, items, null)).subscribe();
             }
-        )
+        );
     }
 
     drag(event: any) {

@@ -7,7 +7,7 @@
      class='ngx-dnd-container'>
     <ng-container *ngIf="model">
         <ng-container *ngFor="let item of model">
-            <app-sitemap-list-item
+            <sitemap-list-item
                     ngxDraggable
                     [model]="item"
                     [dropZone]="dropZone"
@@ -19,7 +19,7 @@
                     (drop)="onDrop($event)"
                     [locale]="locale"
             >
-            </app-sitemap-list-item>
+            </sitemap-list-item>
         </ng-container>
     </ng-container>
     <ng-content *ngIf="!model"></ng-content>

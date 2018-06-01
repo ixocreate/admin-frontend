@@ -40,10 +40,6 @@ export class UserEditComponent extends ResourceEditComponent implements OnInit {
             });
     }
 
-    ngOnInit() {
-        super.ngOnInit();
-    }
-
     initForm() {
 
         // create

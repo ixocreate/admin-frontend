@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services';
-import {ResourceListComponent} from '../resource';
+import {ResourceIndexComponent} from '../resource';
 
 @Component({
-    selector: 'app-user-list',
-    templateUrl: './user-list.component.html',
+    selector: 'user-index',
+    templateUrl: './user-index.component.html',
 })
-export class UserListComponent extends ResourceListComponent {
+export class UserIndexComponent extends ResourceIndexComponent {
 
     /**
      * not needed when dataService is injected in constructor

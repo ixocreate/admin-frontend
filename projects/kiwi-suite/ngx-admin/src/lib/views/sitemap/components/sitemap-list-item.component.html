@@ -1,7 +1,7 @@
 <ng-container [ngSwitch]="type">
 
     <ng-container *ngSwitchCase="'array'">
-        <app-sitemap-list-container
+        <sitemap-list-container
                 [model]="model"
                 [template]="container.template"
                 [dropZone]="dropZone"
@@ -11,7 +11,7 @@
                 [copy]="copy"
                 [locale]="locale"
                 (drop)="onDrop($event)">
-        </app-sitemap-list-container>
+        </sitemap-list-container>
     </ng-container>
 
     <ng-container *ngSwitchCase="'object'">
@@ -56,7 +56,7 @@
                     <i class="fa fa-fw fa-pencil"></i>
                 </button>
             </div>
-            <app-sitemap-list-container
+            <sitemap-list-container
                     *ngIf="model.children"
                     [model]="model.children"
                     [template]="container.template"
@@ -67,7 +67,7 @@
                     [copy]="copy"
                     [locale]="locale"
                     (drop)="onDrop($event)">
-            </app-sitemap-list-container>
+            </sitemap-list-container>
         </ng-container>
     </ng-container>
 

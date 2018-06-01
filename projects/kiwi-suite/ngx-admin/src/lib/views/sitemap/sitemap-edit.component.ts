@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
@@ -10,7 +10,7 @@ import {ResourceEditComponent} from '../resource';
     selector: 'app-sitemap-edit',
     templateUrl: './sitemap-edit.component.html',
 })
-export class SitemapEditComponent extends ResourceEditComponent implements OnInit {
+export class SitemapEditComponent extends ResourceEditComponent implements OnInit, OnDestroy {
     @ViewChild('asideTemplate')
     private asideTemplateTpl: TemplateRef<any>;
 
@@ -31,13 +31,13 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     }
 
     ngOnInit() {
-        this.asideService.enable(this.asideTemplateTpl);
         super.ngOnInit();
+        this.asideService.enable(this.asideTemplateTpl);
     }
 
     ngOnDestroy() {
-        this.asideService.disable();
         super.ngOnDestroy();
+        this.asideService.disable();
         this._contentModel = null;
         this.contentModel = null;
         this.contentForm = null;

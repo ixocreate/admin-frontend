@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from '../../containers/full-layout';
 import {PermissionGuard} from '../auth/guards';
 import {UserEditComponent} from './user-edit.component';
-import {UserListComponent} from './user-list.component';
+import {UserIndexComponent} from './user-index.component';
 
 const routes: Routes = [
     {
@@ -24,7 +24,7 @@ const routes: Routes = [
                         children: [
                             {
                                 path: '',
-                                component: UserListComponent,
+                                component: UserIndexComponent,
                                 canActivate: [PermissionGuard],
                                 data: {
                                     title: 'List'

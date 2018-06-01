@@ -3,7 +3,7 @@ import {takeUntil} from 'rxjs/operators';
 import {ResourceComponent} from './resource.component';
 
 @Component({
-    selector: 'app-resource-detail',
+    selector: 'resource-detail',
     templateUrl: './resource-detail.component.html',
 })
 export class ResourceDetailComponent extends ResourceComponent implements OnInit, OnDestroy {
@@ -13,8 +13,12 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
     model: any;
 
     ngOnInit() {
-        super.ngOnInit();
-
+        if (!this.dataService) {
+            this.route.params.pipe(takeUntil(this.destroyed$))
+                .subscribe(params => {
+                    this.initDataService(params.type);
+                });
+        }
         this.route.data.pipe(takeUntil(this.destroyed$)).subscribe((data: { action: string }) => {
             this.action = data.action;
             this.initModel();
@@ -24,14 +28,6 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
     ngOnDestroy() {
         super.ngOnDestroy();
         this.model = {};
-    }
-
-    get model$() {
-        return this.dataService.model$.pipe(takeUntil(this.destroyed$));
-    }
-
-    get loading$() {
-        return this.dataService.loading$.pipe(takeUntil(this.destroyed$));
     }
 
     protected initModel() {
