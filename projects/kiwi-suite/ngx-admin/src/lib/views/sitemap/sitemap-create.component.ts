@@ -23,7 +23,15 @@ export class SitemapCreateComponent extends ResourceEditComponent {
                 if (params.parentSitemapId) {
                     this.parentSitemapId = params.parentSitemapId;
                 }
+
+
             });
+    }
+
+    ngOnInit()
+    {
+        super.ngOnInit();
+        this.dataService.loadCreateSchema(this.parentSitemapId);
     }
 
     get createSchema$() {

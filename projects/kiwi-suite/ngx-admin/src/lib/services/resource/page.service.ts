@@ -29,8 +29,13 @@ export class PageService extends ResourceService {
         return url.replace('{id}', this._model.id);
     }
 
-    get createSchemaLink() {
-        return this.config.params.routes['pageCreateSchema'];
+    getCreateSchemaLink(parentSitemapId: string = null) {
+        const url = this.config.params.routes['pageCreateSchema'];
+        if (parentSitemapId === null) {
+            return url.replace('[/{parentSitemapId}]', "");
+        }
+
+        return url.replace('[/{parentSitemapId}]', "/" + parentSitemapId);
     }
 
     get updateContentLink() {
@@ -72,19 +77,10 @@ export class PageService extends ResourceService {
         return this.api.post(this.sortLink, data);
     }
 
-    protected loadSchema() {
-        super.loadSchema();
-
-        /**
-         * load additional schemas
-         */
+    loadCreateSchema(parentSitemapId: string = null) {
         this.config.ready$.subscribe(() => {
-            if (!this.createSchemaLink) {
-                console.warn('No create schema link for resource [' + this.resource + ']');
-                return;
-            }
             this._loading$.next(true);
-            this.api.get<any[]>(this.createSchemaLink)
+            this.api.get<any[]>(this.getCreateSchemaLink(parentSitemapId))
                 .subscribe(
                     schema => {
                         this._createSchema = schema;
