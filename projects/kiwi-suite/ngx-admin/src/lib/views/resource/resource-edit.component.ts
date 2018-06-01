@@ -113,7 +113,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
 
     onSubmit(action = null): void {
         if (this.form.valid === false) {
-            this.toastr.error('An error occurred while saving the resource. Are all required fields entered?', 'Error');
+            this.toastr.error('An error occurred while saving the ' + this.resourceKey + '. Are all required fields entered?', 'Error');
             return;
         }
 
@@ -121,7 +121,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
             case 'create':
                 this.dataService.create(this.model, this.form.getRawValue())
                     .subscribe(result => {
-                        this.toastr.success('The resource was successfully created', 'Success');
+                        this.toastr.success('The ' + this.resourceKey + ' was successfully created', 'Success');
                         // TODO: swapping directly to edit view is only possible if we know the model result consistently
                         // this.action = 'edit';
                         // this.initModel();
@@ -135,14 +135,14 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                 this.dataService.update(this.model, this.form.getRawValue())
                     .subscribe(
                         (result) => {
-                            this.toastr.success('The resource was successfully updated', 'Success');
+                            this.toastr.success('The ' + this.resourceKey + ' was successfully updated', 'Success');
                             /**
                              * loading the dataservice here causes the form to reinitialise
                              * which results in unexpected results (duplicating items in the form raw model)
                              */
                             // this.dataService.load(this.model.id);
                         }, () => {
-                            this.toastr.error('An error occurred while saving the resource', 'Error');
+                            this.toastr.error('An error occurred while saving the ' + this.resourceKey, 'Error');
                         }
                     );
                 break;
