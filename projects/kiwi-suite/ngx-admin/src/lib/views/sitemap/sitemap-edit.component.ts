@@ -59,7 +59,6 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     protected initModel() {
         this.route.params.pipe(takeUntil(this.destroyed$))
             .subscribe(params => {
-
                 this.dataService.find(params['id'])
                     .pipe(takeUntil(this.destroyed$))
                     .subscribe(model => {
@@ -67,19 +66,16 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                             return;
                         }
                         this._model = model;
-
                         this.dataService.content(params['id'])
                             .pipe(takeUntil(this.destroyed$))
-                            .subscribe(model => {
-                                if (!model) {
+                            .subscribe(contentModel => {
+                                if (!contentModel) {
                                     return;
                                 }
-                                this._contentModel = model;
+                                this._contentModel = contentModel;
                                 this.resetForm();
                             });
-                        // this.resetForm();
                     });
-
             });
     }
 
@@ -88,7 +84,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
         this.contentModel = Object.assign({}, this._contentModel);
     }
 
-    onSubmit(action = null) {
+    onSubmit(action = null): void {
         /**
          * TODO: check if respective form is dirty before sending it
          */

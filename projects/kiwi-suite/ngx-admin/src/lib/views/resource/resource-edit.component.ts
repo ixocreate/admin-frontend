@@ -111,7 +111,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         this._formReady$.complete();
     }
 
-    onSubmit(action = null) {
+    onSubmit(action = null): void {
         if (this.form.valid === false) {
             this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error');
             return;
