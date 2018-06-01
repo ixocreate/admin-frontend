@@ -9,6 +9,7 @@ import {
     FormlyFieldInput,
     FormlyFieldMedia,
     FormlyFieldMultiCheckbox,
+    FormlyFieldLink,
     FormlyFieldQuill,
     FormlyFieldRadio,
     FormlyFieldRepeatable,
@@ -33,6 +34,7 @@ export const FIELD_TYPE_COMPONENTS = [
     FormlyFieldInput,
     FormlyFieldMedia,
     FormlyFieldMultiCheckbox,
+    FormlyFieldLink,
     FormlyFieldRadio,
     FormlyFieldRepeatable,
     FormlyFieldSelectNative,
@@ -115,6 +117,14 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
                 templateOptions: {
                     options: [],
                 },
+            },
+        },
+        {
+            name: 'link',
+            component: FormlyFieldLink,
+            wrappers: ['fieldset', 'label'],
+            defaultOptions: {
+
             },
         },
         // custom

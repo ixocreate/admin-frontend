@@ -11,5 +11,6 @@ export { FormlyFieldSelectNative } from './selectnative';
 export { FormlyFieldDateTime } from './datetime';
 export { FormlyFieldDynamic } from './dynamic';
 export { FormlyFieldMedia } from './media';
+export { FormlyFieldLink } from './link';
 export { FormlyFieldQuill } from './quill';
 export { FormlyFieldRepeatable } from './repeatable';

@@ -58,6 +58,7 @@ import {AccountModule} from './views/account';
 import {AuthModule} from './views/auth';
 import {DashboardModule} from './views/dashboard';
 import {PageNotFoundComponent} from './views/errors';
+import {LinkModule} from './views/link';
 import {MediaModule} from './views/media';
 import {ResourceModule} from './views/resource';
 import {SitemapModule} from './views/sitemap';
@@ -89,6 +90,7 @@ const APP_FEATURE_MODULES = [
     AccountModule,
     AuthModule,
     DashboardModule,
+    LinkModule,
     MediaModule,
     ResourceModule,
     UserModule,

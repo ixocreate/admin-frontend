@@ -1,13 +1,19 @@
-export interface Media {
-    basePath: string;
-    id: string;
-    description: string;
-    filename: string;
-    mimeType: string;
-    size: number;
-    title: string;
+export interface Link {
+    id?: string;
     type: string;
-    url: string;
+    value: any;
+}
+
+export interface Media {
+  basePath: string;
+  id: string;
+  description: string;
+  filename: string;
+  mimeType: string;
+  size: number;
+  title: string;
+  type: string;
+  url: string;
 }
 
 export interface User {
