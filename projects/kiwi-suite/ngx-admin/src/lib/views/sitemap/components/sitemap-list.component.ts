@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PageService} from '../../../services';
 import {ResourceComponent} from '../../resource';
@@ -9,16 +9,22 @@ import {ResourceComponent} from '../../resource';
 })
 export class SitemapListComponent extends ResourceComponent implements OnInit {
 
-    selectedLocale = 'de_AT';
+    selectedLocale: string;
+    @Output() changeLocale = new EventEmitter<any>();
 
     constructor(protected route: ActivatedRoute,
                 protected dataService: PageService) {
         super(route);
     }
 
+    onChangeLocale() {
+        this.changeLocale.emit(this.selectedLocale);
+    }
+
     ngOnInit() {
         super.ngOnInit();
         this.selectedLocale = this.config.params.intl.default;
+        this.onChangeLocale();
     }
 
     get locales() {

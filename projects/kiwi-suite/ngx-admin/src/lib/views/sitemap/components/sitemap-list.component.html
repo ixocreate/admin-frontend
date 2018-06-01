@@ -4,7 +4,9 @@
             <ng-select [items]="locales"
                        bindLabel="name"
                        bindValue="locale"
-                       [(ngModel)]="selectedLocale" [clearable]="false"></ng-select>
+                       [(ngModel)]="selectedLocale"
+                       [clearable]="false"
+                       (change)="onChangeLocale($event)"></ng-select>
         </div>
     </div>
     <ng-container *ngIf="items.length === 0">

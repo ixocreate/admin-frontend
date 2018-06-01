@@ -13,12 +13,10 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
     model: any;
 
     ngOnInit() {
-        if (!this.dataService) {
-            this.route.params.pipe(takeUntil(this.destroyed$))
-                .subscribe(params => {
-                    this.initDataService(params.type);
-                });
-        }
+        this.route.params.pipe(takeUntil(this.destroyed$))
+            .subscribe(params => {
+                this.initDataService(params.type);
+            });
         this.route.data.pipe(takeUntil(this.destroyed$)).subscribe((data: { action: string }) => {
             this.action = data.action;
             this.initModel();

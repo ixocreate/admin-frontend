@@ -9,8 +9,14 @@ import {ResourceIndexComponent} from '../resource';
 })
 export class SitemapIndexComponent extends ResourceIndexComponent implements OnInit {
 
+    selectedLocale: string;
+
     constructor(protected route: ActivatedRoute,
                 protected dataService: PageService) {
         super(route);
+    }
+
+    onChangeLocale(locale) {
+        this.selectedLocale = locale;
     }
 }
