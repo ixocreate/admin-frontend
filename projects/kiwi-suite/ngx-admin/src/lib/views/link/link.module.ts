@@ -1,36 +1,39 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {FormlyModule} from '@ngx-formly/core';
+import {NgxDnDModule} from '@swimlane/ngx-dnd';
+import {TabsModule} from 'ngx-bootstrap';
 import {AuthModule} from '../auth';
-import {LinkSelectorComponent, LinkModalComponent} from "./components";
-import {MediaModule} from "../media/media.module";
-import {SitemapModalListItemComponent} from "../sitemap/sitemap-modal-list-item.component";
-import {SitemapComponentModule} from "../sitemap/sitemap-component.module";
+import {MediaModule} from '../media';
+import {LinkModalComponent, LinkSelectorComponent} from './components';
+import {SitemapModalListItemComponent} from './components/sitemap-modal-list-item.component';
+import {SitemapModalListComponent} from './components/sitemap-modal-list.component';
 
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         AuthModule,
-
-        NgSelectModule,
-        NgxDatatableModule,
-        ReactiveFormsModule,
-
         MediaModule,
-        SitemapComponentModule
-
+        NgxDnDModule,
+        FormlyModule,
+        ReactiveFormsModule,
+        NgSelectModule,
+        TabsModule
     ],
     declarations: [
-      LinkSelectorComponent,
-      LinkModalComponent,
+        LinkSelectorComponent,
+        LinkModalComponent,
+        SitemapModalListComponent,
+        SitemapModalListItemComponent,
     ],
     providers: [
         // UserResolver
     ],
     exports: [
-      LinkSelectorComponent
+        LinkSelectorComponent
     ]
 })
 export class LinkModule {

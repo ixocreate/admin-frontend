@@ -1,76 +1,86 @@
-<div class="row">
-    <div class="col-md-4 col-lg-5 col-xl-6">
-        <div *ngIf="(contentSchema$ | async) as contentSchema">
-            <form [formGroup]="contentForm" (ngSubmit)="onSubmit()"
-                  *ngIf="contentForm && contentFields">
-                <div class="card card-accent-primary">
-                    <div class="card-header">
-                        <b class="text-muted">{{ resourceName$ | async }}</b>
-                    </div>
-                    <div class="card-body">
-                        <formly-form [form]="contentForm" [fields]="contentFields" [model]="contentModel"></formly-form>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-fw fa-save"></i>
-                            <span>Update</span>
-                        </button>
-                    </div>
-                </div>
-            </form>
+<!--<div class="row">-->
+<!--<div class="col-md-4 col-lg-5 col-xl-6">-->
+<div *ngIf="(contentSchema$ | async) as contentSchema">
+    <form [formGroup]="contentForm" (ngSubmit)="onSubmit()"
+          *ngIf="contentForm">
+        <div class="card card-accent-primary">
+            <div class="card-header">
+                <b class="text-muted">{{ resourceName$ | async }}</b>
+            </div>
+            <div class="card-body">
+                <formly-form [form]="contentForm" [fields]="contentFields" [model]="contentModel"></formly-form>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-fw fa-save"></i>
+                    <span>Update</span>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4 col-lg-5 col-xl-6">
-        <pre *ngIf="this.contentModel">{{ this.contentModel | json }}</pre>
-        <pre *ngIf="this.contentForm">{{ this.contentForm.getRawValue() | json }}</pre>
-    </div>
+    </form>
 </div>
+<!--</div>-->
+<!--<div class="col-md-4 col-lg-5 col-xl-6">-->
+<!--<pre *ngIf="this.contentModel">{{ this.contentModel | json }}</pre>-->
+<!--<pre *ngIf="this.contentForm">{{ this.contentForm.getRawValue() | json }}</pre>-->
+<!--</div>-->
+<!--</div>-->
 
 <ng-template #asideTemplate>
     <tabset>
         <tab>
-            <ng-template tabHeading><i class="icon-settings"></i></ng-template>
-            <div class="p-3" *ngIf="(schema$ | async) as schema">
-                <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form">
+            <ng-template tabHeading>
+                <i class="icon-settings"></i>
+            </ng-template>
+            <div class="p-3">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()"
+                      *ngIf="form && (schema$ | async) as schema">
                     <formly-form [form]="form" [fields]="fields" [model]="model">
+                    </formly-form>
+                </form>
+                <form [formGroup]="navigationForm" (ngSubmit)="onSubmit()"
+                      *ngIf="navigationForm && (navigationSchema$ | async) as navigationSchema">
+                    <formly-form [form]="navigationForm" [fields]="navigationFields" [model]="navigationModel">
                     </formly-form>
                 </form>
             </div>
         </tab>
-        <tab>
-            <ng-template tabHeading><i class="icon-list"></i></ng-template>
-            <div class="list-group list-group-accent">
-                <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                    <div>#3 by <strong>Lucas</strong></div>
-                    <div>
-                        <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
-                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
-                    </div>
-                </div>
-                <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                    <div>#2 by <strong>Lucas</strong></div>
-                    <div>
-                        <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
-                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
-                    </div>
-                </div>
-                <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                    <div>#1 by <strong>Lucas</strong></div>
-                    <div>
-                        <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
-                        <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
-                    </div>
-                </div>
-            </div>
-        </tab>
+        <!--<tab>-->
+            <!--<ng-template tabHeading>-->
+                <!--<i class="fa fa-history"></i>-->
+            <!--</ng-template>-->
+            <!--<div class="list-group list-group-accent">-->
+                <!--<div class="list-group-item list-group-item-accent-warning list-group-item-divider">-->
+                    <!--<div>#3 by <strong>Lucas</strong></div>-->
+                    <!--<div>-->
+                        <!--<small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>-->
+                        <!--<button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="list-group-item list-group-item-accent-warning list-group-item-divider">-->
+                    <!--<div>#2 by <strong>Lucas</strong></div>-->
+                    <!--<div>-->
+                        <!--<small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>-->
+                        <!--<button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="list-group-item list-group-item-accent-warning list-group-item-divider">-->
+                    <!--<div>#1 by <strong>Lucas</strong></div>-->
+                    <!--<div>-->
+                        <!--<small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>-->
+                        <!--<button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</tab>-->
     </tabset>
 </ng-template>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
@@ -9,7 +9,7 @@ import {ResourceEditComponent} from '../resource';
     selector: 'app-sitemap-create',
     templateUrl: './sitemap-create.component.html',
 })
-export class SitemapCreateComponent extends ResourceEditComponent {
+export class SitemapCreateComponent extends ResourceEditComponent implements OnInit {
     private locale: string;
     private parentSitemapId: string;
 
@@ -28,8 +28,7 @@ export class SitemapCreateComponent extends ResourceEditComponent {
             });
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         super.ngOnInit();
         this.dataService.loadCreateSchema(this.parentSitemapId);
     }
@@ -57,7 +56,7 @@ export class SitemapCreateComponent extends ResourceEditComponent {
 
         switch (action) {
             case 'create':
-                let values = this.form.getRawValue();
+                const values = this.form.getRawValue();
                 values['locale'] = this.locale;
                 if (this.parentSitemapId) {
                     values['parentSitemapId'] = this.parentSitemapId;

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/cor
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
-import {takeUntil} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import {AsideService, PageService} from '../../services';
 import {ResourceEditComponent} from '../resource';
 
@@ -24,6 +24,11 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     contentModel: any;
     contentFields: FormlyFieldConfig[];
 
+    private _navigationModel: any;
+    navigationForm: FormGroup;
+    navigationModel: any;
+    navigationFields: FormlyFieldConfig[];
+
     constructor(protected dataService: PageService,
                 protected asideService: AsideService,
                 protected route: ActivatedRoute) {
@@ -44,21 +49,34 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     }
 
     get contentSchema$() {
-        return this.dataService.pageTypeSchema$;
+        return this.dataService.contentSchema$;
+    }
+
+    get navigationSchema$() {
+        return this.dataService.navigationSchema$;
     }
 
     protected initForm() {
         super.initForm();
         this.contentForm = new FormGroup({});
-        this.dataService.loadPageTypeSchema()
+        this.dataService.loadContentSchema()
             .subscribe(schema => {
                 this.contentFields = schema;
+            });
+        this.navigationForm = new FormGroup({});
+        this.dataService.loadNavigationSchema()
+            .subscribe(schema => {
+                this.navigationFields = schema;
             });
     }
 
     protected initModel() {
         this.route.params.pipe(takeUntil(this.destroyed$))
             .subscribe(params => {
+
+                /**
+                 * load page
+                 */
                 this.dataService.find(params['id'])
                     .pipe(takeUntil(this.destroyed$))
                     .subscribe(model => {
@@ -66,14 +84,38 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                             return;
                         }
                         this._model = model;
-                        this.dataService.content(params['id'])
+
+                        /**
+                         * load content
+                         */
+                        this.dataService.content()
                             .pipe(takeUntil(this.destroyed$))
                             .subscribe(contentModel => {
                                 if (!contentModel) {
                                     return;
                                 }
                                 this._contentModel = contentModel;
-                                this.resetForm();
+
+                                /**
+                                 * load navigation
+                                 */
+                                this.dataService.navigation()
+                                    .pipe(
+                                        takeUntil(this.destroyed$),
+                                        map(navigation => {
+                                            if (!navigation) {
+                                                return;
+                                            }
+                                            return navigation.filter(item => item.active).map(item => item.name);
+                                        })
+                                    )
+                                    .subscribe(navigationModel => {
+                                        if (!navigationModel) {
+                                            return;
+                                        }
+                                        this._navigationModel = {navigation: navigationModel};
+                                        this.resetForm();
+                                    });
                             });
                     });
             });
@@ -82,6 +124,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     protected resetModel() {
         this.model = Object.assign({}, this._model);
         this.contentModel = Object.assign({}, this._contentModel);
+        this.navigationModel = Object.assign({}, this._navigationModel);
     }
 
     onSubmit(action = null): void {
@@ -98,24 +141,49 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
          * submit content
          */
         this.onSubmitContent();
+
+        /**
+         * submit navigation
+         */
+        this.onSubmitNavigation();
     }
 
     private onSubmitContent() {
         if (this.contentForm.valid === false) {
-            this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error');
+            this.toastr.error('An error in saving the content. Are all required fields entered?', 'Error');
             return;
         }
         this.dataService.updateContent(this.contentModel, this.contentForm.getRawValue())
             .subscribe(
                 (result) => {
-                    this.toastr.success('The item was successfully updated ', 'Success');
+                    this.toastr.success('Content was successfully updated ', 'Success');
                     /**
                      * loading the dataservice here causes the form to reinitialise
                      * which results in unexpected results (duplicating items in the form raw model)
                      */
                     // this.dataService.load(this.model.id);
                 }, () => {
-                    this.toastr.error('There was an error in updating the item', 'Error');
+                    this.toastr.error('There was an error in updating content', 'Error');
+                }
+            );
+    }
+
+    private onSubmitNavigation() {
+        if (this.navigationForm.valid === false) {
+            this.toastr.error('An error in saving the navigation. Are all required fields entered?', 'Error');
+            return;
+        }
+        this.dataService.updateNavigation(this.navigationModel, this.navigationForm.getRawValue())
+            .subscribe(
+                (result) => {
+                    this.toastr.success('Navigation was successfully updated ', 'Success');
+                    /**
+                     * loading the dataservice here causes the form to reinitialise
+                     * which results in unexpected results (duplicating items in the form raw model)
+                     */
+                    // this.dataService.load(this.model.id);
+                }, () => {
+                    this.toastr.error('There was an error in updating navigation', 'Error');
                 }
             );
     }

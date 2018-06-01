@@ -14,6 +14,10 @@
     padding: 0 0 0 20px !important;
     border: none !important;
     background-color: transparent !important;
+
+    sitemap-list > sitemap-list-container > & {
+        padding: 0 !important;
+    }
 }
 
 .ngx-dnd-container.gu-empty {
