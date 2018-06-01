@@ -150,7 +150,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
 
     private onSubmitContent() {
         if (this.contentForm.valid === false) {
-            this.toastr.error('An error in saving the content. Are all required fields entered?', 'Error');
+            this.toastr.error('An error occurred while saving the content. Are all required fields entered?', 'Error');
             return;
         }
         this.dataService.updateContent(this.contentModel, this.contentForm.getRawValue())
@@ -163,14 +163,14 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                      */
                     // this.dataService.load(this.model.id);
                 }, () => {
-                    this.toastr.error('There was an error in updating content', 'Error');
+                    this.toastr.error('There was an error in updating the content', 'Error');
                 }
             );
     }
 
     private onSubmitNavigation() {
         if (this.navigationForm.valid === false) {
-            this.toastr.error('An error in saving the navigation. Are all required fields entered?', 'Error');
+            this.toastr.error('An error occurred while saving the navigation. Are all required fields entered?', 'Error');
             return;
         }
         this.dataService.updateNavigation(this.navigationModel, this.navigationForm.getRawValue())
@@ -183,7 +183,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                      */
                     // this.dataService.load(this.model.id);
                 }, () => {
-                    this.toastr.error('There was an error in updating navigation', 'Error');
+                    this.toastr.error('There was an error in updating the navigation', 'Error');
                 }
             );
     }
