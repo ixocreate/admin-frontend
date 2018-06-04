@@ -123,10 +123,10 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                     .subscribe(result => {
                         this.toastr.success('The ' + this.resourceKey + ' was successfully created', 'Success');
                         // TODO: swapping directly to edit view is only possible if we know the model result consistently
-                        // this.action = 'edit';
-                        // this.initModel();
-                        this.dataService.load();
-                        this.router.navigate([this.pathPrefix + this.dataService.resourceKey]);
+                        //this.action = 'edit';
+                        //this.initModel();
+                        //this.dataService.load();
+                        this.router.navigate([this.pathPrefix + this.dataService.resourceKey, result.id, 'edit']);
                     }, () => {
                         this.toastr.error('There was an error in creating the ' + this.resourceKey, 'Error');
                     });
@@ -140,7 +140,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                              * loading the dataservice here causes the form to reinitialise
                              * which results in unexpected results (duplicating items in the form raw model)
                              */
-                            // this.dataService.load(this.model.id);
+                            this.dataService.load(this.model.id);
                         }, () => {
                             this.toastr.error('An error occurred while saving the ' + this.resourceKey, 'Error');
                         }

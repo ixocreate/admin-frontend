@@ -7,6 +7,7 @@ import { FieldType } from '@ngx-formly/core';
       <input class="form-control"
              [formlyAttributes]="field"
              [formControl]="formControl"
+             [placement]="placement"
              [bsConfig]="config"
              bsDatepicker>
   `,
@@ -14,5 +15,9 @@ import { FieldType } from '@ngx-formly/core';
 export class FormlyFieldDateTime extends FieldType {
     get config() {
         return this.to.config;
+    }
+
+    get placement() {
+        return (this.to.placement) ? this.to.placement : "bottom";
     }
 }
