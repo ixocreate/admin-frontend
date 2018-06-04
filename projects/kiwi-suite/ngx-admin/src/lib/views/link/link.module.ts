@@ -1,12 +1,11 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {FormlyModule} from '@ngx-formly/core';
-import {NgxDnDModule} from '@swimlane/ngx-dnd';
 import {TabsModule} from 'ngx-bootstrap';
 import {AuthModule} from '../auth';
 import {MediaModule} from '../media';
+import {SitemapModule} from '../sitemap';
 import {LinkModalComponent, LinkSelectorComponent} from './components';
 import {SitemapModalListItemComponent} from './components/sitemap-modal-list-item.component';
 import {SitemapModalListComponent} from './components/sitemap-modal-list.component';
@@ -14,13 +13,11 @@ import {SitemapModalListComponent} from './components/sitemap-modal-list.compone
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
         AuthModule,
+        FormsModule,
         MediaModule,
-        NgxDnDModule,
-        FormlyModule,
-        ReactiveFormsModule,
         NgSelectModule,
+        SitemapModule,
         TabsModule
     ],
     declarations: [

@@ -3,7 +3,7 @@ import {FormArray, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
-import {AsyncSubject, of} from 'rxjs';
+import {of} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {SchemaFormArray, SchemaFormBuilder} from '../../forms/schema-form-builder';
 import {ResourceModelControl, ResourceModelSchema} from '../../models';
@@ -16,13 +16,12 @@ import {ResourceDetailComponent} from './resource-detail.component';
 })
 export class ResourceEditComponent extends ResourceDetailComponent implements OnInit, OnDestroy {
 
-    private _formReady$ = new AsyncSubject();
-    private _schemas: ResourceModelSchema[];
+    private schemas: ResourceModelSchema[];
 
     protected action: string;
     protected formBuilder: SchemaFormBuilder;
 
-    protected _model: any;
+    protected originalModel: any;
     model: any;
     form: FormGroup;
     fields: FormlyFieldConfig[];
@@ -34,9 +33,8 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._formReady$ = null;
-        this._model = null;
-        this._schemas = null;
+        this.originalModel = null;
+        this.schemas = null;
         this.form = null;
         this.model = null;
         this.fields = null;
@@ -56,13 +54,9 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         //     });
     }
 
-    get formReady$() {
-        return this._formReady$.asObservable().pipe(takeUntil(this.destroyed$));
-    }
-
     protected initModel() {
         if (this.action === 'create') {
-            this._model = {};
+            this.originalModel = {};
             this.resetForm();
         }
         if (this.action === 'edit') {
@@ -74,7 +68,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
                             if (!model) {
                                 return;
                             }
-                            this._model = model;
+                            this.originalModel = model;
                             this.resetForm();
                         });
                 });
@@ -82,13 +76,13 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     }
 
     protected resetModel() {
-        this.model = Object.assign({}, this._model);
+        this.model = Object.assign({}, this.originalModel);
     }
 
     protected initForm() {
         this.form = new FormGroup({});
         this.dataService.schema$.pipe(takeUntil(this.destroyed$))
-            .subscribe(schema => this.fields = schema.form);
+            .subscribe(schema => this.fields = schema ? schema.form : this.fields);
 
         // this.fields = [{
         //     key: 'name',
@@ -107,8 +101,6 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     protected resetForm() {
         this.resetModel();
         this.initForm();
-        this._formReady$.next(true);
-        this._formReady$.complete();
     }
 
     onSubmit(action = null): void {
@@ -120,12 +112,8 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         switch (action) {
             case 'create':
                 this.dataService.create(this.model, this.form.getRawValue())
-                    .subscribe(result => {
+                    .subscribe((result: { id: string }) => {
                         this.toastr.success('The ' + this.resourceKey + ' was successfully created', 'Success');
-                        // TODO: swapping directly to edit view is only possible if we know the model result consistently
-                        //this.action = 'edit';
-                        //this.initModel();
-                        //this.dataService.load();
                         this.router.navigate([this.pathPrefix + this.dataService.resourceKey, result.id, 'edit']);
                     }, () => {
                         this.toastr.error('There was an error in creating the ' + this.resourceKey, 'Error');
@@ -178,8 +166,8 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
      * @deprecated use formly forms
      */
     protected buildFormFromSchemas(schemas: ResourceModelSchema[], schemaName: string) {
-        this._schemas = schemas;
-        const schema = this._schemas.find(_schema => _schema.name === schemaName);
+        this.schemas = schemas;
+        const schema = this.schemas.find(_schema => _schema.name === schemaName);
         this.form = this.formBuilder.group(this.buildControls(schema, this.model), schema);
     }
 
@@ -214,7 +202,7 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
     buildControl(control: ResourceModelControl, data: any) {
         let schema = control.schema;
         if (typeof schema === 'string') {
-            schema = this._schemas.find(_schema => _schema.name === schema);
+            schema = this.schemas.find(_schema => _schema.name === schema);
         }
         if (schema && data) {
             return this.formBuilder.group(this.buildControls(<ResourceModelSchema>schema, data), control);

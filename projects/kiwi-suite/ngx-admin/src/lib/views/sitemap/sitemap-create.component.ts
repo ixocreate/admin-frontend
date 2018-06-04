@@ -43,11 +43,6 @@ export class SitemapCreateComponent extends ResourceEditComponent implements OnI
             .subscribe(schema => this.fields = schema);
     }
 
-    protected initModel() {
-        this._model = {};
-        this.resetForm();
-    }
-
     onSubmit(action = null) {
         if (this.form.valid === false) {
             this.toastr.error('An error in saving the item. Are all required fields entered?', 'Error');

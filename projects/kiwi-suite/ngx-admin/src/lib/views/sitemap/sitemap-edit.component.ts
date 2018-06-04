@@ -14,17 +14,12 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     @ViewChild('asideTemplate')
     private asideTemplateTpl: TemplateRef<any>;
 
-    /**
-     * not a standard resource that needs to be prefixed in url (resource/)
-     */
-    protected pathPrefix = '';
-
-    private _contentModel: any;
+    private originalContentModel: any;
     contentForm: FormGroup;
     contentModel: any;
     contentFields: FormlyFieldConfig[];
 
-    private _navigationModel: any;
+    private originalNavigationModel: any;
     navigationForm: FormGroup;
     navigationModel: any;
     navigationFields: FormlyFieldConfig[];
@@ -43,7 +38,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     ngOnDestroy() {
         super.ngOnDestroy();
         this.asideService.disable();
-        this._contentModel = null;
+        this.originalContentModel = null;
         this.contentModel = null;
         this.contentForm = null;
     }
@@ -83,7 +78,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                         if (!model) {
                             return;
                         }
-                        this._model = model;
+                        this.originalModel = model;
 
                         /**
                          * load content
@@ -94,7 +89,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                                 if (!contentModel) {
                                     return;
                                 }
-                                this._contentModel = contentModel;
+                                this.originalContentModel = contentModel;
 
                                 /**
                                  * load navigation
@@ -113,7 +108,7 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
                                         if (!navigationModel) {
                                             return;
                                         }
-                                        this._navigationModel = {navigation: navigationModel};
+                                        this.originalNavigationModel = {navigation: navigationModel};
                                         this.resetForm();
                                     });
                             });
@@ -122,9 +117,9 @@ export class SitemapEditComponent extends ResourceEditComponent implements OnIni
     }
 
     protected resetModel() {
-        this.model = Object.assign({}, this._model);
-        this.contentModel = Object.assign({}, this._contentModel);
-        this.navigationModel = Object.assign({}, this._navigationModel);
+        this.model = Object.assign({}, this.originalModel);
+        this.contentModel = Object.assign({}, this.originalContentModel);
+        this.navigationModel = Object.assign({}, this.originalNavigationModel);
     }
 
     onSubmit(action = null): void {

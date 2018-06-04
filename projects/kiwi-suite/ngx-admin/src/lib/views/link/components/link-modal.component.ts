@@ -1,65 +1,59 @@
-import {Component, EventEmitter, forwardRef, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DomSanitizer, SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {Link} from '../../../models';
-import {ReplaySubject} from "rxjs/ReplaySubject";
-import {ConfigurationService, MediaService} from "../../../services";
-import {takeUntil} from "rxjs/operators";
+import {ConfigurationService, MediaService} from '../../../services';
 
 @Component({
-  selector: 'link-modal',
-  templateUrl: './link-modal.component.html',
+    selector: 'link-modal',
+    templateUrl: './link-modal.component.html',
 })
 export class LinkModalComponent implements OnInit, OnDestroy {
-  private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+    private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  @Output() onSelect = new EventEmitter<Link>();
+    @Output() onSelect = new EventEmitter<Link>();
 
-  allowedTypes: Array<string>;
-  selectedType: string = 'page';
+    allowedTypes: Array<string>;
+    selectedType = 'page';
 
-  select(link: Link) {
-    this.onSelect.emit(link);
-  }
+    select(link: Link) {
+        this.onSelect.emit(link);
+    }
 
-  constructor(protected dataService: MediaService,
-              protected config: ConfigurationService,
-              protected domSanitizer: DomSanitizer) {
+    constructor(protected dataService: MediaService,
+                protected config: ConfigurationService) {
+        //this.dataService.load();
+    }
 
-    //this.dataService.load();
-  }
+    ngOnInit() {
 
-  ngOnInit() {
+    }
 
-  }
+    ngOnDestroy(): void {
+        this._destroyed$.next(true);
+        this._destroyed$.complete();
+    }
 
-  ngOnDestroy(): void {
-    this._destroyed$.next(true);
-    this._destroyed$.complete();
-  }
+    get models$() {
+        return this.dataService.models$;
+    }
 
-  get models$() {
-    return this.dataService.models$;
-  }
+    get destroyed$() {
+        return this._destroyed$.asObservable();
+    }
 
-  get destroyed$() {
-    return this._destroyed$.asObservable();
-  }
+    changeType(type: string) {
+        this.selectedType = type;
+    }
 
-  changeType(type: string) {
-    this.selectedType = type;
-  }
+    onPageSelect(event) {
+        this.onSelect.emit({type: 'page', value: event});
+    }
 
-  onPageSelect(event) {
-      this.onSelect.emit({type: 'page', value: event});
-   }
+    onMediaSelect(event) {
+        this.onSelect.emit({type: 'media', value: 123});
+    }
 
-  onMediaSelect(event) {
-    this.onSelect.emit({type: 'media', value: 123});
-  }
-
-  externalSave() {
-    this.onSelect.emit({type: 'external', value: 123});
-  }
+    externalSave() {
+        this.onSelect.emit({type: 'external', value: 123});
+    }
 }

@@ -6,16 +6,13 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class SitemapModalListItemComponent {
 
-    @Input()
-    items: any;
+    @Input() items: any;
 
-    @Input()
-    locale: string;
+    @Input() locale: string;
 
     @Output() onSelect = new EventEmitter<any>();
 
     select(page: any) {
         this.onSelect.emit(page);
     }
-
 }

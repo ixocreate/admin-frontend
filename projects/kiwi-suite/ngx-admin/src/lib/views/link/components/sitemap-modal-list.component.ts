@@ -10,7 +10,6 @@ export class SitemapModalListComponent extends SitemapListComponent implements O
     @Output() onSelect = new EventEmitter<any>();
 
     ngOnInit(): void {
-
         super.ngOnInit();
         this.dataService.load();
     }

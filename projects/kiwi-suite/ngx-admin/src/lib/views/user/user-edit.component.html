@@ -1,4 +1,4 @@
-<div *ngIf="(action$ | async) as action">
+<div *ngIf="(schema$ | async) && (action$ | async) as action">
     <div *ngIf="action === 'create'">
         <div class="row">
             <div class="col-lg-8 col-xl-6">
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div *ngIf="action === 'edit' && formReady$ | async">
+    <div *ngIf="action === 'edit' && (model$ | async)">
         <div class="row">
             <div class="col-lg-4 col-xl-6 order-lg-2">
                 <div class="card card-accent-primary">

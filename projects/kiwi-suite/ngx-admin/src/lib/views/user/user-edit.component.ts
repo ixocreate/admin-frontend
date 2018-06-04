@@ -12,11 +12,6 @@ import {ResourceEditComponent} from '../resource';
 })
 export class UserEditComponent extends ResourceEditComponent implements OnInit {
 
-    /**
-     * not a standard resource that needs to be prefixed in url (resource/)
-     */
-    protected pathPrefix = '';
-
     model: User;
     account: User;
 

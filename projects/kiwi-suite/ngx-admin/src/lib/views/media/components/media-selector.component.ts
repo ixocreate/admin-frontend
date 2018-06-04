@@ -3,6 +3,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {Media} from '../../../models';
+import {MediaService} from '../../../services';
 
 @Component({
     selector: 'media-selector',
@@ -23,10 +24,10 @@ export class MediaSelectorComponent implements ControlValueAccessor {
     onTouched = () => {
     };
 
-    constructor(
-        private modalService: BsModalService,
-        private sanitizer: DomSanitizer,
-    ) {
+    constructor(protected dataService: MediaService,
+                private modalService: BsModalService,
+                private sanitizer: DomSanitizer) {
+        dataService.load();
     }
 
     registerOnChange(fn: (media: Media) => void): void {

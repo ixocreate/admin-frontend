@@ -1,4 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {ResourceComponent} from './resource.component';
 
@@ -11,6 +12,10 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
     protected action: string;
 
     model: any;
+
+    constructor(protected route: ActivatedRoute) {
+        super();
+    }
 
     ngOnInit() {
         this.route.params.pipe(takeUntil(this.destroyed$))
@@ -25,7 +30,7 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.model = {};
+        this.model = null;
     }
 
     protected initModel() {
@@ -43,6 +48,9 @@ export class ResourceDetailComponent extends ResourceComponent implements OnInit
     }
 
     onDelete() {
+        if (!confirm('Are you sure?')) {
+            return;
+        }
         this.dataService.delete(this.model)
             .subscribe(() => {
                 this.toastr.success('The item was successfully deleted ', 'Success');

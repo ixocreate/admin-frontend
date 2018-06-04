@@ -42,17 +42,16 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
     /**
      * manually injected services
      */
+    protected dataService: ResourceService;
     protected apiService: ApiService;
     protected config: ConfigurationService;
     protected dataStore: DataStoreService;
-    protected dataService: ResourceService;
     protected domSanitizer: DomSanitizer;
     protected accountService: AccountService;
-    // protected route: ActivatedRoute;
     protected router: Router;
     protected toastr: ToastrService;
 
-    constructor(protected route: ActivatedRoute) {
+    constructor() {
         this.apiService = AppInjector.get(ApiService);
         this.accountService = AppInjector.get(AccountService);
         this.config = AppInjector.get(ConfigurationService);
@@ -72,6 +71,10 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
 
     get resourceNamePlural$() {
         return this.schema$.pipe(map(schema => schema ? schema.namePlural : '...'));
+    }
+
+    get resourcePathPrefix() {
+        return this.pathPrefix;
     }
 
     get resourceKey() {

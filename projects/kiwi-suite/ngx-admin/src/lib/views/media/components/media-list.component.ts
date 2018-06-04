@@ -1,10 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DomSanitizer, SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
-import {ActivatedRoute} from '@angular/router';
+import {SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
 import {FileUploader} from 'ng2-file-upload';
 import {takeUntil} from 'rxjs/operators';
 import {Media} from '../../../models';
-import {ConfigurationService, MediaService} from '../../../services';
+import {MediaService} from '../../../services';
 import {ResourceComponent} from '../../resource';
 
 @Component({
@@ -17,36 +16,33 @@ export class MediaListComponent extends ResourceComponent implements OnInit {
 
     @Output() onSelect = new EventEmitter<Media>();
 
-    select(media: Media) {
-        this.onSelect.emit(media);
-    }
-
-    constructor(protected dataService: MediaService,
-                protected config: ConfigurationService,
-                protected domSanitizer: DomSanitizer,
-                protected route: ActivatedRoute) {
-        super(route);
+    constructor(protected dataService: MediaService) {
+        super();
     }
 
     ngOnInit() {
-        this.config.ready$.pipe(takeUntil(this.destroyed$))
-            .subscribe(
-                () => {
-                    this.uploader = new FileUploader({
-                        url: this.dataService.uploadLink,
-                        removeAfterUpload: true,
-                        autoUpload: true,
-                        headers: [
-                            {
-                                name: 'X-XSRF-TOKEN',
-                                value: getDOM().getCookie('XSRF-TOKEN')
-                            }
-                        ]
-                    });
-                    this.uploader.onCompleteAll = () => {
-                        this.dataService.load();
-                    };
+        super.ngOnInit();
+        this.schema$.pipe(takeUntil(this.destroyed$))
+            .subscribe(() => {
+                this.uploader = new FileUploader({
+                    url: this.dataService.uploadLink,
+                    removeAfterUpload: true,
+                    autoUpload: true,
+                    headers: [
+                        {
+                            name: 'X-XSRF-TOKEN',
+                            value: getDOM().getCookie('XSRF-TOKEN')
+                        }
+                    ]
                 });
+                this.uploader.onCompleteAll = () => {
+                    this.dataService.load();
+                };
+            });
+    }
+
+    select(media: Media) {
+        this.onSelect.emit(media);
     }
 
     isImage(mimeType: string): boolean {

@@ -1,5 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {PageService} from '../../../services';
 import {ResourceComponent} from '../../resource';
 
@@ -12,9 +11,8 @@ export class SitemapListComponent extends ResourceComponent implements OnInit {
     selectedLocale: string;
     @Output() changeLocale = new EventEmitter<any>();
 
-    constructor(protected route: ActivatedRoute,
-                protected dataService: PageService) {
-        super(route);
+    constructor(protected dataService: PageService) {
+        super();
     }
 
     onChangeLocale() {

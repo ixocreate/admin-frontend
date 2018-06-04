@@ -54,7 +54,7 @@
         </ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template>
             <div class="text-right">
-                <a routerLink="/resource/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary"
+                <a routerLink="/{{ resourcePathPrefix }}/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary"
                    *can="['admin.api.'+resourceKey+'.edit']">
                     <i class="fa fa-pencil"></i>
                 </a>

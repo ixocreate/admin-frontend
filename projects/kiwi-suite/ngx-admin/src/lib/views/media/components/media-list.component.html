@@ -9,14 +9,14 @@
                         <button class="btn btn-primary" type="button">Choose a file</button>
                         <p>or drag it here</p>
                     </div>
-                    <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple/>
+                    <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <div *ngFor="let item of uploader.queue" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
+    <div *ngFor="let item of uploader.queue" class="col-6 col-xl-2 col-lg-3 col-md-4 col-sm-6">
         <div class="d-block mb-4 h-100">
             <div *ngIf="isImage(item?.file?.type)" class="media-container">
                 <div class="media-icon">
@@ -48,8 +48,8 @@
         </div>
     </div>
 
-    <div *ngFor="let media of (models$ | async)" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
-        <div class="d-block mb-4 h-100">
+    <div *ngFor="let media of (models$ | async)" class="col-6 col-xl-2 col-lg-3 col-md-4 col-sm-6">
+        <div class="d-block mb-4 h-100" (click)="select(media)">
             <div *ngIf="isImage(media.mimeType)" class="media-container">
                 <div class="media-image"
                      [ngStyle]="{backgroundImage: 'url(/media/img/admin-thumb/' + media.basePath + media.filename + ')'}"></div>

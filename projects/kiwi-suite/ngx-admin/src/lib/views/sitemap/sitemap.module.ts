@@ -5,7 +5,6 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {FormlyModule} from '@ngx-formly/core';
 import {NgxDnDModule} from '@swimlane/ngx-dnd';
 import {TabsModule} from 'ngx-bootstrap';
-import {FormlyBootstrapModule} from '../../forms/bootstrap.module';
 import {AuthModule} from '../auth';
 import {SitemapListComponent, SitemapListContainerComponent, SitemapListItemComponent} from './components';
 import {SitemapCreateComponent} from './sitemap-create.component';
@@ -16,14 +15,14 @@ import {SitemapRoutingModule} from './sitemap-routing.module';
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
         AuthModule,
-        NgxDnDModule,
-        SitemapRoutingModule,
         FormlyModule,
-        FormlyBootstrapModule,
-        ReactiveFormsModule,
+        // FormlyBootstrapModule,
+        FormsModule,
         NgSelectModule,
+        NgxDnDModule,
+        ReactiveFormsModule,
+        SitemapRoutingModule,
         TabsModule
     ],
     declarations: [
