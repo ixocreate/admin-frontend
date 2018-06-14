@@ -13,3 +13,4 @@ export * from './resource/media.service';
 export * from './resource/page.service';
 export * from './resource/resource.service';
 export * from './resource/user.service';
+export * from './schema-transform.service';

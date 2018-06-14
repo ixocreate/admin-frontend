@@ -3,6 +3,7 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 import {ApiService} from '../api.service';
 import {ConfigurationService} from '../configuration.service';
 import {DataService} from '../data.service';
+import {SchemaTransformService} from "../schema-transform.service";
 
 export class ResourceService extends DataService {
 
@@ -191,7 +192,7 @@ export class ResourceService extends DataService {
             this.api.get<any[]>(this.schemaLink)
                 .subscribe(
                     schema => {
-                        this._schema = schema;
+                        this._schema = (new SchemaTransformService()).transform(schema);
                         this._schema$.next(this._schema);
                     },
                     () => {

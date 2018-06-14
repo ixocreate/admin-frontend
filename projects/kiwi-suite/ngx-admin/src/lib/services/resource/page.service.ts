@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/index';
 import {ResourceService} from './resource.service';
+import {SchemaTransformService} from "../schema-transform.service";
 
 @Injectable()
 export class PageService extends ResourceService {
@@ -46,7 +47,7 @@ export class PageService extends ResourceService {
             this.api.get<any[]>(this.createSchemaLink(parentSitemapId))
                 .subscribe(
                     schema => {
-                        this._createSchema = schema;
+                        this._createSchema = (new SchemaTransformService()).transformForm(schema);
                         this._createSchema$.next(this._createSchema);
                     },
                     () => {
@@ -114,7 +115,7 @@ export class PageService extends ResourceService {
             this.api.get<any[]>(this.contentSchemaLink)
                 .subscribe(
                     schema => {
-                        this._contentSchema = schema;
+                        this._contentSchema = (new SchemaTransformService()).transformForm(schema);
                         this._contentSchema$.next(this._contentSchema);
                     },
                     () => {
