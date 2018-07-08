@@ -1,5 +1,3 @@
-import {el} from "@angular/platform-browser/testing/src/browser_util";
-
 export class SchemaTransformService {
 
     public transform(apiSchema: any): any {
@@ -19,6 +17,9 @@ export class SchemaTransformService {
                 case 'section':
                     formSchema.push(this.handleSection(value));
                     break;
+                case 'tabbedGroup':
+                    formSchema.push(this.handleTabbedGroup(value));
+                    break;
                 case 'blockContainer':
                     formSchema.push(this.handleBlockContainer(value));
                     break;
@@ -37,6 +38,15 @@ export class SchemaTransformService {
                     break;
                 case 'text':
                     formSchema.push(this.handleText(value));
+                    break;
+                case 'html':
+                    formSchema.push(this.handleHtml(value));
+                    break;
+                case 'link':
+                    formSchema.push(this.handleLink(value));
+                    break;
+                case 'textarea':
+                    formSchema.push(this.handleTextarea(value));
                     break;
             }
         });
@@ -66,6 +76,29 @@ export class SchemaTransformService {
             },
             fieldArray: [],
             fieldGroups: groups,
+        }
+    }
+
+    private handleTabbedGroup(value: any): any
+    {
+        const groups = [];
+
+        value.elements.forEach((element) => {
+            groups.push({
+                wrappers: ['tab'],
+                templateOptions: {
+                    label: element.label
+                },
+                fieldGroup: this.transformForm(element.elements)
+            });
+        });
+
+        return {
+            wrappers: ['tabset'],
+            templateOptions: {
+                label: value.label,
+            },
+            fieldGroup: groups,
         }
     }
 
@@ -116,6 +149,18 @@ export class SchemaTransformService {
         };
     }
 
+    private handleTextarea(value: any): any {
+        return {
+            key: value.name,
+            type: "textarea",
+            templateOptions: {
+                label: value.label,
+                placeholder: value.label,
+                required: value.required,
+            }
+        };
+    }
+
     private handleImage(value: any): any {
         return {
             key: value.name,
@@ -154,6 +199,43 @@ export class SchemaTransformService {
                 config: {
                     dateInputFormat: "YYYY-MM-DD HH:mm:ss",
                 },
+            }
+        };
+    }
+
+    private handleHtml(value: any): any {
+        return {
+            key: value.name,
+            type: "wysiwyg",
+            templateOptions: {
+                label: value.label,
+                placeholder: value.label,
+                required: value.required,
+                height: 200,
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                        [{'list': 'ordered'}, {'list': 'bullet'}],
+                        [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+                        [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+                        [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                        [{'align': []}],
+                        ['clean'], // remove formatting button
+                        ['link'],
+                    ]
+                }
+            }
+        };
+    }
+
+    private handleLink(value: any): any {
+        return {
+            key: value.name,
+            type: "link",
+            templateOptions: {
+                label: value.label,
+                placeholder: value.label,
+                required: value.required,
             }
         };
     }

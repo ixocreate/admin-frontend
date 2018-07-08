@@ -16,7 +16,23 @@ export class ResourceIndexComponent extends ResourceComponent implements OnInit 
     ngOnInit() {
         this.route.params.pipe(takeUntil(this.destroyed$))
             .subscribe(params => {
-                this.initDataService(params.type);
+                if (params.type) {
+                    this.initDataService(params.type);
+                }
             });
+        this.route.data.pipe(takeUntil(this.destroyed$))
+            .subscribe(data => {
+                if (data.resource) {
+                    this.initDataService(data.resource);
+                }
+            });
+    }
+
+    protected loadData() {
+        this.dataService.loadListData();
+    }
+
+    get data$() {
+        return this.dataService.listData$;
     }
 }

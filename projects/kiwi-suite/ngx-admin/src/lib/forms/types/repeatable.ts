@@ -1,7 +1,5 @@
-import {Component} from '@angular/core';
-import {FormArray} from '@angular/forms';
 import {FieldArrayType, FormlyFormBuilder} from '@ngx-formly/core';
-import {clone} from '../utils';
+import {Component} from "@angular/core";
 
 @Component({
     selector: 'formly-field-repeat',

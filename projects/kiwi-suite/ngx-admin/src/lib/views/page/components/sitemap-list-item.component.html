@@ -1,0 +1,87 @@
+<ng-container [ngSwitch]="type">
+
+    <ng-container *ngSwitchCase="'array'">
+        <sitemap-list-container
+                [model]="model"
+                [template]="container.template"
+                [dropZone]="dropZone"
+                [dropZones]="dropZones"
+                [removeOnSpill]="removeOnSpill"
+                [droppableItemClass]="droppableItemClass"
+                [copy]="copy"
+                [locale]="locale"
+                (drop)="onDrop($event)">
+        </sitemap-list-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'object'">
+        <ng-template
+                *ngIf="container.template"
+                [ngTemplateOutlet]="container.template"
+                [ngTemplateOutletContext]="data">
+        </ng-template>
+        <ng-container *ngIf="!container.template">
+            <div class="sitemap-container d-flex mb-2">
+                <div class="btn btn-sm btn-outline-secondary px-2 d-flex flex-column justify-content-center" ngxDragHandle>
+                    <i class="fa fa-fw fa-bars text-muted"></i>
+                </div>
+                <div class="sitemap-label flex-grow-1 py-2 px-3">
+                    <div>
+                        <ng-container *ngIf="model.pages[locale] && model.pages[locale].name">
+                            {{ model.pages[locale].name }}
+                        </ng-container>
+                        <ng-container *ngIf="!model.pages[locale] || !model.pages[locale].name ">
+                            <small *ngFor="let locale of objectKeys(model.pages)"
+                                   style="text-decoration: line-through;">
+                                <ng-container *ngIf="model.pages[locale].name">
+                                    [{{ model.pages[locale].name }}]
+                                </ng-container>
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-success p-2 d-flex flex-column justify-content-center" *ngIf="model.pageType.allowedChildren.length > 0"
+                        type="button"
+                        [routerLink]="['create', locale, model.sitemap.id]">
+                    <i class="fa fa-fw fa-plus"></i>
+                </button>
+
+                <!--{{ model | json }}-->
+
+                <button class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
+                        type="button"
+                        [routerLink]="[model.pages[locale].id, 'edit']"
+                        *ngIf="model.pages[locale]">
+                    <i class="fa fa-fw fa-pencil"></i>
+                </button>
+            </div>
+            <sitemap-list-container
+                    *ngIf="model.children"
+                    [model]="model.children"
+                    [template]="container.template"
+                    [dropZone]="dropZone"
+                    [dropZones]="dropZones"
+                    [removeOnSpill]="removeOnSpill"
+                    [droppableItemClass]="droppableItemClass"
+                    [copy]="copy"
+                    [locale]="locale"
+                    (drop)="onDrop($event)">
+            </sitemap-list-container>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'undefined'">
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+        <ng-template *ngIf="container.template"
+                     [ngTemplateOutlet]="container.template"
+                     [ngTemplateOutletContext]="data">
+        </ng-template>
+        <div *ngIf="!container.template"
+             class="ngx-dnd-content">
+            {{model}}
+        </div>
+    </ng-container>
+
+</ng-container>

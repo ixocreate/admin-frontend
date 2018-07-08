@@ -1,8 +1,12 @@
-<div class="card card-accent-primary">
-    <div class="card-header">
-        <b class="text-muted">{{ resourceNamePlural$ | async }}</b>
-    </div>
-    <div class="card-body">
-        <media-list></media-list>
-    </div>
-</div>
+<ng-container>
+    <app-content [title]="'Media'">
+        <ng-template #content>
+            <div class="card card-accent-primary">
+                <div class="card-body">
+                    <media-list></media-list>
+                </div>
+            </div>
+        </ng-template>
+    </app-content>
+</ng-container>
+

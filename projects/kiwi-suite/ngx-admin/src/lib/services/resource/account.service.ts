@@ -11,8 +11,8 @@ export class AccountService extends UserService {
 
     protected resource = 'account';
 
-    protected _model$: BehaviorSubject<User>;
-    protected _model: User;
+    protected _user$ = new BehaviorSubject<any>({});
+    protected _user: User;
 
     constructor(protected api: ApiService,
                 protected config: ConfigurationService) {
@@ -20,7 +20,7 @@ export class AccountService extends UserService {
     }
 
     get user$() {
-        return this._model$.asObservable().pipe(
+        return this._user$.asObservable().pipe(
             /**
              * skip as long as there is an empty object
              */
@@ -33,12 +33,12 @@ export class AccountService extends UserService {
         this.api.get<User>(this.config.params.routes.authUser)
             .subscribe(
                 user => {
-                    this._model = user;
-                    this._model$.next(this._model);
-                    return this._model;
+                    this._user = user;
+                    this._user$.next(this._user);
+                    return this._user;
                 },
                 () => {
-                    this._model$.next(null);
+                    this._user$.next(null);
                 },
                 () => {
                     this._loading$.next(false);
@@ -61,20 +61,11 @@ export class AccountService extends UserService {
         return this.api.post(this.config.params.routes.authLogout);
     }
 
-    sendResetPasswordEmail(param: any) {
-        return this.api.post(this.config.params.routes.passwordEmail, param);
-    }
-
-    updateAvatar(model: User) {
-        // TODO
-        console.log(this.config.params.routes.accountAvatar, model);
-    }
-
     updateEmail(model: User, values) {
         return this.api.patch(this.config.params.routes['accountEmail'], values);
     }
 
-    updatePassword(model: Account, values) {
+    updatePassword(model: User, values) {
         return this.api.patch(this.config.params.routes['accountPassword'], values);
     }
 }

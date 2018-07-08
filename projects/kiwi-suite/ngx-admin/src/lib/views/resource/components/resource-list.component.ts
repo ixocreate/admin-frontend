@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ResourceService} from '../../../services';
 import {ResourceComponent} from '../resource.component';
 
@@ -6,7 +6,7 @@ import {ResourceComponent} from '../resource.component';
     selector: 'resource-list',
     templateUrl: './resource-list.component.html',
 })
-export class ResourceListComponent extends ResourceComponent {
+export class ResourceListComponent extends ResourceComponent{
 
     @Input('dataService') protected dataService: ResourceService;
 
@@ -47,4 +47,12 @@ export class ResourceListComponent extends ResourceComponent {
     // onDetailToggle(event) {
     //     console.log('Detail Toggled', event);
     // }
+
+    get data$() {
+        return this.dataService.listData$;
+    }
+
+    protected loadData() {
+        this.dataService.loadListData();
+    }
 }

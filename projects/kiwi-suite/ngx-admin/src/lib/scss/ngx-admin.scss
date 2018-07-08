@@ -8,22 +8,18 @@
 // Override Boostrap variables
 @import "bootstrap-variables";
 // Import Bootstrap source files
-@import "~bootstrap/scss/bootstrap";
-// Override core variables
 @import "core-variables";
 // Import core styles
-@import "core/core";
+@import "~@coreui/coreui/scss/coreui";
 // Import datatable styles
 @import '~@swimlane/ngx-datatable/release/index.css';
-//@import '~@swimlane/ngx-datatable/release/themes/material.css';
-//@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
-// @import '~@swimlane/ngx-dnd/release/index.css';
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~ngx-bootstrap/datepicker/bs-datepicker.css";
 @import 'datatable';
 // Custom styles
 @import "custom";
+@import "content";
 @import "floating-labels";
 @import "loader";
 @import "media";

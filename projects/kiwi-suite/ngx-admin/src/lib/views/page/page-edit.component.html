@@ -1,0 +1,76 @@
+<ng-container *ngIf="data$ | async as data">
+    <app-content [title]="data.label">
+        <ng-template #content>
+            <page-version-edit [id]="data.item.id"></page-version-edit>
+        </ng-template>
+
+        <ng-template #aside>
+            <tabset>
+                <tab>
+                    <ng-template tabHeading>
+                        <i class="icon-settings"></i>
+                    </ng-template>
+                    <div class="p-3">
+                        <form [formGroup]="form" *ngIf="form">
+                            <formly-form [form]="form" [fields]="fields" [model]="data.item"></formly-form>
+                        </form>
+                        <form [formGroup]="navigationForm" *ngIf="navigationForm">
+                            <formly-form [form]="navigationForm" [fields]="navigationFields" [model]="navigationModel"></formly-form>
+                        </form>
+                    </div>
+                </tab>
+                <tab>
+                    <ng-template tabHeading>
+                        <i class="fa fa-history"></i>
+                    </ng-template>
+                    <div class="list-group list-group-accent">
+                        <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                            <div>#3 by <strong>Lucas</strong></div>
+                            <div>
+                                <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
+                                <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                            <div>#2 by <strong>Lucas</strong></div>
+                            <div>
+                                <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
+                                <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                            <div>#1 by <strong>Lucas</strong></div>
+                            <div>
+                                <small class="text-muted"><i class="icon-calendar"></i> 2018-05-29 12:24:57</small>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm btn-light"><i class="fa fa-search"></i></button>
+                                <button type="button" class="btn btn-sm btn-light"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </ng-template>
+
+        <ng-template #header>
+            <div class="btn-group btn-group-sm pull-right">
+                <button type="button" (click)="onSubmit()" class="btn btn-outline-primary btn-sm">
+                    <i class="fa fa-fw fa-save"></i>
+                    <span>Publish</span>
+                </button>
+                <button *ngIf="false" type="button" class="btn btn-outline-danger btn-sm"
+                        [disabled]="(loading$ | async)"
+                        (click)="onDelete()">
+                    <i class="fa fa-trash"></i> Delete
+                </button>
+            </div>
+        </ng-template>
+    </app-content>
+</ng-container>

@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {TabsModule} from 'ngx-bootstrap';
 import {AuthModule} from '../auth';
-import {MediaModule} from '../media';
 import {SitemapModule} from '../sitemap';
 import {LinkModalComponent, LinkSelectorComponent} from './components';
 import {SitemapModalListItemComponent} from './components/sitemap-modal-list-item.component';
@@ -15,7 +14,6 @@ import {SitemapModalListComponent} from './components/sitemap-modal-list.compone
         CommonModule,
         AuthModule,
         FormsModule,
-        MediaModule,
         NgSelectModule,
         SitemapModule,
         TabsModule

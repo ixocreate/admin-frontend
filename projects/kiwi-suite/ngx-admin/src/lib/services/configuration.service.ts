@@ -10,6 +10,7 @@ import {LoggerService} from './logger.service';
 @Injectable()
 export class ConfigurationService extends DataService {
 
+    private _navigation = null;
     private _params: Config;
     private _params$ = new BehaviorSubject<Config>(<Config>{});
 
@@ -37,16 +38,41 @@ export class ConfigurationService extends DataService {
         return this._params$.asObservable();
     }
 
-    get navigation$() {
-        return this._params$.pipe(map(config => config.navigation));
-    }
-
     get params() {
         return this._params;
     }
 
     get environment() {
         return this._params.environment;
+    }
+
+    get navigation() {
+        if (this._navigation === null) {
+            this._navigation = this.parseNavigation(this._params.navigation);
+        }
+
+        return this._navigation;
+    }
+
+    private parseNavigation(navArray: Array<any>): Array<any>
+    {
+        const navigation = [];
+
+        for (let group of navArray) {
+            navigation.push({
+                title: true,
+                name: group.name,
+            });
+
+            for (let item of group.children) {
+                if (item.children.length === 0) {
+                    delete item.children;
+                }
+                navigation.push(item);
+            }
+        }
+
+        return navigation;
     }
 
     /**

@@ -27,7 +27,7 @@ export class MediaSelectorComponent implements ControlValueAccessor {
     constructor(protected dataService: MediaService,
                 private modalService: BsModalService,
                 private sanitizer: DomSanitizer) {
-        dataService.load();
+        //dataService.load();
     }
 
     registerOnChange(fn: (media: Media) => void): void {

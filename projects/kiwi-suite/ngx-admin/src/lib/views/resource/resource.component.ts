@@ -24,20 +24,10 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
     private _destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
     /**
-     * comparison type after routing to determine if dataService should reload
-     */
-    private currentType: string;
-
-    /**
      * set a type on a component to receive a generic resource data service
      * to use a specialized data service inject it in the component's constructor
      */
     protected type: string;
-
-    /**
-     * override this if building components that are routed somewhere else
-     */
-    protected pathPrefix = 'resource/';
 
     /**
      * manually injected services
@@ -65,14 +55,6 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
         return this._destroyed$.asObservable();
     }
 
-    get resourceName$() {
-        return this.schema$.pipe(map(schema => schema ? schema.name : '...'));
-    }
-
-    get resourceNamePlural$() {
-        return this.schema$.pipe(map(schema => schema ? schema.namePlural : '...'));
-    }
-
     get resourcePathPrefix() {
         return this.pathPrefix;
     }
@@ -81,20 +63,12 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
         return this.dataService.resourceKey;
     }
 
-    get schema$() {
-        return this.dataService.schema$.pipe(takeUntil(this.destroyed$));
-    }
-
-    get models$() {
-        return this.dataService.models$.pipe(takeUntil(this.destroyed$));
-    }
-
-    get model$() {
-        return this.dataService.model$.pipe(takeUntil(this.destroyed$));
-    }
-
     get loading$() {
         return this.dataService.loading$.pipe(takeUntil(this.destroyed$));
+    }
+
+    get pathPrefix() {
+        return this.dataService.pathPrefix;
     }
 
     ngOnInit(): void {
@@ -103,7 +77,17 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
         }
     }
 
+    protected loadData() {
+
+    }
+
     protected initDataService(type: string = null) {
+
+        if (this.dataService && this.dataService.resourceKey === type) {
+            this.loadData();
+            return;
+        }
+
         /**
          * get type either from route param or from component
          * @type {string}
@@ -118,16 +102,9 @@ export abstract class ResourceComponent implements OnDestroy, OnInit {
          */
         if (this.dataService) {
             this.dataStore.register(this.dataService);
-            _type = this.dataService.resourceKey;
         }
 
-        /**
-         * reload the data service if navigation happened within resource component
-         */
-        if (this.currentType !== _type) {
-            this.dataService.load();
-        }
-        this.currentType = _type;
+        this.loadData();
     }
 
     ngOnDestroy(): void {

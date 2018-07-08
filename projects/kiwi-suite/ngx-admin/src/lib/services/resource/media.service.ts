@@ -3,7 +3,6 @@ import {ResourceService} from './resource.service';
 
 @Injectable()
 export class MediaService extends ResourceService {
-
     protected resource = 'media';
 
     get uploadLink() {

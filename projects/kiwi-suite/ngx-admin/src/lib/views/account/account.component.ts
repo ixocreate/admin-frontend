@@ -4,20 +4,22 @@ import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {AccountService} from '../../services';
 import {ResourceEditComponent} from '../resource';
+import {User} from "../../models/resource.model";
+import {FormlyFieldConfig} from "@ngx-formly/core";
 
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',
 })
 export class AccountComponent extends ResourceEditComponent implements OnInit {
-
-    avatarForm: FormGroup;
-    avatar: FileList;
+    account: User;
 
     passwordForm: FormGroup;
+    passwordFormFields: FormlyFieldConfig[];
     passwordFormModel = {password: '', passwordRepeat: '', passwordOld: ''};
 
     emailForm: FormGroup;
+    emailFormFields: FormlyFieldConfig[];
     emailFormModel = {email: '', emailRepeat: ''};
 
     constructor(protected route: ActivatedRoute,
@@ -26,85 +28,95 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
     }
 
     protected initModel() {
-        this.dataService.model$.pipe(takeUntil(this.destroyed$))
+        this.dataService.user$.pipe(takeUntil(this.destroyed$))
             .subscribe(user => {
+                console.log("test");
                 if (!user) {
                     return;
                 }
-                this.model = user;
+                this.account = user;
                 this.initForm();
             });
-        // this.route.params.pipe(takeUntil(this.destroyed$))
-        //     .subscribe(params => {
-        //         this.dataService.find(params['id']).pipe(takeUntil(this.destroyed$)).subscribe(model => {
-        //             if (!model) {
-        //                 this.model = {};
-        //                 return;
-        //             }
-        //             this.model = model;
-        //         });
-        //     });
     }
 
     initForm() {
-        this.avatarForm = this.formBuilder.group({
-            avatar: new FormControl(this.avatar, [
-                Validators.required
-            ]),
-        });
+        this.emailForm = new FormGroup({});
+        this.emailFormFields = [
+            {
+                key: 'email',
+                type: 'input',
+                templateOptions: {
+                    type: 'email',
+                    label: 'New email address',
+                    placeholder: 'New email address',
+                    required: true,
+                }
+            },
+            {
+                key: 'emailRepeat',
+                type: 'input',
+                templateOptions: {
+                    type: 'email',
+                    label: 'Repeat email address',
+                    placeholder: 'Repeat email address',
+                    required: true,
+                }
+            }
+        ];
 
-        this.emailForm = this.formBuilder.group({
-            email: new FormControl(this.emailFormModel.email, [
-                Validators.required,
-                Validators.minLength(4),
-            ]),
-            emailRepeat: new FormControl(this.emailFormModel.emailRepeat, [
-                Validators.required,
-                Validators.minLength(4),
-            ])
-        });
+        this.passwordForm = new FormGroup({});
+        this.passwordFormFields = [
+            {
+                key: 'passwordOld',
+                type: 'input',
+                templateOptions: {
+                    type: 'password',
+                    label: 'Enter your current password',
+                    placeholder: 'Enter your current password',
+                    required: true,
+                }
+            },
+            {
+                key: 'password',
+                type: 'input',
+                templateOptions: {
+                    type: 'password',
+                    label: 'New password',
+                    placeholder: 'New password',
+                    required: true,
+                }
+            },
+            {
+                key: 'passwordRepeat',
+                type: 'input',
+                templateOptions: {
+                    type: 'password',
+                    label: 'Repeat password',
+                    placeholder: 'Repeat password',
+                    required: true,
+                }
+            }
 
-        this.passwordForm = this.formBuilder.group({
-            password: new FormControl(this.passwordFormModel.password, [
-                Validators.required,
-                Validators.minLength(4),
-            ]),
-            passwordRepeat: new FormControl(this.passwordFormModel.passwordRepeat, [
-                Validators.required,
-                Validators.minLength(4),
-            ]),
-            passwordOld: new FormControl(this.passwordFormModel.passwordOld, [
-                Validators.required,
-                Validators.minLength(4),
-            ])
-        });
-    }
-
-    onFileChange($event, field) {
-        this.avatarForm.controls[field].setValue($event.target.files);
-    }
-
-    onSubmitAvatar() {
-        this.dataService.updateAvatar(this.avatarForm.getRawValue());
+        ];
     }
 
     onSubmitEmail() {
-        this.dataService.updateEmail(this.model, this.emailForm.getRawValue())
-            .subscribe(() => {
-                this.dataService.load();
-                this.toastr.success('The email was successfully updated ', 'Success');
-            }, () => {
-                this.toastr.error('There was an error in updating the email', 'Error');
-            });
+        // this.dataService.updateEmail(this.account, this.emailForm.getRawValue())
+        //     .subscribe(() => {
+        //         this.dataService.load();
+        //         this.toastr.success('The email was successfully updated ', 'Success');
+        //     }, () => {
+        //         this.toastr.error('There was an error in updating the email', 'Error');
+        //     });
     }
 
     onSubmitPassword() {
-        this.dataService.updatePassword(this.model, this.passwordForm.getRawValue())
-            .subscribe(() => {
-                this.dataService.load();
-                this.toastr.success('The password was successfully updated ', 'Success');
-            }, () => {
-                this.toastr.error('There was an error in updating the password', 'Error');
-            });
+        // this.dataService.updatePassword(this.account, this.passwordForm.getRawValue())
+        //     .subscribe(() => {
+        //         this.dataService.load();
+        //         this.toastr.success('The password was successfully updated ', 'Success');
+        //     }, () => {
+        //         this.toastr.error('There was an error in updating the password', 'Error');
+        //     });
     }
 }

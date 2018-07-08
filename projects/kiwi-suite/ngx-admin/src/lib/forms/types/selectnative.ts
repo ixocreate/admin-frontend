@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {DataStoreService} from '../../services';
+import {ResourceListModel} from "../../models/api.model";
 
 export class SelectOption {
     label: string;
@@ -71,7 +72,7 @@ export class FormlyFieldSelectNative extends FieldType implements OnInit, OnDest
     ngOnInit() {
         super.ngOnInit();
         if (this.to.resource) {
-            this.dataStore.resource(this.to.resource).load();
+            this.dataStore.resource(this.to.resource).loadListData();
         }
         this.selectOptions$ = this.getSelectOptions();
     }
@@ -94,9 +95,9 @@ export class FormlyFieldSelectNative extends FieldType implements OnInit, OnDest
         return this.to.groupProp || 'group';
     }
 
-    private getSelectOptions(): Observable<any[]> {
+    private getSelectOptions(): Observable<ResourceListModel> {
         if (this.to.resource) {
-            return this.dataStore.resource(this.to.resource).models$.pipe(takeUntil(this.destroyed$));
+            return this.dataStore.resource(this.to.resource).listData$.pipe(takeUntil(this.destroyed$));
         } if (!(this.to.options instanceof Observable)) {
             const options: SelectOption[] = [],
                 groups: { [key: string]: SelectOption[] } = {};
@@ -117,10 +118,10 @@ export class FormlyFieldSelectNative extends FieldType implements OnInit, OnDest
                 }
             });
 
-            return of(options);
+            return of({items: options, meta: [], schema: [], label: ""});
         } else {
             // return observable directly
-            return this.to.options;
+            //return this.to.options;
         }
     }
 }

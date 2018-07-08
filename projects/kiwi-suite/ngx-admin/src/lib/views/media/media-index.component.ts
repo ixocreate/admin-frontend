@@ -1,16 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {MediaService} from '../../services';
-import {ResourceIndexComponent} from '../resource';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-media-list',
     templateUrl: './media-index.component.html',
 })
-export class MediaIndexComponent extends ResourceIndexComponent implements OnInit {
+export class MediaIndexComponent {
 
-    constructor(protected dataService: MediaService,
-                protected route: ActivatedRoute) {
-        super(route);
-    }
 }

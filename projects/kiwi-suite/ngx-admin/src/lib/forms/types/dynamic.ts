@@ -18,7 +18,7 @@ import {FormlyFieldRepeatable} from './repeatable';
                     </button>
                     <button class="btn btn-link text-muted" type="button"
                             ngxDragHandle
-                            title="Remove">
+                            title="Move">
                         <i class="fa fa-bars"></i>
                     </button>
                     <span class="card-title">

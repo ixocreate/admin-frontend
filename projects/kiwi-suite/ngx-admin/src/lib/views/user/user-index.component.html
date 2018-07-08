@@ -1,14 +1,23 @@
-<div class="card card-accent-primary" *ngIf="schema$ | async as schema">
-    <div class="card-header">
-        <b class="text-muted">{{ resourceNamePlural$ | async }}</b>
-        <div class="card-actions">
-            <a routerLink="/{{ resourceKey }}/create"
-               *can="['admin.api.'+resourceKey+'.create']">
-                <i class="fa fa-plus"></i>
-            </a>
-        </div>
-    </div>
-    <div class="card-body">
-        <user-list [dataService]="dataService"></user-list>
-    </div>
-</div>
+<ng-container *ngIf="data$ | async as data">
+    <app-content [title]="data.label">
+        <ng-template #content>
+            <div class="card card-accent-primary">
+                <div class="card-body">
+                    <user-list [dataService]="dataService"></user-list>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #header>
+            <div class="btn-group btn-group-sm pull-right">
+                <a class="btn btn-success btn-sm" routerLink="/{{ resourceKey }}/create"
+                   *can="['admin.api.'+resourceKey+'.create']">
+                    <i class="fa fa-plus"></i> Add User
+                </a>
+            </div>
+        </ng-template>
+
+
+    </app-content>
+</ng-container>
+

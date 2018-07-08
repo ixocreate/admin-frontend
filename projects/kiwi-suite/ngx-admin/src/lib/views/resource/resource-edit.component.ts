@@ -1,14 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
 import {of} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
-import {SchemaFormArray, SchemaFormBuilder} from '../../forms/schema-form-builder';
-import {ResourceModelControl, ResourceModelSchema} from '../../models';
-import {AppInjector} from '../../services';
-import {ResourceDetailComponent} from './resource-detail.component';
+import {ResourceDetailComponent} from "./resource-detail.component";
 
 @Component({
     selector: 'resource-edit',
@@ -16,86 +13,51 @@ import {ResourceDetailComponent} from './resource-detail.component';
 })
 export class ResourceEditComponent extends ResourceDetailComponent implements OnInit, OnDestroy {
 
-    private schemas: ResourceModelSchema[];
-
-    protected action: string;
-    protected formBuilder: SchemaFormBuilder;
-
-    protected originalModel: any;
-    model: any;
+    protected originalData: any;
     form: FormGroup;
     fields: FormlyFieldConfig[];
 
     constructor(protected route: ActivatedRoute) {
         super(route);
-        this.formBuilder = AppInjector.get(SchemaFormBuilder);
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.originalModel = null;
-        this.schemas = null;
+        this.originalData = null;
         this.form = null;
-        this.model = null;
+        this.data = null;
         this.fields = null;
-    }
-
-    get action$() {
-        return this.route.data.pipe(map((data: { action: string }) => data.action));
     }
 
     get dirty$() {
         return of(true);
-        // return Observable.from(Object.values(this.form.controls))
-        //     .filter(control => control.dirty)
-        //     .subscribe(control => {
-        //         console.log(control);
-        //         // Here doing stuff with all your dirty control
-        //     });
     }
 
     protected initModel() {
-        if (this.action === 'create') {
-            this.originalModel = {};
-            this.resetForm();
-        }
-        if (this.action === 'edit') {
-            this.route.params.pipe(takeUntil(this.destroyed$))
-                .subscribe(params => {
-                    this.dataService.find(params['id'])
-                        .pipe(takeUntil(this.destroyed$))
-                        .subscribe(model => {
-                            if (!model) {
-                                return;
-                            }
-                            this.originalModel = model;
-                            this.resetForm();
-                        });
-                });
-        }
+        this.route.params.pipe(takeUntil(this.destroyed$))
+            .subscribe(params => {
+                this.dataService.loadUpdateData(params['id']);
+                this.dataService.updateData$
+                    .pipe(takeUntil(this.destroyed$))
+                    .subscribe(data => {
+                        if (!data) {
+                            return;
+                        }
+                        this.originalData = data;
+                        this.resetForm();
+                    });
+            });
     }
 
     protected resetModel() {
-        this.model = Object.assign({}, this.originalModel);
+        this.data = Object.assign({}, this.originalData);
     }
 
     protected initForm() {
         this.form = new FormGroup({});
-        this.dataService.schema$.pipe(takeUntil(this.destroyed$))
-            .subscribe(schema => this.fields = schema ? schema.form : this.fields);
-
-        // this.fields = [{
-        //     key: 'name',
-        //     type: 'input',
-        //     templateOptions: {
-        //         type: 'text',
-        //         label: 'Name',
-        //         placeholder: 'Name',
-        //         required: true,
-        //     }
-        // }];
-
-        // this.buildFormFromSchemas(ModelSchemas.all, this.dataService.resourceKey);
+        if (this.data.schema) {
+            this.fields = this.data.schema;
+        }
     }
 
     protected resetForm() {
@@ -103,125 +65,29 @@ export class ResourceEditComponent extends ResourceDetailComponent implements On
         this.initForm();
     }
 
-    onSubmit(action = null): void {
+    get data$() {
+        return this.dataService.updateData$;
+    }
+
+    onSubmit(): void {
         if (this.form.valid === false) {
             this.toastr.error('An error occurred while saving the ' + this.resourceKey + '. Are all required fields entered?', 'Error');
             return;
         }
 
-        switch (action) {
-            case 'create':
-                this.dataService.create(this.model, this.form.getRawValue())
-                    .subscribe((result: { id: string }) => {
-                        this.toastr.success('The ' + this.resourceKey + ' was successfully created', 'Success');
-                        this.router.navigate([this.pathPrefix + this.dataService.resourceKey, result.id, 'edit']);
-                    }, () => {
-                        this.toastr.error('There was an error in creating the ' + this.resourceKey, 'Error');
-                    });
-                break;
-            case 'edit':
-                this.dataService.update(this.model, this.form.getRawValue())
-                    .subscribe(
-                        (result) => {
-                            this.toastr.success('The ' + this.resourceKey + ' was successfully updated', 'Success');
-                            /**
-                             * loading the dataservice here causes the form to reinitialise
-                             * which results in unexpected results (duplicating items in the form raw model)
-                             */
-                            this.dataService.load(this.model.id);
-                        }, () => {
-                            this.toastr.error('An error occurred while saving the ' + this.resourceKey, 'Error');
-                        }
-                    );
-                break;
-        }
-    }
-
-    /**
-     * @deprecated use formly forms
-     */
-    getDirtyState(form: FormGroup): Object {
-        return Object.keys(form.controls).reduce<Object>((dirtyState, controlKey) => {
-            const control = form.controls[controlKey];
-
-            if (!control.dirty) {
-                return dirtyState;
-            }
-
-            if (control instanceof FormGroup) {
-                return {
-                    ...dirtyState,
-                    [controlKey]: this.getDirtyState(control),
-                };
-            }
-
-            return {
-                ...dirtyState,
-                [controlKey]: control.value,
-            };
-        }, {});
-    }
-
-    /**
-     * @deprecated use formly forms
-     */
-    protected buildFormFromSchemas(schemas: ResourceModelSchema[], schemaName: string) {
-        this.schemas = schemas;
-        const schema = this.schemas.find(_schema => _schema.name === schemaName);
-        this.form = this.formBuilder.group(this.buildControls(schema, this.model), schema);
-    }
-
-    /**
-     * @deprecated use formly forms
-     */
-    buildControls(schema: ResourceModelSchema, data: any) {
-        const controls = {};
-        schema.controls.forEach(control => {
-            const entryData = data[control.name] || null;
-            if (control.repeatable) {
-                const formArray = this.formBuilder.array([], control);
-                if (entryData && Object.prototype.toString.call(entryData) === '[object Array]') {
-                    entryData.forEach(_data => formArray.push(this.buildControl(control, _data)));
-                } else {
+        this.dataService.update(this.data.item, this.form.getRawValue())
+            .subscribe(
+                (result) => {
+                    this.toastr.success('The ' + this.resourceKey + ' was successfully updated', 'Success');
                     /**
-                     * TODO: check if an initial entry should be created
+                     * loading the dataservice here causes the form to reinitialise
+                     * which results in unexpected results (duplicating items in the form raw model)
                      */
-                    // formArray.push(this.buildControl(control.name, schema[0], null));
+
+                    this.dataService.loadUpdateData(this.data.item.id);
+                }, () => {
+                    this.toastr.error('An error occurred while saving the ' + this.resourceKey, 'Error');
                 }
-                controls[control.name] = formArray;
-            } else {
-                controls[control.name] = this.buildControl(control, entryData);
-            }
-        });
-        return controls;
-    }
-
-    /**
-     * @deprecated use formly forms
-     */
-    buildControl(control: ResourceModelControl, data: any) {
-        let schema = control.schema;
-        if (typeof schema === 'string') {
-            schema = this.schemas.find(_schema => _schema.name === schema);
-        }
-        if (schema && data) {
-            return this.formBuilder.group(this.buildControls(<ResourceModelSchema>schema, data), control);
-        }
-        return this.formBuilder.control(data, control);
-    }
-
-    /**
-     * @deprecated use formly forms
-     */
-    addControl(control: SchemaFormArray, data: any) {
-        console.log('schema', control.controlSchema);
-        control.push(this.buildControl(control.controlSchema, data));
-    }
-
-    /**
-     * @deprecated use formly forms
-     */
-    removeControl(control: FormArray, index) {
-        control.removeAt(index);
+            );
     }
 }

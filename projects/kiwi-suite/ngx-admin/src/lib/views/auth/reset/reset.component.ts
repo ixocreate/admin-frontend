@@ -32,7 +32,7 @@ export class ResetComponent implements OnInit {
     }
 
     onSubmit() {
-        this.account.sendResetPasswordEmail(this.form.getRawValue());
+        //this.account.sendResetPasswordEmail(this.form.getRawValue());
     }
 
 }

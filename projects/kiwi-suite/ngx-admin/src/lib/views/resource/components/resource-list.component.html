@@ -1,64 +1,38 @@
-<ngx-datatable
-        *ngIf="schema$ | async as schema"
-        class="bootstrap expandable"
-        #dataTable
-        [rows]="models$ | async"
-        [loadingIndicator]="loadingIndicator"
-        [columnMode]="'force'"
-        [rowHeight]="'auto'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [limit]="limit"
-        [reorderable]="reorderable"
-        (page)="onPage($event)">
+<ng-container *ngIf="data$ | async as data">
+    <ngx-datatable
+            class="bootstrap expandable"
+            #dataTable
+            [rows]="data.items"
+            [loadingIndicator]="loadingIndicator"
+            [columnMode]="'force'"
+            [rowHeight]="'auto'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="limit"
+            [reorderable]="reorderable"
+            (page)="onPage($event)">
+        <div *ngIf="data.schema.list">
+            <ngx-datatable-column *ngFor="let schemaColumn of data.schema.list" [prop]="schemaColumn.key">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    {{ schemaColumn.name }}
+                </ng-template>
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                </ng-template>
+            </ngx-datatable-column>
+        </div>
 
-    <!-- Row Detail Template -->
-    <!--<ngx-datatable-row-detail [rowHeight]="50" #myDetailRow (toggle)="onDetailToggle($event)">-->
-    <!--<ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>-->
-    <!--<div style="padding-left:60px; font-size:14px">-->
-    <!--<div>{{row.name}}, {{row.email}}</div>-->
-    <!--</div>-->
-    <!--</ng-template>-->
-    <!--</ngx-datatable-row-detail>-->
-    <!--&lt;!&ndash; Column Templates &ndash;&gt;-->
-    <!--<ngx-datatable-column-->
-    <!--[width]="50"-->
-    <!--[resizeable]="false"-->
-    <!--[sortable]="false"-->
-    <!--[draggable]="false"-->
-    <!--[canAutoResize]="false">-->
-    <!--<ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>-->
-    <!--<button type="button"-->
-    <!--[class.datatable-icon-right]="!expanded"-->
-    <!--[class.datatable-icon-down]="expanded"-->
-    <!--title="Expand/Collapse Row"-->
-    <!--(click)="toggleExpandRow(row)"-->
-    <!--class="d-md-none">-->
-    <!--</button>-->
-    <!--</ng-template>-->
-    <!--</ngx-datatable-column>-->
-
-    <div *ngIf="schema.list">
-        <ngx-datatable-column *ngFor="let schemaColumn of schema.list" [prop]="schemaColumn.key">
+        <ngx-datatable-column prop="id">
             <ng-template let-column="column" ngx-datatable-header-template>
-                {{ schemaColumn.name }}
             </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value }}
+                <div class="text-right">
+                    <a routerLink="/{{ resourcePathPrefix }}/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </div>
             </ng-template>
         </ngx-datatable-column>
-    </div>
+    </ngx-datatable>
+</ng-container>
 
-    <ngx-datatable-column prop="id">
-        <ng-template let-column="column" ngx-datatable-header-template>
-        </ng-template>
-        <ng-template let-value="value" ngx-datatable-cell-template>
-            <div class="text-right">
-                <a routerLink="/{{ resourcePathPrefix }}/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary"
-                   *can="['admin.api.'+resourceKey+'.edit']">
-                    <i class="fa fa-pencil"></i>
-                </a>
-            </div>
-        </ng-template>
-    </ngx-datatable-column>
-</ngx-datatable>

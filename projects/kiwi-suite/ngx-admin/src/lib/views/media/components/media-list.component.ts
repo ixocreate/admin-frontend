@@ -3,42 +3,40 @@ import {SafeUrl, ɵgetDOM as getDOM} from '@angular/platform-browser';
 import {FileUploader} from 'ng2-file-upload';
 import {takeUntil} from 'rxjs/operators';
 import {Media} from '../../../models';
-import {MediaService} from '../../../services';
-import {ResourceComponent} from '../../resource';
+import {ResourceIndexComponent} from "../../resource/resource-index.component";
+import {MediaService} from "../../../services/resource/media.service";
 
 @Component({
     selector: 'media-list',
     templateUrl: './media-list.component.html',
 })
-export class MediaListComponent extends ResourceComponent implements OnInit {
+export class MediaListComponent extends ResourceIndexComponent implements OnInit {
+    protected type = 'media';
+
+    protected dataService: MediaService;
 
     uploader: FileUploader;
 
     @Output() onSelect = new EventEmitter<Media>();
 
-    constructor(protected dataService: MediaService) {
-        super();
-    }
-
     ngOnInit() {
-        super.ngOnInit();
-        this.schema$.pipe(takeUntil(this.destroyed$))
-            .subscribe(() => {
-                this.uploader = new FileUploader({
-                    url: this.dataService.uploadLink,
-                    removeAfterUpload: true,
-                    autoUpload: true,
-                    headers: [
-                        {
-                            name: 'X-XSRF-TOKEN',
-                            value: getDOM().getCookie('XSRF-TOKEN')
-                        }
-                    ]
-                });
-                this.uploader.onCompleteAll = () => {
-                    this.dataService.load();
-                };
+        this.initDataService(this.type);
+        this.config.ready$.subscribe(res => {
+            this.uploader = new FileUploader({
+                url: this.dataService.uploadLink,
+                removeAfterUpload: true,
+                autoUpload: true,
+                headers: [
+                    {
+                        name: 'X-XSRF-TOKEN',
+                        value: getDOM().getCookie('XSRF-TOKEN')
+                    }
+                ]
             });
+            this.uploader.onCompleteAll = () => {
+                this.loadData();
+            };
+        });
     }
 
     select(media: Media) {

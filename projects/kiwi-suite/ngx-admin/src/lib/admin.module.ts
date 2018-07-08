@@ -1,6 +1,6 @@
 import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {ErrorHandler, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {ErrorHandler, Injector, NgModule, Optional, SkipSelf} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Router, RouterModule} from '@angular/router';
@@ -19,25 +19,15 @@ import {ToastrModule} from 'ngx-toastr';
 import {flatMap} from 'rxjs/operators';
 import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from './admin.routing';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import {
-    APP_SIDEBAR_NAV,
-    AppAsideComponent,
-    AppBackgroundComponent,
-    AppBreadcrumbsComponent,
-    AppDebugComponent,
-    AppFooterComponent,
-    AppHeaderComponent,
-    AppLoaderComponent,
-    AppSidebarComponent,
-    AppSidebarFooterComponent,
-    AppSidebarFormComponent,
-    AppSidebarHeaderComponent,
-    AppSidebarMinimizerComponent,
-} from './components';
+    AppAsideModule,
+    AppBreadcrumbModule,
+    AppHeaderModule,
+    AppFooterModule,
+    AppSidebarModule,
+} from '@coreui/angular';
 import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
-import {AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
-import {FormlyBootstrapModule} from './forms/bootstrap';
-import {SchemaFormBuilder} from './forms/schema-form-builder';
 import {BootstrapError} from './models';
 import {
     AccountService,
@@ -47,22 +37,47 @@ import {
     DataStoreService,
     ErrorHandlerService,
     LoggerService,
-    AsideService,
+    ResourceService,
     MediaService,
     PageService,
     SessionService,
     setAppInjector,
     UserService
 } from './services';
-import {AccountModule} from './views/account';
 import {AuthModule} from './views/auth';
-import {DashboardModule} from './views/dashboard';
 import {PageNotFoundComponent} from './views/errors';
-import {LinkModule} from './views/link';
-import {MediaModule} from './views/media';
-import {ResourceModule} from './views/resource';
-import {SitemapModule} from './views/sitemap';
-import {UserModule} from './views/user';
+import {AppLoaderComponent} from "./components/app-loader/app-loader.component";
+import {AppBackgroundComponent} from "./components/app-background/app-background.component";
+import {AppDebugComponent} from "./components/app-debug/app-debug.component";
+import {AppContentComponent} from "./components/app-content/app-content.component";
+import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {UserIndexComponent} from "./views/user/user-index.component";
+import {UserListComponent} from "./views/user/components/user-list.component";
+import {ResourceDetailComponent} from "./views/resource/resource-detail.component";
+import {ResourceEditComponent} from "./views/resource/resource-edit.component";
+import {ResourceIndexComponent} from "./views/resource/resource-index.component";
+import {ResourceListComponent} from "./views/resource/components/resource-list.component";
+import {AccountComponent} from "./views/account/account.component";
+import {ResourceCreateComponent} from "./views/resource/resource-create.component";
+import {MediaIndexComponent} from "./views/media/media-index.component";
+import {MediaListComponent} from "./views/media/components/media-list.component";
+import {MediaSelectorComponent} from "./views/media/components/media-selector.component";
+import {BOOTSTRAP_FORMLY_CONFIG, FIELD_TYPE_COMPONENTS} from './forms/bootstrap.config';
+import {QuillModule} from "ngx-quill";
+import {PageIndexComponent} from "./views/page/page-index.component";
+import {SitemapListComponent} from "./views/page/components/sitemap-list.component";
+import {SitemapListContainerComponent} from "./views/page/components/sitemap-list-container.component";
+import {SitemapListItemComponent} from "./views/page/components/sitemap-list-item.component";
+import {PageEditComponent} from "./views/page/page-edit.component";
+import {PageCreateComponent} from "./views/page/page-create.component";
+import {PageVersionService} from "./services/resource/page-version.service";
+import {PageVersionEditComponent} from "./views/page/page-version/page-version-edit.component";
+import {LinkSelectorComponent} from "./forms/types/component/link-selector.component";
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+};
+
+
 
 const APP_CONTAINERS = [
     FullLayoutComponent,
@@ -70,52 +85,58 @@ const APP_CONTAINERS = [
 ];
 
 const APP_COMPONENTS = [
-    AppAsideComponent,
-    AppBackgroundComponent,
-    AppBreadcrumbsComponent,
-    AppFooterComponent,
-    AppHeaderComponent,
     AppLoaderComponent,
+    AppBackgroundComponent,
     AppDebugComponent,
-    AppSidebarComponent,
-    AppSidebarFooterComponent,
-    AppSidebarFormComponent,
-    AppSidebarHeaderComponent,
-    AppSidebarMinimizerComponent,
-    APP_SIDEBAR_NAV,
+    AppContentComponent,
     PageNotFoundComponent,
+    UserIndexComponent,
+    UserListComponent,
+    ResourceDetailComponent,
+    ResourceEditComponent,
+    ResourceIndexComponent,
+    ResourceListComponent,
+    ResourceCreateComponent,
+    MediaIndexComponent,
+    MediaListComponent,
+    MediaSelectorComponent,
+    AccountComponent,
+    PageIndexComponent,
+    PageEditComponent,
+    PageCreateComponent,
+    SitemapListComponent,
+    SitemapListContainerComponent,
+    SitemapListItemComponent,
+    PageVersionEditComponent,
+    LinkSelectorComponent
 ];
 
 const APP_FEATURE_MODULES = [
-    AccountModule,
     AuthModule,
-    DashboardModule,
-    LinkModule,
-    MediaModule,
-    ResourceModule,
-    UserModule,
-    SitemapModule,
+    //LinkModule,
+    //SitemapModule,
 ];
 
 const APP_DIRECTIVES = [
-    AsideToggleDirective,
-    NAV_DROPDOWN_DIRECTIVES,
-    ReplaceDirective,
-    SIDEBAR_TOGGLE_DIRECTIVES,
 ];
 
 @NgModule({
     imports: [
         AdminRoutingModule,
+        AppAsideModule,
+        AppBreadcrumbModule.forRoot(),
+        AppFooterModule,
+        AppHeaderModule,
+        AppSidebarModule,
         AlertModule.forRoot(),
         BrowserAnimationsModule,
         BsDatepickerModule.forRoot(),
         BsDropdownModule.forRoot(),
+        PerfectScrollbarModule,
         ChartsModule,
         ClipboardModule,
         CommonModule,
-        FormlyModule,
-        FormlyBootstrapModule,
+        FormlyModule.forRoot(BOOTSTRAP_FORMLY_CONFIG),
         FormsModule,
         HotkeyModule.forRoot(),
         HttpClientModule,
@@ -134,6 +155,7 @@ const APP_DIRECTIVES = [
         ReactiveFormsModule,
         RouterModule,
         TabsModule.forRoot(),
+        QuillModule,
         ToastrModule.forRoot({
             positionClass: 'toast-top-right',
             easeTime: 80,
@@ -144,12 +166,13 @@ const APP_DIRECTIVES = [
             progressBar: true,
             timeOut: 2400,
         }),
-        APP_FEATURE_MODULES
+        APP_FEATURE_MODULES,
     ],
     declarations: [
         ...APP_CONTAINERS,
         ...APP_COMPONENTS,
         ...APP_DIRECTIVES,
+        ...FIELD_TYPE_COMPONENTS,
         AdminComponent
     ],
     providers: [
@@ -188,7 +211,7 @@ const APP_DIRECTIVES = [
 })
 export class AdminModule {
 
-    static forRoot(options?: any, environment?: any): ModuleWithProviders {
+    static forRoot(options?: any, environment?: any) {
         return {
             ngModule: AdminModule,
             providers: [
@@ -216,12 +239,12 @@ export class AdminModule {
                 ConfigurationService,
                 DataStoreService,
                 LoggerService,
-                AsideService,
                 MediaService,
                 PageService,
-                SchemaFormBuilder,
                 SessionService,
-                UserService
+                UserService,
+                ResourceService,
+                PageVersionService,
             ],
         };
     }
@@ -232,10 +255,20 @@ export class AdminModule {
                 private logger: LoggerService,
                 private router: Router,
                 private account: AccountService,
+                private user: UserService,
+                private media: MediaService,
+                private page: PageService,
+                private dataStore: DataStoreService,
                 private injector: Injector) {
         if (parentModule) {
             throw new Error('AdminModule is already loaded. Import it in the AppModule only');
         }
+
+        this.dataStore.register(this.account);
+        this.dataStore.register(this.user);
+        this.dataStore.register(this.media);
+        this.dataStore.register(this.page);
+
         setAppInjector(injector);
         this.bootstrap();
     }
@@ -269,12 +302,16 @@ export class AdminModule {
         /**
          * reload configuration each time user is loaded as it is user context sensitive
          */
-        this.account.model$.subscribe(user => {
+        this.account.user$.subscribe(user => {
             if (!user || !user.id) {
                 return;
             }
             this.logger.log('[User] account %c[' + user.id + '] ' + user.email + ' ' + user.role, 'color: #bb5555');
-            this.config.load();
+
+            //very dirty check: only load config after login
+            if (this.config.params.navigation.length === 0) {
+                this.config.load();
+            }
         });
     }
 }
