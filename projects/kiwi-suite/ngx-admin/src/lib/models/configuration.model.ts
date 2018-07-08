@@ -14,6 +14,7 @@ export interface Navigation {
     url: string;
     permissions?: string[];
     roles?: string[];
+    children: any;
 }
 
 export interface Project {

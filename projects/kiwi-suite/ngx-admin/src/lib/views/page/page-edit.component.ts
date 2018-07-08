@@ -7,6 +7,7 @@ import {takeUntil, map} from 'rxjs/operators';
 import {ResourceModel} from "../../models/api.model";
 import {PageVersionEditComponent} from "./page-version/page-version-edit.component";
 import {PageVersionService} from "../../services/resource/page-version.service";
+import {ResourceService} from "../../services/resource/resource.service";
 
 @Component({
     selector: 'page-edit',
@@ -102,7 +103,7 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
         return this.pageVersionEditComponent.versionForm;
     }
 
-    get versionService(): PageVersionService
+    get versionService(): ResourceService
     {
         return this.dataStore.resource('page-version');
     }
