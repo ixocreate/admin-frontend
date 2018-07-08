@@ -101,22 +101,22 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
     }
 
     onSubmitEmail() {
-        // this.dataService.updateEmail(this.account, this.emailForm.getRawValue())
-        //     .subscribe(() => {
-        //         this.dataService.load();
-        //         this.toastr.success('The email was successfully updated ', 'Success');
-        //     }, () => {
-        //         this.toastr.error('There was an error in updating the email', 'Error');
-        //     });
+        this.dataService.updateEmail(this.account, this.emailForm.getRawValue())
+            .subscribe(() => {
+                this.dataService.load();
+                this.toastr.success('The email was successfully updated ', 'Success');
+            }, () => {
+                this.toastr.error('There was an error in updating the email', 'Error');
+            });
     }
 
     onSubmitPassword() {
-        // this.dataService.updatePassword(this.account, this.passwordForm.getRawValue())
-        //     .subscribe(() => {
-        //         this.dataService.load();
-        //         this.toastr.success('The password was successfully updated ', 'Success');
-        //     }, () => {
-        //         this.toastr.error('There was an error in updating the password', 'Error');
-        //     });
+        this.dataService.updatePassword(this.account, this.passwordForm.getRawValue())
+            .subscribe(() => {
+                this.dataService.load();
+                this.toastr.success('The password was successfully updated ', 'Success');
+            }, () => {
+                this.toastr.error('There was an error in updating the password', 'Error');
+            });
     }
 }
