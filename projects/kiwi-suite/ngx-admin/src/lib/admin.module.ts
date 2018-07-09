@@ -73,6 +73,7 @@ import {PageCreateComponent} from "./views/page/page-create.component";
 import {PageVersionService} from "./services/resource/page-version.service";
 import {PageVersionEditComponent} from "./views/page/page-version/page-version-edit.component";
 import {LinkSelectorComponent} from "./forms/types/component/link-selector.component";
+import {YoutubeSelectorComponent} from "./forms/types/component/youtube-selector.component";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -108,7 +109,8 @@ const APP_COMPONENTS = [
     SitemapListContainerComponent,
     SitemapListItemComponent,
     PageVersionEditComponent,
-    LinkSelectorComponent
+    LinkSelectorComponent,
+    YoutubeSelectorComponent
 ];
 
 const APP_FEATURE_MODULES = [

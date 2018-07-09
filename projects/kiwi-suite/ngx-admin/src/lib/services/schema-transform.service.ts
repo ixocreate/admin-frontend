@@ -39,6 +39,9 @@ export class SchemaTransformService {
                 case 'text':
                     formSchema.push(this.handleText(value));
                     break;
+                case 'youtube':
+                    formSchema.push(this.handleYouTube(value));
+                    break;
                 case 'html':
                     formSchema.push(this.handleHtml(value));
                     break;
@@ -232,6 +235,18 @@ export class SchemaTransformService {
         return {
             key: value.name,
             type: "link",
+            templateOptions: {
+                label: value.label,
+                placeholder: value.label,
+                required: value.required,
+            }
+        };
+    }
+
+    private handleYouTube(value: any): any {
+        return {
+            key: value.name,
+            type: "youtube",
             templateOptions: {
                 label: value.label,
                 placeholder: value.label,

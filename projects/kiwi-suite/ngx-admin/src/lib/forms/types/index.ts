@@ -6,6 +6,7 @@ export { FormlyFieldInput } from './input';
 export { FormlyFieldRadio } from './radio';
 export { FormlyFieldTextArea } from './textarea';
 export { FormlyFieldSelect } from './select';
+export { FormlyFieldYouTube } from './youtube';
 export { FormlyFieldSelectNative } from './selectnative';
 // custom
 export { FormlyFieldDateTime } from './datetime';

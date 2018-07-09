@@ -16,6 +16,7 @@ import {
     FormlyFieldSelect,
     FormlyFieldSelectNative,
     FormlyFieldTextArea,
+    FormlyFieldYouTube
 } from './types/index';
 import {
     FormlyWrapperAddons,
@@ -37,6 +38,7 @@ export const FIELD_TYPE_COMPONENTS = [
     FormlyFieldMedia,
     FormlyFieldMultiCheckbox,
     FormlyFieldLink,
+    FormlyFieldYouTube,
     FormlyFieldRadio,
     FormlyFieldRepeatable,
     FormlyFieldSelectNative,
@@ -155,6 +157,11 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         {
             name: 'media',
             component: FormlyFieldMedia,
+            wrappers: ['fieldset', 'label'],
+        },
+        {
+            name: 'youtube',
+            component: FormlyFieldYouTube,
             wrappers: ['fieldset', 'label'],
         },
         {
