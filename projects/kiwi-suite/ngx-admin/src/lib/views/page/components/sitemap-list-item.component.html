@@ -40,20 +40,18 @@
                         </ng-container>
                     </div>
                 </div>
-                <button class="btn btn-sm btn-success p-2 d-flex flex-column justify-content-center" *ngIf="model.pageType.allowedChildren.length > 0"
-                        type="button"
+                <a class="btn btn-sm btn-success p-2 d-flex flex-column justify-content-center" *ngIf="model.pageType.allowedChildren.length > 0"
                         [routerLink]="['create', locale, model.sitemap.id]">
                     <i class="fa fa-fw fa-plus"></i>
-                </button>
+                </a>
 
                 <!--{{ model | json }}-->
 
-                <button class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
-                        type="button"
+                <a class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
                         [routerLink]="[model.pages[locale].id, 'edit']"
                         *ngIf="model.pages[locale]">
                     <i class="fa fa-fw fa-pencil"></i>
-                </button>
+                </a>
             </div>
             <sitemap-list-container
                     *ngIf="model.children"
