@@ -41,9 +41,9 @@
             <app-sidebar-nav [navItems]="navigation" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
             <app-sidebar-minimizer></app-sidebar-minimizer>
         </app-sidebar>
-        <main class="main">
+        <div class="main-container">
             <router-outlet></router-outlet>
-        </main>
+        </div>
     </div>
     <app-footer>
         <span>

@@ -74,6 +74,7 @@ import {PageVersionService} from "./services/resource/page-version.service";
 import {PageVersionEditComponent} from "./views/page/page-version/page-version-edit.component";
 import {LinkSelectorComponent} from "./forms/types/component/link-selector.component";
 import {YoutubeSelectorComponent} from "./forms/types/component/youtube-selector.component";
+import {AppAsideComponent} from './components/app-aside/app-aside.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -90,6 +91,7 @@ const APP_COMPONENTS = [
     AppBackgroundComponent,
     AppDebugComponent,
     AppContentComponent,
+    AppAsideComponent,
     PageNotFoundComponent,
     UserIndexComponent,
     UserListComponent,
@@ -125,7 +127,7 @@ const APP_DIRECTIVES = [
 @NgModule({
     imports: [
         AdminRoutingModule,
-        AppAsideModule,
+        //AppAsideModule,
         AppBreadcrumbModule.forRoot(),
         AppFooterModule,
         AppHeaderModule,

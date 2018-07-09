@@ -62,3 +62,76 @@ input[type="color"] {
     margin-bottom: 0 !important;
   }
 }
+
+.main-container {
+    display: flex;
+    flex: 1;
+
+    > * {
+        display: flex;
+        flex: 1;
+    }
+
+    app-content {
+        display: flex;
+        flex: 1;
+    }
+
+    > router-outlet {
+        display: none;
+    }
+}
+
+[appasidemenutoggler] {
+    display: none;
+
+    .aside-menu-lg-show & {
+        display: block;
+    }
+}
+
+.page-title-container {
+    background-color: $title-container-background;
+    @include border-radius($breadcrumb-border-radius);
+    @include borders($breadcrumb-borders);
+    padding: 12px 0;
+    position: fixed;
+    top: $navbar-height;
+    right: 0;
+    left: 0;
+    z-index: $zindex-sticky - 3;
+    transition: left $layout-transition-speed, right $layout-transition-speed, width $layout-transition-speed;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+        html:not([dir="rtl"]) {
+            .sidebar#{$infix}-show {
+                @include media-breakpoint-up(sm) {
+                    .page-title-container {
+                        left: $sidebar-width;
+                    }
+                    &.sidebar-compact {
+                        .page-title-container {
+                            left: $sidebar-compact-width;
+                        }
+                    }
+                    &.sidebar-minimized {
+                        .page-title-container {
+                            left: $sidebar-minimized-width;
+                        }
+                    }
+                }
+            }
+
+            .aside-menu#{$infix}-show {
+                @include media-breakpoint-up(sm) {
+                    .page-title-container {
+                        right: $aside-menu-width;
+                    }
+                }
+            }
+        }
+    }
+}
