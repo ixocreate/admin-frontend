@@ -1,11 +1,20 @@
-import {AfterViewInit, Component, ContentChild, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ContentChild,
+    ElementRef,
+    HostListener,
+    Input,
+    TemplateRef,
+    ViewChild,
+} from '@angular/core';
 
 @Component({
     selector: 'app-content',
     templateUrl: './app-content.component.html',
-    styleUrls: ['./app-content.component.scss']
+    styleUrls: ['./app-content.component.scss'],
 })
-export class AppContentComponent implements OnInit{
+export class AppContentComponent implements AfterViewInit {
     @ContentChild('content')
     mainContent: TemplateRef<any>;
 
@@ -16,13 +25,20 @@ export class AppContentComponent implements OnInit{
     headerContent: TemplateRef<any>;
 
     @Input()
-    title: string = "";
+    title: string = '';
 
-    aside = false;
+    headerHeight = 0;
+    @ViewChild('titleContainer') titleContainer: ElementRef;
 
-    ngOnInit(): void {
-        if (this.asideContent) {
-            this.aside = true;
+    @HostListener('window:resize') onResize() {
+        if (this.titleContainer) {
+            this.headerHeight = this.titleContainer.nativeElement.clientHeight;
         }
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.headerHeight = this.titleContainer.nativeElement.clientHeight;
+        });
     }
 }

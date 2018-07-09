@@ -76,6 +76,7 @@ import {LinkSelectorComponent} from "./forms/types/component/link-selector.compo
 import {YoutubeSelectorComponent} from "./forms/types/component/youtube-selector.component";
 import {SitemapModalListComponent} from "./forms/types/component/link/sitemap-modal-list.component";
 import {SitemapModalListItemComponent} from "./forms/types/component/link/sitemap-modal-list-item.component";
+import {AppAsideComponent} from './components/app-aside/app-aside.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -92,6 +93,7 @@ const APP_COMPONENTS = [
     AppBackgroundComponent,
     AppDebugComponent,
     AppContentComponent,
+    AppAsideComponent,
     PageNotFoundComponent,
     UserIndexComponent,
     UserListComponent,
@@ -129,7 +131,7 @@ const APP_DIRECTIVES = [
 @NgModule({
     imports: [
         AdminRoutingModule,
-        AppAsideModule,
+        //AppAsideModule,
         AppBreadcrumbModule.forRoot(),
         AppFooterModule,
         AppHeaderModule,
