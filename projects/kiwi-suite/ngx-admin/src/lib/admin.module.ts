@@ -74,6 +74,8 @@ import {PageVersionService} from "./services/resource/page-version.service";
 import {PageVersionEditComponent} from "./views/page/page-version/page-version-edit.component";
 import {LinkSelectorComponent} from "./forms/types/component/link-selector.component";
 import {YoutubeSelectorComponent} from "./forms/types/component/youtube-selector.component";
+import {SitemapModalListComponent} from "./forms/types/component/link/sitemap-modal-list.component";
+import {SitemapModalListItemComponent} from "./forms/types/component/link/sitemap-modal-list-item.component";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -110,7 +112,9 @@ const APP_COMPONENTS = [
     SitemapListItemComponent,
     PageVersionEditComponent,
     LinkSelectorComponent,
-    YoutubeSelectorComponent
+    YoutubeSelectorComponent,
+    SitemapModalListComponent,
+    SitemapModalListItemComponent,
 ];
 
 const APP_FEATURE_MODULES = [

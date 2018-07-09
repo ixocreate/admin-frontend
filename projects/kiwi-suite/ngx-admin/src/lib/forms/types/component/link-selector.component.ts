@@ -19,11 +19,7 @@ export class LinkSelectorComponent implements ControlValueAccessor, OnInit, OnDe
     linkValue: Link;
     modalRef: BsModalRef;
     onChange = (linkValue: Link) => {
-        if (!linkValue) {
-            this.selectedType = null;
-            return;
-        }
-        this.selectedType = linkValue.type;
+
     };
     onTouched = () => {
     };
@@ -34,7 +30,7 @@ export class LinkSelectorComponent implements ControlValueAccessor, OnInit, OnDe
 
     ngOnInit() {
         if (!this.linkValue) {
-            this.selectedType = 'media';
+            this.selectedType = 'sitemap';
         } else {
             this.selectedType = this.linkValue.type;
         }
@@ -57,6 +53,12 @@ export class LinkSelectorComponent implements ControlValueAccessor, OnInit, OnDe
 
     writeValue(linkValue: Link): void {
         this.linkValue = linkValue;
+        if (!linkValue) {
+            this.selectedType = null;
+            return;
+        }
+        this.selectedType = linkValue.type;
+
         this.onChange(this.linkValue);
     }
 
@@ -70,14 +72,24 @@ export class LinkSelectorComponent implements ControlValueAccessor, OnInit, OnDe
 
     remove() {
         this.writeValue(null);
+
         return false;
     }
 
     onSelectMedia(media: Media) {
         this.modalRef.hide();
+
         this.writeValue({
             type: 'media',
             value: media
+        });
+    }
+
+    onSelectPage(page: any) {
+        this.modalRef.hide();
+        this.writeValue({
+            type: 'sitemap',
+            value: page
         });
     }
 }

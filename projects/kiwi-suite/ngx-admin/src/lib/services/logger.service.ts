@@ -1,6 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {AdminError} from '../models';
+import {environment} from "../../../../../../src/environments/environment";
 
 @Injectable()
 export class LoggerService {
@@ -28,6 +29,9 @@ export class LoggerService {
     }
 
     log(message, ...params: any[]) {
+        if (environment.production) {
+            return;
+        }
         if (params.length && params[0] !== undefined) {
             console.log('%c[kiwi] %c' + message, 'color: #88bb55', 'color: #5588bb', ...params);
         } else {

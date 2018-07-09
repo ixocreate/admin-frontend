@@ -4,6 +4,10 @@
             <span class="badge badge-pill badge-secondary" *ngIf="linkValue.type === 'media'">
                 {{ linkValue.type }}: {{ linkValue.value.filename}} <button type="button" class="btn btn-link btn-sm" (click)="remove()"><span class="text-danger fa fa-close"></span></button>
             </span>
+
+            <span class="badge badge-pill badge-secondary" *ngIf="linkValue.type === 'sitemap'">
+                {{ linkValue.type }}: {{ linkValue.value.name}} <button type="button" class="btn btn-link btn-sm" (click)="remove()"><span class="text-danger fa fa-close"></span></button>
+            </span>
         </ng-container>
 
         <button *ngIf="!linkValue" type="button" class="btn btn-sm btn-light" (click)="openModal(template)">Select</button>
@@ -28,7 +32,7 @@
             <media-list (onSelect)="onSelectMedia($event)"></media-list>
         </ng-container>
         <ng-container *ngIf="selectedType === 'sitemap'">
-            <sitemap-list (onSelect)="onSelectMedia($event)"></sitemap-list>
+            <sitemap-modal-list (onSelect)="onSelectPage($event)"></sitemap-modal-list>
         </ng-container>
         <ng-container *ngIf="selectedType === 'external'">
             Test
