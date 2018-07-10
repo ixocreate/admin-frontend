@@ -11,7 +11,13 @@ import {NgxDnDModule} from '@swimlane/ngx-dnd';
 import {HotkeyModule} from 'angular2-hotkeys';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {FileUploadModule} from 'ng2-file-upload';
-import {AlertModule, BsDatepickerModule, ModalModule, PopoverModule, ProgressbarModule} from 'ngx-bootstrap';
+import {
+    AlertModule,
+    BsDatepickerModule,
+    ModalModule,
+    PopoverModule,
+    ProgressbarModule
+} from 'ngx-bootstrap';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ClipboardModule} from 'ngx-clipboard';

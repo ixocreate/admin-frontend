@@ -92,4 +92,20 @@ export class LinkSelectorComponent implements ControlValueAccessor, OnInit, OnDe
             value: page
         });
     }
+
+    onSelectExternal(event: any) {
+        if (!event.target.value) {
+            return;
+        }
+
+        this.writeValue({
+            type: 'external',
+            value: event.target.value
+        });
+    }
+
+    closeModal()
+    {
+        this.modalRef.hide();
+    }
 }

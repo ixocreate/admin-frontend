@@ -2,7 +2,7 @@
      [dropZone]="dropZone"
      [model]="model"
      [copy]="copy"
-     [ngClass]="{ 'gu-empty': !model?.length }"
+     [ngClass]="{ 'sitemap-empty': !model?.length && showEmptyBox }"
      [removeOnSpill]="removeOnSpill"
      class='ngx-dnd-container'>
     <ng-container *ngIf="model">
@@ -16,10 +16,18 @@
                     [moves]="moves"
                     [removeOnSpill]="removeOnSpill"
                     [droppableItemClass]="droppableItemClass"
+                    (cancel)="onCancel($event)"
                     (drop)="onDrop($event)"
+                    (drag)="onDrag($event)"
+                    [dragPageType]="dragPageType$"
                     [locale]="locale"
             >
             </sitemap-list-item>
+        </ng-container>
+        <ng-container *ngIf="model.length === 0 && showEmptyBox">
+            <div class="text-center">
+                <small class="text-success"><i>Drop here, for adding as first child</i></small>
+            </div>
         </ng-container>
     </ng-container>
     <ng-content *ngIf="!model"></ng-content>

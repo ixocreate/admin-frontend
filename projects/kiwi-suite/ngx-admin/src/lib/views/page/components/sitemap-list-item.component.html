@@ -4,12 +4,15 @@
         <sitemap-list-container
                 [model]="model"
                 [template]="container.template"
-                [dropZone]="dropZone"
+                [dropZone]="internalDropZone"
                 [dropZones]="dropZones"
                 [removeOnSpill]="removeOnSpill"
                 [droppableItemClass]="droppableItemClass"
                 [copy]="copy"
                 [locale]="locale"
+                [dragPageType]="dragPageType$"
+                (cancel)="onCancel($event)"
+                (drag)="onDrag($event)"
                 (drop)="onDrop($event)">
         </sitemap-list-container>
     </ng-container>
@@ -27,10 +30,25 @@
                 </div>
                 <div class="sitemap-label flex-grow-1 py-2 px-3">
                     <div>
+                        <ng-container *ngIf="model.children.length > 0">
+                            <a (click)="collapse = !collapse"><span class="fa fa-fw" [ngClass]="{'fa-chevron-down': !collapse, 'fa-chevron-right': collapse}"></span></a>
+                        </ng-container>
+                        <ng-container *ngIf="model.children.length === 0">
+                            <span class="fa fa-fw fa-minus text-secondary"></span>
+                        </ng-container>
                         <ng-container *ngIf="model.pages[locale] && model.pages[locale].name">
+                            <span class="fa fa-fw fa-power-off" [ngClass]="{'text-danger': model.pages[locale].status === 'offline', 'text-success': model.pages[locale].status === 'online'}"></span>
+                            <ng-container *ngIf="model.pages[locale].publishedFrom !== null || model.pages[locale].publishedUntil !== null">
+                                <span class="fa fa-fw fa-clock-o"></span>
+                            </ng-container>
+                            <ng-container *ngIf="model.pages[locale].publishedFrom === null && model.pages[locale].publishedUntil === null">
+                                <span class="fa fa-fw fa-clock-o text-secondary"></span>
+                            </ng-container>
                             {{ model.pages[locale].name }}
                         </ng-container>
                         <ng-container *ngIf="!model.pages[locale] || !model.pages[locale].name ">
+                            <span class="fa fa-fw fa-power-off text-danger"></span>
+                            <span class="fa fa-fw fa-clock-o text-secondary"></span>
                             <small *ngFor="let locale of objectKeys(model.pages)"
                                    style="text-decoration: line-through;">
                                 <ng-container *ngIf="model.pages[locale].name">
@@ -55,18 +73,25 @@
                     <i class="fa fa-fw fa-pencil"></i>
                 </button>
             </div>
-            <sitemap-list-container
-                    *ngIf="model.children"
-                    [model]="model.children"
-                    [template]="container.template"
-                    [dropZone]="dropZone"
-                    [dropZones]="dropZones"
-                    [removeOnSpill]="removeOnSpill"
-                    [droppableItemClass]="droppableItemClass"
-                    [copy]="copy"
-                    [locale]="locale"
-                    (drop)="onDrop($event)">
-            </sitemap-list-container>
+            <ng-container *ngIf="!collapse">
+                <sitemap-list-container
+                        *ngIf="model.children"
+                        [model]="model.children"
+                        [template]="container.template"
+                        [dropZone]="internalDropZone"
+                        [dropZones]="dropZones"
+                        [removeOnSpill]="removeOnSpill"
+                        [droppableItemClass]="droppableItemClass"
+                        [copy]="copy"
+                        [locale]="locale"
+                        [showDropableBox]="internalDropZone !== ''"
+                        (cancel)="onCancel($event)"
+                        (drop)="onDrop($event)"
+                        (drag)="onDrag($event)"
+                        [dragPageType]="dragPageType$"
+                >
+                </sitemap-list-container>
+            </ng-container>
         </ng-container>
     </ng-container>
 

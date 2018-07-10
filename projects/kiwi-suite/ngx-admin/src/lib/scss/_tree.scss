@@ -20,10 +20,25 @@
     }
 }
 
-.ngx-dnd-container.gu-empty {
-    border: none !important;
-    min-height: 6px;
-    margin: 0 0 0 20px !important;
+.sitemap-empty {
+    display: none;
+}
+.drag-enabeled {
+    .ngx-dnd-container {
+        .gu-unselectable &, &.gu-over, &.gu-over .ngx-dnd-container {
+
+        }
+
+        &.sitemap-empty {
+            display: block;
+            border: 1px dotted #4dbd74 !important;
+            margin: 0 0 5px 20px !important;
+            min-height: 50px;
+            opacity: 0.5;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+            filter: alpha(opacity=50);
+        }
+    }
 }
 
 .ngx-dnd-container:nth-child(odd) {
@@ -82,11 +97,10 @@
 }
 
 .ngx-dnd-item:hover {
-    border: 1px solid blue;
+    border: none;
 
     &.gu-empty {
-        border: 2px dotted red !important;
-        min-height: 50px;
+        border: none !important;
     }
 }
 

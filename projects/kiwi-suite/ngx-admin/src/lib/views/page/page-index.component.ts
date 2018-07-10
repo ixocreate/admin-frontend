@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ResourceIndexComponent} from '../resource';
+import {takeUntil} from 'rxjs/operators';
+import {Config} from '../../models/configuration.model';
 
 @Component({
     selector: 'app-page-index',
@@ -15,6 +17,11 @@ export class PageIndexComponent extends ResourceIndexComponent implements OnInit
 
     ngOnInit() {
         this.initDataService(this.type);
+        this.config.params$.pipe(takeUntil(this.destroyed$)).subscribe(
+            (params: Config) => {
+                this.onChangeLocale(params.intl.default);
+            }
+        );
     }
 
     protected loadData() {
