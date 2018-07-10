@@ -23,6 +23,9 @@ export class SchemaTransformService {
                 case 'blockContainer':
                     formSchema.push(this.handleBlockContainer(value));
                     break;
+                case 'collection':
+                    formSchema.push(this.handleCollection(value));
+                    break;
 
                 case 'select':
                     formSchema.push(this.handleSelect(value));
@@ -66,6 +69,31 @@ export class SchemaTransformService {
                  _type: element.name,
                 templateOptions: {
                      label: element.label
+                },
+                fieldGroup: this.transformForm(element.elements)
+            });
+        });
+
+        return {
+            key: value.name,
+            type: 'dynamic',
+            templateOptions: {
+                label: value.label,
+            },
+            fieldArray: [],
+            fieldGroups: groups,
+        }
+    }
+
+    private handleCollection(value: any): any
+    {
+        const groups = [];
+
+        value.elements.forEach((element) => {
+            groups.push({
+                _type: element.name,
+                templateOptions: {
+                    label: element.label
                 },
                 fieldGroup: this.transformForm(element.elements)
             });
