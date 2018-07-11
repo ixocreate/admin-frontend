@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ResourceEditComponent} from "../resource/resource-edit.component";
 import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {PageService} from "../../services/resource/page.service";
 import {takeUntil, map} from 'rxjs/operators';
-import {ResourceModel} from "../../models/api.model";
 import {PageVersionEditComponent} from "./page-version/page-version-edit.component";
-import {PageVersionService} from "../../services/resource/page-version.service";
 import {ResourceService} from "../../services/resource/resource.service";
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'page-edit',
@@ -26,6 +26,12 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
     navigationFields: FormlyFieldConfig[];
 
     protected dataService: PageService;
+
+    modalRef: BsModalRef;
+
+    constructor(protected route: ActivatedRoute, private modalService: BsModalService) {
+        super(route);
+    }
 
     ngOnInit() {
         this.initDataService(this.type);
@@ -106,6 +112,20 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
     get versionService(): ResourceService
     {
         return this.dataStore.resource('page-version');
+    }
+
+    showDeleteModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, {
+            backdrop: true,
+            ignoreBackdropClick: false,
+            class: 'modal-sm'
+        });
+    }
+
+    onDelete()
+    {
+        this.modalRef.hide();
+        super.onDelete();
     }
 
     onSubmit(): void {

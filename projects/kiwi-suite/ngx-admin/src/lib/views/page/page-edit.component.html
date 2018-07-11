@@ -24,16 +24,32 @@
 
         <ng-template #header>
             <div class="btn-group btn-group-sm pull-right">
+                <button type="button" class="btn btn-outline-danger btn-sm"
+                        [disabled]="(loading$ | async)"
+                        (click)="showDeleteModal(deleteModal)">
+                    <i class="fa fa-trash"></i> Delete
+                </button>
                 <button type="button" (click)="onSubmit()" class="btn btn-outline-primary btn-sm">
                     <i class="fa fa-fw fa-save"></i>
                     <span>Publish</span>
-                </button>
-                <button *ngIf="false" type="button" class="btn btn-outline-danger btn-sm"
-                        [disabled]="(loading$ | async)"
-                        (click)="onDelete()">
-                    <i class="fa fa-trash"></i> Delete
                 </button>
             </div>
         </ng-template>
     </app-content>
 </ng-container>
+
+<ng-template #deleteModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        You really want to delete this page?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onDelete()">Delete</button>
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+    </div>
+</ng-template>
