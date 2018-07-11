@@ -30,6 +30,9 @@ export class SchemaTransformService {
                 case 'select':
                     formSchema.push(this.handleSelect(value));
                     break;
+                case 'multiselect':
+                    formSchema.push(this.handleMultiSelect(value));
+                    break;
                 case 'datetime':
                     formSchema.push(this.handleDatetime(value));
                     break;
@@ -164,6 +167,32 @@ export class SchemaTransformService {
                 placeholder: value.label,
                 required: value.required,
                 options: options,
+                resource: value.resource,
+            }
+        }
+    }
+
+    private handleMultiSelect(value: any): any
+    {
+        const options = [];
+
+        for (let key in value.options) {
+            options.push({
+                value: key,
+                label: value.options[key]
+            });
+        }
+
+        return {
+            key: value.name,
+            type: "select",
+            templateOptions: {
+                label: value.label,
+                placeholder: value.label,
+                required: value.required,
+                options: options,
+                resource: value.resource,
+                multiple: true
             }
         }
     }

@@ -30,13 +30,18 @@ export class SelectOption {
 @Component({
     selector: 'formly-field-select',
     template: `
-        <ng-select [items]="(selectOptions$ | async).items"
-                   [bindValue]="valueProp"
-                   [bindLabel]="labelProp"
-                   [clearable]="clearable"
-                   [multiple]="multiple"
-                   [formControl]="formControl">
-        </ng-select>
+        <ng-container *ngIf="selectOptions$ | async as selectOptions">
+            <ng-select 
+                        *ngIf="selectOptions.items"
+                       [items]="selectOptions.items"
+                       [bindValue]="valueProp"
+                       [bindLabel]="labelProp"
+                       [clearable]="clearable"
+                       [multiple]="multiple"
+                       [formControl]="formControl">
+            </ng-select>
+        </ng-container>
+        
     `,
 })
 export class FormlyFieldSelect extends FieldType implements OnInit, OnDestroy {
@@ -51,7 +56,7 @@ export class FormlyFieldSelect extends FieldType implements OnInit, OnDestroy {
     ngOnInit() {
         super.ngOnInit();
         if (this.to.resource) {
-            this.dataStore.resource(this.to.resource).loadListData();
+            this.dataStore.resource(this.to.resource.resource).loadListData();
         }
         this.selectOptions$ = this.getSelectOptions();
     }
@@ -67,17 +72,11 @@ export class FormlyFieldSelect extends FieldType implements OnInit, OnDestroy {
     // }
 
     get labelProp(): string {
-        return this.to.labelProp || 'label';
+        return (this.to.resource) ? this.to.resource.label : 'label';
     }
 
     get valueProp(): string {
-        /**
-         * ng-select allows null to use object as value -> allow false as valueProp binding
-         */
-        if (this.to.valueProp === false) {
-            return null;
-        }
-        return this.to.valueProp || 'value';
+        return (this.to.resource) ? this.to.resource.value : 'value';
     }
 
     get groupProp(): string {
@@ -94,7 +93,7 @@ export class FormlyFieldSelect extends FieldType implements OnInit, OnDestroy {
 
     private getSelectOptions(): Observable<ResourceListModel> {
         if (this.to.resource) {
-            return this.dataStore.resource(this.to.resource).listData$.pipe(takeUntil(this.destroyed$));
+            return this.dataStore.resource(this.to.resource.resource).listData$.pipe(takeUntil(this.destroyed$));
         } else if (!(this.to.options instanceof Observable)) {
             const options: SelectOption[] = [],
                 groups: { [key: string]: SelectOption[] } = {};

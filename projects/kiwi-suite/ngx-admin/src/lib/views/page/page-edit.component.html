@@ -24,7 +24,7 @@
 
         <ng-template #header>
             <div class="btn-group btn-group-sm pull-right">
-                <button type="button" class="btn btn-outline-danger btn-sm"
+                <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="false"
                         [disabled]="(loading$ | async)"
                         (click)="showDeleteModal(deleteModal)">
                     <i class="fa fa-trash"></i> Delete
