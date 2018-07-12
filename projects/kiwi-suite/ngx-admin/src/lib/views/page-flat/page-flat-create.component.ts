@@ -1,24 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ResourceCreateComponent} from "../resource/resource-create.component";
-import {takeUntil} from 'rxjs/operators';
+import {PageCreateComponent} from "../page/page-create.component";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
-    selector: 'page-create',
-    templateUrl: './page-create.component.html',
+    selector: 'page-flat-create',
+    templateUrl: './page-flat-create.component.html',
 })
-export class PageCreateComponent extends ResourceCreateComponent implements OnInit, OnDestroy {
-    protected type = "page";
-    protected parentSitemapId: string = null;
-    protected locale: string;
+export class PageFlatCreateComponent extends PageCreateComponent implements OnInit, OnDestroy {
 
-    ngOnInit() {
-        this.initDataService(this.type);
-        this.initModel();
-    }
+    protected handle = "";
 
     protected initModel() {
         this.route.params.pipe(takeUntil(this.destroyed$))
             .subscribe(params => {
+                this.handle = params.handle;
                 this.locale = params.locale;
                 if (params.parentSitemapId) {
                     this.parentSitemapId = params.parentSitemapId;
@@ -56,7 +51,7 @@ export class PageCreateComponent extends ResourceCreateComponent implements OnIn
         this.dataService.create(value)
             .subscribe((result: { id: string }) => {
                 this.toastr.success('The ' + this.resourceKey + ' was successfully created', 'Success');
-                this.router.navigate([this.pathPrefix + this.dataService.resourceKey, result.id, 'edit']);
+                this.router.navigate(["/page-flat/" + this.handle, result.id, 'edit']);
             }, () => {
                 this.toastr.error('There was an error in creating the ' + this.resourceKey, 'Error');
             });

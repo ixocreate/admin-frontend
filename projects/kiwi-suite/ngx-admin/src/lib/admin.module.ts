@@ -83,6 +83,9 @@ import {YoutubeSelectorComponent} from "./forms/types/component/youtube-selector
 import {SitemapModalListComponent} from "./forms/types/component/link/sitemap-modal-list.component";
 import {SitemapModalListItemComponent} from "./forms/types/component/link/sitemap-modal-list-item.component";
 import {AppAsideComponent} from './components/app-aside/app-aside.component';
+import {PageFlatIndexComponent} from "./views/page-flat/page-flat-index.component";
+import {PageFlatCreateComponent} from "./views/page-flat/page-flat-create.component";
+import {PageListComponent} from "./views/page-flat/components/page-list.component";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -123,6 +126,9 @@ const APP_COMPONENTS = [
     YoutubeSelectorComponent,
     SitemapModalListComponent,
     SitemapModalListItemComponent,
+    PageFlatIndexComponent,
+    PageFlatCreateComponent,
+    PageListComponent
 ];
 
 const APP_FEATURE_MODULES = [

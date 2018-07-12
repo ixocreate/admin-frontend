@@ -13,6 +13,8 @@ import {MediaIndexComponent} from "./views/media/media-index.component";
 import {PageIndexComponent} from "./views/page/page-index.component";
 import {PageCreateComponent} from "./views/page/page-create.component";
 import {PageEditComponent} from "./views/page/page-edit.component";
+import {PageFlatIndexComponent} from "./views/page-flat/page-flat-index.component";
+import {PageFlatCreateComponent} from "./views/page-flat/page-flat-create.component";
 
 export const routes: Routes = [
     {
@@ -185,6 +187,35 @@ export const routes: Routes = [
                         ]
                     },
                 ]
+            },
+            {
+                path: 'page-flat/:handle',
+                component: FullLayoutComponent,
+                children: [
+                    {
+                        path: '',
+                        children: [
+                            {
+                                path: '',
+                                component: PageFlatIndexComponent,
+                                canActivate: [PermissionGuard],
+                            },
+                            {
+                                path: 'create/:locale/:parentSitemapId',
+                                component: PageFlatCreateComponent,
+                                canActivate: [PermissionGuard],
+                                data: {
+                                    title: 'Create',
+                                },
+                            },
+                            {
+                                path: ':id/edit',
+                                component: PageEditComponent,
+                                canActivate: [PermissionGuard],
+                            }
+                        ],
+                    },
+                ],
             },
             {
                 path: '**',

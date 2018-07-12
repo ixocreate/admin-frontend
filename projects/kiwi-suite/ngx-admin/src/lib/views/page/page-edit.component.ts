@@ -129,7 +129,6 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
     }
 
     onSubmit(): void {
-
         if (this.form.valid === false) {
             this.toastr.error('An error occurred while saving the ' + this.resourceKey + '. Are all required fields entered?', 'Error');
             return;

@@ -72,11 +72,13 @@ export class FormlyFieldSelect extends FieldType implements OnInit, OnDestroy {
     // }
 
     get labelProp(): string {
-        return (this.to.resource) ? this.to.resource.label : 'label';
+        const defaultLabel = this.to.labelProp || 'label';
+        return (this.to.resource) ? this.to.resource.label : defaultLabel;
     }
 
     get valueProp(): string {
-        return (this.to.resource) ? this.to.resource.value : 'value';
+        const defaultValue = this.to.valueProp || 'value';
+        return (this.to.resource) ? this.to.resource.value : defaultValue;
     }
 
     get groupProp(): string {
