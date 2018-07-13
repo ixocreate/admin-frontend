@@ -52,7 +52,6 @@ export class LinkSelectorComponent implements ControlValueAccessor, OnInit, OnDe
     }
 
     writeValue(linkValue: Link): void {
-        console.log(linkValue);
         this.linkValue = linkValue;
         if (!linkValue) {
             this.selectedType = null;
