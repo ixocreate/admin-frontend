@@ -25,6 +25,10 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
     navigationModel: any;
     navigationFields: FormlyFieldConfig[];
 
+    pageTypeForm: FormGroup;
+    pageTypeModel: any;
+    pageTypeFields: FormlyFieldConfig[];
+
     protected dataService: PageService;
 
     modalRef: BsModalRef;
@@ -69,6 +73,38 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
                     },
                 ];
             });
+
+        /*
+        this.pageTypeForm = null;
+        this.pageTypeModel = null;
+        this.pageTypeFields = null;
+
+        if (this.pageVersionEditComponent) {
+            this.pageVersionEditComponent.data$.pipe(takeUntil(this.destroyed$)).subscribe((data) => {
+                if (!data) {
+                    return;
+                }
+
+                if (data.meta.allowedPageTypes.length === 0) {
+                    return;
+                }
+
+                this.pageTypeFields = [
+                    {
+                        key: 'pageType',
+                        type: 'select',
+                        templateOptions: {
+                            label: 'Page Type',
+                            options: data.meta.allowedPageTypes,
+                        },
+                    }
+                ];
+
+                this.pageTypeForm = new FormGroup({});
+            });
+        }
+*/
+
     }
 
     protected initModel() {
@@ -115,6 +151,19 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
     }
 
     showDeleteModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, {
+            backdrop: true,
+            ignoreBackdropClick: false,
+            class: 'modal-sm'
+        });
+    }
+
+    changePageType() {
+
+        this.modalRef.hide();
+    }
+
+    onChangePageTypeModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template, {
             backdrop: true,
             ignoreBackdropClick: false,

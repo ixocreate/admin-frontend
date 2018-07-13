@@ -19,6 +19,18 @@
                         </form>
                     </div>
                 </tab>
+                <tab *ngIf="false">
+                    <ng-template tabHeading>
+                        <i class="icon-wrench"></i>
+                    </ng-template>
+                    <div class="p-3">
+                        <form [formGroup]="pageTypeForm" *ngIf="pageTypeForm">
+                            <formly-form [form]="pageTypeForm" [fields]="pageTypeFields" [model]="pageTypeModel"></formly-form>
+
+                            <button type="button" class="btn btn-outline-success btn-sm" (click)="onChangePageTypeModal(changePageTypeModal)">Change Page Type</button>
+                        </form>
+                    </div>
+                </tab>
             </tabset>
         </ng-template>
 
@@ -50,6 +62,23 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="onDelete()">Delete</button>
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+    </div>
+</ng-template>
+
+
+<ng-template #changePageTypeModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Page Type</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        You really want to change the page type? All entered data will be lost!
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="changePageType()">Change</button>
         <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
     </div>
 </ng-template>
