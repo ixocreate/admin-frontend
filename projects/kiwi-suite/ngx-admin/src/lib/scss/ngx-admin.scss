@@ -12,11 +12,11 @@
 // Import core styles
 @import "~@coreui/coreui/scss/coreui";
 // Import datatable styles
-@import '~@swimlane/ngx-datatable/release/index.css';
+@import "datatable";
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~ngx-bootstrap/datepicker/bs-datepicker.css";
-@import 'datatable';
 // Custom styles
 @import "custom";
 @import "content";

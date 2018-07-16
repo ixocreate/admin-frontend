@@ -14,7 +14,7 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {
     AlertModule,
     BsDatepickerModule,
-    ModalModule,
+    ModalModule, PaginationModule,
     PopoverModule,
     ProgressbarModule
 } from 'ngx-bootstrap';
@@ -25,9 +25,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {flatMap} from 'rxjs/operators';
 import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from './admin.routing';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import {
-    AppAsideModule,
     AppBreadcrumbModule,
     AppHeaderModule,
     AppFooterModule,
@@ -58,11 +56,9 @@ import {AppDebugComponent} from "./components/app-debug/app-debug.component";
 import {AppContentComponent} from "./components/app-content/app-content.component";
 import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {UserIndexComponent} from "./views/user/user-index.component";
-import {UserListComponent} from "./views/user/components/user-list.component";
 import {ResourceDetailComponent} from "./views/resource/resource-detail.component";
 import {ResourceEditComponent} from "./views/resource/resource-edit.component";
 import {ResourceIndexComponent} from "./views/resource/resource-index.component";
-import {ResourceListComponent} from "./views/resource/components/resource-list.component";
 import {AccountComponent} from "./views/account/account.component";
 import {ResourceCreateComponent} from "./views/resource/resource-create.component";
 import {MediaIndexComponent} from "./views/media/media-index.component";
@@ -105,11 +101,9 @@ const APP_COMPONENTS = [
     AppAsideComponent,
     PageNotFoundComponent,
     UserIndexComponent,
-    UserListComponent,
     ResourceDetailComponent,
     ResourceEditComponent,
     ResourceIndexComponent,
-    ResourceListComponent,
     ResourceCreateComponent,
     MediaIndexComponent,
     MediaListComponent,
@@ -169,6 +163,7 @@ const APP_DIRECTIVES = [
         ModalModule.forRoot(),
         NgSelectModule,
         NgxDatatableModule,
+        PaginationModule.forRoot(),
         NgxDnDModule,
         PopoverModule.forRoot(),
         ProgressbarModule.forRoot(),

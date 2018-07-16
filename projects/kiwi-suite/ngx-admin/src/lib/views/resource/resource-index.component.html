@@ -3,7 +3,51 @@
         <ng-template #content>
             <div class="card card-accent-primary">
                 <div class="card-body">
-                    <resource-list [dataService]="dataService"></resource-list>
+                    <ngx-datatable
+                            class="bootstrap expandable"
+                            [rows]="data.items"
+                            [columnMode]="'force'"
+                            [rowHeight]="'auto'"
+                            [footerHeight]="100"
+                            [limit]="'10'"
+                            [externalSorting]="true"
+                            [externalPaging]="true"
+                            [count]="data.meta.count"
+                            [offset]="offset"
+                            (sort)="onSort($event)"
+                            [reorderable]="false">
+                        <ng-container *ngIf="data.schema.elements">
+                            <ngx-datatable-column *ngFor="let schemaColumn of data.schema.elements" [prop]="schemaColumn.name" [sortable]="schemaColumn.sortable" [draggable]="false" [resizeable]="false">
+                                <ng-template let-column="column" ngx-datatable-header-template>
+                                    {{ schemaColumn.label }}
+                                </ng-template>
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    {{ value }}
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ng-container>
+
+                        <ngx-datatable-column prop="id" [sortable]="false" [draggable]="false" [resizeable]="false">
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <div class="text-right">
+                                    <a routerLink="/{{ resourcePathPrefix }}/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-footer>
+                            <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset">
+                                <div style="flex: 1;">
+                                    <pagination *ngIf="rowCount > pageSize" [previousText]="'<'"  [nextText]="'>'" [boundaryLinks]="false" [directionLinks]="true" [maxSize]="10" [rotate]="true" [itemsPerPage]="pageSize" [totalItems]="rowCount" [ngModel]="curPage" (pageChanged)="onPage($event)"></pagination>
+                                </div>
+                            </ng-template>
+
+                        </ngx-datatable-footer>
+                    </ngx-datatable>
                 </div>
             </div>
         </ng-template>

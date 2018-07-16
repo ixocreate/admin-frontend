@@ -9,6 +9,8 @@ import {ResourceComponent} from './resource.component';
 })
 export class ResourceIndexComponent extends ResourceComponent implements OnInit {
 
+    offset:number = 0;
+    
     constructor(protected route: ActivatedRoute) {
         super();
     }
@@ -28,11 +30,28 @@ export class ResourceIndexComponent extends ResourceComponent implements OnInit 
             });
     }
 
-    protected loadData() {
-        this.dataService.loadListData();
+    protected loadData(params: any = {}) {
+        this.dataService.loadListData(params);
     }
 
     get data$() {
         return this.dataService.listData$;
+    }
+
+    onPage(event) {
+        const offset = ((event.page - 1) * event.itemsPerPage);
+        if (offset === this.offset) {
+            return;
+        }
+        this.offset = offset;
+
+        this.loadData({
+            offset: this.offset,
+            limit: event.itemsPerPage,
+        });
+    }
+
+    onSort(event) {
+        console.log('Sort Event', event);
     }
 }
