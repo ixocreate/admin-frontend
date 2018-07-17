@@ -1,18 +1,18 @@
 {
   "/admin/*": {
-    "target": "http://kiwi-v4.test",
+    "target": "http://skn-web.test",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/media/img/*": {
-    "target": "http://kiwi-v4.test",
+    "target": "http://skn-web.test",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/assets/*": {
-    "target": "http://kiwi-v4.test",
+    "target": "http://skn-web.test",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
