@@ -35,7 +35,7 @@ import {FormlyFieldRepeatable} from './repeatable';
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="fieldGroups && fieldGroups.length > 0">
             <div class="input-group">
                 <select class="custom-select" (change)="selectFieldGroup($event)">
                     <option *ngFor="let fieldGroup of fieldGroups" [value]="fieldGroup._type">
@@ -46,7 +46,6 @@ import {FormlyFieldRepeatable} from './repeatable';
                     <button class="btn btn-outline-info" type="button"
                             (click)="add()">
                         <i class="fa fa-plus"></i>
-                        {{ field.templateOptions.btnText }}
                     </button>
                 </div>
             </div>
@@ -90,6 +89,7 @@ export class FormlyFieldDynamic extends FormlyFieldRepeatable implements OnInit 
          * cleanup - remove controls that are marked for removal
          */
         this.removeControls.forEach(index => this.remove(index));
+
     }
 
     get fieldGroups() {

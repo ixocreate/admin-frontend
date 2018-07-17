@@ -38,7 +38,6 @@ import {Component} from "@angular/core";
         </div>
         <button class="btn btn-link" type="button" (click)="add()">
             <i class="fa fa-plus"></i>
-            {{ field.templateOptions.btnText }}
         </button>
     `,
 })
