@@ -10,7 +10,7 @@
         <div class="d-block mb-4 h-100" *ngIf="media">
             <div *ngIf="isImage(media.mimeType)" class="media-container">
                 <div class="media-image"
-                     [ngStyle]="{backgroundImage: 'url(/media/img/admin-thumb/' + media.basePath + media.filename + ')'}"></div>
+                     [ngStyle]="{backgroundImage: 'url('+ media.thumb + ')'}"></div>
                 <div class="media-image-title p-1 text-nowrap text-truncate">
                     <a (click)="remove()"><span class="fa fa-close"></span></a>&nbsp;<small>{{ media.filename }}</small>
                 </div>
