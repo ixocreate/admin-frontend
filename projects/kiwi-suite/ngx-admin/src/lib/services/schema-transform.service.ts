@@ -1,4 +1,36 @@
+import {Injectable} from '@angular/core';
+
+@Injectable()
 export class SchemaTransformService {
+    private transformers: {inputType: string, callback: (value: any) => any}[] = [];
+
+    constructor()
+    {
+        this.registerTransform('section', this.handleSection);
+        this.registerTransform('tabbedGroup', this.handleTabbedGroup);
+        this.registerTransform('blockContainer', this.handleBlockContainer);
+        this.registerTransform('collection', this.handleCollection);
+        this.registerTransform('select', this.handleSelect);
+        this.registerTransform('multiselect', this.handleMultiSelect);
+        this.registerTransform('datetime', this.handleDatetime);
+        this.registerTransform('date', this.handleDate);
+        this.registerTransform('image', this.handleImage);
+        this.registerTransform('text', this.handleText);
+        this.registerTransform('youtube', this.handleYouTube);
+        this.registerTransform('color', this.handleColor);
+        this.registerTransform('html', this.handleHtml);
+        this.registerTransform('link', this.handleLink);
+        this.registerTransform('checkbox', this.handleCheckbox);
+        this.registerTransform('textarea', this.handleTextarea);
+    }
+
+    registerTransform(inputType: string, callback: (value: any) => any )
+    {
+        this.transformers.push({
+            inputType: inputType,
+            callback: callback
+        });
+    }
 
     public transform(apiSchema: any): any {
         return {
@@ -9,55 +41,19 @@ export class SchemaTransformService {
         };
     }
 
+
+
     public transformForm(form: any): any {
         const formSchema = [];
 
         form.forEach((value) => {
-            switch (value.inputType) {
-                case 'section':
-                    formSchema.push(this.handleSection(value));
-                    break;
-                case 'tabbedGroup':
-                    formSchema.push(this.handleTabbedGroup(value));
-                    break;
-                case 'blockContainer':
-                    formSchema.push(this.handleBlockContainer(value));
-                    break;
-                case 'collection':
-                    formSchema.push(this.handleCollection(value));
-                    break;
+            this.transformers.forEach((transformer) => {
+                if (transformer.inputType !== value.inputType) {
+                   return;
+                }
 
-                case 'select':
-                    formSchema.push(this.handleSelect(value));
-                    break;
-                case 'multiselect':
-                    formSchema.push(this.handleMultiSelect(value));
-                    break;
-                case 'datetime':
-                    formSchema.push(this.handleDatetime(value));
-                    break;
-                case 'date':
-                    formSchema.push(this.handleDate(value));
-                    break;
-                case 'image':
-                    formSchema.push(this.handleImage(value));
-                    break;
-                case 'text':
-                    formSchema.push(this.handleText(value));
-                    break;
-                case 'youtube':
-                    formSchema.push(this.handleYouTube(value));
-                    break;
-                case 'html':
-                    formSchema.push(this.handleHtml(value));
-                    break;
-                case 'link':
-                    formSchema.push(this.handleLink(value));
-                    break;
-                case 'textarea':
-                    formSchema.push(this.handleTextarea(value));
-                    break;
-            }
+               formSchema.push(transformer.callback(value));
+            });
         });
 
         return formSchema;
@@ -209,6 +205,18 @@ export class SchemaTransformService {
         };
     }
 
+    private handleCheckbox(value: any): any {
+        return {
+            key: value.name,
+            type: "checkbox",
+            templateOptions: {
+                label: value.label,
+                placeholder: value.label,
+                required: value.required,
+            }
+        };
+    }
+
     private handleTextarea(value: any): any {
         return {
             key: value.name,
@@ -304,6 +312,18 @@ export class SchemaTransformService {
         return {
             key: value.name,
             type: "youtube",
+            templateOptions: {
+                label: value.label,
+                placeholder: value.label,
+                required: value.required,
+            }
+        };
+    }
+
+    private handleColor(value: any): any {
+        return {
+            key: value.name,
+            type: "color",
             templateOptions: {
                 label: value.label,
                 placeholder: value.label,

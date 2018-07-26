@@ -28,6 +28,7 @@ import {
     FormlyWrapperTab,
     FormlyWrapperTabset,
 } from './wrappers/index';
+import {FormlyFieldColor} from "./types/color";
 
 export const FIELD_TYPE_COMPONENTS = [
     // types
@@ -45,6 +46,7 @@ export const FIELD_TYPE_COMPONENTS = [
     FormlyFieldSelect,
     FormlyFieldTextArea,
     FormlyFieldQuill,
+    FormlyFieldColor,
 
     // wrappers
     FormlyWrapperLabel,
@@ -162,6 +164,11 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         {
             name: 'youtube',
             component: FormlyFieldYouTube,
+            wrappers: ['fieldset', 'label'],
+        },
+        {
+            name: 'color',
+            component: FormlyFieldColor,
             wrappers: ['fieldset', 'label'],
         },
         {

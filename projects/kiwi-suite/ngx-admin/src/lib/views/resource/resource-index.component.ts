@@ -7,9 +7,12 @@ import {ResourceComponent} from './resource.component';
     selector: 'resource-index',
     templateUrl: './resource-index.component.html',
 })
-export class ResourceIndexComponent extends ResourceComponent implements OnInit {
+export class ResourceIndexComponent extends ResourceComponent implements OnInit
+{
 
     offset:number = 0;
+
+    currentPage: number = 1;
     
     constructor(protected route: ActivatedRoute) {
         super();
@@ -31,6 +34,10 @@ export class ResourceIndexComponent extends ResourceComponent implements OnInit 
     }
 
     protected loadData(params: any = {}) {
+        if (!params.offset) {
+            this.offset = 0;
+            this.currentPage = 1;
+        }
         this.dataService.loadListData(params);
     }
 
@@ -39,11 +46,11 @@ export class ResourceIndexComponent extends ResourceComponent implements OnInit 
     }
 
     onPage(event) {
-        const offset = ((event.page - 1) * event.itemsPerPage);
-        if (offset === this.offset) {
+        if (this.currentPage === event.page) {
             return;
         }
-        this.offset = offset;
+        this.currentPage = event.page;
+        this.offset = ((event.page - 1) * event.itemsPerPage);
 
         this.loadData({
             offset: this.offset,
@@ -52,6 +59,5 @@ export class ResourceIndexComponent extends ResourceComponent implements OnInit 
     }
 
     onSort(event) {
-        console.log('Sort Event', event);
     }
 }

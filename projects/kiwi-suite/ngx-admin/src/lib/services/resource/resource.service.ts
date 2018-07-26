@@ -19,7 +19,10 @@ export class ResourceService extends DataService {
     protected _pathPrefix = 'resource/';
 
     constructor(@Inject(ApiService) protected api: ApiService,
-                @Inject(ConfigurationService) protected config: ConfigurationService) {
+                @Inject(ConfigurationService) protected config: ConfigurationService,
+                @Inject(SchemaTransformService) protected schemaTransformService: SchemaTransformService
+
+    ) {
         super(api);
     }
 
@@ -113,8 +116,7 @@ export class ResourceService extends DataService {
             this.api.get<ResourceModel>(link, params)
                 .subscribe(
                     (data: ResourceModel) => {
-                        const schemaTransformService = new SchemaTransformService();
-                        data.schema = schemaTransformService.transformForm(data.schema);
+                        data.schema = this.schemaTransformService.transformForm(data.schema);
 
                         this._createData$.next(data);
                         return data;
@@ -143,8 +145,7 @@ export class ResourceService extends DataService {
             this.api.get<ResourceModel>(link, params)
                 .subscribe(
                     (data: ResourceModel) => {
-                        const schemaTransformService = new SchemaTransformService();
-                        data.schema = schemaTransformService.transformForm(data.schema);
+                        data.schema = this.schemaTransformService.transformForm(data.schema);
 
                         this._updateData$.next(data);
                         return data;

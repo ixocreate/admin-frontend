@@ -3,6 +3,7 @@ import {AppInjector} from './app-injector.service';
 import {ConfigurationService} from './configuration.service';
 import {LoggerService} from './logger.service';
 import {ResourceService} from './resource/resource.service';
+import {SchemaTransformService} from "./schema-transform.service";
 
 export class DataStoreService {
     /**
@@ -42,7 +43,7 @@ export class DataStoreService {
         let dataService = this.dataServices[resourceKey];
 
         if (!dataService) {
-            dataService = new ResourceService(AppInjector.get(ApiService), AppInjector.get(ConfigurationService));
+            dataService = new ResourceService(AppInjector.get(ApiService), AppInjector.get(ConfigurationService), AppInjector.get(SchemaTransformService));
             dataService.resourceKey = resourceKey;
             this.register(dataService);
         }

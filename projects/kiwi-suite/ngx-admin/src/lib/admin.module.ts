@@ -82,6 +82,9 @@ import {AppAsideComponent} from './components/app-aside/app-aside.component';
 import {PageFlatIndexComponent} from "./views/page-flat/page-flat-index.component";
 import {PageFlatCreateComponent} from "./views/page-flat/page-flat-create.component";
 import {PageListComponent} from "./views/page-flat/components/page-list.component";
+import { ColorPickerModule } from 'ngx-color-picker';
+import {ColorSelectorComponent} from "./forms/types/component/color-selector.component";
+import {SchemaTransformService} from "./services/schema-transform.service";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -122,7 +125,8 @@ const APP_COMPONENTS = [
     SitemapModalListItemComponent,
     PageFlatIndexComponent,
     PageFlatCreateComponent,
-    PageListComponent
+    PageListComponent,
+    ColorSelectorComponent,
 ];
 
 const APP_FEATURE_MODULES = [
@@ -163,6 +167,7 @@ const APP_DIRECTIVES = [
         ModalModule.forRoot(),
         NgSelectModule,
         NgxDatatableModule,
+        ColorPickerModule,
         PaginationModule.forRoot(),
         NgxDnDModule,
         PopoverModule.forRoot(),
@@ -191,6 +196,7 @@ const APP_DIRECTIVES = [
         AdminComponent
     ],
     providers: [
+        SchemaTransformService,
         {
             provide: LocationStrategy,
             useClass: PathLocationStrategy

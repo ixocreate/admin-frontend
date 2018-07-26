@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {map, skipWhile} from 'rxjs/operators';
 import {LoginCredentials, User} from '../../models';
-import {ApiService} from '../api.service';
-import {ConfigurationService} from '../configuration.service';
 import {UserService} from './user.service';
 
 @Injectable()
@@ -13,11 +11,6 @@ export class AccountService extends UserService {
 
     protected _user$ = new BehaviorSubject<any>({});
     protected _user: User;
-
-    constructor(protected api: ApiService,
-                protected config: ConfigurationService) {
-        super(api, config);
-    }
 
     get user$() {
         return this._user$.asObservable().pipe(
