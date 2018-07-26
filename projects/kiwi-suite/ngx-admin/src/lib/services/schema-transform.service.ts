@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class SchemaTransformService {
-    private transformers: {inputType: string, callback: (value: any) => any}[] = [];
+    private transformers: {inputType: string, callback: (value: any, transformer: SchemaTransformService) => any}[] = [];
 
     constructor()
     {
@@ -24,7 +24,7 @@ export class SchemaTransformService {
         this.registerTransform('textarea', this.handleTextarea);
     }
 
-    registerTransform(inputType: string, callback: (value: any) => any )
+    registerTransform(inputType: string, callback: (value: any, transformer: SchemaTransformService) => any )
     {
         this.transformers.push({
             inputType: inputType,
@@ -52,14 +52,14 @@ export class SchemaTransformService {
                    return;
                 }
 
-               formSchema.push(transformer.callback(value));
+               formSchema.push(transformer.callback(value, this));
             });
         });
 
         return formSchema;
     }
 
-    private handleBlockContainer(value: any): any
+    private handleBlockContainer(value: any, transformer: SchemaTransformService): any
     {
         const groups = [];
 
@@ -69,7 +69,7 @@ export class SchemaTransformService {
                 templateOptions: {
                      label: element.label
                 },
-                fieldGroup: this.transformForm(element.elements)
+                fieldGroup: transformer.transformForm(element.elements)
             });
         });
 
@@ -84,7 +84,7 @@ export class SchemaTransformService {
         }
     }
 
-    private handleCollection(value: any): any
+    private handleCollection(value: any, transformer: SchemaTransformService): any
     {
         const groups = [];
 
@@ -94,7 +94,7 @@ export class SchemaTransformService {
                 templateOptions: {
                     label: element.label
                 },
-                fieldGroup: this.transformForm(element.elements)
+                fieldGroup: transformer.transformForm(element.elements)
             });
         });
 
@@ -109,7 +109,7 @@ export class SchemaTransformService {
         }
     }
 
-    private handleTabbedGroup(value: any): any
+    private handleTabbedGroup(value: any, transformer: SchemaTransformService): any
     {
         const groups = [];
 
@@ -119,7 +119,7 @@ export class SchemaTransformService {
                 templateOptions: {
                     label: element.label
                 },
-                fieldGroup: this.transformForm(element.elements)
+                fieldGroup: transformer.transformForm(element.elements)
             });
         });
 
@@ -132,7 +132,7 @@ export class SchemaTransformService {
         }
     }
 
-    private handleSection(value: any): any
+    private handleSection(value: any, transformer: SchemaTransformService): any
     {
         return {
             wrappers: ['section'],
@@ -140,11 +140,11 @@ export class SchemaTransformService {
                 label: value.label,
                 icon: 'fa fa-fw ' + value.icon,
             },
-            fieldGroup: this.transformForm(value.elements),
+            fieldGroup: transformer.transformForm(value.elements),
         }
     }
 
-    private handleSelect(value: any): any
+    private handleSelect(value: any, transformer: SchemaTransformService): any
     {
         const options = [];
 
@@ -168,7 +168,7 @@ export class SchemaTransformService {
         }
     }
 
-    private handleMultiSelect(value: any): any
+    private handleMultiSelect(value: any, transformer: SchemaTransformService): any
     {
         const options = [];
 
@@ -193,7 +193,7 @@ export class SchemaTransformService {
         }
     }
 
-    private handleText(value: any): any {
+    private handleText(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "input",
@@ -205,7 +205,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleCheckbox(value: any): any {
+    private handleCheckbox(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "checkbox",
@@ -217,7 +217,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleTextarea(value: any): any {
+    private handleTextarea(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "textarea",
@@ -229,7 +229,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleImage(value: any): any {
+    private handleImage(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "media",
@@ -241,7 +241,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleDate(value: any): any {
+    private handleDate(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "datetime",
@@ -256,7 +256,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleDatetime(value: any): any {
+    private handleDatetime(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "datetime",
@@ -271,7 +271,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleHtml(value: any): any {
+    private handleHtml(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "wysiwyg",
@@ -296,7 +296,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleLink(value: any): any {
+    private handleLink(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "link",
@@ -308,7 +308,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleYouTube(value: any): any {
+    private handleYouTube(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "youtube",
@@ -320,7 +320,7 @@ export class SchemaTransformService {
         };
     }
 
-    private handleColor(value: any): any {
+    private handleColor(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
             type: "color",
