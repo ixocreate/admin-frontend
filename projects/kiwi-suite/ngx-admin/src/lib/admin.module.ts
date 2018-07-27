@@ -85,6 +85,7 @@ import {PageListComponent} from "./views/page-flat/components/page-list.componen
 import { ColorPickerModule } from 'ngx-color-picker';
 import {ColorSelectorComponent} from "./forms/types/component/color-selector.component";
 import {SchemaTransformService} from "./services/schema-transform.service";
+import {DateSelectorComponent} from "./forms/types/component/date-selector.component";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -127,6 +128,7 @@ const APP_COMPONENTS = [
     PageFlatCreateComponent,
     PageListComponent,
     ColorSelectorComponent,
+    DateSelectorComponent
 ];
 
 const APP_FEATURE_MODULES = [

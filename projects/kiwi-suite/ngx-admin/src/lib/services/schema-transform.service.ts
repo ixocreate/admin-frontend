@@ -244,14 +244,11 @@ export class SchemaTransformService {
     private handleDate(value: any, transformer: SchemaTransformService): any {
         return {
             key: value.name,
-            type: "datetime",
+            type: "date",
             templateOptions: {
                 label: value.label,
                 placeholder: value.label,
                 required: value.required,
-                config: {
-                    dateInputFormat: "YYYY-MM-DD",
-                },
             }
         };
     }

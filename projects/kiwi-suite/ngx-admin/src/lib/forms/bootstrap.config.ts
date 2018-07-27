@@ -29,11 +29,13 @@ import {
     FormlyWrapperTabset,
 } from './wrappers/index';
 import {FormlyFieldColor} from "./types/color";
+import {FormlyFieldDate} from "./types/date";
 
 export const FIELD_TYPE_COMPONENTS = [
     // types
     FormlyFieldCheckbox,
     FormlyFieldDateTime,
+    FormlyFieldDate,
     FormlyFieldDynamic,
     FormlyFieldInput,
     FormlyFieldMedia,
@@ -150,6 +152,11 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
                     }
                 }
             },
+        },
+        {
+            name: 'date',
+            component: FormlyFieldDate,
+            wrappers: ['fieldset', 'label'],
         },
         {
             name: 'dynamic',
