@@ -70,6 +70,12 @@
                         *ngIf="model.pages[locale]">
                     <i class="fa fa-fw fa-pencil"></i>
                 </a>
+
+                <a class="btn btn-sm btn-warning p-2 d-flex flex-column justify-content-center"
+                   [routerLink]="['add', locale, model.sitemap.id]"
+                   *ngIf="!model.pages[locale]">
+                    <i class="fa fa-fw fa-pencil"></i>
+                </a>
             </div>
             <ng-container *ngIf="!collapse">
                 <sitemap-list-container

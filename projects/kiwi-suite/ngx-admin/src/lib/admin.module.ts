@@ -72,6 +72,7 @@ import {SitemapListContainerComponent} from "./views/page/components/sitemap-lis
 import {SitemapListItemComponent} from "./views/page/components/sitemap-list-item.component";
 import {PageEditComponent} from "./views/page/page-edit.component";
 import {PageCreateComponent} from "./views/page/page-create.component";
+import {PageAddComponent} from "./views/page/page-add.component";
 import {PageVersionService} from "./services/resource/page-version.service";
 import {PageVersionEditComponent} from "./views/page/page-version/page-version-edit.component";
 import {LinkSelectorComponent} from "./forms/types/component/link-selector.component";
@@ -115,6 +116,7 @@ const APP_COMPONENTS = [
     AccountComponent,
     PageIndexComponent,
     PageEditComponent,
+    PageAddComponent,
     PageCreateComponent,
     SitemapListComponent,
     SitemapListContainerComponent,

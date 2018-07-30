@@ -24,6 +24,10 @@ export class PageIndexComponent extends ResourceIndexComponent implements OnInit
         );
     }
 
+    get locales() {
+        return this.config.params.intl.locales;
+    }
+
     protected loadData() {
 
     }

@@ -15,6 +15,7 @@ import {PageCreateComponent} from "./views/page/page-create.component";
 import {PageEditComponent} from "./views/page/page-edit.component";
 import {PageFlatIndexComponent} from "./views/page-flat/page-flat-index.component";
 import {PageFlatCreateComponent} from "./views/page-flat/page-flat-create.component";
+import {PageAddComponent} from "./views/page/page-add.component";
 
 export const routes: Routes = [
     {
@@ -27,16 +28,10 @@ export const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        data: {
-                            title: 'Account'
-                        },
                         children: [
                             {
                                 path: '',
-                                component: AccountComponent,
-                                data: {
-                                    title: 'Settings',
-                                },
+                                component: AccountComponent
                             }
                         ],
                     },
@@ -48,24 +43,17 @@ export const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        data: {
-                            title: 'Users'
-                        },
                         children: [
                             {
                                 path: '',
                                 component: UserIndexComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'List'
-                                },
+                                canActivate: [PermissionGuard]
                             },
                             {
                                 path: 'create',
                                 component: ResourceCreateComponent,
                                 canActivate: [PermissionGuard],
                                 data: {
-                                    title: 'Create User',
                                     resource: 'admin-user',
                                 }
                             },
@@ -74,7 +62,6 @@ export const routes: Routes = [
                                 component: ResourceEditComponent,
                                 canActivate: [PermissionGuard],
                                 data: {
-                                    title: 'Edit User',
                                     resource: 'admin-user',
                                 }
                             }
@@ -88,33 +75,21 @@ export const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        data: {
-                            title: '%resources'
-                        },
                         children: [
                             {
                                 path: '',
                                 component: ResourceIndexComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'List'
-                                },
+                                canActivate: [PermissionGuard]
                             },
                             {
                                 path: 'create',
                                 component: ResourceCreateComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'Create %resource'
-                                },
+                                canActivate: [PermissionGuard]
                             },
                             {
                                 path: ':id/edit',
                                 component: ResourceEditComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'Edit %resource'
-                                },
+                                canActivate: [PermissionGuard]
                             }
                         ],
                     },
@@ -126,17 +101,11 @@ export const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        data: {
-                            title: 'Media'
-                        },
                         children: [
                             {
                                 path: '',
                                 component: MediaIndexComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'List',
-                                },
+                                canActivate: [PermissionGuard]
                             }
                         ]
                     },
@@ -148,41 +117,31 @@ export const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        data: {
-                            title: 'Page'
-                        },
                         children: [
                             {
                                 path: '',
                                 component: PageIndexComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'List',
-                                },
+                                canActivate: [PermissionGuard]
                             },
                             {
                                 path: 'create/:locale',
                                 component: PageCreateComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'Create',
-                                },
+                                canActivate: [PermissionGuard]
                             },
                             {
                                 path: 'create/:locale/:parentSitemapId',
                                 component: PageCreateComponent,
+                                canActivate: [PermissionGuard]
+                            },
+                            {
+                                path: 'add/:locale/:sitemapId',
+                                component: PageAddComponent,
                                 canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'Create',
-                                },
                             },
                             {
                                 path: ':id/edit',
                                 component: PageEditComponent,
-                                canActivate: [PermissionGuard],
-                                data: {
-                                    title: 'Edit',
-                                },
+                                canActivate: [PermissionGuard]
                             }
                         ]
                     },

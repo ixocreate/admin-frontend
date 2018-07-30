@@ -13,6 +13,10 @@ export class PageService extends ResourceService {
         return this.config.params.routes['pageSort'];
     }
 
+    get addLink() {
+        return this.config.params.routes['pageAdd'];
+    }
+
     loadNavigation(id) {
         let url = this.config.params.routes['pageNavigationIndex'];
         url = url.replace('{id}', id);
@@ -34,5 +38,9 @@ export class PageService extends ResourceService {
 
     saveSort(data: any) {
         return this.api.post(this.sortLink, data);
+    }
+
+    addPage(data: any) {
+        return this.api.post(this.addLink, data);
     }
 }
