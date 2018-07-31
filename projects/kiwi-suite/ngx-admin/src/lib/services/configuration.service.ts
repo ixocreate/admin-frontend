@@ -48,6 +48,10 @@ export class ConfigurationService extends DataService {
 
     get navigation() {
         if (this._navigation === null) {
+            if (this._params.navigation.length === 0) {
+                return [];
+            }
+            
             this._navigation = this.parseNavigation(this._params.navigation);
         }
 
