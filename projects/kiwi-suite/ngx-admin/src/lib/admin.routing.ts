@@ -16,6 +16,9 @@ import {PageEditComponent} from "./views/page/page-edit.component";
 import {PageFlatIndexComponent} from "./views/page-flat/page-flat-index.component";
 import {PageFlatCreateComponent} from "./views/page-flat/page-flat-create.component";
 import {PageAddComponent} from "./views/page/page-add.component";
+import {TranslationCatalogueComponent} from "./views/translation/translation-catalogue.component";
+import {TranslationIndexComponent} from "./views/translation/translation-index.component";
+import {TranslationEditComponent} from "./views/translation/translation-edit.component";
 
 export const routes: Routes = [
     {
@@ -142,6 +145,32 @@ export const routes: Routes = [
                                 path: ':id/edit',
                                 component: PageEditComponent,
                                 canActivate: [PermissionGuard]
+                            }
+                        ]
+                    },
+                ]
+            },
+            {
+                path: 'translation',
+                component: FullLayoutComponent,
+                children: [
+                    {
+                        path: '',
+                        children: [
+                            {
+                                path: '',
+                                component: TranslationCatalogueComponent,
+                                canActivate: [PermissionGuard]
+                            },
+                            {
+                                path: 'catalogue/:catalogue',
+                                component: TranslationIndexComponent,
+                                canActivate: [PermissionGuard]
+                            },
+                            {
+                                path: 'catalogue/:catalogue/:id/edit',
+                                component: TranslationEditComponent,
+                                canActivate: [PermissionGuard],
                             }
                         ]
                     },

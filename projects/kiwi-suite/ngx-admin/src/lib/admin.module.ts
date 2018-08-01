@@ -87,6 +87,10 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import {ColorSelectorComponent} from "./forms/types/component/color-selector.component";
 import {SchemaTransformService} from "./services/schema-transform.service";
 import {DateSelectorComponent} from "./forms/types/component/date-selector.component";
+import {TranslationCatalogueComponent} from "./views/translation/translation-catalogue.component";
+import {TranslationService} from "./services/resource/translation.service";
+import {TranslationIndexComponent} from "./views/translation/translation-index.component";
+import {TranslationEditComponent} from "./views/translation/translation-edit.component";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -130,7 +134,10 @@ const APP_COMPONENTS = [
     PageFlatCreateComponent,
     PageListComponent,
     ColorSelectorComponent,
-    DateSelectorComponent
+    DateSelectorComponent,
+    TranslationCatalogueComponent,
+    TranslationIndexComponent,
+    TranslationEditComponent,
 ];
 
 const APP_FEATURE_MODULES = [
@@ -270,6 +277,7 @@ export class AdminModule {
                 UserService,
                 ResourceService,
                 PageVersionService,
+                TranslationService,
             ],
         };
     }
@@ -279,20 +287,22 @@ export class AdminModule {
                 private config: ConfigurationService,
                 private logger: LoggerService,
                 private router: Router,
-                private account: AccountService,
-                private user: UserService,
-                private media: MediaService,
-                private page: PageService,
+                private accountService: AccountService,
+                private userService: UserService,
+                private mediaService: MediaService,
+                private pageService: PageService,
+                private translationService: TranslationService,
                 private dataStore: DataStoreService,
                 private injector: Injector) {
         if (parentModule) {
             throw new Error('AdminModule is already loaded. Import it in the AppModule only');
         }
 
-        this.dataStore.register(this.account);
-        this.dataStore.register(this.user);
-        this.dataStore.register(this.media);
-        this.dataStore.register(this.page);
+        this.dataStore.register(this.accountService);
+        this.dataStore.register(this.userService);
+        this.dataStore.register(this.mediaService);
+        this.dataStore.register(this.pageService);
+        this.dataStore.register(this.translationService);
 
         setAppInjector(injector);
         this.bootstrap();
@@ -310,8 +320,8 @@ export class AdminModule {
                 this.config.load();
                 return this.config.ready$.pipe(
                     flatMap(() => {
-                        this.account.load();
-                        return this.account.user$;
+                        this.accountService.load();
+                        return this.accountService.user$;
                     })
                 );
             })
@@ -327,7 +337,7 @@ export class AdminModule {
         /**
          * reload configuration each time user is loaded as it is user context sensitive
          */
-        this.account.user$.subscribe(user => {
+        this.accountService.user$.subscribe(user => {
             if (!user || !user.id) {
                 return;
             }
