@@ -43,7 +43,7 @@ export class TranslationEditComponent implements OnInit
         this.translationService.save(data, this.definitionId).subscribe(
             () => {
                 this.toastr.success('Translation saved!', 'Success');
-                this.data$ = this.translationService.getDetail$(this.catalogue, this.definitionId);
+                //this.data$ = this.translationService.getDetail$(this.catalogue, this.definitionId);
             }, () => {
                 this.toastr.error('An error occurred while saving the translation', 'Error');
             }
