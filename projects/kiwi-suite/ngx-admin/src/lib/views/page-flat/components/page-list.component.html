@@ -56,6 +56,12 @@
                        *ngIf="row.pages[locale]">
                         <i class="fa fa-fw fa-pencil"></i>
                     </a>
+
+                    <a class="btn btn-sm btn-warning"
+                       [routerLink]="['add', locale, row.sitemap.id]"
+                       *ngIf="!row.pages[locale]">
+                        <i class="fa fa-fw fa-pencil"></i>
+                    </a>
                 </div>
             </ng-template>
         </ngx-datatable-column>

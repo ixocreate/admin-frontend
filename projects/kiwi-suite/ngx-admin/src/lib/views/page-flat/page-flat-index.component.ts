@@ -17,8 +17,6 @@ export class PageFlatIndexComponent extends PageIndexComponent implements OnInit
                 this.onChangeLocale(params.intl.default);
             }
         );
-
-
     }
 
     protected loadData() {

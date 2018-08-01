@@ -19,6 +19,7 @@ import {PageAddComponent} from "./views/page/page-add.component";
 import {TranslationCatalogueComponent} from "./views/translation/translation-catalogue.component";
 import {TranslationIndexComponent} from "./views/translation/translation-index.component";
 import {TranslationEditComponent} from "./views/translation/translation-edit.component";
+import {PageFlatAddComponent} from "./views/page-flat/page-flat-add.component";
 
 export const routes: Routes = [
     {
@@ -195,6 +196,11 @@ export const routes: Routes = [
                                 data: {
                                     title: 'Create',
                                 },
+                            },
+                            {
+                                path: 'add/:locale/:sitemapId',
+                                component: PageFlatAddComponent,
+                                canActivate: [PermissionGuard],
                             },
                             {
                                 path: ':id/edit',

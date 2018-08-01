@@ -6,6 +6,7 @@ import {ResourceComponent} from "../../resource/resource.component";
     templateUrl: './page-list.component.html',
 })
 export class PageListComponent extends ResourceComponent{
+    objectKeys = Object.keys;
 
     @ViewChild('dataTable') dataTable: any;
 
