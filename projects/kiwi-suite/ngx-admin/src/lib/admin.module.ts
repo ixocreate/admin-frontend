@@ -92,6 +92,7 @@ import {TranslationService} from "./services/resource/translation.service";
 import {TranslationIndexComponent} from "./views/translation/translation-index.component";
 import {TranslationEditComponent} from "./views/translation/translation-edit.component";
 import {PageFlatAddComponent} from "./views/page-flat/page-flat-add.component";
+import {QuillSelectorComponent} from "./forms/types/component/quill-selector.component";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -137,6 +138,7 @@ const APP_COMPONENTS = [
     PageFlatAddComponent,
     ColorSelectorComponent,
     DateSelectorComponent,
+    QuillSelectorComponent,
     TranslationCatalogueComponent,
     TranslationIndexComponent,
     TranslationEditComponent,

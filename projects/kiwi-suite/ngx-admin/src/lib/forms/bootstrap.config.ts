@@ -203,7 +203,7 @@ export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
                             // [{'align': []}],
                             // ['clean'], // remove formatting button
                             // ['link'],
-                        ]
+                        ],
                     }
                 },
             },
