@@ -30,7 +30,6 @@ export class AccountComponent extends ResourceEditComponent implements OnInit {
     protected initModel() {
         this.dataService.user$.pipe(takeUntil(this.destroyed$))
             .subscribe(user => {
-                console.log("test");
                 if (!user) {
                     return;
                 }
