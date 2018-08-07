@@ -1,6 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 
+import Quill from 'quill';
+const Parchment = Quill.import('parchment');
+const LineBreakClass = new Parchment.Attributor.Class('linebreak', 'linebreak', {
+    scope: Parchment.Scope.BLOCK
+});
+Quill.register('formats/linebreak', LineBreakClass);
+
 @Component({
     // tslint:disable-next-line
     selector: 'body',
@@ -14,7 +21,7 @@ export class AdminComponent implements OnInit{
             if (!(evt instanceof NavigationEnd)) {
                 return;
             }
-            window.scrollTo(0, 0)
+            window.scrollTo(0, 0);
         });
     }
 }

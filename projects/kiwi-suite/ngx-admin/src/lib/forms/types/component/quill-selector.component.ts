@@ -1,6 +1,7 @@
 import {Component, ViewChild, forwardRef, OnInit, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {QuillEditorComponent} from 'ngx-quill';
+import Quill from 'quill';
 
 @Component({
     selector: 'quill-selector',
@@ -34,6 +35,36 @@ export class QuillSelectorComponent implements ControlValueAccessor, OnInit {
     };
 
     ngOnInit() {
+        this.modules.keyboard = {
+            bindings: {
+                smartbreak: {
+                    key: 13,
+                    shiftKey: true,
+                    handler: function (range, context) {
+                        this.quill.setSelection(range.index, 'silent');
+                        this.quill.insertText(range.index, '\n', 'user');
+                        this.quill.setSelection(range.index + 1, 'silent');
+                        this.quill.format('linebreak', true, 'user');
+                    }
+                },
+                paragraph: {
+                    key: 13,
+                    handler: function (range, context) {
+                        this.quill.setSelection(range.index, 'silent');
+                        this.quill.insertText(range.index, '\n', 'user');
+                        this.quill.setSelection(range.index + 1, 'silent');
+                        const f = this.quill.getFormat(range.index + 1);
+                        if (f.hasOwnProperty('linebreak')) {
+                            delete(f.linebreak)
+                            this.quill.removeFormat(range.index + 1);
+                            for (let key in f) {
+                                this.quill.formatText(range.index + 1, key, f[key]);
+                            }
+                        }
+                    }
+                }
+            }
+        };
         this.editor.onContentChanged.subscribe(data => {
             this.writeValue({
                 html: data.html,
@@ -52,6 +83,7 @@ export class QuillSelectorComponent implements ControlValueAccessor, OnInit {
 
     setDisabledState(isDisabled: boolean): void {
     }
+
 
     writeValue(data: any): void {
         if (!data) {
