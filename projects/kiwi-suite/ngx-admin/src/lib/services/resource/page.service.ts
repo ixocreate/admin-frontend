@@ -43,4 +43,11 @@ export class PageService extends ResourceService {
     addPage(data: any) {
         return this.api.post(this.addLink, data);
     }
+
+    replaceContent(fromId: string, toId: string)
+    {
+        let url = this.config.params.routes['pageVersionReplace'];
+        url = url.replace('{fromId}', fromId).replace('{toId}', toId);
+        return this.api.post(url);
+    }
 }

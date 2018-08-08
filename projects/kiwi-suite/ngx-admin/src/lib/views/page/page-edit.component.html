@@ -19,16 +19,42 @@
                         </form>
                     </div>
                 </tab>
-                <tab *ngIf="false">
+                <tab>
                     <ng-template tabHeading>
                         <i class="icon-wrench"></i>
                     </ng-template>
                     <div class="p-3">
-                        <form [formGroup]="pageTypeForm" *ngIf="pageTypeForm">
-                            <formly-form [form]="pageTypeForm" [fields]="pageTypeFields" [model]="pageTypeModel"></formly-form>
+                        <ng-container *ngIf="false">
+                            <form [formGroup]="pageTypeForm" *ngIf="pageTypeForm" >
+                                <formly-form [form]="pageTypeForm" [fields]="pageTypeFields" [model]="pageTypeModel"></formly-form>
 
-                            <button type="button" class="btn btn-outline-success btn-sm" (click)="onChangePageTypeModal(changePageTypeModal)">Change Page Type</button>
-                        </form>
+                                <button type="button" class="btn btn-outline-success btn-sm" (click)="onChangePageTypeModal(changePageTypeModal)">Change Page Type</button>
+                            </form>
+                        </ng-container>
+                        <ng-container *ngIf="data.meta.otherLanguages.length > 0">
+                            <h6><i class="fa fa-fw fa-clone"></i> Replace Content</h6>
+                            <ng-container *ngIf="data.meta.otherLanguages.length > 0">
+                                <div><small><b>From other language</b></small></div>
+                                <div class="row mb-3">
+                                    <div class="col" *ngFor="let language of data.meta.otherLanguages">
+                                        <a style="cursor: pointer;" (click)="onReplaceContentModal(replaceModal, language)">
+                                            <i class="flag-icon flag-icon-{{ language.locale.substr(3) | lowercase }}"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="data.meta.samePageTypePages.length > 0">
+                                <div><small><b>From other page</b></small></div>
+                                <ng-select [items]="data.meta.samePageTypePages"
+                                           (change)="onReplaceContentModal(replaceModal, $event)"
+                                           bindLabel="name"
+                                           [searchable]="true"
+                                           [clearable]="false"
+                                           bindValue="id">
+                                </ng-select>
+                            </ng-container>
+                            <hr>
+                        </ng-container>
                     </div>
                 </tab>
             </tabset>
@@ -51,37 +77,54 @@
             </div>
         </ng-template>
     </app-content>
+    <ng-template #deleteModal>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Delete</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            You really want to delete this page?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="onDelete()">Delete</button>
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+        </div>
+    </ng-template>
+
+
+    <ng-template #changePageTypeModal>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Page Type</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            You really want to change the page type? All entered data will be lost!
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="changePageType()">Change</button>
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+        </div>
+    </ng-template>
+
+    <ng-template #replaceModal>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Replace Content</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            You really want to replace this page content with the content of page <i>{{ replacePage.name }}</i>(<i class="flag-icon flag-icon-{{ replacePage.locale.substr(3) | lowercase }}"></i>)? All current entered data will be lost!
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="onReplaceContent(data.item.id)">Replace</button>
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide();replacePage = null;">Cancel</button>
+        </div>
+    </ng-template>
+
 </ng-container>
 
-<ng-template #deleteModal>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Delete</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        You really want to delete this page?
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="onDelete()">Delete</button>
-        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
-    </div>
-</ng-template>
-
-
-<ng-template #changePageTypeModal>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Page Type</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        You really want to change the page type? All entered data will be lost!
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="changePageType()">Change</button>
-        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
-    </div>
-</ng-template>

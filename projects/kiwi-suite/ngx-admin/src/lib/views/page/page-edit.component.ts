@@ -29,6 +29,8 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
     pageTypeModel: any;
     pageTypeFields: FormlyFieldConfig[];
 
+    replacePage: any;
+
     protected dataService: PageService;
 
     modalRef: BsModalRef;
@@ -169,6 +171,25 @@ export class PageEditComponent extends ResourceEditComponent implements OnInit{
             ignoreBackdropClick: false,
             class: 'modal-sm'
         });
+    }
+
+    onReplaceContentModal(template: TemplateRef<any>, fromPage)
+    {
+        this.replacePage = fromPage;
+        this.modalRef = this.modalService.show(template, {
+            backdrop: true,
+            ignoreBackdropClick: false,
+        });
+    }
+
+    onReplaceContent(toPageId) {
+        this.dataService.replaceContent(this.replacePage.id, toPageId).subscribe(() => {
+            this.pageVersionEditComponent.loadUpdateData();
+            this.toastr.success('Successfully replaced content ', 'Success');
+        }, () => {
+            this.toastr.error('An error occurred while replacing the content', 'Error');
+        });
+        this.modalRef.hide();
     }
 
     onDelete()
