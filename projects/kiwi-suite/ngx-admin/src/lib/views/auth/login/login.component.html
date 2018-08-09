@@ -1,0 +1,42 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <div class="text-center mb-2">
+                  <img src="assets/img/brand/logo.svg" style="width: 200px; height: auto;">
+                </div>
+                <form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
+                  <div class="text-center">
+                    <p class="text-muted">Sign In to your account</p>
+                  </div>
+                  <alert type="danger" *ngIf="error !== null">
+                    {{ error }}
+                  </alert>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    </div>
+                    <input formControlName="email" type="text" class="form-control" placeholder="Username" (keyup)="error = null">
+                  </div>
+                  <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                    </div>
+                    <input formControlName="password" type="password" class="form-control" placeholder="Password" (keyup)="error = null">
+                  </div>
+                  <div class="text-right">
+                    <button type="submit" class="btn btn-primary px-4 btn-block" [disabled]="!form.valid">Login</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
