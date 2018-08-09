@@ -19,7 +19,6 @@ export const genericRetryStrategy = (config: GenericRetryStrategyInterface = {})
   return (attempts: Observable<any>) => {
     return attempts.pipe(
       mergeMap((error, i) => {
-        console.log(error);
         const retryAttempt = i + 1;
         if (retryAttempt > config.maxRetryAttempts || config.excludedStatusCodes.find(e => e === error.status)) {
           return _throw(error);

@@ -12,12 +12,12 @@ import { DefaultHelper } from '../../helpers/default.helper';
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
 
-  public config$: Observable<Config>;
-  public config: Config = {
+  config$: Observable<Config>;
+  config: Config = {
     navigation: [],
     routes: [],
   };
-  public _navigation: any;
+  _navigation: any;
 
   constructor(protected api: ApiService, protected store: Store<AppState>) {
     super(store);

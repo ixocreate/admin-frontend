@@ -75,12 +75,14 @@ export class ApiService {
         }
       }),
       catchError((error) => {
+        /*
         if (error.status === 401) {
           this.auth.clearToken();
           window.location.reload();
           return null;
         }
-        return _throw(error);
+        */
+        return _throw(error.error);
       }),
       map((response: HttpResponse<any>) => {
         const apiResponse: APIResponse = response.body;
