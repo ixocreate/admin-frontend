@@ -13,18 +13,24 @@ import { DefaultHelper } from '../../helpers/default.helper';
 export class AppDataService extends DataServiceAbstract {
 
   public config$: Observable<Config>;
+  public config: Config = {
+    navigation: [],
+    routes: [],
+  };
   public _navigation: any;
 
   constructor(protected api: ApiService, protected store: Store<AppState>) {
     super(store);
     this.addReducers();
 
-    this.saveToDefaultStore('CONFIG', Object.assign(DefaultHelper.windowVar('__kiwi'), {
-      navigation: [],
-      project: {},
-      routes: {},
-    }));
+
     this.config$ = this.loadFromStore('config', this.loadConfig);
+    this.config$.subscribe((config) => {
+      this.config = config;
+    });
+
+    this.saveToDefaultStore('CONFIG', Object.assign({}, this.config, DefaultHelper.windowVar('__kiwi')));
+    this.loadConfig();
   }
 
   private addReducers() {
@@ -34,7 +40,9 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   loadConfig(): Promise<any> {
-    return this.api.get('/config').then((data: Config) => {
+    console.log(this.config);
+    return this.api.get(this.config.routes.config).then((data: Config) => {
+      console.log(data);
       this.saveToDefaultStore('CONFIG', data);
       this.parseNavigation(data.navigation);
     });

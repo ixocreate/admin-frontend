@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, publishLast, refCount, retryWhen, timeout } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { genericRetryStrategy } from './generic-retry-strategy';
 import { _throw } from 'rxjs/observable/throw';
-import { Router } from '@angular/router';
 import { tap } from 'rxjs/internal/operators';
 
 export enum ApiRequestMethod {
@@ -31,14 +30,17 @@ export interface APIError {
 
 export interface APIResponse {
   success: Boolean;
-  payload?: any;
+  result?: any;
   error?: APIError;
 }
 
 @Injectable()
 export class ApiService {
 
-  constructor(protected http: HttpClient, protected config: ConfigService, protected auth: AuthService, private router: Router) {
+  constructor(protected http: HttpClient,
+              protected config: ConfigService,
+              protected auth: AuthService,
+              protected tokenExtractor: HttpXsrfTokenExtractor) {
   }
 
   /**
@@ -56,38 +58,44 @@ export class ApiService {
    * @description Sends a request to the server
    */
   protected request(method: ApiRequestMethod, url: string, body: any = null): Observable<any> {
-    return this.http.request(<string>method, url, {body, headers: this.headers, observe: 'events'})
-      .pipe(
-        timeout(10000),
-        retryWhen(genericRetryStrategy()),
-        publishLast(),
-        refCount(),
-        tap((val) => {
-          const authHeader = val.headers.get('Authorization');
-          if (authHeader) {
-            this.auth.setToken(authHeader.replace('Bearer ', ''));
-          }
-        }),
-        catchError((error) => {
-          if (error.status === 401) {
-            this.auth.clearToken();
-            window.location.reload();
-            return null;
-          }
-          return _throw(error);
-        }),
-        map((response: HttpResponse<any>) => {
-          const apiResponse: APIResponse = response.body;
-          if (typeof apiResponse.success === 'undefined') {
-            return apiResponse;
-          }
-          if (apiResponse.success) {
-            return apiResponse.payload;
-          } else {
-            throw apiResponse.error || null;
-          }
-        }),
-      );
+    console.log(this.tokenExtractor.getToken());
+
+    return this.http.request(<string>method, url, {
+      body,
+      headers: this.headers,
+      observe: 'events',
+      withCredentials: !this.config.environment.production,
+    }).pipe(
+      timeout(10000),
+      retryWhen(genericRetryStrategy()),
+      publishLast(),
+      refCount(),
+      tap((val) => {
+        const authHeader = val.headers.get('Authorization');
+        if (authHeader) {
+          this.auth.setToken(authHeader.replace('Bearer ', ''));
+        }
+      }),
+      catchError((error) => {
+        if (error.status === 401) {
+          this.auth.clearToken();
+          window.location.reload();
+          return null;
+        }
+        return _throw(error);
+      }),
+      map((response: HttpResponse<any>) => {
+        const apiResponse: APIResponse = response.body;
+        if (typeof apiResponse.success === 'undefined') {
+          return apiResponse;
+        }
+        if (apiResponse.success) {
+          return apiResponse.result;
+        } else {
+          throw apiResponse.error || null;
+        }
+      }),
+    );
   }
 
   get(url: string): Promise<any> {

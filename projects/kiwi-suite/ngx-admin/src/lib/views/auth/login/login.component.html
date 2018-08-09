@@ -6,8 +6,8 @@
           <div class="card-group">
             <div class="card p-4">
               <div class="card-body">
-                <div class="text-center mb-2">
-                  <img src="assets/img/brand/logo.svg" style="width: 200px; height: auto;">
+                <div class="text-center mb-2" *ngIf="appData.config.project">
+                  <img src="{{ appData.config.project.logo }}" style="width: 200px; height: auto;">
                 </div>
                 <form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
                   <div class="text-center">

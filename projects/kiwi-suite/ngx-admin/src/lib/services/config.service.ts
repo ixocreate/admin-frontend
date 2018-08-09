@@ -5,8 +5,13 @@ export const PACKAGE_CONFIG = new InjectionToken<PackageConfig>('PACKAGE_CONFIG'
 
 export interface PackageConfig {
   namespace?: string;
+  environment?: EnvironmentConfig;
   apiUrl?: string;
   apiTimeout?: number;
+}
+
+export interface EnvironmentConfig {
+  production: boolean;
 }
 
 @Injectable()
@@ -14,6 +19,9 @@ export class ConfigService {
 
   private readonly _config: PackageConfig = {
     namespace: '@kiwi',
+    environment: {
+      production: false,
+    },
   };
 
   constructor(@Inject(PACKAGE_CONFIG) config: PackageConfig) {
@@ -26,6 +34,10 @@ export class ConfigService {
 
   get namespace(): string {
     return this._config.namespace ? this._config.namespace + '/' : '';
+  }
+
+  get environment(): EnvironmentConfig {
+    return this._config.environment;
   }
 
 }

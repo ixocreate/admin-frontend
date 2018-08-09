@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { PACKAGE_CONFIG, PackageConfig } from './services/config.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -87,10 +88,14 @@ const APP_COMPONENTS = [
 })
 export class NgxAdminModule {
 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(config: PackageConfig = {}): ModuleWithProviders {
     return {
       ngModule: NgxAdminModule,
       providers: [
+        {
+          provide: PACKAGE_CONFIG,
+          useValue: config,
+        },
         {
           provide: LocationStrategy,
           useClass: HashLocationStrategy,

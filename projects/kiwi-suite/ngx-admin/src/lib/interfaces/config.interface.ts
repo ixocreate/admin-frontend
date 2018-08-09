@@ -1,19 +1,21 @@
 export interface Config {
-  environment: {
+  environment?: {
     production: boolean;
   };
-  project: Project;
+  project?: Project;
   navigation: Navigation[];
   routes: any;
-  intl: {default: string, locales: Locale[]};
+  intl?: {default: string, locales: Locale[]};
 }
 
 export interface Project {
   author: string;
   copyright: string;
   name: string;
-  poweredBy?: boolean;
+  poweredBy: boolean;
   version: string;
+  icon: string;
+  logo: string;
 }
 
 export interface Navigation {
