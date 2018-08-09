@@ -14,6 +14,7 @@ export interface Project {
   name: string;
   poweredBy: boolean;
   version: string;
+  background: string;
   icon: string;
   logo: string;
 }
