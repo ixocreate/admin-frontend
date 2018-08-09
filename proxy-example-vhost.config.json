@@ -1,0 +1,20 @@
+{
+  "/admin/*": {
+    "target": "http://...",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/media/img/*": {
+    "target": "http://...",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/assets/*": {
+    "target": "http://...",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}
