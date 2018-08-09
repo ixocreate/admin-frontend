@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AppDataService } from '../../../services/data/app-data.service';
 
 @Component({
-  selector: 'kiwi-login',
+  selector: 'app-dashboard',
   templateUrl: 'login.component.html',
 })
 export class LoginComponent {

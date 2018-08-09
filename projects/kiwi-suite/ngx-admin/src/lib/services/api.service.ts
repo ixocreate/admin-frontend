@@ -58,8 +58,6 @@ export class ApiService {
    * @description Sends a request to the server
    */
   protected request(method: ApiRequestMethod, url: string, body: any = null): Observable<any> {
-    console.log(this.tokenExtractor.getToken());
-
     return this.http.request(<string>method, url, {
       body,
       headers: this.headers,

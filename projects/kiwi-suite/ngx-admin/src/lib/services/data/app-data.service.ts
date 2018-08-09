@@ -23,8 +23,7 @@ export class AppDataService extends DataServiceAbstract {
     super(store);
     this.addReducers();
 
-
-    this.config$ = this.loadFromStore('config', this.loadConfig);
+    this.config$ = this.store.select('config');
     this.config$.subscribe((config) => {
       this.config = config;
     });
@@ -40,9 +39,7 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   loadConfig(): Promise<any> {
-    console.log(this.config);
     return this.api.get(this.config.routes.config).then((data: Config) => {
-      console.log(data);
       this.saveToDefaultStore('CONFIG', data);
       this.parseNavigation(data.navigation);
     });

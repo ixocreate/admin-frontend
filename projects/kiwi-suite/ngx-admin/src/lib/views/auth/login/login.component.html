@@ -7,7 +7,7 @@
             <div class="card p-4">
               <div class="card-body">
                 <div class="text-center mb-2" *ngIf="appData.config.project">
-                  <img src="{{ appData.config.project.logo }}" style="width: 200px; height: auto;">
+                  <img src="{{ appData.config.project.logo }}" style="width: 100px; height: 100px;">
                 </div>
                 <form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
                   <div class="text-center">
