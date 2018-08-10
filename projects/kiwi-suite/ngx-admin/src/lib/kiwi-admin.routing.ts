@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './views/auth/login/login.component';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
 import { AccountComponent } from './views/account/account.component';
-
+import { PageComponent } from './views/page/page.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +27,17 @@ export const routes: Routes = [
       {
         path: 'account',
         component: AccountComponent,
-        data: { title: 'Account' },
+        data: {title: 'Account'},
+      },
+      {
+        path: 'page',
+        data: {title: 'Sitemap'},
+        children: [
+          {
+            path: '',
+            component: PageComponent,
+          },
+        ],
       },
       /*
       {
@@ -213,5 +223,5 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class NgxAdminRouting {
+export class KiwiAdminRouting {
 }

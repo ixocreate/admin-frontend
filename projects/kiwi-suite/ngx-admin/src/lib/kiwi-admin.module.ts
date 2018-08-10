@@ -13,7 +13,6 @@ import { ServiceModule } from './services/service.module';
 import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { NgxAdminRouting } from './ngx-admin.routing';
 import { LoginComponent } from './views/auth/login/login.component';
 import { AlertModule, BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -27,6 +26,9 @@ import { AccountComponent } from './views/account/account.component';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { KiwiContentComponent } from './components/kiwi-content/kiwi-content.component';
+import { KiwiAsideComponent } from './components/kiwi-aside/kiwi-aside.component';
+import { KiwiAdminRouting } from './kiwi-admin.routing';
+import { PageComponent } from './views/page/page.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -37,12 +39,14 @@ const APP_CONTAINERS = [
 ];
 
 const APP_COMPONENTS = [
+  KiwiAsideComponent,
   KiwiContentComponent,
 
   // Views
   AdminComponent,
   LoginComponent,
   AccountComponent,
+  PageComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
@@ -58,7 +62,7 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
     RouterModule,
     HttpClientModule,
 
-    NgxAdminRouting,
+    KiwiAdminRouting,
 
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
@@ -108,11 +112,11 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
     RouterModule,
   ],
 })
-export class NgxAdminModule {
+export class KiwiAdminModule {
 
   static forRoot(config: KiwiConfig = {}): ModuleWithProviders {
     return {
-      ngModule: NgxAdminModule,
+      ngModule: KiwiAdminModule,
       providers: [
         {
           provide: KIWI_CONFIG,

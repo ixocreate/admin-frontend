@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { NgxAdminModule } from '../../projects/kiwi-suite/ngx-admin/src/lib/ngx-admin.module';
 import { AdminComponent } from '../../projects/kiwi-suite/ngx-admin/src/lib/admin.component';
 import { environment } from '../environments/environment';
-
+import { KiwiAdminModule } from '../../projects/kiwi-suite/ngx-admin/src/lib/kiwi-admin.module';
 
 @NgModule({
   imports: [
-    NgxAdminModule.forRoot({
+    KiwiAdminModule.forRoot({
       environment: environment,
     }),
   ],

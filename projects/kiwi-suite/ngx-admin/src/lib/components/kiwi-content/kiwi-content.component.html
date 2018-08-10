@@ -7,5 +7,11 @@
   </div>
 </div>
 <div class="container-fluid" [style.paddingTop]="headerHeight + 'px'">
-  <ng-content></ng-content>
+  <div class="animated fadeIn">
+    <ng-content></ng-content>
+  </div>
 </div>
+
+<kiwi-aside>
+  <ng-content select="[aside]"></ng-content>
+</kiwi-aside>
