@@ -26,6 +26,7 @@ export const routes: Routes = [
       title: 'Home',
     },
     children: [
+      {path: '', redirectTo: 'account', pathMatch: 'full'},
       {
         path: 'account',
         component: AccountComponent,

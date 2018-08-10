@@ -23,7 +23,9 @@ export class DefaultLayoutComponent {
 
     this.appData.config$.subscribe(() => {
       this.navItems = null;
-      this.navItems = this.appData.navigation;
+      setTimeout(() => {
+        this.navItems = this.appData.navigation;
+      });
     });
   }
 
