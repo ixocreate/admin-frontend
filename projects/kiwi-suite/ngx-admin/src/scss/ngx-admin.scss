@@ -4,4 +4,11 @@
 // Import styles
 @import "~@coreui/coreui/scss/coreui";
 
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import '~@swimlane/ngx-datatable/src/themes/bootstrap';
+@import 'vendor/ngx-datatable';
+@import '~ngx-toastr/toastr.css';
+@import 'vendor/toastr';
+
 @import "layout";

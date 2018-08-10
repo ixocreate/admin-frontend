@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
-import { APIError, APIErrorElement } from './api.service';
+import { APIErrorElement } from './api.service';
 
 @Injectable()
 export class NotificationService {
@@ -24,14 +24,11 @@ export class NotificationService {
     return this.toastr.error(message, title);
   }
 
-  formError(error: APIError): ActiveToast<any> {
-    return this.error(`Missing fields: ${this.getApiErrorIdentifiers(error.data).join(', ')}`, error.message);
-  }
-
-  private getApiErrorIdentifiers(data: Array<APIErrorElement>): Array<string> {
-    return data.map((error) => {
-      return error.identifier;
-    });
+  apiError(error: APIErrorElement): ActiveToast<any> {
+    if (error && error.data) {
+      return this.error(error.data.messages.join('<br/>'), error.data.title);
+    }
+    return null;
   }
 
 }

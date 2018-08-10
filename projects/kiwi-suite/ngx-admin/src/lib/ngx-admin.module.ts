@@ -70,7 +70,11 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
     NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
-    FormlyModule.forRoot(),
+    FormlyModule.forRoot({
+      validationMessages: [
+        { name: 'required', message: 'This field is required' },
+      ],
+    }),
     FormlyBootstrapModule,
 
     TabsModule.forRoot(),
@@ -82,6 +86,7 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
       closeButton: true,
       maxOpened: 5,
       progressBar: true,
+      enableHtml: true,
       positionClass: 'toast-top-right',
       timeOut: 5000,
     }),

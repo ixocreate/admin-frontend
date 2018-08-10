@@ -19,19 +19,20 @@ export enum ApiRequestMethod {
 }
 
 export interface APIErrorElement {
-  identifier: string;
-  error: string;
+  code: string;
+  data: APIErrorMessages;
 }
 
-export interface APIError {
-  message: string;
-  data: Array<APIErrorElement>;
+export interface APIErrorMessages {
+  title: string;
+  messages: Array<string>;
 }
 
 export interface APIResponse {
   success: Boolean;
   result?: any;
-  error?: APIError;
+  errorCode?: string;
+  errorMessages?: Array<string>;
 }
 
 @Injectable()
@@ -39,19 +40,31 @@ export class ApiService {
 
   constructor(protected http: HttpClient,
               protected config: ConfigService,
-              protected auth: AuthService,
-              protected tokenExtractor: HttpXsrfTokenExtractor) {
+              protected auth: AuthService) {
   }
 
   /**
    * @description Headers for requests
    */
   protected get headers(): HttpHeaders {
-    let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    if (this.auth.isAuthenticated()) {
-      headers = headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
+    return new HttpHeaders({'Content-Type': 'application/json'});
+  }
+
+  /**
+   * @description Headers for requests
+   */
+  private errorMapping(response: APIResponse): APIErrorElement {
+    const errors: APIErrorElement = {
+      code: response.errorCode,
+      data: {
+        title: 'Error',
+        messages: [],
+      },
+    };
+    for (const message of response.errorMessages) {
+      errors.data.messages.push(message);
     }
-    return headers;
+    return errors;
   }
 
   /**
@@ -68,21 +81,14 @@ export class ApiService {
       retryWhen(genericRetryStrategy()),
       publishLast(),
       refCount(),
-      tap((val) => {
-        const authHeader = val.headers.get('Authorization');
-        if (authHeader) {
-          this.auth.setToken(authHeader.replace('Bearer ', ''));
-        }
-      }),
       catchError((error) => {
         /*
         if (error.status === 401) {
-          this.auth.clearToken();
           window.location.reload();
           return null;
         }
         */
-        return _throw(error.error);
+        return _throw(error.error ? this.errorMapping(error.error) : null);
       }),
       map((response: HttpResponse<any>) => {
         const apiResponse: APIResponse = response.body;
@@ -92,7 +98,7 @@ export class ApiService {
         if (apiResponse.success) {
           return apiResponse.result;
         } else {
-          throw apiResponse.error || null;
+          throw apiResponse ? this.errorMapping(apiResponse) : null;
         }
       }),
     );

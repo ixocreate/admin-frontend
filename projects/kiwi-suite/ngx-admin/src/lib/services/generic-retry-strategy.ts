@@ -13,7 +13,7 @@ export const genericRetryStrategy = (config: GenericRetryStrategyInterface = {})
   config = Object.assign({}, {
     maxRetryAttempts: 3,
     scalingDuration: 1000,
-    excludedStatusCodes: [401, 403, 404],
+    excludedStatusCodes: [400, 401, 403, 404],
   }, config);
 
   return (attempts: Observable<any>) => {

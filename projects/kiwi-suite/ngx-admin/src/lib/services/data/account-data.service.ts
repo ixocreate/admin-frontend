@@ -27,6 +27,13 @@ export class AccountDataService extends DataServiceAbstract {
     });
   }
 
+  updateEmail(email: string, emailRepeat: string) {
+    return this.api.patch(this.appData.config.routes.accountEmail, {email, emailRepeat});
+  }
+
+  updatePassword(passwordOld: string, password: string, passwordRepeat: string) {
+    return this.api.patch(this.appData.config.routes.accountPassword, {passwordOld, password, passwordRepeat});
+  }
 
   login(email: string, password: string) {
     return this.api.post(this.appData.config.routes.authLogin, {email, password});
