@@ -10,7 +10,7 @@ export class DefaultLayoutComponent {
   public element: HTMLElement = document.body;
 
   constructor() {
-    this.changes = new MutationObserver((mutations) => {
+    this.changes = new MutationObserver(() => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
 

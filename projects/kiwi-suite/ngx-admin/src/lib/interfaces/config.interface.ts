@@ -9,14 +9,14 @@ export interface Config {
 }
 
 export interface Project {
-  author: string;
-  copyright: string;
-  name: string;
-  poweredBy: boolean;
-  version: string;
-  background: string;
-  icon: string;
-  logo: string;
+  author?: string;
+  copyright?: string;
+  name?: string;
+  poweredBy?: boolean;
+  version?: string;
+  background?: string;
+  icon?: string;
+  logo?: string;
 }
 
 export interface Navigation {

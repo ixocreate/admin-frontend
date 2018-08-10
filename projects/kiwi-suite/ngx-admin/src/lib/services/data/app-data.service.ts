@@ -16,6 +16,7 @@ export class AppDataService extends DataServiceAbstract {
   session$: Observable<any>;
 
   config: Config = {
+    project: {},
     navigation: [],
     routes: [],
   };
