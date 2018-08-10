@@ -22,31 +22,14 @@ export const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
-    data: {
-      title: 'Home',
-    },
     children: [
       {path: '', redirectTo: 'account', pathMatch: 'full'},
       {
         path: 'account',
         component: AccountComponent,
+        data: { title: 'Account' },
       },
       /*
-      {
-        path: 'account',
-        component: FullLayoutComponent,
-        children: [
-          {
-            path: '',
-            children: [
-              {
-                path: '',
-                component: AccountComponent
-              }
-            ],
-          },
-        ],
-      },
       {
         path: 'admin-user',
         component: FullLayoutComponent,
