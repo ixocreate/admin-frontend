@@ -39,6 +39,10 @@ export class AppDataService extends DataServiceAbstract {
     this.loadSession();
   }
 
+  get navigation() {
+    return this._navigation;
+  }
+
   loadSession(): Promise<any> {
     return this.api.get(this.config.routes.session).then((data: any) => {
       this.saveToDefaultStore('SESSION', data);
@@ -47,13 +51,9 @@ export class AppDataService extends DataServiceAbstract {
 
   loadConfig(): Promise<any> {
     return this.api.get(this.config.routes.config).then((data: Config) => {
-      this.saveToDefaultStore('CONFIG', data);
       this.parseNavigation(data.navigation);
+      this.saveToDefaultStore('CONFIG', Object.assign({}, this.config, DefaultHelper.windowVar('__kiwi'), data));
     });
-  }
-
-  get navigation() {
-    return this._navigation;
   }
 
   private parseNavigation(navArray: Array<any>) {

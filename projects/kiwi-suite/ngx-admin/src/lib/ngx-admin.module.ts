@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { environment } from '../../../../../src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ToastrModule } from 'ngx-toastr';
@@ -15,13 +15,14 @@ import { UndoStore } from './store/undo.store';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgxAdminRouting } from './ngx-admin.routing';
 import { LoginComponent } from './views/auth/login/login.component';
-import { AlertModule, TabsModule } from 'ngx-bootstrap';
+import { AlertModule, BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { KIWI_CONFIG, KiwiConfig } from './services/config.service';
+import { AppDataService } from './services/data/app-data.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -36,6 +37,11 @@ const APP_COMPONENTS = [
   LoginComponent,
 ];
 
+export function initConfig(appData: AppDataService): () => Promise<any> {
+  return (): Promise<any> => {
+    return appData.loadConfig();
+  };
+}
 
 @NgModule({
   imports: [
@@ -59,6 +65,7 @@ const APP_COMPONENTS = [
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),
+    BsDropdownModule.forRoot(),
 
     ToastrModule.forRoot({
       autoDismiss: true,
@@ -99,6 +106,12 @@ export class NgxAdminModule {
         {
           provide: LocationStrategy,
           useClass: HashLocationStrategy,
+        },
+        {
+          provide: APP_INITIALIZER,
+          useFactory: initConfig,
+          deps: [AppDataService],
+          multi: true,
         },
       ],
     };

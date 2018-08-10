@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountDataService } from '../../../services/data/account-data.service';
 import { AppDataService } from '../../../services/data/app-data.service';
 
@@ -17,7 +17,8 @@ export class LoginComponent {
   constructor(private router: Router,
               private auth: AuthService,
               public appData: AppDataService,
-              public accountData: AccountDataService,
+              private accountData: AccountDataService,
+              private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required]],
@@ -26,8 +27,10 @@ export class LoginComponent {
   }
 
   onLogin() {
-    this.accountData.login(this.form.value.email, this.form.value.password).then((response) => {
-      console.log(response);
+    this.accountData.login(this.form.value.email, this.form.value.password).then(() => {
+      this.route.queryParams.subscribe(query => {
+        this.router.navigate([query.intended || '/']);
+      });
     }).catch((error) => {
       this.error = error.errorCode;
     });
