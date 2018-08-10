@@ -14,8 +14,8 @@ export class AccountDataService extends DataServiceAbstract {
     super(store);
   }
 
-  login(username: string, password: string) {
-    return this.api.post(this.appData.config.routes.authLogin, {username, password});
+  login(email: string, password: string) {
+    return this.api.post(this.appData.config.routes.authLogin, {email, password});
   }
 
 }

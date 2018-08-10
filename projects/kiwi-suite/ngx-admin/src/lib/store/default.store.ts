@@ -16,7 +16,7 @@ export namespace DefaultStore {
     Clear: (actionName: string): StoreAction => ({type: parseTypeName(actionName, Types.CLEAR)}),
   };
 
-  export function Handle(actionName: string, action: StoreAction, state?: any): ActionReducer<any> {
+  export function HandleWithValues(actionName: string, action: StoreAction, state?: any): ActionReducer<any> {
     switch (action.type) {
       case parseTypeName(actionName, Types.SET):
         return action.payload;
@@ -25,5 +25,11 @@ export namespace DefaultStore {
       default:
         return state;
     }
+  }
+
+  export function Handle(actionName: string, value: any = null): ActionReducer<any> {
+    return (state: any = value, action: StoreAction): ActionReducer<any> => {
+      return DefaultStore.HandleWithValues(actionName, action, state);
+    };
   }
 }

@@ -1,13 +1,12 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { APIResponse } from './api.service';
 
-export const PACKAGE_CONFIG = new InjectionToken<PackageConfig>('PACKAGE_CONFIG');
+export const KIWI_CONFIG = new InjectionToken<KiwiConfig>('KIWI_CONFIG');
 
-export interface PackageConfig {
+export interface KiwiConfig {
   namespace?: string;
+  configVariable?: string;
   environment?: EnvironmentConfig;
-  apiUrl?: string;
-  apiTimeout?: number;
 }
 
 export interface EnvironmentConfig {
@@ -17,18 +16,19 @@ export interface EnvironmentConfig {
 @Injectable()
 export class ConfigService {
 
-  private readonly _config: PackageConfig = {
+  private readonly _config: KiwiConfig = {
     namespace: '@kiwi',
+    configVariable: '__kiwi',
     environment: {
       production: false,
     },
   };
 
-  constructor(@Inject(PACKAGE_CONFIG) config: PackageConfig) {
+  constructor(@Inject(KIWI_CONFIG) config: KiwiConfig) {
     this._config = Object.assign({}, this._config, config);
   }
 
-  get config(): PackageConfig {
+  get config(): KiwiConfig {
     return this._config;
   }
 

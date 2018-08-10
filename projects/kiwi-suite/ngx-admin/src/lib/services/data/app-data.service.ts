@@ -13,6 +13,8 @@ import { DefaultHelper } from '../../helpers/default.helper';
 export class AppDataService extends DataServiceAbstract {
 
   config$: Observable<Config>;
+  session$: Observable<any>;
+
   config: Config = {
     navigation: [],
     routes: [],
@@ -21,20 +23,24 @@ export class AppDataService extends DataServiceAbstract {
 
   constructor(protected api: ApiService, protected store: Store<AppState>) {
     super(store);
-    this.addReducers();
 
+    this.store.addReducer('session', DefaultStore.Handle('SESSION'));
+    this.store.addReducer('config', DefaultStore.Handle('CONFIG', Object.assign({}, this.config, DefaultHelper.windowVar('__kiwi'))));
+
+    this.session$ = this.loadFromStore('session', this.loadSession);
     this.config$ = this.store.select('config');
+
     this.config$.subscribe((config) => {
       this.config = config;
     });
 
-    this.saveToDefaultStore('CONFIG', Object.assign({}, this.config, DefaultHelper.windowVar('__kiwi')));
     this.loadConfig();
+    this.loadSession();
   }
 
-  private addReducers() {
-    this.store.addReducer('config', (state: any = null, action: StoreAction) => {
-      return DefaultStore.Handle('CONFIG', action, state);
+  loadSession(): Promise<any> {
+    return this.api.get(this.config.routes.session).then((data: any) => {
+      this.saveToDefaultStore('SESSION', data);
     });
   }
 

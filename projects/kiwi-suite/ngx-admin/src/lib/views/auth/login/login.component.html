@@ -14,14 +14,12 @@
                   <div class="text-center">
                     <p class="text-muted">Sign In to your account</p>
                   </div>
-                  <alert type="danger" *ngIf="error !== null">
-                    {{ error }}
-                  </alert>
+                  <alert type="danger" *ngIf="error !== null">{{ error }}</alert>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-user"></i></span>
                     </div>
-                    <input formControlName="username" type="text" class="form-control" placeholder="Username" (keyup)="error = null">
+                    <input formControlName="email" type="email" class="form-control" placeholder="Email" (keyup)="error = null">
                   </div>
                   <div class="input-group mb-4">
                     <div class="input-group-prepend">

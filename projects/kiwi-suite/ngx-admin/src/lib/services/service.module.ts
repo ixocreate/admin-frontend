@@ -5,6 +5,7 @@ import { ConfigService } from './config.service';
 import { NotificationService } from './notification.service';
 import { AppDataService } from './data/app-data.service';
 import { AccountDataService } from './data/account-data.service';
+import { LocalStorageService } from './local-storage.service';
 
 @NgModule({
   imports: [],
@@ -20,6 +21,7 @@ export class ServiceModule {
         AuthService,
         ConfigService,
         NotificationService,
+        LocalStorageService,
 
         AppDataService,
         AccountDataService,

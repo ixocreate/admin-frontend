@@ -20,13 +20,13 @@ export class LoginComponent {
               public accountData: AccountDataService,
               private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
 
   onLogin() {
-    this.accountData.login(this.form.value.username, this.form.value.password).then((response) => {
+    this.accountData.login(this.form.value.email, this.form.value.password).then((response) => {
       console.log(response);
     }).catch((error) => {
       this.error = error.errorCode;
