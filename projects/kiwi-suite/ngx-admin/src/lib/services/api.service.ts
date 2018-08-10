@@ -102,11 +102,11 @@ export class ApiService {
     return this.request(ApiRequestMethod.GET, url, null).toPromise();
   }
 
-  post(url: string, body: any): Promise<any> {
+  post(url: string, body: any = {}): Promise<any> {
     return this.request(ApiRequestMethod.POST, url, body).toPromise();
   }
 
-  put(url: string, body: any): Promise<any> {
+  put(url: string, body: any = {}): Promise<any> {
     return this.request(ApiRequestMethod.PUT, url, body).toPromise();
   }
 
@@ -114,7 +114,7 @@ export class ApiService {
     return this.request(ApiRequestMethod.DELETE, url, null).toPromise();
   }
 
-  patch(url: string, body: any): Promise<any> {
+  patch(url: string, body: any = {}): Promise<any> {
     return this.request(ApiRequestMethod.PATCH, url, body).toPromise();
   }
 

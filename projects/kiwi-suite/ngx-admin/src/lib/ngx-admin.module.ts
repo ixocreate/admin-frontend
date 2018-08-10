@@ -23,6 +23,10 @@ import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { KIWI_CONFIG, KiwiConfig } from './services/config.service';
 import { AppDataService } from './services/data/app-data.service';
+import { AccountComponent } from './views/account/account.component';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { KiwiContentComponent } from './components/kiwi-content/kiwi-content.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -33,8 +37,12 @@ const APP_CONTAINERS = [
 ];
 
 const APP_COMPONENTS = [
+  KiwiContentComponent,
+
+  // Views
   AdminComponent,
   LoginComponent,
+  AccountComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
@@ -62,6 +70,8 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
     NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyBootstrapModule,
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),

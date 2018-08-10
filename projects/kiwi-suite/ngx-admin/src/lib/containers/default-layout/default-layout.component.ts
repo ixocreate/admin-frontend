@@ -22,7 +22,15 @@ export class DefaultLayoutComponent {
     });
 
     this.appData.config$.subscribe(() => {
+      this.navItems = null;
       this.navItems = this.appData.navigation;
     });
   }
+
+  logout() {
+    this.accountData.logout().then(() => {
+      window.location.reload();
+    });
+  }
+
 }

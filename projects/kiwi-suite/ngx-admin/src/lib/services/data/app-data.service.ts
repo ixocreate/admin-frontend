@@ -20,7 +20,7 @@ export class AppDataService extends DataServiceAbstract {
     navigation: [],
     routes: [],
   };
-  _navigation: any;
+  _navigation: any = null;
 
   constructor(protected api: ApiService, protected store: Store<AppState>) {
     super(store);

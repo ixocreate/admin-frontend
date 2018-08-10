@@ -12,8 +12,8 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
         <div class="dropdown-header text-center"><strong>Settings</strong></div>
-        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Account</a>
-        <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+        <a class="dropdown-item" routerLink="/account" href="#"><i class="fa fa-user"></i> Account</a>
+        <button class="dropdown-item" (click)="logout()" ><i class="fa fa-lock"></i> Logout</button>
       </div>
     </li>
   </ul>
@@ -22,24 +22,14 @@
 <div class="app-body">
 
   <app-sidebar [fixed]="true" [display]="'lg'">
-    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <ng-container *ngIf="navItems">
+      <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    </ng-container>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
 
   <main class="main">
-    <ol class="breadcrumb">
-      <app-breadcrumb></app-breadcrumb>
-      <li class="breadcrumb-menu d-md-down-none">
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <a class="btn" href="#"><i class="icon-speech"></i></a>
-          <a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
-          <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
-        </div>
-      </li>
-    </ol>
-    <div class="container-fluid">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </main>
 
   <app-aside [fixed]="true" [display]="false">

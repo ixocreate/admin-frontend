@@ -32,4 +32,8 @@ export class AccountDataService extends DataServiceAbstract {
     return this.api.post(this.appData.config.routes.authLogin, {email, password});
   }
 
+  logout() {
+    return this.api.post(this.appData.config.routes.authLogout);
+  }
+
 }
