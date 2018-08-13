@@ -4,11 +4,12 @@ import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { AccountDataService } from '../../services/data/account-data.service';
 import { NotificationService } from '../../services/notification.service';
 import { User } from '../../interfaces/user.interface';
+import { ViewAbstractComponent } from '../../components/view.abstract.component';
 
 @Component({
   templateUrl: './account.component.html',
 })
-export class AccountComponent {
+export class AccountComponent extends ViewAbstractComponent {
   account: User;
 
   passwordForm: FormGroup = new FormGroup({});
@@ -75,6 +76,7 @@ export class AccountComponent {
 
   constructor(protected notification: NotificationService,
               protected accountData: AccountDataService) {
+    super();
   }
 
   onSubmitEmail() {

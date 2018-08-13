@@ -10,32 +10,47 @@ export class KiwiAsideComponent implements OnInit, OnDestroy {
 
   @Input() display: any = 'lg';
 
+  @Input() set visible(visible: boolean) {
+    console.log(visible);
+    if (visible) {
+      this.show();
+    } else {
+      this.hide();
+    }
+  }
+
   private asideMenuCssClasses: Array<string> = [
     'aside-menu-show',
     'aside-menu-sm-show',
     'aside-menu-md-show',
     'aside-menu-lg-show',
-    'aside-menu-xl-show'
+    'aside-menu-xl-show',
   ];
 
   constructor() {
   }
 
   ngOnInit() {
-    this.displayBreakpoint(this.display);
     document.querySelector('body').classList.add('aside-menu-fixed');
-    document.querySelector('body').classList.add('aside-menu-lg-show');
   }
 
   ngOnDestroy() {
     document.querySelector('body').classList.remove('aside-menu-lg-show');
   }
 
-  displayBreakpoint(display: any): void {
-    if (this.display !== false ) {
+  show(): void {
+    if (this.display !== false) {
       let cssClass;
       this.display ? cssClass = `aside-menu-${this.display}-show` : cssClass = this.asideMenuCssClasses[0];
       document.querySelector('body').classList.add(cssClass);
+    }
+  }
+
+  hide(): void {
+    if (this.display !== false) {
+      let cssClass;
+      this.display ? cssClass = `aside-menu-${this.display}-show` : cssClass = this.asideMenuCssClasses[0];
+      document.querySelector('body').classList.remove(cssClass);
     }
   }
 }

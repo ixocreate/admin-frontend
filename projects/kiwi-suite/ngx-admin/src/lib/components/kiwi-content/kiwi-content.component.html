@@ -1,11 +1,4 @@
-<div class="page-title" #header>
-  <ol class="breadcrumb">
-    <app-breadcrumb></app-breadcrumb>
-  </ol>
-  <div class="page-title-buttons" *ngIf="headerButtons">
-    <ng-container *ngTemplateOutlet="headerButtons"></ng-container>
-  </div>
-</div>
+
 
 <div class="container-fluid" [style.paddingTop]="headerHeight + 'px'">
   <div class="animated fadeIn">
@@ -13,6 +6,4 @@
   </div>
 </div>
 
-<kiwi-aside *ngIf="aside">
-  <ng-container *ngTemplateOutlet="aside"></ng-container>
-</kiwi-aside>
+

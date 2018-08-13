@@ -28,8 +28,21 @@
   </app-sidebar>
 
   <main class="main">
-    <router-outlet></router-outlet>
+    <div class="page-title" #header>
+      <ol class="breadcrumb">
+        <app-breadcrumb></app-breadcrumb>
+      </ol>
+      <div class="page-title-buttons" *ngIf="headerButtons">
+        <ng-container *ngTemplateOutlet="headerButtons"></ng-container>
+      </div>
+    </div>
+
+    <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
   </main>
+
+  <kiwi-aside [visible]="!!aside">
+    <ng-container *ngTemplateOutlet="aside"></ng-container>
+  </kiwi-aside>
 </div>
 
 <app-footer>

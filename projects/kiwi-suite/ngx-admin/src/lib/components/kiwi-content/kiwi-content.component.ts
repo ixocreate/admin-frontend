@@ -20,7 +20,6 @@ export class KiwiContentComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.aside);
     setTimeout(() => {
       this.headerHeight = this.header.nativeElement.clientHeight + this.paddingTop;
     });

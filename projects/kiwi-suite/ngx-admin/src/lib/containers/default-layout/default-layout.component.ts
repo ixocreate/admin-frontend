@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { AccountDataService } from '../../services/data/account-data.service';
 import { AppDataService } from '../../services/data/app-data.service';
+import { KiwiContentComponent } from '../../components/kiwi-content/kiwi-content.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
 })
-export class DefaultLayoutComponent {
-  public navItems = null;
-  public sidebarMinimized = true;
+export class DefaultLayoutComponent implements AfterViewInit {
+  navItems = null;
+  sidebarMinimized = true;
   private changes: MutationObserver;
-  public element: HTMLElement = document.body;
+  element: HTMLElement = document.body;
+
+  aside: TemplateRef<any>;
+  headerButtons: TemplateRef<any>;
+
+  @ViewChild(KiwiContentComponent) content: TemplateRef<any>;
 
   constructor(public accountData: AccountDataService, public appData: AppDataService) {
     this.changes = new MutationObserver(() => {
@@ -27,6 +33,17 @@ export class DefaultLayoutComponent {
         this.navItems = this.appData.navigation;
       });
     });
+  }
+
+  public onRouterOutletActivate(event: any) {
+    if (event.kiwiContent) {
+      this.aside = event.kiwiContent.aside;
+      this.headerButtons = event.kiwiContent.headerButtons;
+    }
+  }
+
+  ngAfterViewInit() {
+    console.log(this.content);
   }
 
   logout() {
