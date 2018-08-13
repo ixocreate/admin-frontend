@@ -2,6 +2,17 @@
   padding: 0 25px;
 }
 
+.header-email {
+  max-width: 30vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header .nav-item .nav-link > .img-avatar {
+  border: 2px solid $border-color;
+}
+
 .aside-menu {
   top: $navbar-height;
 
@@ -54,7 +65,7 @@
   .page-title-buttons {
     flex: 1;
     text-align: right;
-    padding: 7px 15px;
+    padding: 5px 15px;
 
     .btn {
       margin-left: 5px;
