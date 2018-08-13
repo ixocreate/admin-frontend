@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/internal/operators';
 import { AppDataService } from './services/data/app-data.service';
+import { ConfigService } from './services/config.service';
 
 @Component({
   // tslint:disable-next-line
@@ -17,9 +18,10 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router,
               private titleService: Title,
               private appData: AppDataService,
+              private config: ConfigService,
               private activatedRoute: ActivatedRoute) {
-    this.appData.config$.subscribe((config) => {
-      this.projectName = config.project.name;
+    this.appData.config$.subscribe((appConfig) => {
+      this.projectName = appConfig.project.name;
       this.setPageTitle();
     });
   }
@@ -28,6 +30,9 @@ export class AdminComponent implements OnInit {
     let name = this.pageName;
     if (this.projectName) {
       name += ' :: ' + this.projectName;
+    }
+    if (!this.config.environment.production) {
+      name = '[dev] ' + name;
     }
     this.titleService.setTitle(name);
   }
