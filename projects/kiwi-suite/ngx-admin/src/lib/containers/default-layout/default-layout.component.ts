@@ -58,7 +58,9 @@ export class DefaultLayoutComponent implements AfterViewInit {
 
   setHeaderHeight() {
     if (this.kiwiContent) {
-      this.kiwiContent.headerHeight = this.header.nativeElement.clientHeight + this.paddingTop;
+      setTimeout(() => {
+        this.kiwiContent.headerHeight = this.header.nativeElement.clientHeight + this.paddingTop;
+      });
     }
   }
 

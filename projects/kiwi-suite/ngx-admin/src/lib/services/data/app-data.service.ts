@@ -76,4 +76,8 @@ export class AppDataService extends DataServiceAbstract {
     this._navigation = navigation;
   }
 
+  getTranslationCatalogue(): Promise<any> {
+    return this.api.get(this.config.routes.translationCatalogue);
+  }
+
 }

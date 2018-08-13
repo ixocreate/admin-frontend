@@ -1,0 +1,42 @@
+@import "../../../scss/variables-include";
+
+.translate-holder {
+  border: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .flag {
+    font-size: 1.3em;
+    width: 40px;
+    text-align: center;
+    background: $border-color;
+    margin-right: 5px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+
+    .flag-icon {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  .progress {
+    flex: 1;
+  }
+
+  .progress-number {
+    width: 80px;
+    background: $border-color;
+    margin-left: 5px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -5,6 +5,7 @@ import { LoginComponent } from './views/auth/login/login.component';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
 import { AccountComponent } from './views/account/account.component';
 import { PageComponent } from './views/page/page.component';
+import { TranslationComponent } from './views/translation/translation.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,28 @@ export const routes: Routes = [
             component: PageComponent,
           },
         ],
+      },
+      {
+        path: 'translation',
+        data: {title: 'Translation'},
+        children: [
+          {
+            path: '',
+            component: TranslationComponent,
+          },
+          /*
+          {
+            path: 'catalogue/:catalogue',
+            component: TranslationIndexComponent,
+            canActivate: [PermissionGuard]
+          },
+          {
+            path: 'catalogue/:catalogue/:id/edit',
+            component: TranslationEditComponent,
+            canActivate: [PermissionGuard],
+          }
+          */
+        ]
       },
       /*
       {
