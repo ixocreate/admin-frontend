@@ -5,7 +5,7 @@
 
   <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
     <div class="text-right">
-      <button class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i> Edit</button>
+      <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'"><i class="fa fa-pencil"></i> Edit</a>
     </div>
   </ng-template>
 </kiwi-content>

@@ -27,4 +27,5 @@ export class TranslationComponent extends ViewAbstractComponent implements OnIni
     }
     return 'danger';
   }
+
 }

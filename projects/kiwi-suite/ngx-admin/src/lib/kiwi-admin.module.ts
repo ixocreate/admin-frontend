@@ -34,6 +34,7 @@ import { TranslationListComponent } from './views/translation/list/translation-l
 import { KiwiBreadcrumbModule } from './components/kiwi-breadcrumb/kiwi-breadcrumb.module';
 import { KiwiDatatableComponent } from './components/kiwi-datatable/kiwi-datatable.component';
 import { KiwiLoadingComponent } from './components/kiwi-loading/kiwi-loading.component';
+import { TranslationEditComponent } from './views/translation/edit/translation-edit.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -57,6 +58,7 @@ const APP_COMPONENTS = [
 
   TranslationComponent,
   TranslationListComponent,
+  TranslationEditComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {

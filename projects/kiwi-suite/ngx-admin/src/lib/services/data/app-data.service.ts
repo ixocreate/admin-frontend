@@ -80,4 +80,12 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.routes.translationCatalogue);
   }
 
+  getTranslationDetail(catalogue: string, definitionId: string): Promise<any> {
+    return this.api.get(this.config.routes.translationDetail.replace('{catalogue}', catalogue).replace('{id}', definitionId));
+  }
+
+  saveTranslation(locale: string, definitionId: string, id: string, message: string) {
+    return this.api.post(this.config.routes.translationSave, {locale, definitionId, id, message});
+  }
+
 }

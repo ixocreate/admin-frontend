@@ -1,9 +1,9 @@
 @import "../../../scss/variables-include";
 
 .translate-holder {
+  align-items: center;
   border: 1px solid $border-color;
   display: flex;
-  align-items: center;
   margin-bottom: 15px;
 
   &:last-child {
@@ -11,14 +11,14 @@
   }
 
   .flag {
-    font-size: 1.3em;
-    width: 40px;
-    text-align: center;
-    background: $border-color;
-    margin-right: 5px;
-    height: 28px;
-    display: flex;
     align-items: center;
+    background: $border-color;
+    display: flex;
+    font-size: 1.3em;
+    height: 28px;
+    margin-right: 5px;
+    text-align: center;
+    width: 40px;
 
     .flag-icon {
       display: block;
@@ -31,12 +31,12 @@
   }
 
   .progress-number {
-    width: 80px;
-    background: $border-color;
-    margin-left: 5px;
-    height: 28px;
-    display: flex;
     align-items: center;
+    background: $border-color;
+    display: flex;
+    height: 28px;
     justify-content: center;
+    margin-left: 5px;
+    width: 80px;
   }
 }

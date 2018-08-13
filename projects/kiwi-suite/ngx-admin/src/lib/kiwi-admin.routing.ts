@@ -7,6 +7,7 @@ import { AccountComponent } from './views/account/account.component';
 import { PageComponent } from './views/page/page.component';
 import { TranslationComponent } from './views/translation/translation.component';
 import { TranslationListComponent } from './views/translation/list/translation-list.component';
+import { TranslationEditComponent } from './views/translation/edit/translation-edit.component';
 
 export const routes: Routes = [
   {
@@ -53,21 +54,20 @@ export const routes: Routes = [
           },
           {
             path: 'catalogue/:catalogue',
-            component: TranslationListComponent,
             data: {title: 'Catalogue'},
+            children: [
+              {
+                path: '',
+                component: TranslationListComponent,
+                data: {title: null},
+              },
+              {
+                path: ':id/edit',
+                component: TranslationEditComponent,
+                data: {title: 'Edit Translation'},
+              }
+            ],
           },
-          /*
-          {
-            path: 'catalogue/:catalogue',
-            component: TranslationIndexComponent,
-            canActivate: [PermissionGuard]
-          },
-          {
-            path: 'catalogue/:catalogue/:id/edit',
-            component: TranslationEditComponent,
-            canActivate: [PermissionGuard],
-          }
-          */
         ]
       },
       /*

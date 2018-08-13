@@ -1,65 +1,51 @@
-<ng-container *ngIf="data$ | async as data">
-    <app-content [title]="'Translation: ' + data.name">
-        <ng-template #content>
-            <div class="card card-accent-primary" *ngFor="let locale of data.locales">
-                <div class="card-header">
-                    <i class="flag-icon flag-icon-{{ locale.country }}"></i>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label [for]="locale.locale">Message</label>
-                        <textarea rows="5" [id]="locale.locale" class="form-control" [(ngModel)]="locale.message">
+<kiwi-content>
+  <ng-container *ngIf="data$ | async as data">
+    <div class="card card-accent-primary" *ngFor="let locale of data.locales">
+      <div class="card-header">
+        <i class="flag-icon flag-icon-{{ locale.country }}"></i> {{ locale.locale }}
+      </div>
+      <div class="card-body">
+        <textarea rows="4" class="form-control" [(ngModel)]="locale.message"></textarea>
+      </div>
+      <div class="card-footer text-right">
+        <button type="button" class="btn btn-primary" (click)="saveTranslation(locale)">
+          <i class="fa fa-save"></i> Update
+        </button>
+      </div>
+    </div>
+  </ng-container>
 
-                        </textarea>
-                    </div>
-
-                </div>
-                <div class="card-footer">
-                    <button type="button" class="btn btn-primary" (click)="saveTranslation(locale)">
-                        <i class="fa fa-save"></i>
-                        Update
-                    </button>
-                </div>
+  <ng-template #aside>
+    <tabset>
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-code"></i>
+        </ng-template>
+        <div class="p-3">
+          <h6>Placeholders</h6>
+          <ng-container  *ngIf="data$ | async as data">
+            <div *ngFor="let placeholder of data.placeholders">
+              <small>{{ placeholder }}</small>
             </div>
-        </ng-template>
-
-        <ng-template #aside>
-            <tabset>
-                <tab>
-                    <ng-template tabHeading>
-                        <i class="icon-speech"></i>
-                    </ng-template>
-                    <div class="p-3">
-                        <h6>Placeholders</h6>
-                        <div *ngFor="let placeholder of data.placeholders">
-                            <small>{{ placeholder }}</small>
-                        </div>
-                        <div *ngIf="data.placeholders.length == 0">
-                            <small>No placeholders available for this translation</small>
-                        </div>
-                    </div>
-                </tab>
-                <tab>
-                    <ng-template tabHeading>
-                        <i class="icon-doc"></i>
-                    </ng-template>
-                    <div class="p-3">
-                        <h6>Files</h6>
-                        <div *ngFor="let file of data.files">
-                            <small>{{ file }}</small>
-                        </div>
-                    </div>
-                </tab>
-            </tabset>
-        </ng-template>
-
-        <ng-template #header>
-            <div class="btn-group btn-group-sm pull-right">
-                <a routerLink="/translation/catalogue/{{ catalogue }}" class="btn btn-secondary btn-sm">
-                    <i class="fa fa-fw fa-chevron-left"></i> Back
-                </a>
+            <div *ngIf="data.placeholders.length === 0">
+              <small>No placeholders available for this translation</small>
             </div>
+          </ng-container>
+        </div>
+      </tab>
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-file"></i>
         </ng-template>
-    </app-content>
-</ng-container>
-
+        <div class="p-3">
+          <h6>Files</h6>
+          <ng-container  *ngIf="data$ | async as data">
+            <div *ngFor="let file of data.files">
+              <small>{{ file }}</small>
+            </div>
+          </ng-container>
+        </div>
+      </tab>
+    </tabset>
+  </ng-template>
+</kiwi-content>

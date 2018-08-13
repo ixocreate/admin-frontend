@@ -25,8 +25,6 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
       this.catalogueId = params.catalogue;
       this.dataUrl = this.appData.config.routes.translationIndex.replace('{catalogue}', this.catalogueId);
     });
-
-
   }
 
   setColumns(data: TableResponse<any>) {
@@ -39,7 +37,6 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
 
     if (data.result[0]) {
       const firstResult = data.result[0];
-      console.log(firstResult);
       for (const key in firstResult.locales) {
         if (firstResult.locales.hasOwnProperty(key)) {
           const locale = firstResult.locales[key];
@@ -50,7 +47,6 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
             moveToDetailBelow: 'sm',
             width: 50,
             render: (value) => {
-              console.log(value);
               if (value[key].translated) {
                 return '<i class="fa fa-check text-success"></i>';
               } else {
@@ -69,7 +65,4 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
     this.columns = columns;
   }
 
-  onSearch(): void {
-
-  }
 }
