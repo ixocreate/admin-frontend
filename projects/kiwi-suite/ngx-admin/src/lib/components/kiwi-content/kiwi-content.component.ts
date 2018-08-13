@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild, } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ElementRef, HostListener, TemplateRef, ViewChild, } from '@angular/core';
 
 @Component({
   selector: 'kiwi-content',
@@ -6,6 +6,9 @@ import { AfterViewInit, Component, ElementRef, HostListener, ViewChild, } from '
 })
 export class KiwiContentComponent implements AfterViewInit {
   @ViewChild('header') header: ElementRef;
+
+  @ContentChild('headerButtons') headerButtons: TemplateRef<any>;
+  @ContentChild('aside') aside: TemplateRef<any>;
 
   headerHeight = 0;
   paddingTop = 26;
@@ -17,6 +20,7 @@ export class KiwiContentComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log(this.aside);
     setTimeout(() => {
       this.headerHeight = this.header.nativeElement.clientHeight + this.paddingTop;
     });
