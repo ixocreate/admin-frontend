@@ -44,8 +44,8 @@ export class KiwiDatatableComponent implements OnInit {
   detailColumns: Array<TableColumnData<any>> = [];
   filterValue = '';
   loading = false;
+  pageNumber = 0;
 
-  private pageNumber = 0;
   private orderBy: string = null;
   private orderDirection: string = null;
 
@@ -112,7 +112,7 @@ export class KiwiDatatableComponent implements OnInit {
     }
 
     if (this.filterValue && this.filterValue !== '') {
-      params.searchString = this.filterValue;
+      params.search = this.filterValue;
     }
 
     this.loading = true;
