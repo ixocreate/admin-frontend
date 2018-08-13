@@ -1,3 +1,16 @@
+<kiwi-content>
+  <ng-container *ngIf="dataUrl">
+    <kiwi-datatable tableTitle="Incidents" [apiUrl]="dataUrl" [columns]="columns" (updatedData)="setColumns($event)"></kiwi-datatable>
+  </ng-container>
+
+  <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
+    <div class="text-right">
+      <button class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i> Edit</button>
+    </div>
+  </ng-template>
+</kiwi-content>
+
+<!--
 <ng-container>
     <app-content [title]="'Translation Catalogue: ' + catalogue">
         <ng-template #content>
@@ -57,4 +70,4 @@
         </ng-template>
     </app-content>
 </ng-container>
-
+-->

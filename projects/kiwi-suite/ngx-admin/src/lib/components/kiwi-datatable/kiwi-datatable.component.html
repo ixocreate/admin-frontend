@@ -1,0 +1,118 @@
+<div class="card card-accent-primary">
+  <div class="card-header py-2">
+    <div class="row align-items-center">
+      <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left">{{ tableTitle }}</h6></div>
+      <div class="col-sm mt-2 mt-sm-0">
+        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue" (keyup)="applyFilter()"/>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <ng-container *ngIf="data; else isLoading">
+      <ngx-datatable #table class="bootstrap"
+                     [rows]="data.result"
+                     [loadingIndicator]="loading"
+                     [columnMode]="'force'"
+                     [reorderable]="false"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [count]="data.count"
+                     [offset]="pageNumber"
+                     [limit]="limit"
+                     [externalPaging]="true"
+                     [rowHeight]="'auto'"
+                     (page)="setPage($event)"
+                     (sort)="onSort($event)">
+
+        <ngx-datatable-row-detail [rowHeight]="'auto'">
+          <ng-template let-row="row" let-value="value" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div class="detail-content">
+              <table class="detail-table">
+                <tbody>
+                <ng-container *ngFor="let data of detailColumns">
+                  <tr *ngIf="data.render || data.prop">
+                    <th [innerHtml]="data.name"></th>
+                    <td>
+                      <span *ngIf="data.render" [innerHtml]="data.render(row[data.prop], row)"></span>
+                      <ng-container *ngIf="!data.render">{{ row[data.prop] }}</ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+
+        <ngx-datatable-column [canAutoResize]="false" [width]="40" cellClass="collapse-cell" *ngIf="detailColumns.length">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <button class="datatable-collapse" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row)"></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ng-container *ngFor="let data of tableColumns">
+          <ngx-datatable-column
+            [name]="data.name"
+            [prop]="data.prop"
+            [headerClass]="data.headerClass"
+            [cellClass]="data.cellClass"
+            [cellTemplate]="data.cellTemplate"
+            [canAutoResize]="data.canAutoResize"
+            [width]="data.width || 150" *ngIf="data.cellTemplate">
+          </ngx-datatable-column>
+
+          <ngx-datatable-column
+            [name]="data.name"
+            [prop]="data.prop"
+            [headerClass]="data.headerClass"
+            [cellClass]="data.cellClass"
+            [canAutoResize]="data.canAutoResize"
+            [width]="data.width || 150" *ngIf="!data.cellTemplate">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <span *ngIf="data.render" [innerHtml]="data.render(value, row)"></span>
+              <ng-container *ngIf="!data.render">{{ value }}</ng-container>
+            </ng-template>
+          </ngx-datatable-column>
+        </ng-container>
+
+        <ngx-datatable-footer>
+          <ng-template
+            ngx-datatable-footer-template
+            let-rowCount="rowCount"
+            let-pageSize="pageSize"
+            let-selectedCount="selectedCount"
+            let-curPage="curPage"
+            let-offset="offset"
+            let-isVisible="isVisible">
+            <div class="page-count">
+              <span *ngIf="selectedMessage">
+                {{selectedCount.toLocaleString()}} {{selectedMessage}} /
+              </span>
+              {{rowCount.toLocaleString()}} {{totalMessage}}
+              <span class="d-inline d-sm-none">
+                (Page {{ curPage }} of {{ ceil(rowCount / pageSize) }})
+              </span>
+
+            </div>
+            <datatable-pager
+              [pagerLeftArrowIcon]="'datatable-icon-left'"
+              [pagerRightArrowIcon]="'datatable-icon-right'"
+              [pagerPreviousIcon]="'datatable-icon-prev'"
+              [pagerNextIcon]="'datatable-icon-skip'"
+              [page]="curPage"
+              [size]="pageSize"
+              [count]="rowCount"
+              [hidden]="!((rowCount / pageSize) > 1)"
+              (change)="table.onFooterPage($event)">
+            </datatable-pager>
+          </ng-template>
+        </ngx-datatable-footer>
+
+      </ngx-datatable>
+    </ng-container>
+    <ng-template #isLoading>
+      <div class="text-center my-3 loading">
+        <kiwi-loading class="block"></kiwi-loading>
+      </div>
+    </ng-template>
+  </div>
+</div>

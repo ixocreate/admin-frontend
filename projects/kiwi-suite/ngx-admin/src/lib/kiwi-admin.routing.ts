@@ -6,6 +6,7 @@ import { DefaultLayoutComponent } from './containers/default-layout/default-layo
 import { AccountComponent } from './views/account/account.component';
 import { PageComponent } from './views/page/page.component';
 import { TranslationComponent } from './views/translation/translation.component';
+import { TranslationListComponent } from './views/translation/list/translation-list.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,7 @@ export const routes: Routes = [
           {
             path: '',
             component: PageComponent,
+            data: {title: null},
           },
         ],
       },
@@ -47,6 +49,12 @@ export const routes: Routes = [
           {
             path: '',
             component: TranslationComponent,
+            data: {title: null},
+          },
+          {
+            path: 'catalogue/:catalogue',
+            component: TranslationListComponent,
+            data: {title: 'Catalogue'},
           },
           /*
           {

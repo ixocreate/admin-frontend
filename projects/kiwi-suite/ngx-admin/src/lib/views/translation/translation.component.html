@@ -17,9 +17,9 @@
           </div>
         </div>
         <div class="card-footer">
-          <button class="btn btn-primary btn-block" (click)="goToCatalogue(catalogue.catalogue)"><i
-            class="fa fa-edit"></i> Update Catalogue
-          </button>
+          <a class="btn btn-primary btn-block" [routerLink]="'catalogue/' + catalogue.catalogue">
+            <i class="fa fa-edit"></i> Update Catalogue
+          </a>
         </div>
       </div>
     </div>

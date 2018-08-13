@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
 import { AppDataService } from '../../services/data/app-data.service';
 
@@ -11,8 +10,7 @@ export class TranslationComponent extends ViewAbstractComponent implements OnIni
 
   translationCatalogue$: Promise<any>;
 
-  constructor(private router: Router,
-              public appData: AppDataService) {
+  constructor(public appData: AppDataService) {
     super();
   }
 
@@ -21,16 +19,12 @@ export class TranslationComponent extends ViewAbstractComponent implements OnIni
   }
 
   translationColor(current: number, max: number): string {
-    const percent =  current / max;
+    const percent = current / max;
     if (percent === 1) {
       return 'success';
     } else if (percent > .5) {
       return 'warning';
     }
     return 'danger';
-  }
-
-  goToCatalogue(catalogue: string) {
-    // this.router.navigate([this.translationService.resourceKey, 'catalogue', catalogue]);
   }
 }

@@ -11,7 +11,6 @@ export class KiwiAsideComponent implements OnInit, OnDestroy {
   @Input() display: any = 'lg';
 
   @Input() set visible(visible: boolean) {
-    console.log(visible);
     if (visible) {
       this.show();
     } else {

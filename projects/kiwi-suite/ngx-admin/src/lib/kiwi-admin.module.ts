@@ -30,6 +30,10 @@ import { KiwiAsideComponent } from './components/kiwi-aside/kiwi-aside.component
 import { KiwiAdminRouting } from './kiwi-admin.routing';
 import { PageComponent } from './views/page/page.component';
 import { TranslationComponent } from './views/translation/translation.component';
+import { TranslationListComponent } from './views/translation/list/translation-list.component';
+import { KiwiBreadcrumbModule } from './components/kiwi-breadcrumb/kiwi-breadcrumb.module';
+import { KiwiDatatableComponent } from './components/kiwi-datatable/kiwi-datatable.component';
+import { KiwiLoadingComponent } from './components/kiwi-loading/kiwi-loading.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -42,6 +46,8 @@ const APP_CONTAINERS = [
 const APP_COMPONENTS = [
   KiwiAsideComponent,
   KiwiContentComponent,
+  KiwiDatatableComponent,
+  KiwiLoadingComponent,
 
   // Views
   AdminComponent,
@@ -50,6 +56,7 @@ const APP_COMPONENTS = [
   PageComponent,
 
   TranslationComponent,
+  TranslationListComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
@@ -66,9 +73,8 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
     HttpClientModule,
 
     KiwiAdminRouting,
+    KiwiBreadcrumbModule.forRoot(),
 
-    AppAsideModule,
-    AppBreadcrumbModule.forRoot(),
     AppFooterModule,
     AppHeaderModule,
     AppSidebarModule,
