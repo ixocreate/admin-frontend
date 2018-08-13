@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ElementRef, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { AccountDataService } from '../../services/data/account-data.service';
 import { AppDataService } from '../../services/data/app-data.service';
 import { KiwiContentComponent } from '../../components/kiwi-content/kiwi-content.component';
@@ -8,6 +8,9 @@ import { KiwiContentComponent } from '../../components/kiwi-content/kiwi-content
   templateUrl: './default-layout.component.html',
 })
 export class DefaultLayoutComponent implements AfterViewInit {
+
+  @ViewChild('header') header: ElementRef;
+
   navItems = null;
   sidebarMinimized = true;
   private changes: MutationObserver;
@@ -15,8 +18,13 @@ export class DefaultLayoutComponent implements AfterViewInit {
 
   aside: TemplateRef<any>;
   headerButtons: TemplateRef<any>;
+  kiwiContent: KiwiContentComponent;
 
-  @ViewChild(KiwiContentComponent) content: TemplateRef<any>;
+  paddingTop = 26;
+
+  @HostListener('window:resize') onResize() {
+    this.setHeaderHeight();
+  }
 
   constructor(public accountData: AccountDataService, public appData: AppDataService) {
     this.changes = new MutationObserver(() => {
@@ -35,15 +43,23 @@ export class DefaultLayoutComponent implements AfterViewInit {
     });
   }
 
-  public onRouterOutletActivate(event: any) {
+  onRouterOutletActivate(event: any) {
+    this.kiwiContent = event.kiwiContent;
     if (event.kiwiContent) {
       this.aside = event.kiwiContent.aside;
       this.headerButtons = event.kiwiContent.headerButtons;
+      this.setHeaderHeight();
     }
   }
 
   ngAfterViewInit() {
-    console.log(this.content);
+    this.setHeaderHeight();
+  }
+
+  setHeaderHeight() {
+    if (this.kiwiContent) {
+      this.kiwiContent.headerHeight = this.header.nativeElement.clientHeight + this.paddingTop;
+    }
   }
 
   logout() {

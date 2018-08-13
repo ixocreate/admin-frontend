@@ -45,8 +45,6 @@
   left: 0;
   z-index: $zindex-sticky - 3;
   transition: left $layout-transition-speed, right $layout-transition-speed, width $layout-transition-speed;
-  display: flex;
-  align-items: center;
 
   .breadcrumb {
     border: 0;

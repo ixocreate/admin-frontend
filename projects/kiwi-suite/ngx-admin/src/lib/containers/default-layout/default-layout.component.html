@@ -29,11 +29,17 @@
 
   <main class="main">
     <div class="page-title" #header>
-      <ol class="breadcrumb">
-        <app-breadcrumb></app-breadcrumb>
-      </ol>
-      <div class="page-title-buttons" *ngIf="headerButtons">
-        <ng-container *ngTemplateOutlet="headerButtons"></ng-container>
+      <div class="row align-items-center">
+        <div class="col-md">
+          <ol class="breadcrumb">
+            <app-breadcrumb></app-breadcrumb>
+          </ol>
+        </div>
+        <div class="col-md">
+          <div class="page-title-buttons" *ngIf="headerButtons">
+            <ng-container *ngTemplateOutlet="headerButtons"></ng-container>
+          </div>
+        </div>
       </div>
     </div>
 
