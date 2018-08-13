@@ -21,8 +21,7 @@ export class TranslationComponent extends ViewAbstractComponent implements OnIni
   }
 
   translationColor(current: number, max: number): string {
-    const percent = max / current;
-    console.log(percent);
+    const percent =  current / max;
     if (percent === 1) {
       return 'success';
     } else if (percent > .5) {
