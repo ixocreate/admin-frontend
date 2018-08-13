@@ -34,9 +34,6 @@ export class AppDataService extends DataServiceAbstract {
     this.config$.subscribe((config) => {
       this.config = config;
     });
-
-    this.loadConfig();
-    this.loadSession();
   }
 
   get navigation() {

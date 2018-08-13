@@ -28,8 +28,10 @@ export class LoginComponent {
 
   onLogin() {
     this.accountData.login(this.form.value.email, this.form.value.password).then(() => {
-      this.route.queryParams.subscribe(query => {
-        this.router.navigate([query.intended || '/']);
+      this.appData.loadConfig().then(() => {
+        this.route.queryParams.subscribe(query => {
+          this.router.navigate([query.intended || '/']);
+        });
       });
     }).catch((error) => {
       this.error = error.errorCode;

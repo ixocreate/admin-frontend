@@ -35,6 +35,7 @@ import { KiwiBreadcrumbModule } from './components/kiwi-breadcrumb/kiwi-breadcru
 import { KiwiDatatableComponent } from './components/kiwi-datatable/kiwi-datatable.component';
 import { KiwiLoadingComponent } from './components/kiwi-loading/kiwi-loading.component';
 import { TranslationEditComponent } from './views/translation/edit/translation-edit.component';
+import { PermissionGuard } from './guards/permission.guard';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -130,6 +131,7 @@ export class KiwiAdminModule {
     return {
       ngModule: KiwiAdminModule,
       providers: [
+        PermissionGuard,
         {
           provide: KIWI_CONFIG,
           useValue: config,

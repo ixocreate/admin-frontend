@@ -8,6 +8,7 @@ import { PageComponent } from './views/page/page.component';
 import { TranslationComponent } from './views/translation/translation.component';
 import { TranslationListComponent } from './views/translation/list/translation-list.component';
 import { TranslationEditComponent } from './views/translation/edit/translation-edit.component';
+import { PermissionGuard } from './guards/permission.guard';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,7 @@ export const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
+    canActivate: [PermissionGuard],
     children: [
       {path: '', redirectTo: 'account', pathMatch: 'full'},
       {
