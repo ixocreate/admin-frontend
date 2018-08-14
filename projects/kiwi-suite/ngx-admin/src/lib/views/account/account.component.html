@@ -10,7 +10,8 @@
                 <label>Your current email *</label>
                 <input type="text" class="form-control" placeholder="{{ user.email }}" readonly>
               </div>
-              <formly-form [form]="emailForm" [fields]="emailFormFields"  [options]="emailFormOptions" [model]="emailFormModel"></formly-form>
+              <formly-form [form]="emailForm" [fields]="emailFormFields" [options]="emailFormOptions"
+                           [model]="emailFormModel"></formly-form>
             </div>
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-primary" [disabled]="!emailForm.valid">
@@ -25,7 +26,8 @@
           <div class="card card-accent-primary">
             <div class="card-header">Change Password</div>
             <div class="card-body pb-1">
-              <formly-form [form]="passwordForm" [fields]="passwordFormFields" [options]="passwordFormOptions" [model]="passwordFormModel"></formly-form>
+              <formly-form [form]="passwordForm" [fields]="passwordFormFields" [options]="passwordFormOptions"
+                           [model]="passwordFormModel"></formly-form>
             </div>
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-primary" [disabled]="!passwordForm.valid">

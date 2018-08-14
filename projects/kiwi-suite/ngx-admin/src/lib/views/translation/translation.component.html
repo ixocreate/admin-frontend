@@ -9,7 +9,8 @@
               <i class="flag-icon flag-icon-{{ locale.country }}"></i>
             </div>
             <div class="progress">
-              <progressbar [max]="catalogue.count" [value]="locale.count" [type]="translationColor(locale.count, catalogue.count)"></progressbar>
+              <progressbar [max]="catalogue.count" [value]="locale.count"
+                           [type]="translationColor(locale.count, catalogue.count)"></progressbar>
             </div>
             <div class="progress-number">
               {{locale.count}} / {{ catalogue.count }}

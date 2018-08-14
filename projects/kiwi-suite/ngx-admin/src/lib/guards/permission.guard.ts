@@ -4,31 +4,13 @@ import { Observable } from 'rxjs';
 import { AccountDataService } from '../services/data/account-data.service';
 import { RxService } from '../services/rx.service';
 import { User } from '../interfaces/user.interface';
+import { canActivateWithPermissions } from '../shared/userCanActivate';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
 
   constructor(private accountData: AccountDataService,
               private router: Router) {
-  }
-
-  can(user: User, abilities: string[]) {
-    let can = true;
-    if (!user || !user.id) {
-      can = false;
-    } else {
-      abilities.map(ability => {
-        const wildCardAbility = ability.split('.').slice(0, -1).join('.') + '.*';
-        if (user.permissions.indexOf('*') > -1
-          || user.permissions.indexOf(wildCardAbility) > -1
-          || user.permissions.indexOf(ability) > -1) {
-          // all good
-        } else {
-          can = false;
-        }
-      });
-    }
-    return can;
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -43,7 +25,7 @@ export class PermissionGuard implements CanActivate {
       }
       const ability = 'admin.api.' + resource + '.' + action;
       RxService.getData(this.accountData.user$).then((user: User) => {
-        const can = this.can(user, [ability]);
+        const can = canActivateWithPermissions(user.permissions, [ability]);
         if (!can) {
           this.router.navigateByUrl('/');
           resolve(false);

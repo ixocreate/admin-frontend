@@ -1,7 +1,7 @@
 <app-header
   [fixed]="true"
-  [navbarBrandFull]="{src: appData.config.project.logo, width: 150, height: 45, alt: appData.config.project.name }"
-  [navbarBrandMinimized]="{src: appData.config.project.icon, width: 35, height: 35, alt: appData.config.project.name }"
+  [navbarBrandFull]="{src: config.appConfig.project.logo, width: 150, height: 45, alt: config.appConfig.project.name }"
+  [navbarBrandMinimized]="{src: config.appConfig.project.icon, width: 35, height: 35, alt: config.appConfig.project.name }"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="false"
   [mobileAsideMenuToggler]="false">
@@ -13,7 +13,7 @@
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
         <div class="dropdown-header text-center"><strong>Settings</strong></div>
         <a class="dropdown-item" routerLink="/account" href="#"><i class="fa fa-user"></i> Account</a>
-        <button class="dropdown-item" (click)="logout()" ><i class="fa fa-lock"></i> Logout</button>
+        <button class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Logout</button>
       </div>
     </li>
   </ul>
@@ -52,8 +52,8 @@
 </div>
 
 <app-footer>
-  <span><b>{{ appData.config.project.name }}</b> / &copy; {{ appData.config.project.copyright }} {{ appData.config.project.author }}.</span>
-  <span *ngIf="appData.config.project.poweredBy" class="ml-auto">
+  <span><b>{{ config.appConfig.project.name }}</b> / &copy; {{ config.appConfig.project.copyright }} {{ config.appConfig.project.author }}.</span>
+  <span *ngIf="config.appConfig.project.poweredBy" class="ml-auto">
     powered by <a href="https://github.com/kiwi-suite/kiwi" target="_blank">kiwi</a>
   </span>
 </app-footer>

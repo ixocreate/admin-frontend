@@ -17,7 +17,7 @@ export abstract class DataServiceAbstract {
     return this.store.select(storeKey).pipe(
       tap((data: any) => {
         this.loadIfNoData(data, request);
-      })
+      }),
     );
   }
 

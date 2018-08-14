@@ -23,7 +23,7 @@
         </ng-template>
         <div class="p-3">
           <h6>Placeholders</h6>
-          <ng-container  *ngIf="data$ | async as data">
+          <ng-container *ngIf="data$ | async as data">
             <div *ngFor="let placeholder of data.placeholders">
               <small>{{ placeholder }}</small>
             </div>
@@ -39,7 +39,7 @@
         </ng-template>
         <div class="p-3">
           <h6>Files</h6>
-          <ng-container  *ngIf="data$ | async as data">
+          <ng-container *ngIf="data$ | async as data">
             <div *ngFor="let file of data.files">
               <small>{{ file }}</small>
             </div>

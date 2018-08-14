@@ -3,7 +3,8 @@
     <div class="row align-items-center">
       <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left" [innerHTML]="tableTitle"></h6></div>
       <div class="col-sm mt-2 mt-sm-0">
-        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue" (keyup)="applyFilter()"/>
+        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue"
+               (keyup)="applyFilter()"/>
       </div>
     </div>
   </div>
@@ -43,9 +44,12 @@
           </ng-template>
         </ngx-datatable-row-detail>
 
-        <ngx-datatable-column [canAutoResize]="false" [width]="40" cellClass="collapse-cell" *ngIf="detailColumns.length">
+        <ngx-datatable-column [canAutoResize]="false" [width]="40" cellClass="collapse-cell"
+                              *ngIf="detailColumns.length">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-            <button class="datatable-collapse" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row)"></button>
+            <button class="datatable-collapse" [class.datatable-icon-right]="!expanded"
+                    [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+                    (click)="toggleExpandRow(row)"></button>
           </ng-template>
         </ngx-datatable-column>
 

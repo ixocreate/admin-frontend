@@ -6,7 +6,7 @@ export class RxService {
   static getData(observable: Observable<any>): Promise<any> {
     return observable.pipe(
       filter((data) => data !== null),
-      first()
+      first(),
     ).toPromise();
   }
 

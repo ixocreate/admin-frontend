@@ -5,9 +5,11 @@ import { Config } from '../../interfaces/config.interface';
 import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
-import { StoreAction } from '../../store/store.interface';
 import { DefaultStore } from '../../store/default.store';
 import { DefaultHelper } from '../../helpers/default.helper';
+import { AccountDataService } from './account-data.service';
+import { ConfigService } from '../config.service';
+import { tap } from 'rxjs/internal/operators';
 
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
@@ -15,74 +17,44 @@ export class AppDataService extends DataServiceAbstract {
   config$: Observable<Config>;
   session$: Observable<any>;
 
-  config: Config = {
-    project: {},
-    navigation: [],
-    routes: [],
-  };
-  _navigation: any = null;
 
-  constructor(protected api: ApiService, protected store: Store<AppState>) {
+  constructor(protected api: ApiService,
+              protected store: Store<AppState>,
+              protected config: ConfigService) {
     super(store);
 
     this.store.addReducer('session', DefaultStore.Handle('SESSION'));
-    this.store.addReducer('config', DefaultStore.Handle('CONFIG', Object.assign({}, this.config, DefaultHelper.windowVar('__kiwi'))));
+    this.config.setAppConfig({});
+    this.store.addReducer('config', DefaultStore.Handle('CONFIG', this.config.appConfig));
 
     this.session$ = this.loadFromStore('session', this.loadSession);
-    this.config$ = this.store.select('config');
-
-    this.config$.subscribe((config) => {
-      this.config = config;
-    });
-  }
-
-  get navigation() {
-    return this._navigation;
+    this.config$ = this.store.select('config').pipe(tap((configResponse) => {
+      this.config.setAppConfig(configResponse);
+    }));
   }
 
   loadSession(): Promise<any> {
-    return this.api.get(this.config.routes.session).then((data: any) => {
+    return this.api.get(this.config.appConfig.routes.session).then((data: any) => {
       this.saveToDefaultStore('SESSION', data);
     });
   }
 
   loadConfig(): Promise<any> {
-    return this.api.get(this.config.routes.config).then((data: Config) => {
-      this.parseNavigation(data.navigation);
+    return this.api.get(this.config.appConfig.routes.config).then((data: Config) => {
       this.saveToDefaultStore('CONFIG', Object.assign({}, this.config, DefaultHelper.windowVar('__kiwi'), data));
     });
   }
 
-  private parseNavigation(navArray: Array<any>) {
-    const navigation = [];
-
-    for (const group of navArray) {
-      navigation.push({
-        title: true,
-        name: group.name,
-      });
-
-      for (const item of group.children) {
-        if (item.children.length === 0) {
-          delete item.children;
-        }
-        navigation.push(item);
-      }
-    }
-
-    this._navigation = navigation;
-  }
-
   getTranslationCatalogue(): Promise<any> {
-    return this.api.get(this.config.routes.translationCatalogue);
+    return this.api.get(this.config.appConfig.routes.translationCatalogue);
   }
 
   getTranslationDetail(catalogue: string, definitionId: string): Promise<any> {
-    return this.api.get(this.config.routes.translationDetail.replace('{catalogue}', catalogue).replace('{id}', definitionId));
+    return this.api.get(this.config.appConfig.routes.translationDetail.replace('{catalogue}', catalogue).replace('{id}', definitionId));
   }
 
   saveTranslation(locale: string, definitionId: string, id: string, message: string) {
-    return this.api.post(this.config.routes.translationSave, {locale, definitionId, id, message});
+    return this.api.post(this.config.appConfig.routes.translationSave, {locale, definitionId, id, message});
   }
 
 }

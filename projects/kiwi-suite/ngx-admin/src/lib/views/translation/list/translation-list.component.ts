@@ -4,6 +4,7 @@ import { TableColumnData } from '../../../components/kiwi-datatable/table-column
 import { AppDataService } from '../../../services/data/app-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { TableResponse } from '../../../components/kiwi-datatable/table-response.interface';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   templateUrl: './translation-list.component.html',
@@ -16,14 +17,14 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
   dataUrl: string;
   columns: Array<TableColumnData<any>> = [];
 
-  constructor(private route: ActivatedRoute, private appData: AppDataService) {
+  constructor(private route: ActivatedRoute, private config: ConfigService) {
     super();
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.catalogueId = params.catalogue;
-      this.dataUrl = this.appData.config.routes.translationIndex.replace('{catalogue}', this.catalogueId);
+      this.dataUrl = this.config.appConfig.routes.translationIndex.replace('{catalogue}', this.catalogueId);
     });
   }
 

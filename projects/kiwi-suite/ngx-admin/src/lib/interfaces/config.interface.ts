@@ -3,9 +3,9 @@ export interface Config {
     production: boolean;
   };
   project?: Project;
-  navigation: Navigation[];
-  routes: any;
-  intl?: {default: string, locales: Locale[]};
+  navigation?: Navigation[];
+  routes?: any;
+  intl?: { default: string, locales: Locale[] };
 }
 
 export interface Project {

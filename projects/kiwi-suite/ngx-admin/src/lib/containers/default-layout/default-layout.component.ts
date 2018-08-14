@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ContentChild, ElementRef, HostListener, Templ
 import { AccountDataService } from '../../services/data/account-data.service';
 import { AppDataService } from '../../services/data/app-data.service';
 import { KiwiContentComponent } from '../../components/kiwi-content/kiwi-content.component';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,7 +27,7 @@ export class DefaultLayoutComponent implements AfterViewInit {
     this.setHeaderHeight();
   }
 
-  constructor(public accountData: AccountDataService, public appData: AppDataService) {
+  constructor(public accountData: AccountDataService, public config: ConfigService) {
     this.changes = new MutationObserver(() => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
@@ -35,12 +36,7 @@ export class DefaultLayoutComponent implements AfterViewInit {
       attributes: true,
     });
 
-    this.appData.config$.subscribe(() => {
-      this.navItems = null;
-      setTimeout(() => {
-        this.navItems = this.appData.navigation;
-      });
-    });
+    this.navItems = this.config.navigation;
   }
 
   onRouterOutletActivate(event: any) {

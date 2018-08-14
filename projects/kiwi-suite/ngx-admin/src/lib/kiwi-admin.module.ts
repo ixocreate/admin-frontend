@@ -88,7 +88,7 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
     ReactiveFormsModule,
     FormlyModule.forRoot({
       validationMessages: [
-        { name: 'required', message: 'This field is required' },
+        {name: 'required', message: 'This field is required'},
       ],
     }),
     FormlyBootstrapModule,
