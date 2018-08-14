@@ -16,6 +16,7 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      console.log(params);
       this.dataUrl = this.config.appConfig.routes.resourceIndex.replace('{resource}', params.type);
     });
   }

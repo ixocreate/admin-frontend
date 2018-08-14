@@ -7,7 +7,7 @@ import { PerfectScrollbarConfigInterface, PerfectScrollbarModule } from 'ngx-per
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule } from '@coreui/angular';
+import { AppFooterModule, AppHeaderModule, AppSidebarModule } from '@coreui/angular';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ServiceModule } from './services/service.module';
 import { NgrxHelperModule } from './store/store.module';
@@ -18,7 +18,7 @@ import { AlertModule, BsDropdownModule, PaginationModule, ProgressbarModule, Tab
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
-import { RouterModule } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { KIWI_CONFIG, KiwiConfig } from './services/config.service';
 import { AppDataService } from './services/data/app-data.service';
@@ -79,6 +79,30 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
   return (): Promise<any> => {
     return appData.loadConfig();
   };
+}
+
+export class KiwiReuseStrategy implements RouteReuseStrategy {
+  shouldDetach(route: ActivatedRouteSnapshot): boolean {
+    return false;
+  }
+
+  store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {
+  }
+
+  shouldAttach(route: ActivatedRouteSnapshot): boolean {
+    return false;
+  }
+
+  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
+    return null;
+  }
+
+  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+    if (future.params && curr.params && future.params.type !== curr.params.type) {
+      return false;
+    }
+    return future.routeConfig === curr.routeConfig;
+  }
 }
 
 @NgModule({
@@ -150,6 +174,10 @@ export class KiwiAdminModule {
         {
           provide: KIWI_CONFIG,
           useValue: config,
+        },
+        {
+          provide: RouteReuseStrategy,
+          useClass: KiwiReuseStrategy,
         },
         {
           provide: LocationStrategy,

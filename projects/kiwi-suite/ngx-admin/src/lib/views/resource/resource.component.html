@@ -1,4 +1,8 @@
 <kiwi-content>
+  <ng-template #headerButtons>
+    <button class="btn btn-success"><i class="fa fa-plus"></i> Create</button>
+  </ng-template>
+
   <ng-container *ngIf="dataUrl">
     <kiwi-datatable [apiUrl]="dataUrl"></kiwi-datatable>
   </ng-container>
