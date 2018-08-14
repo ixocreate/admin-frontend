@@ -41,6 +41,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { KiwiMediaListComponent } from './components/kiwi-media-list/kiwi-media-list.component';
 import { PermissionDirective } from './directives/permission.directive';
 import { KiwiPaginationComponent } from './components/kiwi-pagination/kiwi-pagination.component';
+import { ResourceComponent } from './views/resource/resource.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -70,6 +71,8 @@ const APP_COMPONENTS = [
   TranslationEditComponent,
 
   MediaComponent,
+
+  ResourceComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {

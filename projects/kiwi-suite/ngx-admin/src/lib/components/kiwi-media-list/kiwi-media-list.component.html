@@ -58,14 +58,14 @@
         </div>
       </div>
     </ng-container>
-
-    <kiwi-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [currentPage]="currentPage" (pageChanged)="onPage($event)"></kiwi-pagination>
-
     <ng-template #isLoading>
       <div class="p-3">
         <kiwi-loading class="big-center"></kiwi-loading>
       </div>
     </ng-template>
+  </div>
+  <div class="card-footer">
+    <kiwi-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [currentPage]="currentPage" (pageChanged)="onPage($event)"></kiwi-pagination>
   </div>
 </div>
 

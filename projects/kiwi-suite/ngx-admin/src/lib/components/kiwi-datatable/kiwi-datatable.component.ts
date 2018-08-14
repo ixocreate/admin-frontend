@@ -16,26 +16,15 @@ export class KiwiDatatableComponent implements OnInit {
   @Output() updatedData = new EventEmitter<any>();
 
   @Input('columns') set columnsTemp(columns: Array<any>) {
-    for (const column of columns) {
-      column.headerClass = column.headerClass || '';
-      column.cellClass = column.cellClass || '';
-      if (column.type) {
-        delete column.type;
-      }
-      if (column.align) {
-        column.headerClass += ' text-' + column.align;
-        column.cellClass += ' text-' + column.align;
-        delete column.align;
-      }
-    }
-    this.hostColumns = columns;
-    this.calculateColumns();
+    this.setColumns(columns);
   }
 
   @Input() limit = 10;
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @ViewChild('collapseColumnTemplate') collapseColumnTemplate: TemplateRef<any>;
+
+  @ViewChild('buttonColumnTemplate') buttonColumnTemplate: TemplateRef<any>;
 
   data: TableResponse<any> = null;
   hostColumns: Array<TableColumnData<any>> = [];
@@ -46,7 +35,7 @@ export class KiwiDatatableComponent implements OnInit {
   pageNumber = 0;
 
   private orderBy: string = null;
-  private orderDirection: string = null;
+  private orderDirection: 'DESC' | 'ASC' = null;
 
   private inputTimeout = null;
 
@@ -69,6 +58,23 @@ export class KiwiDatatableComponent implements OnInit {
     if (this.apiUrl) {
       this.updateElements();
     }
+  }
+
+  private setColumns(columns: Array<any>) {
+    for (const column of columns) {
+      column.headerClass = column.headerClass || '';
+      column.cellClass = column.cellClass || '';
+      if (column.type) {
+        delete column.type;
+      }
+      if (column.align) {
+        column.headerClass += ' text-' + column.align;
+        column.cellClass += ' text-' + column.align;
+        delete column.align;
+      }
+    }
+    this.hostColumns = columns;
+    this.calculateColumns();
   }
 
   private calculateColumns() {
@@ -118,19 +124,41 @@ export class KiwiDatatableComponent implements OnInit {
     return this.api.get(this.apiUrl + '?' + this.parseParams(params)).then((data: any) => {
       this.loading = false;
 
-      // TODO: Update
-      this.data = {
-        count: 1000,
-        limit: 1000,
-        offset: 0,
-        search: '',
-        orderBy: 'id',
-        orderDirection: 'DESC',
-        result: data,
-      };
-      this.updatedData.emit(this.data);
+      if (this.tableTitle === null && data.label) {
+        this.tableTitle = data.label;
+      }
 
-      // this.data = data;
+      if (this.hostColumns.length === 0 && data.schema) {
+        const columns = data.schema.elements;
+        columns.push({
+          cellTemplate: this.buttonColumnTemplate,
+        });
+        this.setColumns(columns);
+      }
+
+      if (data.items) {
+        this.data = {
+          count: data.meta.count,
+          limit: this.limit,
+          offset: params.offset,
+          search: params.search,
+          orderBy: this.orderBy,
+          orderDirection: this.orderDirection,
+          result: data.items,
+        };
+      } else {
+        // TODO: Update
+        this.data = {
+          count: 1000,
+          limit: this.limit,
+          offset: params.offset,
+          search: params.search,
+          orderBy: this.orderBy,
+          orderDirection: this.orderDirection,
+          result: data,
+        };
+      }
+      this.updatedData.emit(this.data);
     });
   }
 
