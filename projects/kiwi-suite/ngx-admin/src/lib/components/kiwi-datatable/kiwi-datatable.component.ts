@@ -7,7 +7,6 @@ import { TableResponse } from './table-response.interface';
 @Component({
   selector: 'kiwi-datatable',
   templateUrl: 'kiwi-datatable.component.html',
-  styleUrls: ['kiwi-datatable.component.scss'],
 })
 export class KiwiDatatableComponent implements OnInit {
 

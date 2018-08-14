@@ -2,7 +2,7 @@
   <ng-container *ngIf="data$ | async as data">
     <div class="card card-accent-primary" *ngFor="let locale of data.locales">
       <div class="card-header">
-        <i class="flag-icon flag-icon-{{ locale.country }}"></i> {{ locale.locale }}
+        <i class="flag-icon flag-icon-{{ locale.country }}"></i> {{ data.name }}
       </div>
       <div class="card-body">
         <textarea rows="4" class="form-control" [(ngModel)]="locale.message"></textarea>

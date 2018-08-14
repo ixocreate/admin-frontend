@@ -102,8 +102,6 @@ export class ConfigService {
       }
     }
 
-    console.log(navigation);
-
     this._navigation = navigation;
   }
 

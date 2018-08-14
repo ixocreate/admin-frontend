@@ -1,0 +1,109 @@
+<ng-container *ngIf="data$ | async as data; else isLoading">
+
+  <div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-12" *kiwiCan="['admin.api.' + resourceKey + '.upload']">
+      <div ng2FileDrop [uploader]="uploader">
+        <div class="upload-container">
+          <div class="drop-box">
+            <div class="upload-center">
+              <button class="btn btn-primary" type="button">Choose a file</button>
+              <p>or drag it here</p>
+            </div>
+            <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let media of data.items" class="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-12">
+      <div class="media-container" (click)="selectMedia(media)">
+        <ng-container *ngIf="isImage(media.mimeType); else noImage">
+          <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + media.thumb + ')'}"></div>
+          <div class="media-image-title">{{ media.filename }}</div>
+        </ng-container>
+        <ng-template #noImage class="media-container">
+          <div class="media-icon">
+            <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
+          </div>
+          <div class="media-image-title">{{ media.filename }}</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #isLoading>
+  <kiwi-loading class="big-center"></kiwi-loading>
+</ng-template>
+
+<!--
+<ng-container *ngIf="data$ | async as data">
+    <div class="row text-center text-lg-left" *ngIf="uploader">
+
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12"
+             *can="['admin.api.'+resourceKey+'.upload']">
+            <div class="d-block mb-4 h-100" ng2FileDrop [uploader]="uploader">
+                <div class="upload-container">
+                    <div class="drop-box">
+                        <div class="upload-center">
+                            <button class="btn btn-primary" type="button">Choose a file</button>
+                            <p>or drag it here</p>
+                        </div>
+                        <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngFor="let item of uploader.queue" class="col-6 col-xl-2 col-lg-3 col-md-4 col-sm-6">
+            <div class="d-block mb-4 h-100">
+                <div *ngIf="isImage(item?.file?.type)" class="media-container">
+                    <div class="media-icon">
+                        <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(item?.file?.type)"></span>
+                    </div>
+                    <div class="media-image-title p-1 text-nowrap text-truncate">
+                        <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress"
+                                     type="info"></progressbar>
+                        <div>
+                            <small>{{ item?.file?.name }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!isImage(item?.file?.type)" class="media-container">
+                    <div class="media-icon">
+                        <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(item?.file?.type)"></span>
+                    </div>
+                    <div class="media-image-title p-1 text-nowrap text-truncate">
+                        <progressbar class="progress-striped progress-xs mt-3" [value]="item.progress"
+                                     type="info"></progressbar>
+                        <div>
+                            <small>{{ item?.file?.name }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngFor="let media of data.items" class="col-6 col-xl-2 col-lg-3 col-md-4 col-sm-6">
+            <div class="d-block mb-4 h-100" (click)="select(media)">
+                <div *ngIf="isImage(media.mimeType)" class="media-container">
+                    <div class="media-image"
+                         [ngStyle]="{backgroundImage: 'url(' + media.thumb + ')'}"></div>
+                    <div class="media-image-title p-1 text-nowrap text-truncate">
+                        <small>{{ media.filename }}</small>
+                    </div>
+                </div>
+                <div *ngIf="!isImage(media.mimeType)" class="media-container">
+                    <div class="media-icon">
+                        <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
+                    </div>
+                    <div class="media-image-title p-1 text-nowrap text-truncate">
+                        <small>{{ media.filename }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-container>
+-->

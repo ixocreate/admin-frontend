@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { DefaultStore } from '../../store/default.store';
 import { DefaultHelper } from '../../helpers/default.helper';
-import { AccountDataService } from './account-data.service';
 import { ConfigService } from '../config.service';
 import { tap } from 'rxjs/internal/operators';
 
@@ -55,6 +54,30 @@ export class AppDataService extends DataServiceAbstract {
 
   saveTranslation(locale: string, definitionId: string, id: string, message: string) {
     return this.api.post(this.config.appConfig.routes.translationSave, {locale, definitionId, id, message});
+  }
+
+  getResourceIndex(resource: string) {
+    return this.api.get(this.config.appConfig.routes.resourceIndex.replace('{resource}', resource));
+  }
+
+  getResourceDetail(resource: string, id: string) {
+    return this.api.get(this.config.appConfig.routes.resourceDetail.replace('{resource}', resource).replace('{id}', id));
+  }
+
+  createResource(resource: string, data: any) {
+    return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data);
+  }
+
+  createResourceDetail(resource: string, id: string, data: any) {
+    return this.api.post(this.config.appConfig.routes.resourceCreateDetail.replace('{resource}', resource).replace('{id}', id), data);
+  }
+
+  updateResource(resource: string, id: string, data: any) {
+    return this.api.patch(this.config.appConfig.routes.resourceUpdate.replace('{resource}', resource).replace('{id}', id), data);
+  }
+
+  deleteResource(resource: string, id: string) {
+    return this.api.delete(this.config.appConfig.routes.resourceDelete.replace('{resource}', resource).replace('{id}', id));
   }
 
 }

@@ -36,6 +36,10 @@ import { KiwiDatatableComponent } from './components/kiwi-datatable/kiwi-datatab
 import { KiwiLoadingComponent } from './components/kiwi-loading/kiwi-loading.component';
 import { TranslationEditComponent } from './views/translation/edit/translation-edit.component';
 import { PermissionGuard } from './guards/permission.guard';
+import { MediaComponent } from './views/media/media.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { KiwiMediaListComponent } from './components/kiwi-media-list/kiwi-media-list.component';
+import { PermissionDirective } from './directives/permission.directive';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -50,6 +54,8 @@ const APP_COMPONENTS = [
   KiwiContentComponent,
   KiwiDatatableComponent,
   KiwiLoadingComponent,
+  KiwiMediaListComponent,
+  PermissionDirective,
 
   // Views
   AdminComponent,
@@ -60,6 +66,8 @@ const APP_COMPONENTS = [
   TranslationComponent,
   TranslationListComponent,
   TranslationEditComponent,
+
+  MediaComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
@@ -92,6 +100,7 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
       ],
     }),
     FormlyBootstrapModule,
+    FileUploadModule,
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),

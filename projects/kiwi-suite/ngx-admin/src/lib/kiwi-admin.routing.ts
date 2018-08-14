@@ -9,6 +9,7 @@ import { TranslationComponent } from './views/translation/translation.component'
 import { TranslationListComponent } from './views/translation/list/translation-list.component';
 import { TranslationEditComponent } from './views/translation/edit/translation-edit.component';
 import { PermissionGuard } from './guards/permission.guard';
+import { MediaComponent } from './views/media/media.component';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,17 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'media',
+        data: {title: 'Media'},
+        children: [
+          {
+            path: '',
+            component: MediaComponent,
+            data: {title: null},
+          },
+        ],
+      },
+      {
         path: 'translation',
         data: {title: 'Translation'},
         children: [
@@ -67,10 +79,10 @@ export const routes: Routes = [
                 path: ':id/edit',
                 component: TranslationEditComponent,
                 data: {title: 'Edit Translation'},
-              }
+              },
             ],
           },
-        ]
+        ],
       },
       /*
       {
