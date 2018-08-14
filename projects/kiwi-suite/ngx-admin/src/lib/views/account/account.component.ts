@@ -75,7 +75,7 @@ export class AccountComponent extends ViewAbstractComponent {
   emailFormModel = {email: '', emailRepeat: ''};
 
   constructor(protected notification: NotificationService,
-              protected accountData: AccountDataService) {
+              public accountData: AccountDataService) {
     super();
   }
 

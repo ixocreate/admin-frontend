@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountDataService } from '../../../services/data/account-data.service';
 import { AppDataService } from '../../../services/data/app-data.service';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ export class LoginComponent {
   constructor(private router: Router,
               private auth: AuthService,
               public appData: AppDataService,
+              public config: ConfigService,
               private accountData: AccountDataService,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
