@@ -2,6 +2,15 @@
   padding: 0 25px;
 }
 
+.app-footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+}
+
 .header-email {
   max-width: 30vw;
   white-space: nowrap;

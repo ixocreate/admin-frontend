@@ -30,7 +30,7 @@
   <main class="main">
     <div class="page-title" #header>
       <div class="row align-items-center">
-        <div class="col-md">
+        <div class="col-md-auto">
           <ol class="breadcrumb">
             <kiwi-breadcrumb></kiwi-breadcrumb>
           </ol>
@@ -52,8 +52,8 @@
 </div>
 
 <app-footer>
-  <span><b>{{ config.appConfig.project.name }}</b> / &copy; {{ config.appConfig.project.copyright }} {{ config.appConfig.project.author }}.</span>
-  <span *ngIf="config.appConfig.project.poweredBy" class="ml-auto">
+  <div><b>{{ config.appConfig.project.name }}</b> / &copy; {{ config.appConfig.project.copyright }} {{ config.appConfig.project.author }}.</div>
+  <div *ngIf="config.appConfig.project.poweredBy" class="ml-auto text-muted">
     powered by <a href="https://github.com/kiwi-suite/kiwi" target="_blank">kiwi</a>
-  </span>
+  </div>
 </app-footer>
