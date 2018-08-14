@@ -3,8 +3,7 @@
     <div class="row align-items-center">
       <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left">Media Files</h6></div>
       <div class="col-sm mt-2 mt-sm-0">
-        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue"
-               (keyup)="applyFilter()"/>
+        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue" (keyup)="applyFilter()"/>
       </div>
     </div>
   </div>
@@ -25,6 +24,20 @@
 
     <ng-container *ngIf="data$ | async as data; else isLoading">
       <div class="row no-gutters media-grid">
+        <div *ngFor="let item of uploader.queue" class="col-xl-2 col-sm-4 col-6">
+          <div class="media-container">
+            <div class="progress-bar-container">
+              <progressbar class="progress-sm" [value]="item.progress" type="primary"></progressbar>
+            </div>
+            <div class="media-icon">
+              <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(item?.file?.type)"></span>
+            </div>
+            <div class="media-image-title p-1 text-nowrap text-truncate">
+              <div>{{ item?.file?.name }}</div>
+            </div>
+          </div>
+        </div>
+
         <div *ngFor="let media of data.items" class="col-xl-2 col-sm-4 col-6">
           <div class="media-container" (click)="selectMedia(media)">
             <ng-container *ngIf="isImage(media.mimeType); else noImage">

@@ -24,6 +24,19 @@
     }
   }
 
+  .progress-bar-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+
+    .progress,
+    .progress-bar {
+      border-radius: 0;
+    }
+  }
+
   .media-image {
     position: absolute;
     top: 0;
