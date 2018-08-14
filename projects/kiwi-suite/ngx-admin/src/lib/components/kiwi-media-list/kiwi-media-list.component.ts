@@ -47,11 +47,9 @@ export class KiwiMediaListComponent implements OnInit {
   }
 
   updateMedia() {
-    this.data$ = this.appData.getResourceIndex(this.resourceKey, this.itemsPerPage, this.currentPage, this.filterValue);
-
-    this.data$.then((response: any) => {
+    this.data$ = this.appData.getResourceIndex(this.resourceKey, this.itemsPerPage, this.currentPage, this.filterValue).then((response: any) => {
       this.totalItems = response.meta.count;
-      console.log(response);
+      return response;
     });
   }
 

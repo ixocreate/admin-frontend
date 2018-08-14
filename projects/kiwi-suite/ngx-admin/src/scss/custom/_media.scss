@@ -80,6 +80,12 @@
   border-bottom: 1px dashed $border-color;
   background: #fafafa;
   height: 90px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f2f2f2;
+    border-color: $primary;
+  }
 
   .drop-box {
     position: absolute;
