@@ -110,3 +110,18 @@
     }
   }
 }
+
+.pagination-container {
+  padding: $card-spacer-y $card-spacer-x;
+  background-color: $card-cap-bg;
+  border-top: $card-border-width solid $card-border-color;
+  @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
+
+  pagination {
+    display: inline-block;
+  }
+
+  .pagination {
+    margin-bottom: 0;
+  }
+}

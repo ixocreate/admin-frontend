@@ -14,6 +14,12 @@ export class KiwiMediaListComponent implements OnInit {
   data$: Promise<Media>;
   uploader: FileUploader;
   resourceKey = 'media';
+  filterValue = '';
+  itemsPerPage = 20;
+  currentPage = 1;
+  totalItems = 0;
+
+  private inputTimeout = null;
 
   @Output() select = new EventEmitter<Media>();
 
@@ -21,7 +27,7 @@ export class KiwiMediaListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data$ = this.appData.getResourceIndex(this.resourceKey);
+    this.updateMedia();
 
     this.uploader = new FileUploader({
       url: this.config.appConfig.routes.mediaUpload,
@@ -34,9 +40,19 @@ export class KiwiMediaListComponent implements OnInit {
         },
       ],
     });
+
     this.uploader.onCompleteAll = () => {
-      //this.loadData();
+      this.updateMedia();
     };
+  }
+
+  updateMedia() {
+    this.data$ = this.appData.getResourceIndex(this.resourceKey, this.itemsPerPage, this.currentPage, this.filterValue);
+
+    this.data$.then((response: any) => {
+      this.totalItems = response.meta.count;
+      console.log(response);
+    });
   }
 
   selectMedia(media: Media) {
@@ -67,4 +83,23 @@ export class KiwiMediaListComponent implements OnInit {
     }
     return icon;
   }
+
+  applyFilter() {
+    if (this.inputTimeout) {
+      clearTimeout(this.inputTimeout);
+    }
+    this.inputTimeout = setTimeout(() => {
+      this.currentPage = 1;
+      this.updateMedia();
+    }, 500);
+  }
+
+  onPage(event) {
+    if (this.currentPage !== event.page) {
+      console.log(event);
+      this.currentPage = event.page;
+      this.updateMedia();
+    }
+  }
+
 }

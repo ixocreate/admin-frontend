@@ -1,12 +1,33 @@
+.media-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+
+  & > div {
+    width: 150px;
+    margin: 10px;
+  }
+}
+
 .media-container {
   display: block;
   position: relative;
   overflow: hidden;
   width: 100%;
-  border: 1px solid $border-color;
+  border: 2px solid $border-color;
   padding-bottom: calc(100% - 2px);
   border-radius: $border-radius;
-  margin-bottom: $grid-gutter-width;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $primary;
+
+    .media-image-title {
+      color: #fff;
+      background: $primary;
+    }
+  }
 
   .media-image {
     position: absolute;
@@ -16,7 +37,6 @@
     width: 100%;
     background-size: cover;
     background-position: center center;
-    border-radius: $border-radius;
   }
 
   .media-icon {
@@ -44,12 +64,15 @@
     background: $border-color;
     font-size: .85em;
     padding: 0 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     height: 25px;
     display: flex;
     align-items: center;
+
+    & > div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
@@ -60,7 +83,6 @@
   border: 1px dashed $border-color;
   padding-bottom: calc(100% - 2px);
   border-radius: $border-radius;
-  margin-bottom: $grid-gutter-width;
 
   .drop-box {
     position: absolute;

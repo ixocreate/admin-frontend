@@ -14,7 +14,7 @@ import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LoginComponent } from './views/auth/login/login.component';
-import { AlertModule, BsDropdownModule, ProgressbarModule, TabsModule } from 'ngx-bootstrap';
+import { AlertModule, BsDropdownModule, PaginationModule, ProgressbarModule, TabsModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
@@ -40,6 +40,7 @@ import { MediaComponent } from './views/media/media.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { KiwiMediaListComponent } from './components/kiwi-media-list/kiwi-media-list.component';
 import { PermissionDirective } from './directives/permission.directive';
+import { KiwiPaginationComponent } from './components/kiwi-pagination/kiwi-pagination.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -55,6 +56,7 @@ const APP_COMPONENTS = [
   KiwiDatatableComponent,
   KiwiLoadingComponent,
   KiwiMediaListComponent,
+  KiwiPaginationComponent,
   PermissionDirective,
 
   // Views
@@ -106,6 +108,7 @@ export function initConfig(appData: AppDataService): () => Promise<any> {
     AlertModule.forRoot(),
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
+    PaginationModule.forRoot(),
 
     ToastrModule.forRoot({
       autoDismiss: true,

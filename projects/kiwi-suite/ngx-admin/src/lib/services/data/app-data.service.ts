@@ -9,6 +9,7 @@ import { DefaultStore } from '../../store/default.store';
 import { DefaultHelper } from '../../helpers/default.helper';
 import { ConfigService } from '../config.service';
 import { tap } from 'rxjs/internal/operators';
+import { parseParams } from '../../shared/parseParams';
 
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
@@ -56,8 +57,15 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.appConfig.routes.translationSave, {locale, definitionId, id, message});
   }
 
-  getResourceIndex(resource: string) {
-    return this.api.get(this.config.appConfig.routes.resourceIndex.replace('{resource}', resource));
+  getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 0, search: string = null) {
+    const params: any = {
+      offset: (pageNumber - 1) * limit,
+      limit: limit,
+    };
+    if (search && search !== '') {
+      params.search = search;
+    }
+    return this.api.get(this.config.appConfig.routes.resourceIndex.replace('{resource}', resource) + '?' + parseParams(params));
   }
 
   getResourceDetail(resource: string, id: string) {

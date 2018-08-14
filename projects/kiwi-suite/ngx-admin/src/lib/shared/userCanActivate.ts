@@ -1,5 +1,3 @@
-import { User } from '../interfaces/user.interface';
-
 export function canActivateWithPermissions(permissions: Array<string>, abilities: string[]) {
   let can = true;
   if (!permissions) {
