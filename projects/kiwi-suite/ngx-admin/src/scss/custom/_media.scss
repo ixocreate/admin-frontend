@@ -1,11 +1,7 @@
 .media-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   margin: 10px;
 
-  & > div {
-    width: 150px;
+  .media-container {
     margin: 10px;
   }
 }
@@ -14,9 +10,8 @@
   display: block;
   position: relative;
   overflow: hidden;
-  width: 100%;
   border: 2px solid $border-color;
-  padding-bottom: calc(100% - 2px);
+  padding-bottom: calc(100% - 24px);
   border-radius: $border-radius;
   cursor: pointer;
 
@@ -82,9 +77,9 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  border: 1px dashed $border-color;
-  padding-bottom: calc(100% - 2px);
-  border-radius: $border-radius;
+  border-bottom: 1px dashed $border-color;
+  background: #fafafa;
+  height: 90px;
 
   .drop-box {
     position: absolute;

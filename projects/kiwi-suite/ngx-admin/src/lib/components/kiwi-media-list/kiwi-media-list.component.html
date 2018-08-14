@@ -11,22 +11,22 @@
   <div class="card-body p-0">
     <ng-container *ngIf="data$ | async as data; else isLoading">
 
-      <div class="media-grid">
-        <div *kiwiCan="['admin.api.' + resourceKey + '.upload']">
-          <div ng2FileDrop [uploader]="uploader">
-            <div class="upload-container">
-              <div class="drop-box">
-                <div class="upload-center">
-                  <button class="btn btn-primary" type="button">Choose a file</button>
-                  <p>or drag it here</p>
-                </div>
-                <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple>
+      <div *kiwiCan="['admin.api.' + resourceKey + '.upload']">
+        <div ng2FileDrop [uploader]="uploader">
+          <div class="upload-container">
+            <div class="drop-box">
+              <div class="upload-center">
+                <button class="btn btn-primary" type="button">Choose a file</button>
+                <p>or drag it here</p>
               </div>
+              <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple>
             </div>
           </div>
         </div>
+      </div>
 
-        <div *ngFor="let media of data.items">
+      <div class="row no-gutters media-grid">
+        <div *ngFor="let media of data.items" class="col-xl-2 col-sm-4 col-6">
           <div class="media-container" (click)="selectMedia(media)">
             <ng-container *ngIf="isImage(media.mimeType); else noImage">
               <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + media.thumb + ')'}"></div>
@@ -49,7 +49,9 @@
       <kiwi-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [currentPage]="currentPage" (pageChanged)="onPage($event)"></kiwi-pagination>
     </ng-container>
     <ng-template #isLoading>
-      <kiwi-loading class="big-center"></kiwi-loading>
+      <div class="p-3">
+        <kiwi-loading class="big-center"></kiwi-loading>
+      </div>
     </ng-template>
   </div>
 </div>

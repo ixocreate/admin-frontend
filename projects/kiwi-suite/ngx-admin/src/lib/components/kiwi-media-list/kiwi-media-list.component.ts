@@ -15,7 +15,7 @@ export class KiwiMediaListComponent implements OnInit {
   uploader: FileUploader;
   resourceKey = 'media';
   filterValue = '';
-  itemsPerPage = 20;
+  itemsPerPage = 18;
   currentPage = 1;
   totalItems = 0;
 
