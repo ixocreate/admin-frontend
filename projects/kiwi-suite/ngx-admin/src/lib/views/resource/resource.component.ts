@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
+import { PageTitleService } from '../../services/page-title.service';
 
 @Component({
   templateUrl: './resource.component.html',
@@ -11,7 +12,7 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
   dataUrl: string;
   resourceKey: string;
 
-  constructor(protected route: ActivatedRoute, private config: ConfigService) {
+  constructor(protected route: ActivatedRoute, private config: ConfigService, private pageTitle: PageTitleService) {
     super();
   }
 
@@ -21,4 +22,9 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
       this.dataUrl = this.config.appConfig.routes.resourceIndex.replace('{resource}', params.type);
     });
   }
+
+  onUpdatedData(data) {
+    this.pageTitle.setPageTitle([{search: '{resource}', replace: data.label}]);
+  }
+
 }

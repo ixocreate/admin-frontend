@@ -5,11 +5,12 @@ import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class KiwiBreadcrumbService {
-  breadcrumbs: Observable<Array<Object>>;
-  private _breadcrumbs: BehaviorSubject<Array<Object>>;
+  currentBreadcrumbs: Array<any>;
+  breadcrumbs: Observable<Array<any>>;
+  private _breadcrumbs: BehaviorSubject<Array<any>>;
 
   constructor(private router: Router, private route: ActivatedRoute) {
-    this._breadcrumbs = new BehaviorSubject<Object[]>([]);
+    this._breadcrumbs = new BehaviorSubject<any[]>([]);
     this.breadcrumbs = this._breadcrumbs.asObservable();
 
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event) => {
@@ -36,8 +37,22 @@ export class KiwiBreadcrumbService {
           }
         });
       } while (currentRoute);
-      this._breadcrumbs.next(Object.assign([], breadcrumbs));
+      this.currentBreadcrumbs = breadcrumbs;
+      this.updateBreadCrumbs();
       return breadcrumbs;
     });
+  }
+
+  updateBreadCrumbs(replaceData: Array<{ search: string, replace: string }> = []) {
+    if (!this.currentBreadcrumbs) {
+      return;
+    }
+    const breadcrumbs = JSON.parse(JSON.stringify(this.currentBreadcrumbs));
+    for (const breadcrumb of breadcrumbs) {
+      for (const value of replaceData) {
+        breadcrumb.label.title = breadcrumb.label.title.replace(value.search, value.replace);
+      }
+    }
+    this._breadcrumbs.next(breadcrumbs);
   }
 }

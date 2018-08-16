@@ -89,7 +89,7 @@ export const routes: Routes = [
       },
       {
         path: 'resource/:type',
-        data: {title: 'Resource'},
+        data: {title: '{resource}'},
         children: [
           {
             path: '',

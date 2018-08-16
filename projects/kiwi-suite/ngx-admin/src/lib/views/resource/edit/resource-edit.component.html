@@ -2,7 +2,7 @@
   <ng-template #headerButtons>
     <ng-container *ngIf="showButton">
       <button class="btn btn-primary" (click)="onSubmit()" [disabled]="false && !form.valid">
-        <i class="fa fa-save"></i> Save
+        <i class="fa fa-save"></i> Update
       </button>
       <button class="btn btn-danger" (click)="doDelete()">
         <i class="fa fa-trash"></i>
@@ -13,7 +13,7 @@
   <ng-container *ngIf="data$ | async as data">
     <div class="card card-accent-primary">
       <div class="card-header custom-card-header">
-        <h6 class="m-0 text-center text-sm-left">Edit a <b>{{ data.label }}</b></h6>
+        <h6 class="m-0 text-center text-sm-left">Edit <b>{{ data.label }}</b></h6>
       </div>
       <div class="card-body">
         <ng-container *ngIf="data && form && fields; else isLoading">

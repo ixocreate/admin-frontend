@@ -4,6 +4,6 @@
   </ng-template>
 
   <ng-container *ngIf="dataUrl">
-    <kiwi-datatable [apiUrl]="dataUrl"></kiwi-datatable>
+    <kiwi-datatable [apiUrl]="dataUrl" (updatedData)="onUpdatedData($event)"></kiwi-datatable>
   </ng-container>
 </kiwi-content>

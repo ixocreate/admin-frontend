@@ -143,6 +143,7 @@ export class KiwiDatatableComponent implements OnInit {
 
       if (data.items) {
         this.data = {
+          label: data.label,
           count: data.meta.count,
           limit: this.limit,
           offset: params.offset,
@@ -154,6 +155,7 @@ export class KiwiDatatableComponent implements OnInit {
       } else {
         // TODO: Update
         this.data = {
+          label: '',
           count: 1000,
           limit: this.limit,
           offset: params.offset,

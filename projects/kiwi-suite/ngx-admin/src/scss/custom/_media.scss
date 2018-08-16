@@ -31,8 +31,8 @@
   .btn-media-remove {
     position: absolute;
     z-index: 1;
-    right: 0;
-    top: 0;
+    right: -1px;
+    top: -1px;
     border: 0;
     background: $border-color;
     color: #fff;

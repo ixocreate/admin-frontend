@@ -6,6 +6,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
+import { PageTitleService } from '../../../services/page-title.service';
 
 @Component({
   templateUrl: './resource-create.component.html',
@@ -24,6 +25,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
               protected router: Router,
               protected appData: AppDataService,
               protected notification: NotificationService,
+              protected pageTitle: PageTitleService,
               protected schemaTransformService: SchemaTransformService) {
     super();
   }
@@ -36,6 +38,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
         data.schema = this.schemaTransformService.transformForm(data.schema);
         this.fields = data.schema ? data.schema : [];
         setTimeout(() => this.showButton = true);
+        this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceName}]);
         return data;
       });
     });
