@@ -220,6 +220,7 @@ export class SchemaTransformService {
         label: value.label,
         placeholder: value.label,
         required: value.required,
+        rows: 3,
       },
     };
   }

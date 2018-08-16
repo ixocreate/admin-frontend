@@ -6,6 +6,10 @@
   }
 }
 
+.media-container-max-width-container {
+  max-width: 160px;
+}
+
 .media-container {
   display: block;
   position: relative;
@@ -21,6 +25,29 @@
     .media-image-title {
       color: #fff;
       background: $primary;
+    }
+  }
+
+  .btn-media-remove {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    border: 0;
+    background: $border-color;
+    color: #fff;
+    @include border-radius(0 0 0 $border-radius);
+    width: 25px;
+    height: 25px;
+    text-align: center;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:hover {
+      background: $danger;
     }
   }
 

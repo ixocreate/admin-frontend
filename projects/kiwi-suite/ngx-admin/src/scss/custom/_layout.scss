@@ -147,6 +147,16 @@
   }
 }
 
+.modal-dialog.modal-empty {
+  .modal-content {
+    background: transparent;
+
+    .card {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .modal-content {
   border: 0;
 

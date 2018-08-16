@@ -45,6 +45,8 @@ import { ResourceComponent } from './views/resource/resource.component';
 import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
 import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
 import { KiwiConfirmModalComponent } from './components/kiwi-confirm-modal/kiwi-confirm-modal.component';
+import { KIWI_BOOTSTRAP_FORMLY_CONFIG, FIELD_TYPE_COMPONENTS } from './forms/bootstrap.config';
+import { ClickStopPropagation } from './directives/click-stop-propagation.directive';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -66,6 +68,7 @@ const APP_COMPONENTS = [
   KiwiMediaListComponent,
   KiwiPaginationComponent,
   PermissionDirective,
+  ClickStopPropagation,
 
   // Views
   AdminComponent,
@@ -132,11 +135,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
-    FormlyModule.forRoot({
-      validationMessages: [
-        {name: 'required', message: 'This field is required'},
-      ],
-    }),
+    FormlyModule.forRoot(KIWI_BOOTSTRAP_FORMLY_CONFIG),
     FormlyBootstrapModule,
     FileUploadModule,
 
@@ -170,6 +169,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
     ...APP_ENTRY_COMPONENTS,
+    ...FIELD_TYPE_COMPONENTS,
   ],
   entryComponents: [
     ...APP_ENTRY_COMPONENTS,

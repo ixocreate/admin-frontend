@@ -4,6 +4,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { ConfigService } from '../../services/config.service';
 import { Media } from '../../interfaces/media.interface';
 import { AppDataService } from '../../services/data/app-data.service';
+import { MediaHelper } from '../../helpers/media.helper';
 
 @Component({
   selector: 'kiwi-media-list',
@@ -58,28 +59,15 @@ export class KiwiMediaListComponent implements OnInit {
   }
 
   isImage(mimeType: string): boolean {
-    if (!mimeType || mimeType.length < 6) {
-      return false;
-    }
-    return mimeType.substr(0, 6) === 'image/';
+    return MediaHelper.isImage(mimeType);
   }
 
   isSVG(mimeType: string): boolean {
-    if (!mimeType || mimeType.length < 6) {
-      return false;
-    }
-    return mimeType.indexOf('svg') !== -1;
+    return MediaHelper.isSVG(mimeType);
   }
 
   mimeTypeIcon(mimeType: string): string {
-    let icon = 'fa-file';
-    if (mimeType.indexOf('pdf') > -1) {
-      icon = 'fa-file-pdf-o';
-    }
-    if (mimeType.indexOf('image') > -1) {
-      icon = 'fa-file-image-o';
-    }
-    return icon;
+    return MediaHelper.mimeTypeIcon(mimeType);
   }
 
   applyFilter() {
