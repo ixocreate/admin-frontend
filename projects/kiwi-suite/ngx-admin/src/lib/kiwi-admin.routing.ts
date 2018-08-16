@@ -11,6 +11,7 @@ import { TranslationEditComponent } from './views/translation/edit/translation-e
 import { PermissionGuard } from './guards/permission.guard';
 import { MediaComponent } from './views/media/media.component';
 import { ResourceComponent } from './views/resource/resource.component';
+import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
 
 export const routes: Routes = [
   {
@@ -93,6 +94,11 @@ export const routes: Routes = [
             path: '',
             component: ResourceComponent,
             data: {title: null},
+          },
+          {
+            path: 'create',
+            component: ResourceCreateComponent,
+            data: {title: 'Create'},
           },
           /*
           {

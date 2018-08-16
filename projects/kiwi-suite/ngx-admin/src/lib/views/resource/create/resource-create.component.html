@@ -1,0 +1,65 @@
+<kiwi-content>
+  <ng-template #headerButtons>
+    <button class="btn btn-success" (click)="onSubmit()" [disabled]="false && !form.valid" *ngIf="showButton">
+      <i class="fa fa-plus"></i> Create
+    </button>
+  </ng-template>
+
+  <ng-container *ngIf="data$ | async as data">
+    <div class="card card-accent-primary">
+      <div class="card-header custom-card-header">
+        <h6 class="m-0 text-center text-sm-left">Create a <b>{{ data.label }}</b></h6>
+      </div>
+      <div class="card-body">
+        <ng-container *ngIf="data && form && fields; else isLoading">
+          <form #f="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()" class="kiwi-form">
+            <formly-form [form]="form" [fields]="fields" [model]="data.item"></formly-form>
+          </form>
+        </ng-container>
+        <ng-template #isLoading>
+          <div class="text-center my-3 loading">
+            <kiwi-loading class="big-center"></kiwi-loading>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
+      <div class="text-right">
+        <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'"><i class="fa fa-pencil"></i> Edit</a>
+      </div>
+    </ng-template>
+  </ng-container>
+</kiwi-content>
+
+
+<!--
+<ng-container *ngIf="data$ | async as data">
+    <form [formGroup]="form"
+          (ngSubmit)="onSubmit()"
+          *ngIf="form && fields">
+        <app-content [title]="data.label">
+            <ng-template #content>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-accent-primary">
+                            <div class="card-body">
+                                <formly-form [form]="form" [fields]="fields" [model]="data.item"></formly-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template #header>
+                <div class="btn-group btn-group-sm pull-right">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-fw fa-save"></i>
+                        <span>Create</span>
+                    </button>
+                </div>
+            </ng-template>
+        </app-content>
+    </form>
+</ng-container>
+-->

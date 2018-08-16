@@ -129,7 +129,12 @@ export class KiwiDatatableComponent implements OnInit {
       }
 
       if (this.hostColumns.length === 0 && data.schema) {
-        const columns = data.schema.elements;
+        const columns = data.schema.elements.map((element) => {
+          return {
+            name: element.label,
+            prop: element.name,
+          };
+        });
         columns.push({
           cellTemplate: this.buttonColumnTemplate,
         });

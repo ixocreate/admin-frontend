@@ -6,6 +6,7 @@ import { NotificationService } from './notification.service';
 import { AppDataService } from './data/app-data.service';
 import { AccountDataService } from './data/account-data.service';
 import { LocalStorageService } from './local-storage.service';
+import { SchemaTransformService } from './schema-transform.service';
 
 @NgModule({
   imports: [],
@@ -22,6 +23,7 @@ export class ServiceModule {
         ConfigService,
         NotificationService,
         LocalStorageService,
+        SchemaTransformService,
 
         AppDataService,
         AccountDataService,

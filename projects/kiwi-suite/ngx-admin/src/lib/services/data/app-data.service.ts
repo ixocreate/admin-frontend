@@ -76,8 +76,8 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data);
   }
 
-  createResourceDetail(resource: string, id: string, data: any) {
-    return this.api.post(this.config.appConfig.routes.resourceCreateDetail.replace('{resource}', resource).replace('{id}', id), data);
+  createResourceDetail(resource: string) {
+    return this.api.get(this.config.appConfig.routes.resourceCreateDetail.replace('{resource}', resource));
   }
 
   updateResource(resource: string, id: string, data: any) {
