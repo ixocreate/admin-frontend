@@ -138,6 +138,12 @@
     font-size: .9em;
   }
 
+  .custom-control-label {
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+  }
+
   .form-group {
     margin-bottom: .5rem;
   }
