@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpXsrfTokenExtractor } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, publishLast, refCount, retryWhen, timeout } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { genericRetryStrategy } from './generic-retry-strategy';
 import { _throw } from 'rxjs/observable/throw';
-import { tap } from 'rxjs/internal/operators';
 
 export enum ApiRequestMethod {
   GET = 'get',

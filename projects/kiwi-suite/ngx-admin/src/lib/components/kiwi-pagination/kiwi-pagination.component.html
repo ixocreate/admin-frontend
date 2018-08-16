@@ -4,7 +4,8 @@
       {{ totalItems.toLocaleString() }} Items
     </div>
     <div class="col-sm text-right">
-      <pagination previousText="<" nextText=">" [maxSize]="5" [rotate]="true" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [ngModel]="currentPage" (pageChanged)="onPage($event)"></pagination>
+      <pagination previousText="<" nextText=">" [maxSize]="5" [rotate]="true" [itemsPerPage]="itemsPerPage"
+                  [totalItems]="totalItems" [ngModel]="currentPage" (pageChanged)="onPage($event)"></pagination>
     </div>
   </div>
 </div>

@@ -52,7 +52,9 @@
 </div>
 
 <app-footer>
-  <div><b>{{ config.appConfig.project.name }}</b> / &copy; {{ config.appConfig.project.copyright }} {{ config.appConfig.project.author }}.</div>
+  <div><b>{{ config.appConfig.project.name }}</b> / &copy; {{ config.appConfig.project.copyright }} {{
+    config.appConfig.project.author }}.
+  </div>
   <div *ngIf="config.appConfig.project.poweredBy" class="ml-auto text-muted">
     powered by <a href="https://github.com/kiwi-suite/kiwi" target="_blank">kiwi</a>
   </div>

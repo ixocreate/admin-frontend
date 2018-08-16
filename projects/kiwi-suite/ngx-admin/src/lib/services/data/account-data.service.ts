@@ -1,9 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DataServiceAbstract } from './data.service.abstract';
 import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
-import { AppDataService } from './app-data.service';
 import { DefaultStore } from '../../store/default.store';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../interfaces/user.interface';

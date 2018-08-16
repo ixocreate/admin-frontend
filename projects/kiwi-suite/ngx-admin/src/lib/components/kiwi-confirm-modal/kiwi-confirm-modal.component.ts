@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, } from '@angular/core';
+import { Component, } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 
 @Component({
@@ -16,7 +16,8 @@ export class KiwiConfirmModalComponent {
   confirmBtnTitle = 'Delete';
   cancelBtnTitle = 'Cancel';
 
-  onConfirm = () => {};
+  onConfirm = () => {
+  };
 
   constructor(public bsModalRef: BsModalRef) {
   }

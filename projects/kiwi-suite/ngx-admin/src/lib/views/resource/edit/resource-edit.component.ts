@@ -68,7 +68,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
           this.notification.success('Data successfully deleted', 'Success');
           this.router.navigateByUrl('/resource/' + this.resourceKey);
         }).catch((error) => this.notification.apiError(error));
-      }
+      },
     };
     this.modalService.show(KiwiConfirmModalComponent, {initialState});
   }

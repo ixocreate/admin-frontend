@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, ContentChild, ElementRef, HostListener, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { AccountDataService } from '../../services/data/account-data.service';
-import { AppDataService } from '../../services/data/app-data.service';
 import { KiwiContentComponent } from '../../components/kiwi-content/kiwi-content.component';
 import { ConfigService } from '../../services/config.service';
 

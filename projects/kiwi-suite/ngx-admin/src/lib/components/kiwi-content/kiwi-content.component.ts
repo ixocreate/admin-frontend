@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, ElementRef, HostListener, TemplateRef, ViewChild, } from '@angular/core';
+import { Component, ContentChild, TemplateRef, } from '@angular/core';
 
 @Component({
   selector: 'kiwi-content',

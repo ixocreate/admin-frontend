@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { APIErrorElement } from './api.service';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { FormlyConfig } from '@ngx-formly/core';
 
 @Injectable()
