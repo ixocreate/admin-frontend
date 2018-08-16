@@ -49,8 +49,6 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
   }
 
   onSubmit(): void {
-    console.log(this.form.getRawValue());
-    /*
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
@@ -59,7 +57,6 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
         this.router.navigateByUrl('../' + response.id + '/edit');
       }).catch((error) => this.notification.apiError(error));
     }
-    */
   }
 
   doDelete(): void {
