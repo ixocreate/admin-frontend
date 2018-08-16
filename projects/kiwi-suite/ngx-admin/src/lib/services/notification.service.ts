@@ -35,8 +35,6 @@ export class NotificationService {
   }
 
   formErrors(form: FormGroup) {
-    console.log(form);
-    console.log(this.formlyConfig.messages);
     const errors: Array<string> = [];
     Object.keys(form.controls).forEach(key => {
       const control: AbstractControl = form.get(key);
@@ -48,7 +46,6 @@ export class NotificationService {
         });
       }
     });
-    console.log(errors);
     return this.error(errors.join('<br/>'), 'Form Error');
   }
 

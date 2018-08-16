@@ -94,7 +94,6 @@ export class KiwiMediaListComponent implements OnInit {
 
   onPage(event) {
     if (this.currentPage !== event.page) {
-      console.log(event);
       this.currentPage = event.page;
       this.updateMedia();
     }

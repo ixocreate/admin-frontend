@@ -9,6 +9,7 @@ import { ViewAbstractComponent } from '../../components/view.abstract.component'
 export class ResourceComponent extends ViewAbstractComponent implements OnInit {
 
   dataUrl: string;
+  resourceKey: string;
 
   constructor(protected route: ActivatedRoute, private config: ConfigService) {
     super();
@@ -16,6 +17,7 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      this.resourceKey = params.type;
       this.dataUrl = this.config.appConfig.routes.resourceIndex.replace('{resource}', params.type);
     });
   }

@@ -22,44 +22,9 @@
           </div>
         </ng-template>
       </div>
-    </div>
-
-    <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
-      <div class="text-right">
-        <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'"><i class="fa fa-pencil"></i> Edit</a>
+      <div class="card-footer text-muted">
+        * Required Field
       </div>
-    </ng-template>
+    </div>
   </ng-container>
 </kiwi-content>
-
-
-<!--
-<ng-container *ngIf="data$ | async as data">
-    <form [formGroup]="form"
-          (ngSubmit)="onSubmit()"
-          *ngIf="form && fields">
-        <app-content [title]="data.label">
-            <ng-template #content>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card card-accent-primary">
-                            <div class="card-body">
-                                <formly-form [form]="form" [fields]="fields" [model]="data.item"></formly-form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ng-template>
-
-            <ng-template #header>
-                <div class="btn-group btn-group-sm pull-right">
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        <i class="fa fa-fw fa-save"></i>
-                        <span>Create</span>
-                    </button>
-                </div>
-            </ng-template>
-        </app-content>
-    </form>
-</ng-container>
--->
