@@ -1,19 +1,11 @@
-import { Component, forwardRef, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
 import { MediaHelper } from '../../helpers/media.helper';
 import { Media } from '../../interfaces/media.interface';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'formly-field-media',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormlyFieldMediaComponent),
-      multi: true,
-    },
-  ],
   template: `
     <div class="media-container-max-width-container">
       <div class="media-container media-container-max-width" (click)="openModal(modalTemplate)">
@@ -68,14 +60,12 @@ export class FormlyFieldMediaComponent extends FieldType implements OnInit {
     this.formControl.setValue(media);
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {
-      class: 'modal-lg modal-empty',
-    });
-  }
-
   remove() {
     this.setValue(null);
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg modal-empty'});
   }
 
   onSelect(media: Media) {
