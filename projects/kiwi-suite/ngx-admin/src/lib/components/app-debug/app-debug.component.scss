@@ -1,0 +1,41 @@
+#debug {
+    z-index: 99999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(235, 235, 235, 0.8);
+    font-size: 0.9em;
+    //font-weight: bold;
+    //height: 50px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0;
+    padding: 5px 10px;
+
+    .bg-light-transparent {
+        color: #000;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+    }
+
+    &:after {
+        content: " ";
+        position: absolute;
+        background: url('../../assets/img/kiwi-logo.svg') top center  no-repeat;
+        top: 5px;
+        left: 50%;
+        margin-left: -60px;
+        width: 120px;
+        height: 80px;
+    }
+
+    .lead {
+        line-height: 1em;
+    }
+
+    pre {
+        margin-bottom: 0;
+    }
+}

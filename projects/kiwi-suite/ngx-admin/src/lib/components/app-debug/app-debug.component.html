@@ -1,0 +1,66 @@
+<div id="debug" *ngIf="show">
+    <button class="btn btn-dark btn-lg pull-right" type="button" (click)="toggle()">
+        <strong style="line-height: 1em">
+            &times;
+        </strong>
+    </button>
+    <div class="mb-3 btn-group-lg">
+        <!--<button type="button" (click)="sessionReady(true)">Session Ready</button>-->
+        <!--<button type="button" (click)="sessionReady(false)">Session Not Ready</button>-->
+        <!--<button type="button" (click)="configReady(true)">Config Ready</button>-->
+        <!--<button type="button" (click)="configReady(false)">Config Not Ready</button>-->
+        <!--<button type="button" (click)="loadSession()">Load Session</button>-->
+        <button class="btn btn-success" type="button" (click)="loadConfig()">Reload Config</button>
+        <button class="btn btn-success" type="button" (click)="loadUser()">Reload User</button>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="bg-light-transparent mb-3" *ngIf="(config$ | async) as config">
+                <p class="lead">Project</p>
+                <pre>{{ config.project | json }}</pre>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-light-transparent mb-3" *ngIf="(user$ | async) as user">
+                <p class="lead">User</p>
+                <pre>{{ user | json }}</pre>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-light-transparent mb-3">
+                <p class="lead">Session</p>
+                <pre *ngIf="(session$ | async) as session">Ready</pre>
+                <pre *ngIf="!(session$ | async) as session">Not Ready</pre>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="bg-light-transparent mb-3" *ngIf="(routes$ | async) as routes">
+                <p class="lead">Routes</p>
+                <pre>{{ routes | json }}</pre>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-light-transparent mb-3" *ngIf="(config$ | async) as config">
+                <p class="lead">Navigation</p>
+                <pre>{{ config.navigation | json }}</pre>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-light-transparent mb-3" *ngIf="dataStoreServices">
+                <p class="lead">Registered Data Services</p>
+                <pre>{{ dataStoreServices | json }}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="bg-light-transparent mb-3" *ngIf="(config$ | async) as config">
+                <p class="lead">Default Locale: <b>{{ config.intl.default }}</b></p>
+                <p class="lead">Locales</p>
+                <pre>{{ config.intl.locales | json }}</pre>
+            </div>
+        </div>
+    </div>
+</div>

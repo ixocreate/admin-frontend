@@ -1,0 +1,70 @@
+<ng-container *ngIf="data$ | async as data">
+    <ngx-datatable
+            class="bootstrap expandable"
+            #dataTable
+            [rows]="data.items"
+            [loadingIndicator]="loadingIndicator"
+            [columnMode]="'force'"
+            [rowHeight]="'auto'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="limit"
+            [reorderable]="reorderable">
+        <!--(page)="onPage($event)"-->
+
+        <ngx-datatable-column prop="name" name="Name">
+            <ng-template let-column="column" ngx-datatable-header-template>
+                    <span class="">
+                        Name
+                    </span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span class="">
+                        <ng-container *ngIf="row.pages[locale] && row.pages[locale].name">
+                            <span class="fa fa-fw fa-power-off" [ngClass]="{'text-danger': row.pages[locale].status === 'offline', 'text-success': row.pages[locale].status === 'online'}"></span>
+                            <ng-container *ngIf="row.pages[locale].publishedFrom !== null || row.pages[locale].publishedUntil !== null">
+                                <span class="fa fa-fw fa-clock-o"></span>
+                            </ng-container>
+                            <ng-container *ngIf="row.pages[locale].publishedFrom === null && row.pages[locale].publishedUntil === null">
+                                <span class="fa fa-fw fa-clock-o text-secondary"></span>
+                            </ng-container>
+                            {{ row.pages[locale].name }}
+                        </ng-container>
+                        <ng-container *ngIf="!row.pages[locale] || !row.pages[locale].name ">
+                            <span class="fa fa-fw fa-power-off text-danger"></span>
+                            <span class="fa fa-fw fa-clock-o text-secondary"></span>
+                            <small *ngFor="let locale of objectKeys(row.pages)"
+                                   style="text-decoration: line-through;">
+                                <ng-container *ngIf="row.pages[locale].name">
+                                    [{{ row.pages[locale].name }}]
+                                </ng-container>
+                            </small>
+                        </ng-container>
+                    </span>
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="id"
+                              [resizeable]="false">
+            <ng-template let-column="column" ngx-datatable-header-template>
+
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <div class="text-right">
+                    <a class="btn btn-sm btn-primary"
+                       [routerLink]="[row.pages[locale].id, 'edit']"
+                       *ngIf="row.pages[locale]">
+                        <i class="fa fa-fw fa-pencil"></i>
+                    </a>
+
+                    <a class="btn btn-sm btn-warning"
+                       [routerLink]="['add', locale, row.sitemap.id]"
+                       *ngIf="!row.pages[locale]">
+                        <i class="fa fa-fw fa-pencil"></i>
+                    </a>
+                </div>
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+
+</ng-container>

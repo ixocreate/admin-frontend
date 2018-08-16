@@ -1,0 +1,85 @@
+<div class="background" *ngIf="config$ | async as config"
+     [ngStyle]="{backgroundImage: 'url('+config.background+')'}">
+</div>
+<div class="app flex-row align-items-center" *ngIf="ready$ | async">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <h1>Login</h1>
+                            <p class="text-muted">Sign In to your account</p>
+                            <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+                                <alert type="danger" *ngIf="showError === true">
+                                    <strong>Login failed!</strong> Invalid credentials.
+                                </alert>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon-envelope"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-label-group">
+                                        <input formControlName="email" id="email" type="email" class="form-control"
+                                               placeholder="Email Address" autocomplete="email"
+                                               [ngClass]="{'is-invalid': form.get('email').invalid && form.get('email').dirty}"
+                                               (keyup)="showError = false"
+                                               required>
+                                        <label for="email">Email Address</label>
+                                    </div>
+                                    <div class="invalid-feedback ml-5"
+                                         *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)">
+                                        <div *ngIf="form.get('email').errors.required">
+                                            Email is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon-lock"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-label-group">
+                                        <input formControlName="password" id="password" type="password"
+                                               class="form-control"
+                                               placeholder="Password" autocomplete="current-password"
+                                               (keyup)="showError = false"
+                                               [ngClass]="{'is-invalid': form.get('password').invalid && form.get('password').dirty}">
+                                        <label for="password">Password</label>
+                                    </div>
+                                    <!--<div class="invalid-feedback ml-5"-->
+                                    <!--*ngIf="form.get('password').invalid && (form.get('password').dirty || form.get('password').touched)">-->
+                                    <!--<div *ngIf="form.get('password').errors.required">-->
+                                    <!--Password is required.-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary px-4">
+                                            Login
+                                        </button>
+                                    </div>
+                                    <!--
+                                    <div class="col-6 text-right">
+                                        <a routerLink="/auth/reset" class="btn btn-link px-0">Forgot password?</a>
+                                    </div>
+                                    -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card p-4 d-none d-lg-block">
+                        <div class="card-body text-center h-100 d-flex flex-column justify-content-center">
+                            <div *ngIf="(config$ | async) as config">
+                                <img class="img-fluid" *ngIf="config.logo" [src]="config.logo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

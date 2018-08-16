@@ -1,0 +1,41 @@
+<ng-container *ngIf="data$ | async as data">
+    <div class="row" *ngIf="locales.length > 1">
+        <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 offset-md-9 offset-lg-9">
+            <ng-select [items]="locales"
+                       bindLabel="name"
+                       bindValue="locale"
+                       [(ngModel)]="selectedLocale"
+                       [clearable]="false"
+                       (change)="onChangeLocale($event)"></ng-select>
+        </div>
+    </div>
+    <ng-container *ngIf="data.items.length === 0">
+        No Pages
+    </ng-container>
+    <div [ngClass]="{'drag-enabeled': dragPageTypes.length > 0}" *ngIf="data.items.length > 0">
+        <sitemap-list-container [model]="data.items"
+                                (drop)="drop($event, modal)"
+                                (drag)="drag($event)"
+                                (cancel)="cancel($event)"
+                                [dragPageType]="dragPageType$"
+                                [dropZones]="dragPageTypes"
+                                [locale]="selectedLocale">
+        </sitemap-list-container>
+    </div>
+</ng-container>
+
+<ng-template #modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Sort</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        You really want to change the sitemap sorting?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sort()">Save sorting</button>
+        <button type="button" class="btn btn-secondary" (click)="dismiss()">Dismiss sorting</button>
+    </div>
+</ng-template>

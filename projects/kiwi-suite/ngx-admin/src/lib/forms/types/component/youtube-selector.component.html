@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-3" *ngIf="youTubeKey">
+        <div class="d-block mb-4 h-100">
+            <div class="media-container">
+                <div class="media-image"
+                     [ngStyle]="{backgroundImage: 'url(https://img.youtube.com/vi/' + youTubeKey + '/sddefault.jpg)'}"></div>
+                <div class="media-image-title p-1 text-nowrap text-truncate">
+                    <a (click)="remove()"><span class="fa fa-close"></span></a>&nbsp;<a [href]="'https://www.youtube.com/watch?v=' + youTubeKey" target="_blank"><span class="fa fa-youtube"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" *ngIf="!youTubeKey">
+        <div class="d-block">
+            <input type="text" class="form-control" placeholder="Please enter a YouTube Link" (keyup)="onKey($event)">
+        </div>
+    </div>
+</div>

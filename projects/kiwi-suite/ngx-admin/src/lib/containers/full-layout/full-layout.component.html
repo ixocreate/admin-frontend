@@ -1,0 +1,58 @@
+<ng-container *ngIf="config$ | async as config">
+    <app-header
+            [fixed]="true"
+            [asideMenuToggler]="false"
+            [sidebarToggler]="'lg'"
+            [navbarBrandFull]="{src: config.project.logo, alt: config.project.name}"
+            [navbarBrandMinimized]="{src: config.project.icon, alt: config.project.name}"
+    >
+        <ul class="nav navbar-nav ml-auto">
+            <!--
+            <li class="nav-item" *ngIf="loading$ | async">
+            <span class="nav-link">
+                <span class="img-avatar">
+                    <span class="fa fa-2x fa-spin fa-circle-o-notch"></span>
+                </span>
+            </span>
+            </li>
+            -->
+            <li class="nav-item dropdown" dropdown placement="bottom right" *ngIf="user$ | async as user">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+                   dropdownToggle (click)="false">
+                    <img [src]="sanitizeUrl(user.avatar)"
+                         class="img-avatar" alt="{{ user.email }}">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                    <div class="dropdown-header text-center">
+                        <strong>Settings</strong>
+                    </div>
+                    <button class="dropdown-item" routerLink="/account" type="button">
+                        <i class="fa fa-user"></i> Account
+                    </button>
+                    <button class="dropdown-item" (click)="logout()" type="button">
+                        <i class="fa fa-lock"></i> Logout
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </app-header>
+    <div class="app-body">
+        <app-sidebar [fixed]="true" [display]="'lg'">
+            <app-sidebar-nav [navItems]="navigation" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+            <app-sidebar-minimizer></app-sidebar-minimizer>
+        </app-sidebar>
+        <div class="main-container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <app-footer>
+        <span>
+            {{ config.project.name }} &copy; {{ config.project.copyright }} {{ config.project.author }}.
+        </span>
+        <span *ngIf="config.project.poweredBy" class="ml-auto">
+            Powered by <a href="https://github.com/kiwi-suite/kiwi" target="_blank">kiwi</a>
+        </span>
+    </app-footer>
+</ng-container>
+
+

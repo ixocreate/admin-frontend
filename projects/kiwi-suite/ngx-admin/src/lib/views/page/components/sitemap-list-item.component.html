@@ -1,0 +1,116 @@
+<ng-container [ngSwitch]="type">
+
+    <ng-container *ngSwitchCase="'array'">
+        <sitemap-list-container
+                [model]="model"
+                [template]="container.template"
+                [dropZone]="internalDropZone"
+                [dropZones]="dropZones"
+                [removeOnSpill]="removeOnSpill"
+                [droppableItemClass]="droppableItemClass"
+                [copy]="copy"
+                [locale]="locale"
+                [dragPageType]="dragPageType$"
+                (cancel)="onCancel($event)"
+                (drag)="onDrag($event)"
+                (drop)="onDrop($event)">
+        </sitemap-list-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'object'">
+        <ng-template
+                *ngIf="container.template"
+                [ngTemplateOutlet]="container.template"
+                [ngTemplateOutletContext]="data">
+        </ng-template>
+        <ng-container *ngIf="!container.template">
+            <div class="sitemap-container d-flex mb-2">
+                <div class="btn btn-sm btn-outline-secondary px-2 d-flex flex-column justify-content-center" ngxDragHandle>
+                    <i class="fa fa-fw fa-bars text-muted"></i>
+                </div>
+                <div class="sitemap-label flex-grow-1 py-2 px-3">
+                    <div>
+                        <ng-container *ngIf="model.children.length > 0">
+                            <a (click)="collapse = !collapse"><span class="fa fa-fw" [ngClass]="{'fa-chevron-down': !collapse, 'fa-chevron-right': collapse}"></span></a>
+                        </ng-container>
+                        <ng-container *ngIf="model.children.length === 0">
+                            <span class="fa fa-fw fa-minus text-secondary"></span>
+                        </ng-container>
+                        <ng-container *ngIf="model.pages[locale] && model.pages[locale].name">
+                            <span class="fa fa-fw fa-power-off" [ngClass]="{'text-danger': model.pages[locale].status === 'offline', 'text-success': model.pages[locale].status === 'online'}"></span>
+                            <ng-container *ngIf="model.pages[locale].publishedFrom !== null || model.pages[locale].publishedUntil !== null">
+                                <span class="fa fa-fw fa-clock-o"></span>
+                            </ng-container>
+                            <ng-container *ngIf="model.pages[locale].publishedFrom === null && model.pages[locale].publishedUntil === null">
+                                <span class="fa fa-fw fa-clock-o text-secondary"></span>
+                            </ng-container>
+                            {{ model.pages[locale].name }}
+                        </ng-container>
+                        <ng-container *ngIf="!model.pages[locale] || !model.pages[locale].name ">
+                            <span class="fa fa-fw fa-power-off text-danger"></span>
+                            <span class="fa fa-fw fa-clock-o text-secondary"></span>
+                            <small *ngFor="let locale of objectKeys(model.pages)"
+                                   style="text-decoration: line-through;">
+                                <ng-container *ngIf="model.pages[locale].name">
+                                    [{{ model.pages[locale].name }}]
+                                </ng-container>
+                            </small>
+                        </ng-container>
+                    </div>
+                </div>
+                <a class="btn btn-sm btn-success p-2 d-flex flex-column justify-content-center" *ngIf="model.pageType.allowedChildren.length > 0"
+                        [routerLink]="['create', locale, model.sitemap.id]">
+                    <i class="fa fa-fw fa-plus"></i>
+                </a>
+
+                <!--{{ model | json }}-->
+
+                <a class="btn btn-sm btn-primary p-2 d-flex flex-column justify-content-center"
+                        [routerLink]="[model.pages[locale].id, 'edit']"
+                        *ngIf="model.pages[locale]">
+                    <i class="fa fa-fw fa-pencil"></i>
+                </a>
+
+                <a class="btn btn-sm btn-warning p-2 d-flex flex-column justify-content-center"
+                   [routerLink]="['add', locale, model.sitemap.id]"
+                   *ngIf="!model.pages[locale]">
+                    <i class="fa fa-fw fa-pencil"></i>
+                </a>
+            </div>
+            <ng-container *ngIf="!collapse">
+                <sitemap-list-container
+                        *ngIf="model.children"
+                        [model]="model.children"
+                        [template]="container.template"
+                        [dropZone]="internalDropZone"
+                        [dropZones]="dropZones"
+                        [removeOnSpill]="removeOnSpill"
+                        [droppableItemClass]="droppableItemClass"
+                        [copy]="copy"
+                        [locale]="locale"
+                        [showDropableBox]="internalDropZone !== ''"
+                        (cancel)="onCancel($event)"
+                        (drop)="onDrop($event)"
+                        (drag)="onDrag($event)"
+                        [dragPageType]="dragPageType$"
+                >
+                </sitemap-list-container>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'undefined'">
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+        <ng-template *ngIf="container.template"
+                     [ngTemplateOutlet]="container.template"
+                     [ngTemplateOutletContext]="data">
+        </ng-template>
+        <div *ngIf="!container.template"
+             class="ngx-dnd-content">
+            {{model}}
+        </div>
+    </ng-container>
+
+</ng-container>

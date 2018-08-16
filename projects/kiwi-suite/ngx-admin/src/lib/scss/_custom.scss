@@ -1,0 +1,150 @@
+// Here you can add other styles
+
+// == background
+.ql-editor p , .ql-editor ul, .ql-editor ol{
+    margin-top: 10px;
+}
+
+p.linebreak-true {
+    margin-top: 0;
+}
+
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.7;
+  background-position: center center;
+  background-size: cover;
+}
+
+// == cards
+
+.card {
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+}
+
+// == forms
+
+input[type="color"] {
+  height: $input-height;
+  padding: 2px 4px;
+}
+
+.app-header.navbar {
+  .navbar-brand {
+    .navbar-brand-full, .navbar-brand-minimized {
+      height: 90%;
+      width: auto;
+    }
+  }
+
+}
+
+
+// == toastr
+
+.toast-bottom-right {
+  bottom: $footer-height !important;
+  right: 0 !important;
+  border-left: 1px solid $gray-300;
+  border-top: 1px solid $gray-300;
+}
+
+.toast-top-right {
+  top: $navbar-height !important;
+  right: 0 !important;
+  border-left: 1px solid $gray-300;
+  border-bottom: 1px solid $gray-300;
+}
+
+.toast-container {
+  max-width: 100% !important;
+  .toast {
+    box-shadow: none !important;
+    max-width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+
+    > * {
+        display: flex;
+        flex: 1;
+
+        > form {
+            display: flex;
+            flex: 1;
+        }
+    }
+
+    app-content {
+        display: flex;
+        flex: 1;
+    }
+
+    > router-outlet {
+        display: none;
+    }
+}
+
+[appasidemenutoggler] {
+    display: none;
+
+    .aside-menu-lg-show & {
+        display: block;
+    }
+}
+
+.page-title-container {
+    background-color: $title-container-background;
+    @include border-radius($breadcrumb-border-radius);
+    @include borders($breadcrumb-borders);
+    padding: 12px 0;
+    position: fixed;
+    top: $navbar-height;
+    right: 0;
+    left: 0;
+    z-index: $zindex-sticky - 3;
+    transition: left $layout-transition-speed, right $layout-transition-speed, width $layout-transition-speed;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+        html:not([dir="rtl"]) {
+            .sidebar#{$infix}-show {
+                @include media-breakpoint-up(sm) {
+                    .page-title-container {
+                        left: $sidebar-width;
+                    }
+                    &.sidebar-compact {
+                        .page-title-container {
+                            left: $sidebar-compact-width;
+                        }
+                    }
+                    &.sidebar-minimized {
+                        .page-title-container {
+                            left: $sidebar-minimized-width;
+                        }
+                    }
+                }
+            }
+
+            .aside-menu#{$infix}-show {
+                @include media-breakpoint-up(sm) {
+                    .page-title-container {
+                        right: $aside-menu-width;
+                    }
+                }
+            }
+        }
+    }
+}

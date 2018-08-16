@@ -1,0 +1,48 @@
+<ng-container>
+    <app-content [title]="'Account'">
+        <ng-template #content>
+            <div class="card card-accent-primary">
+                <div class="card-body">
+                    <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail(emailFormModel)" *ngIf="emailForm" novalidate>
+                        <div class="card card-accent-primary">
+                            <div class="card-header">
+                                Email
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="{{ account.email }}" readonly>
+                                </div>
+                                <formly-form [form]="emailForm" [fields]="emailFormFields" [model]="emailFormModel"></formly-form>
+
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-save"></i>
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword(passwordFormModel)" *ngIf="passwordForm" novalidate>
+                        <div class="card card-accent-primary">
+                            <div class="card-header">
+                                Password
+                            </div>
+                            <div class="card-body">
+                                <formly-form [form]="passwordForm" [fields]="passwordFormFields" [model]="passwordFormModel"></formly-form>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-save"></i>
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </ng-template>
+
+    </app-content>
+</ng-container>

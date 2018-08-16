@@ -1,0 +1,130 @@
+.sitemap-container {
+    margin-top: 10px;
+}
+
+.sitemap-label {
+    transition: opacity 0.4s ease-in-out;
+    border-top: 1px solid $gray-200;
+    border-bottom: 1px solid $gray-200;
+    background-color: lighten($primary, 49%);
+}
+
+.ngx-dnd-container {
+    margin: 0 !important;
+    padding: 0 0 0 20px !important;
+    border: none !important;
+    background-color: transparent !important;
+
+    sitemap-list > sitemap-list-container > & {
+        padding: 0 !important;
+    }
+}
+
+.sitemap-empty {
+    display: none;
+}
+.drag-enabeled {
+    .ngx-dnd-container {
+        .gu-unselectable &, &.gu-over, &.gu-over .ngx-dnd-container {
+
+        }
+
+        &.sitemap-empty {
+            display: block;
+            border: 1px dotted #4dbd74 !important;
+            margin: 0 0 5px 20px !important;
+            opacity: 0.5;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+            filter: alpha(opacity=50);
+        }
+    }
+}
+
+.ngx-dnd-container:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.ngx-dnd-container .ex-moved {
+    background-color: #e74c3c;
+}
+
+.ngx-dnd-container .ex-over {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.ngx-dnd-container .handle {
+    padding: 0 5px;
+    margin-right: 5px;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: move;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -khtml-user-select: none;
+    /* Konqueror */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE/Edge */
+    user-select: none;
+    /* non-prefixed version, currently not supported by any browser */
+}
+
+.ngx-dnd-item {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.ngx-dnd-item:not(.has-handle):not(.move-disabled),
+.ngx-dnd-item.has-handle [ngxdraghandle],
+.ngx-dnd-item.has-handle [ngxDragHandle] {
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.ngx-dnd-item .ngx-dnd-content {
+    user-select: none;
+}
+
+.ngx-dnd-item:hover {
+    border: none;
+
+    &.gu-empty {
+        border: none !important;
+    }
+}
+
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+}
+
+.gu-hide {
+    display: none !important;
+}
+
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+}

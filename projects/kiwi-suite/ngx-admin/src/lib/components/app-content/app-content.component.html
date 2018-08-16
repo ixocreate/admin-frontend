@@ -1,0 +1,21 @@
+<main class="content-container no-gutters h-100 main">
+    <div class="page-title-container" #titleContainer>
+        <div class="container-fluid h-100">
+            <div class="row align-items-center h-100">
+                <div class="col-sm-5">
+                    <h4 class="mb-2 mb-sm-0">{{ title }}</h4>
+                </div>
+                <div class="col-sm-7" *ngIf="headerContent">
+                    <ng-container *ngTemplateOutlet="headerContent"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-4" *ngIf="mainContent" [style.paddingTop]="headerHeight + 'px'">
+        <ng-container *ngTemplateOutlet="mainContent"></ng-container>
+    </div>
+</main>
+
+<app-aside *ngIf="asideContent">
+    <ng-container *ngTemplateOutlet="asideContent"></ng-container>
+</app-aside>

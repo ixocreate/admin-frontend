@@ -1,0 +1,25 @@
+#loader {
+    background-color: $body-bg;
+    background-image: url('../assets/img/kiwi-icon.svg');
+    background-position: center center;
+    background-size: 180px auto;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+        margin-top: 160px;
+        width: 160px;
+        .message {
+            font-weight: bold;
+            font-size: 80%;
+        }
+    }
+}

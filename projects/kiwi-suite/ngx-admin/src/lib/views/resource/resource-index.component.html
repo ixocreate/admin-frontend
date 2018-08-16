@@ -1,0 +1,72 @@
+<ng-container *ngIf="data$ | async as data">
+    <app-content [title]="data.label">
+        <ng-template #content>
+            <div class="card card-accent-primary">
+                <div class="card-body">
+                    <!--
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 offset-md-8 offset-lg-8">
+                            <input type="search" class="form-control form-control-sm" placeholder="Search" (keyup)="onSearch()">
+                        </div>
+                    </div>
+                    -->
+                    <ngx-datatable
+                            class="bootstrap expandable"
+                            [rows]="data.items"
+                            [columnMode]="'force'"
+                            [rowHeight]="'auto'"
+                            [footerHeight]="'auto'"
+                            [limit]="'10'"
+                            [externalSorting]="true"
+                            [externalPaging]="true"
+                            [count]="data.meta.count"
+                            [offset]="offset"
+                            (sort)="onSort($event)"
+                            [reorderable]="false">
+                        <ng-container *ngIf="data.schema.elements">
+                            <ngx-datatable-column *ngFor="let schemaColumn of data.schema.elements" [prop]="schemaColumn.name" [sortable]="schemaColumn.sortable" [draggable]="false" [resizeable]="false">
+                                <ng-template let-column="column" ngx-datatable-header-template>
+                                    {{ schemaColumn.label }}
+                                </ng-template>
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    {{ value }}
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ng-container>
+
+                        <ngx-datatable-column prop="id" [sortable]="false" [draggable]="false" [resizeable]="false">
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <div class="text-right">
+                                    <a routerLink="/{{ resourcePathPrefix }}/{{ resourceKey }}/{{ value }}/edit" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-footer>
+                            <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset">
+                                <div style="flex: 1;" *ngIf="rowCount > pageSize">
+                                    <pagination [previousText]="'<'"  [nextText]="'>'" [boundaryLinks]="false" [directionLinks]="true" [maxSize]="10" [rotate]="true" [itemsPerPage]="pageSize" [totalItems]="rowCount" [ngModel]="currentPage" (pageChanged)="onPage($event)"></pagination>
+                                </div>
+                            </ng-template>
+
+                        </ngx-datatable-footer>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #header>
+            <div class="btn-group btn-group-sm pull-right">
+                <a routerLink="/{{ resourcePathPrefix }}/{{ resourceKey }}/create"
+                   *can="['admin.api.'+resourceKey+'.create']" class="btn btn-success btn-sm">
+                    <i class="fa fa-fw fa-plus"></i> Create
+                </a>
+            </div>
+        </ng-template>
+    </app-content>
+</ng-container>
+
