@@ -12,6 +12,7 @@ import { PermissionGuard } from './guards/permission.guard';
 import { MediaComponent } from './views/media/media.component';
 import { ResourceComponent } from './views/resource/resource.component';
 import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
+import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
 
 export const routes: Routes = [
   {
@@ -99,6 +100,11 @@ export const routes: Routes = [
             path: 'create',
             component: ResourceCreateComponent,
             data: {title: 'Create'},
+          },
+          {
+            path: ':id/edit',
+            component: ResourceEditComponent,
+            data: {title: 'Edit'},
           },
           /*
           {

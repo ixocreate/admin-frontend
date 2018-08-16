@@ -146,3 +146,12 @@
     margin-bottom: 0;
   }
 }
+
+.modal-content {
+  border: 0;
+
+  .modal-header {
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+  }
+}

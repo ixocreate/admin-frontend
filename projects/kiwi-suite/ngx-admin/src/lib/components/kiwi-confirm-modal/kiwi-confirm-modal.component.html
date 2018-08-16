@@ -1,0 +1,8 @@
+<div class="modal-header bg-danger">
+  <h5 class="modal-title pull-left" [innerHtml]="title"></h5>
+</div>
+<div class="modal-body" [innerHtml]="text"></div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-{{ confirmBtnType }}" (click)="confirm()"><i class="{{ confirmBtnIcon }}"></i> {{ confirmBtnTitle }}</button>
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">{{ cancelBtnTitle }}</button>
+</div>

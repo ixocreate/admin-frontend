@@ -14,7 +14,7 @@ import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LoginComponent } from './views/auth/login/login.component';
-import { AlertModule, BsDropdownModule, PaginationModule, ProgressbarModule, TabsModule } from 'ngx-bootstrap';
+import { AlertModule, BsDropdownModule, ModalModule, PaginationModule, ProgressbarModule, TabsModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
@@ -43,6 +43,8 @@ import { PermissionDirective } from './directives/permission.directive';
 import { KiwiPaginationComponent } from './components/kiwi-pagination/kiwi-pagination.component';
 import { ResourceComponent } from './views/resource/resource.component';
 import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
+import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
+import { KiwiConfirmModalComponent } from './components/kiwi-confirm-modal/kiwi-confirm-modal.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -50,6 +52,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent,
+];
+
+const APP_ENTRY_COMPONENTS = [
+  KiwiConfirmModalComponent,
 ];
 
 const APP_COMPONENTS = [
@@ -75,6 +81,7 @@ const APP_COMPONENTS = [
 
   ResourceComponent,
   ResourceCreateComponent,
+  ResourceEditComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
@@ -138,6 +145,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     PaginationModule.forRoot(),
+    ModalModule.forRoot(),
 
     ToastrModule.forRoot({
       autoDismiss: true,
@@ -161,6 +169,10 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
   declarations: [
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
+    ...APP_ENTRY_COMPONENTS,
+  ],
+  entryComponents: [
+    ...APP_ENTRY_COMPONENTS,
   ],
   exports: [
     RouterModule,

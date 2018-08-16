@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewAbstractComponent } from '../../../components/view.abstract.component';
 import { AppDataService } from '../../../services/data/app-data.service';
-import { FormGroup, NgForm } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
@@ -12,10 +12,9 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 })
 export class ResourceCreateComponent extends ViewAbstractComponent implements OnInit {
 
-  @ViewChild('f') formElement: NgForm;
-
   data$: Promise<any>;
   resourceKey: string;
+  resourceName: string;
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
@@ -32,11 +31,10 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.resourceKey = params.type;
-      this.data$ = this.appData.createResourceDetail(params.type).then((data) => {
+      this.data$ = this.appData.createResourceDetail(this.resourceKey).then((data) => {
+        this.resourceName = data.label;
         data.schema = this.schemaTransformService.transformForm(data.schema);
-        if (data.schema) {
-          this.fields = data.schema;
-        }
+        this.fields = data.schema ? data.schema : [];
         setTimeout(() => this.showButton = true);
         return data;
       });
@@ -48,8 +46,8 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
       this.notification.formErrors(this.form);
     } else {
       this.appData.createResource(this.resourceKey, this.form.getRawValue()).then((response) => {
-        this.notification.error('Data successfully created', 'Success');
-        this.router.navigateByUrl('../' + response.id + '/edit');
+        this.notification.success(this.resourceName + ' successfully created', 'Success');
+        this.router.navigateByUrl('/resource/' + this.resourceKey + '/' + response.id + '/edit');
       }).catch((error) => this.notification.apiError(error));
     }
   }
