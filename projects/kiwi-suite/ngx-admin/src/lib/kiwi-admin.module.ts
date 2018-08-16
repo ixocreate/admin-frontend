@@ -14,7 +14,15 @@ import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LoginComponent } from './views/auth/login/login.component';
-import { AlertModule, BsDropdownModule, ModalModule, PaginationModule, ProgressbarModule, TabsModule } from 'ngx-bootstrap';
+import {
+  AlertModule,
+  BsDatepickerModule,
+  BsDropdownModule,
+  ModalModule,
+  PaginationModule,
+  ProgressbarModule,
+  TabsModule,
+} from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
@@ -45,7 +53,7 @@ import { ResourceComponent } from './views/resource/resource.component';
 import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
 import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
 import { KiwiConfirmModalComponent } from './components/kiwi-confirm-modal/kiwi-confirm-modal.component';
-import { KIWI_BOOTSTRAP_FORMLY_CONFIG, FIELD_TYPE_COMPONENTS } from './forms/bootstrap.config';
+import { FIELD_TYPE_COMPONENTS, KIWI_BOOTSTRAP_FORMLY_CONFIG } from './forms/bootstrap.config';
 import { ClickStopPropagation } from './directives/click-stop-propagation.directive';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -145,6 +153,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     ProgressbarModule.forRoot(),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
 
     ToastrModule.forRoot({
       autoDismiss: true,

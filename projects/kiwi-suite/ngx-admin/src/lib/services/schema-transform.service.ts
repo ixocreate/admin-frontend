@@ -257,9 +257,6 @@ export class SchemaTransformService {
         label: value.label,
         placeholder: value.label,
         required: value.required,
-        config: {
-          dateInputFormat: 'YYYY-MM-DD HH:mm:ss',
-        },
       },
     };
   }

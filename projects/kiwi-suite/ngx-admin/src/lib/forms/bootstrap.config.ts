@@ -1,14 +1,16 @@
 import { ConfigOption } from '@ngx-formly/core';
-import {
-  FormlyWrapperSection,
-  FormlyWrapperTab,
-  FormlyWrapperTabset,
-} from './wrappers';
 import { FormlyFieldMediaComponent } from './types/media';
+import { FormlyWrapperSection } from './wrappers/section';
+import { FormlyWrapperTabset } from './wrappers/tabset';
+import { FormlyWrapperTab } from './wrappers/tab';
+import { FormlyFieldDateTimeComponent } from './types/datetime';
+import { FormlyFieldLinkComponent } from './types/link';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
   FormlyFieldMediaComponent,
+  FormlyFieldDateTimeComponent,
+  FormlyFieldLinkComponent,
 
   // wrappers
   FormlyWrapperSection,
@@ -25,6 +27,26 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       name: 'media',
       component: FormlyFieldMediaComponent,
       wrappers: ['form-field'],
+    },
+    {
+      name: 'link',
+      component: FormlyFieldLinkComponent,
+      wrappers: ['form-field'],
+      defaultOptions: {},
+    },
+    {
+      name: 'datetime',
+      component: FormlyFieldDateTimeComponent,
+      wrappers: ['form-field'],
+      defaultOptions: {
+        templateOptions: {
+          config: {
+            showWeekNumbers: false,
+            containerClass: 'theme-default',
+            dateInputFormat: 'YYYY-MM-DD HH:mm:ss',
+          },
+        },
+      },
     },
     /*
     {
