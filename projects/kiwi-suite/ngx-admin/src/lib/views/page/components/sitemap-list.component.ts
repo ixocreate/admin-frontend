@@ -95,9 +95,10 @@ export class SitemapListComponent extends ResourceIndexComponent implements OnIn
     }
 
     cancel(event: any) {
-        this.dragPageType$.next(null);
-        this.dragPageTypes = [];
-        this.loadData();
+        // TODO: this event cancels moving pages to be a child of another page
+        // this.dragPageType$.next(null);
+        // this.dragPageTypes = [];
+        // this.loadData();
     }
 
     protected getPosition(searchId: string, items: any, parent: string): { id: string, parent: string, prevSibling: string } {
