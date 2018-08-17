@@ -39,8 +39,8 @@ export class FormlyFieldSelectComponent extends FieldType implements OnInit, OnD
 
   ngOnInit() {
     if (this.to.resource) {
-      this.appData.getResourceIndex(this.to.resource.resource).then((response) => {
-        this.selectOptions = response.items;
+      this.appData.getResourceSelect(this.to.resource.resource).then((options) => {
+        this.selectOptions = options;
       });
     } else {
       const options: SelectOption[] = [];

@@ -1,10 +1,12 @@
+import { Routes } from './routes.interface';
+
 export interface Config {
   environment?: {
     production: boolean;
   };
   project?: Project;
   navigation?: Navigation[];
-  routes?: any;
+  routes?: Routes;
   intl?: { default: string, locales: Locale[] };
 }
 

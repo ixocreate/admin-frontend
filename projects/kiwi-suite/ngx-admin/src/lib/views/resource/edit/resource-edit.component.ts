@@ -55,9 +55,8 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
-      this.appData.updateResource(this.resourceKey, this.resourceId, this.form.getRawValue()).then((response) => {
+      this.appData.updateResource(this.resourceKey, this.resourceId, this.form.getRawValue()).then(() => {
         this.notification.success(this.resourceName + ' successfully updated', 'Success');
-        this.router.navigateByUrl('../' + response.id + '/edit');
       }).catch((error) => this.notification.apiError(error));
     }
   }
@@ -67,7 +66,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
       title: 'Delete this ' + this.resourceName + '?',
       text: 'Do you really want to delete this ' + this.resourceName + '?',
       onConfirm: () => {
-        this.appData.deleteResource(this.resourceKey, this.resourceId).then((response) => {
+        this.appData.deleteResource(this.resourceKey, this.resourceId).then(() => {
           this.notification.success(this.resourceName + ' successfully deleted', 'Success');
           this.router.navigateByUrl('/resource/' + this.resourceKey);
         }).catch((error) => this.notification.apiError(error));

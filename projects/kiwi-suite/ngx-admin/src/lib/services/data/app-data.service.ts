@@ -19,6 +19,7 @@ export class AppDataService extends DataServiceAbstract {
   config$: Observable<Config>;
   session$: Observable<any>;
 
+  savedResourceSelects: { [key: string]: any } = {};
 
   constructor(protected api: ApiService,
               protected store: Store<AppState>,
@@ -59,6 +60,21 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.appConfig.routes.translationSave, {locale, definitionId, id, message});
   }
 
+  clearResourceSelect(resource: string) {
+    if (this.savedResourceSelects[resource]) {
+      delete this.savedResourceSelects[resource];
+    }
+  }
+
+  getResourceSelect(resource: string): Promise<Array<any>> {
+    if (!this.savedResourceSelects[resource]) {
+      this.savedResourceSelects[resource] = this.getResourceIndex(resource, 500);
+    }
+    return this.savedResourceSelects[resource].then((response) => {
+      return response.items;
+    });
+  }
+
   getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null): Promise<ResourceList> {
     const params: any = {
       offset: (pageNumber - 1) * limit,
@@ -79,11 +95,17 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   createResource(resource: string, data: any): Promise<{ id: string }> {
-    return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data);
+    return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data).then((response) => {
+      this.clearResourceSelect(resource)
+      return response;
+    });
   }
 
   updateResource(resource: string, id: string, data: any): Promise<void> {
-    return this.api.patch(this.config.appConfig.routes.resourceUpdate.replace('{resource}', resource).replace('{id}', id), data);
+    return this.api.patch(this.config.appConfig.routes.resourceUpdate.replace('{resource}', resource).replace('{id}', id), data).then((response) => {
+      this.clearResourceSelect(resource)
+      return response;
+    });
   }
 
   deleteResource(resource: string, id: string): Promise<void> {

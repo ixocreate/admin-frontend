@@ -23,7 +23,7 @@ export class ConfigService {
   private _appConfig: Config = {
     project: {},
     navigation: [],
-    routes: [],
+    routes: null,
   };
 
   private _userPermissions: Array<string> = null;
