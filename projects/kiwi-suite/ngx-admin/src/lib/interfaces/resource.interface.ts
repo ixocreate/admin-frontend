@@ -1,6 +1,8 @@
+import { ResourceMeta } from './resource-meta.interface';
+
 export interface Resource {
   label: string;
-  item: Array<any>;
+  item: any;
   schema: Array<any>;
-  meta: Array<any>;
+  meta: ResourceMeta;
 }

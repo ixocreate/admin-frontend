@@ -55,6 +55,7 @@ import { ResourceEditComponent } from './views/resource/edit/resource-edit.compo
 import { KiwiConfirmModalComponent } from './components/kiwi-confirm-modal/kiwi-confirm-modal.component';
 import { FIELD_TYPE_COMPONENTS, KIWI_BOOTSTRAP_FORMLY_CONFIG } from './forms/bootstrap.config';
 import { ClickStopPropagation } from './directives/click-stop-propagation.directive';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -146,6 +147,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     FormlyModule.forRoot(KIWI_BOOTSTRAP_FORMLY_CONFIG),
     FormlyBootstrapModule,
     FileUploadModule,
+    NgSelectModule,
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),

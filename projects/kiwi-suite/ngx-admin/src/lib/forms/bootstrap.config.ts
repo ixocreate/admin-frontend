@@ -5,9 +5,11 @@ import { FormlyWrapperTabset } from './wrappers/tabset';
 import { FormlyWrapperTab } from './wrappers/tab';
 import { FormlyFieldDateTimeComponent } from './types/datetime';
 import { FormlyFieldLinkComponent } from './types/link';
+import { FormlyFieldSelectComponent } from './types/select';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
+  FormlyFieldSelectComponent,
   FormlyFieldMediaComponent,
   FormlyFieldDateTimeComponent,
   FormlyFieldLinkComponent,
@@ -24,6 +26,11 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
   ],
   types: [
     {
+      name: 'select',
+      component: FormlyFieldSelectComponent,
+      wrappers: ['form-field'],
+    },
+    {
       name: 'media',
       component: FormlyFieldMediaComponent,
       wrappers: ['form-field'],
@@ -32,7 +39,6 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       name: 'link',
       component: FormlyFieldLinkComponent,
       wrappers: ['form-field'],
-      defaultOptions: {},
     },
     {
       name: 'datetime',

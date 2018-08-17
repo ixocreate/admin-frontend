@@ -1,0 +1,15 @@
+.ng-select .ng-select-container {
+  border-color: $input-border-color;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.ng-select.ng-select-opened>.ng-select-container {
+  border-color: $input-border-color;
+}
+
+.ng-dropdown-panel.ng-select-bottom {
+  border-color: $input-border-color;
+}

@@ -10,6 +10,8 @@ import { DefaultHelper } from '../../helpers/default.helper';
 import { ConfigService } from '../config.service';
 import { tap } from 'rxjs/internal/operators';
 import { parseParams } from '../../shared/parseParams';
+import { ResourceList } from '../../interfaces/resource-list.interface';
+import { Resource } from '../../interfaces/resource.interface';
 
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
@@ -57,7 +59,7 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.appConfig.routes.translationSave, {locale, definitionId, id, message});
   }
 
-  getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 0, search: string = null) {
+  getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null): Promise<ResourceList> {
     const params: any = {
       offset: (pageNumber - 1) * limit,
       limit: limit,
@@ -68,23 +70,23 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.appConfig.routes.resourceIndex.replace('{resource}', resource) + '?' + parseParams(params));
   }
 
-  getResourceDetail(resource: string, id: string) {
+  getResourceDetail(resource: string, id: string): Promise<Resource> {
     return this.api.get(this.config.appConfig.routes.resourceDetail.replace('{resource}', resource).replace('{id}', id));
   }
 
-  createResource(resource: string, data: any) {
-    return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data);
-  }
-
-  createResourceDetail(resource: string) {
+  createResourceDetail(resource: string): Promise<Resource> {
     return this.api.get(this.config.appConfig.routes.resourceCreateDetail.replace('{resource}', resource));
   }
 
-  updateResource(resource: string, id: string, data: any) {
+  createResource(resource: string, data: any): Promise<{ id: string }> {
+    return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data);
+  }
+
+  updateResource(resource: string, id: string, data: any): Promise<void> {
     return this.api.patch(this.config.appConfig.routes.resourceUpdate.replace('{resource}', resource).replace('{id}', id), data);
   }
 
-  deleteResource(resource: string, id: string) {
+  deleteResource(resource: string, id: string): Promise<void> {
     return this.api.delete(this.config.appConfig.routes.resourceDelete.replace('{resource}', resource).replace('{id}', id));
   }
 

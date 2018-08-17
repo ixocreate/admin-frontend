@@ -27,6 +27,7 @@
     "@coreui/angular": "^2.0.0-rc.1",
     "@coreui/coreui": "^2.0.4",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
+    "@ng-select/ng-select": "^2.4.3",
     "@ngrx/store": "^6.1.0",
     "@ngrx/store-devtools": "^6.1.0",
     "@ngx-formly/bootstrap": "^4.7.2",

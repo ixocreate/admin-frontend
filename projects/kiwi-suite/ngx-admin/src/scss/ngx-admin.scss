@@ -5,12 +5,17 @@
 @import "~@coreui/coreui/scss/coreui";
 
 @import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 @import '~@swimlane/ngx-datatable/src/themes/bootstrap';
 @import 'vendor/ngx-datatable';
+
 @import '~ngx-toastr/toastr.css';
 @import 'vendor/toastr';
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "vendor/ng-select";
 
 @import "custom/layout";
 @import "custom/loading";
