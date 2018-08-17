@@ -158,6 +158,7 @@ export class SchemaTransformService {
         required: value.required,
         options: options,
         resource: value.resource,
+        clearable: value.clearable || false,
       },
     };
   }
@@ -184,6 +185,7 @@ export class SchemaTransformService {
         options: options,
         resource: value.resource,
         multiple: true,
+        clearable: value.clearable || true,
       },
     };
   }
