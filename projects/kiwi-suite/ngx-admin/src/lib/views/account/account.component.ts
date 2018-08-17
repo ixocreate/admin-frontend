@@ -46,7 +46,6 @@ export class AccountComponent extends ViewAbstractComponent {
       },
     },
   ];
-  passwordFormModel = {password: '', passwordRepeat: '', passwordOld: ''};
 
   emailForm: FormGroup = new FormGroup({});
   emailFormOptions: FormlyFormOptions = {};
@@ -72,7 +71,6 @@ export class AccountComponent extends ViewAbstractComponent {
       },
     },
   ];
-  emailFormModel = {email: '', emailRepeat: ''};
 
   constructor(protected notification: NotificationService,
               public accountData: AccountDataService) {
@@ -80,7 +78,7 @@ export class AccountComponent extends ViewAbstractComponent {
   }
 
   onSubmitEmail() {
-    const data = this.emailFormModel;
+    const data = this.emailForm.getRawValue();
     this.accountData.updateEmail(data.email, data.emailRepeat).then(() => {
       this.emailFormOptions.resetModel();
       this.notification.success('The email was successfully updated', 'Success');
@@ -88,7 +86,7 @@ export class AccountComponent extends ViewAbstractComponent {
   }
 
   onSubmitPassword() {
-    const data = this.passwordFormModel;
+    const data = this.passwordForm.getRawValue();
     this.accountData.updatePassword(data.passwordOld, data.password, data.passwordRepeat).then(() => {
       this.passwordFormOptions.resetModel();
       this.notification.success('The password was successfully updated', 'Success');

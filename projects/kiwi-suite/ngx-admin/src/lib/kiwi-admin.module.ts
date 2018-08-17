@@ -164,7 +164,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
       progressBar: true,
       enableHtml: true,
       positionClass: 'toast-top-right',
-      timeOut: 5000,
+      timeOut: 4000,
     }),
     StoreModule.forRoot({}, {
       metaReducers: [

@@ -1,7 +1,7 @@
 <kiwi-content>
   <ng-template #headerButtons>
     <ng-container *ngIf="showButton">
-      <button class="btn btn-primary" (click)="onSubmit()" [disabled]="false && !form.valid">
+      <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!form.valid">
         <i class="fa fa-save"></i> Update
       </button>
       <button class="btn btn-danger" (click)="doDelete()">
@@ -16,10 +16,9 @@
         <h6 class="m-0 text-center text-sm-left">Edit <b>{{ data.label }}</b></h6>
       </div>
       <div class="card-body">
-        <ng-container *ngIf="data && form && fields; else isLoading">
-          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="kiwi-form">
-            <formly-form [form]="form" [fields]="fields" [model]="data.item"></formly-form>
-          </form>
+        <ng-container *ngIf="form && fields; else isLoading">
+          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form" (ngSubmit)="onSubmit()">
+          </formly-form>
         </ng-container>
         <ng-template #isLoading>
           <div class="text-center my-3 loading">

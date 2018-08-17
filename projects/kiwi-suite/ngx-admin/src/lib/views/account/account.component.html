@@ -2,16 +2,15 @@
   <ng-container *ngIf="accountData.user$ | async as user">
     <div class="row">
       <div class="col-md">
-        <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()">
+        <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()" class="kiwi-form">
           <div class="card card-accent-primary">
-            <div class="card-header">Change Email</div>
-            <div class="card-body pb-1">
+            <div class="card-header">Change <b>Email</b></div>
+            <div class="card-body">
               <div class="form-group">
                 <label>Your current email *</label>
                 <input type="text" class="form-control" placeholder="{{ user.email }}" readonly>
               </div>
-              <formly-form [form]="emailForm" [fields]="emailFormFields" [options]="emailFormOptions"
-                           [model]="emailFormModel"></formly-form>
+              <formly-form [form]="emailForm" [fields]="emailFormFields" [options]="emailFormOptions"></formly-form>
             </div>
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-primary" [disabled]="!emailForm.valid">
@@ -22,12 +21,11 @@
         </form>
       </div>
       <div class="col-md">
-        <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+        <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()" class="kiwi-form">
           <div class="card card-accent-primary">
-            <div class="card-header">Change Password</div>
-            <div class="card-body pb-1">
-              <formly-form [form]="passwordForm" [fields]="passwordFormFields" [options]="passwordFormOptions"
-                           [model]="passwordFormModel"></formly-form>
+            <div class="card-header">Change <b>Password</b></div>
+            <div class="card-body">
+              <formly-form [form]="passwordForm" [fields]="passwordFormFields" [options]="passwordFormOptions"></formly-form>
             </div>
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-primary" [disabled]="!passwordForm.valid">
