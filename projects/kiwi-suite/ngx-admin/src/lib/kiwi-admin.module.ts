@@ -57,6 +57,9 @@ import { FIELD_TYPE_COMPONENTS, KIWI_BOOTSTRAP_FORMLY_CONFIG } from './forms/boo
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { KiwiSitemapComponent } from './components/kiwi-sitemap/kiwi-sitemap.component';
+import { KiwiSitemapItemComponent } from './components/kiwi-sitemap-item/kiwi-sitemap-item.component';
+import { PipesModule } from './pipes/pipes.module';
+import { KiwiDatePipe } from './pipes/kiwi-date.pipe';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -78,6 +81,7 @@ const APP_COMPONENTS = [
   KiwiMediaListComponent,
   KiwiPaginationComponent,
   KiwiSitemapComponent,
+  KiwiSitemapItemComponent,
 
   PermissionDirective,
   ClickStopPropagationDirective,
@@ -178,6 +182,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     NgrxHelperModule.forRoot(),
 
     ServiceModule.forRoot(),
+    PipesModule.forRoot(),
   ],
   declarations: [
     ...APP_CONTAINERS,

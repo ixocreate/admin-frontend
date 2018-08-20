@@ -1,0 +1,65 @@
+.sitemap-item {
+  background: #f9f9f9;
+  margin-bottom: 10px;
+  display: flex;
+  position: relative;
+  min-height: 35px;
+  opacity: .3;
+
+  > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.is-created {
+    opacity: 1;
+  }
+
+  .btn-collapse {
+    padding: 0;
+    width: 30px;
+    border: 1px solid $border-color;
+
+    &.toggle {
+      border-color: $primary;
+      background: $primary;
+      color: #fff;
+
+      &:hover {
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    .toggle-icon {
+      display: block;
+      transition: transform .2s;
+    }
+
+    &.open .toggle-icon {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .sitemap-item-content {
+    flex: 1;
+    padding: 5px 10px;
+    justify-content: start;
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    font-size: .9em;
+  }
+
+  .sitemap-item-icons {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    padding: 0 10px;
+  }
+}
+
+.sitemap-sub-item {
+  padding-left: 20px;
+}

@@ -27,7 +27,9 @@ export class KiwiSitemapComponent implements OnInit {
   ngOnInit() {
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.appConfig.intl.default);
     this.onChangeLocale();
-    this.data$ = this.appData.getResourceIndex('page', 500);
+    this.data$ = this.appData.getResourceIndex('page', 500).then((response) => {
+      return response.items;
+    });
   }
 
   get locales() {
