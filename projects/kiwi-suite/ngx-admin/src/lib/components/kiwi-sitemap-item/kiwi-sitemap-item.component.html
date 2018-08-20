@@ -7,7 +7,12 @@
     <div class="btn-collapse" *ngIf="page.children.length === 0"></div>
     <div class="sitemap-item-content" [innerHtml]="pageName"></div>
     <div class="sitemap-item-icons" *ngIf="pageData">
-      <i class="fa fa-fw fa-power-off" [ngClass]="{'text-danger': pageData.status === 'offline', 'text-success': pageData.status === 'online'}"></i>
+      <ng-container *ngIf="pageData.status === 'online'; else offline">
+        <i class="fa fa-fw fa-power-off text-success"></i>
+      </ng-container>
+      <ng-template #offline>
+        <i class="fa fa-fw fa-power-off text-danger"></i>
+      </ng-template>
       <ng-container *ngIf="publishedString; else noPublishTime">
         <i class="fa fa-fw fa-clock-o" [title]="publishedString"></i>
       </ng-container>
@@ -15,9 +20,15 @@
         <i class="fa fa-fw fa-clock-o text-secondary"></i>
       </ng-template>
     </div>
-    <div>
-      ffdsa
-    </div>
+    <a class="btn btn-success btn-sitemap" [routerLink]="'page/create/' + locale + '/' + this.page.sitemap.id">
+      <i class="fa fa-fw fa-plus"></i>
+    </a>
+    <a class="btn btn-primary btn-sitemap" [routerLink]="'page/' + pageData.id + '/edit'" *ngIf="pageData">
+      <i class="fa fa-fw fa-pencil"></i>
+    </a>
+    <a class="btn btn-warning btn-sitemap" [routerLink]="'page/add/' + locale + '/' + this.page.sitemap.id" *ngIf="!pageData">
+      <i class="fa fa-fw fa-pencil"></i>
+    </a>
   </div>
 
   <div class="sitemap-sub-item" *ngIf="page.children.length > 0" [hidden]="collapsed">

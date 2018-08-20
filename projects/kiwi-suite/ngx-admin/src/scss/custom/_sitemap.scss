@@ -16,31 +16,29 @@
     opacity: 1;
   }
 
+  .btn-sitemap {
+    border-radius: 0;
+    padding: 0 5px;
+  }
+
   .btn-collapse {
     padding: 0;
     width: 30px;
     border: 1px solid $border-color;
 
     &.toggle {
-      border-color: $primary;
+      border: 0;
       background: $primary;
       color: #fff;
 
       &:hover {
+        background: darken($primary, 10%);
+        text-decoration: none;
       }
     }
 
     &:focus {
       outline: none;
-    }
-
-    .toggle-icon {
-      display: block;
-      transition: transform .2s;
-    }
-
-    &.open .toggle-icon {
-      transform: rotate(-180deg);
     }
   }
 
