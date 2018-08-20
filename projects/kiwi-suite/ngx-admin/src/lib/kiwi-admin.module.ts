@@ -87,6 +87,7 @@ const APP_COMPONENTS = [
   KiwiSitemapComponent,
   KiwiSitemapItemComponent,
 
+  // Directives
   PermissionDirective,
   ClickStopPropagationDirective,
 

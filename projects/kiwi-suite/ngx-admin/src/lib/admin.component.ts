@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { PageTitleService } from './services/page-title.service';
-import { AccountDataService } from './services/data/account-data.service';
 
 @Component({
   // tslint:disable-next-line
