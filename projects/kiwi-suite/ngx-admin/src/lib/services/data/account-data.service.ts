@@ -8,25 +8,35 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../../interfaces/user.interface';
 import { ConfigService } from '../config.service';
 import { tap } from 'rxjs/internal/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AccountDataService extends DataServiceAbstract {
 
   user$: Observable<User>;
+  private _isAuthorized$: BehaviorSubject<boolean> = new BehaviorSubject(null);
 
   constructor(protected api: ApiService, protected config: ConfigService, protected store: Store<AppState>) {
     super(store);
 
     this.store.addReducer('user', DefaultStore.Handle('USER'));
 
-    this.user$ = this.loadFromStore('user', this.loadUser).pipe(tap((user) => {
+    this.user$ = this.loadFromStore('user', this.loadUser);
+    this.user$.subscribe((user) => {
       this.config.setUserPermissions(user ? user.permissions : null);
-    }));
+    });
+  }
+
+  get isAuthorized$(): Observable<boolean> {
+    return this._isAuthorized$.asObservable();
   }
 
   loadUser(): Promise<any> {
     return this.api.get(this.config.appConfig.routes.authUser).then((data: any) => {
+      this._isAuthorized$.next(true);
       this.saveToDefaultStore('USER', data);
+    }).catch(() => {
+      this._isAuthorized$.next(false);
     });
   }
 

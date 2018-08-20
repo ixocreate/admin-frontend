@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PageTitleService } from './services/page-title.service';
+import { AccountDataService } from './services/data/account-data.service';
 
 @Component({
   // tslint:disable-next-line
@@ -8,8 +9,8 @@ import { PageTitleService } from './services/page-title.service';
 })
 export class AdminComponent {
 
-  constructor(private pageTitle: PageTitleService) {
-    this.pageTitle.init();
+  constructor(pageTitle: PageTitleService) {
+    pageTitle.init();
   }
 
 }

@@ -26,7 +26,7 @@ import {
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, RouterModule } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, Router, RouteReuseStrategy, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { KIWI_CONFIG, KiwiConfig } from './services/config.service';
 import { AppDataService } from './services/data/app-data.service';
@@ -63,6 +63,7 @@ import { KiwiDatePipe } from './pipes/kiwi-date.pipe';
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
+import { AccountDataService } from './services/data/account-data.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,

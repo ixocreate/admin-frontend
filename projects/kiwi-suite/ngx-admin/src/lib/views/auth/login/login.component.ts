@@ -31,8 +31,10 @@ export class LoginComponent {
   onLogin() {
     this.accountData.login(this.form.value.email, this.form.value.password).then(() => {
       this.appData.loadConfig().then(() => {
-        this.route.queryParams.subscribe(query => {
-          this.router.navigate([query.intended || '/']);
+        this.accountData.loadUser().then(() => {
+          this.route.queryParams.subscribe(query => {
+            this.router.navigateByUrl(query.intended || '/');
+          });
         });
       });
     }).catch((error) => {

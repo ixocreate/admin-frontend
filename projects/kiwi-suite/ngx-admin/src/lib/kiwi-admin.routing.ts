@@ -35,7 +35,7 @@ export const routes: Routes = [
     component: DefaultLayoutComponent,
     canActivate: [PermissionGuard],
     children: [
-      {path: '', redirectTo: 'account', pathMatch: 'full'},
+      {path: '', redirectTo: 'page', pathMatch: 'full'},
       {
         path: 'account',
         component: AccountComponent,
