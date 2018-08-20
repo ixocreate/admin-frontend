@@ -62,6 +62,7 @@ import { PipesModule } from './pipes/pipes.module';
 import { KiwiDatePipe } from './pipes/kiwi-date.pipe';
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
+import { PageEditComponent } from './views/page/edit/page-edit.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -96,6 +97,7 @@ const APP_COMPONENTS = [
   PageComponent,
   PageCreateComponent,
   PageAddComponent,
+  PageEditComponent,
 
   TranslationComponent,
   TranslationListComponent,
@@ -110,7 +112,7 @@ const APP_COMPONENTS = [
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
   return (): Promise<any> => {
-    return appData.loadConfig();
+    return appData.loadSession().then(() => appData.loadConfig());
   };
 }
 

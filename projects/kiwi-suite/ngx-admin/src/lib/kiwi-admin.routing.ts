@@ -15,6 +15,7 @@ import { ResourceCreateComponent } from './views/resource/create/resource-create
 import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
+import { PageEditComponent } from './views/page/edit/page-edit.component';
 
 export const routes: Routes = [
   {
@@ -64,6 +65,11 @@ export const routes: Routes = [
             component: PageAddComponent,
             data: {title: 'Add Page'},
           },
+          {
+            path: ':id/edit',
+            component: PageEditComponent,
+            data: {title: 'Edit Page'},
+          }
         ],
       },
       {

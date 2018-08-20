@@ -76,6 +76,10 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.appConfig.routes.pageAdd, {name, locale, sitemapId});
   }
 
+  pageNavigationIndex(id: string): Promise<Array<{ name: string, label: string, active: boolean }>> {
+    return this.api.get(this.config.appConfig.routes.pageNavigationIndex.replace('{id}', id));
+  }
+
   clearResourceSelect(resource: string) {
     if (this.savedResourceSelects[resource]) {
       delete this.savedResourceSelects[resource];

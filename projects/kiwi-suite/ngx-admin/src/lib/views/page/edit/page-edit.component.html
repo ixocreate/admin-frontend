@@ -1,0 +1,91 @@
+<kiwi-content>
+  <ng-template #headerButtons>
+    <ng-container *ngIf="showButton">
+      <button class="btn btn-success" (click)="onSubmit()" [disabled]="!form.valid">
+        <i class="fa fa-plus"></i> Create
+      </button>
+    </ng-container>
+  </ng-template>
+
+  <ng-container *ngIf="data$ | async as data">
+    <div class="card card-accent-primary">
+      <div class="card-header custom-card-header">
+        <h6 class="m-0 text-center text-sm-left">Create a <b>Page</b></h6>
+      </div>
+      <div class="card-body">
+        <ng-container *ngIf="form && fields; else isLoading">
+          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form" (ngSubmit)="onSubmit()">
+          </formly-form>
+        </ng-container>
+        <ng-template #isLoading>
+          <div class="text-center my-3 loading">
+            <kiwi-loading class="big-center"></kiwi-loading>
+          </div>
+        </ng-template>
+      </div>
+      <div class="card-footer text-muted">
+        * Required Field
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #aside>
+    <tabset>
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-cog"></i>
+        </ng-template>
+        <div class="p-3">
+          <ng-container *ngIf="detailData$ | async as detailData">
+            <ng-container *ngIf="detailForm && detailFields; else isDetailsLoading">
+              <formly-form [form]="detailForm" [fields]="detailFields" [model]="detailData.item"
+                           class="kiwi-form"></formly-form>
+            </ng-container>
+            <ng-container *ngIf="navigationForm && navigationFields; else isDetailsLoading">
+              <formly-form [form]="navigationForm" [fields]="navigationFields" [model]="navigationModel"></formly-form>
+            </ng-container>
+            <ng-template #isDetailsLoading>
+              <div class="text-center my-3 loading">
+                <kiwi-loading class="big-center"></kiwi-loading>
+              </div>
+            </ng-template>
+          </ng-container>
+        </div>
+      </tab>
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-wrench"></i>
+        </ng-template>
+        <div class="p-3">
+          <ng-container *ngIf="detailData$ | async as detailData">
+            <ng-container *ngIf="detailData.meta.otherLanguages.length > 0">
+              <h6><i class="fa fa-fw fa-clone"></i> Replace Content</h6>
+              <ng-container *ngIf="detailData.meta.otherLanguages.length > 0">
+                <div>
+                  <small><b>From other language</b></small>
+                </div>
+                <div class="row mb-3">
+                  <div class="col" *ngFor="let language of detailData.meta.otherLanguages">
+                    <a style="cursor: pointer;" (click)="onReplaceContentModal(language)">
+                      <i class="flag-icon flag-icon-{{ language.locale.substr(3) | lowercase }}"></i>
+                    </a>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="detailData.meta.samePageTypePages.length > 0">
+                <div>
+                  <small><b>From other page</b></small>
+                </div>
+                <ng-select [items]="detailData.meta.samePageTypePages" (change)="onReplaceContentModal($event)"
+                           bindLabel="name" bindValue="id" [clearable]="false">
+                </ng-select>
+              </ng-container>
+              <hr>
+            </ng-container>
+          </ng-container>
+        </div>
+      </tab>
+    </tabset>
+  </ng-template>
+
+</kiwi-content>
