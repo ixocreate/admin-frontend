@@ -60,6 +60,8 @@ import { KiwiSitemapComponent } from './components/kiwi-sitemap/kiwi-sitemap.com
 import { KiwiSitemapItemComponent } from './components/kiwi-sitemap-item/kiwi-sitemap-item.component';
 import { PipesModule } from './pipes/pipes.module';
 import { KiwiDatePipe } from './pipes/kiwi-date.pipe';
+import { PageCreateComponent } from './views/page/create/page-create.component';
+import { PageAddComponent } from './views/page/add/page-add.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -90,7 +92,10 @@ const APP_COMPONENTS = [
   AdminComponent,
   LoginComponent,
   AccountComponent,
+
   PageComponent,
+  PageCreateComponent,
+  PageAddComponent,
 
   TranslationComponent,
   TranslationListComponent,

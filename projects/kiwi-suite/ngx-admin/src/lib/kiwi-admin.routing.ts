@@ -13,6 +13,8 @@ import { MediaComponent } from './views/media/media.component';
 import { ResourceComponent } from './views/resource/resource.component';
 import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
 import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
+import { PageCreateComponent } from './views/page/create/page-create.component';
+import { PageAddComponent } from './views/page/add/page-add.component';
 
 export const routes: Routes = [
   {
@@ -46,6 +48,21 @@ export const routes: Routes = [
             path: '',
             component: PageComponent,
             data: {title: null},
+          },
+          {
+            path: 'create/:locale',
+            component: PageCreateComponent,
+            data: {title: 'Create Page'},
+          },
+          {
+            path: 'create/:locale/:parentSitemapId',
+            component: PageCreateComponent,
+            data: {title: 'Create Page'},
+          },
+          {
+            path: 'add/:locale/:sitemapId',
+            component: PageAddComponent,
+            data: {title: 'Add Page'},
           },
         ],
       },
@@ -106,18 +123,6 @@ export const routes: Routes = [
             component: ResourceEditComponent,
             data: {title: 'Edit'},
           },
-          /*
-          {
-            path: 'create',
-            component: ResourceCreateComponent,
-            canActivate: [PermissionGuard]
-          },
-          {
-            path: ':id/edit',
-            component: ResourceEditComponent,
-            canActivate: [PermissionGuard]
-          }
-          */
         ],
       },
       /*

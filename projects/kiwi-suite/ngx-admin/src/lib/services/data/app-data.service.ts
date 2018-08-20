@@ -60,6 +60,22 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.appConfig.routes.translationSave, {locale, definitionId, id, message});
   }
 
+  getPageVersion() {
+    return this.api.get(this.config.appConfig.routes.pageVersionDetail);
+  }
+
+  savePageVersion(data: any) {
+    return this.api.post(this.config.appConfig.routes.pageVersionReplace, data);
+  }
+
+  getPageCreateSchema(parentSitemapId: string = null) {
+    return this.api.get(this.config.appConfig.routes.pageCreateSchema.replace('[/{parentSitemapId}]', parentSitemapId ? '/' + parentSitemapId : ''));
+  }
+
+  addPage(name: string, locale: string, sitemapId: string): Promise<{ id: string }> {
+    return this.api.post(this.config.appConfig.routes.pageAdd, {name, locale, sitemapId});
+  }
+
   clearResourceSelect(resource: string) {
     if (this.savedResourceSelects[resource]) {
       delete this.savedResourceSelects[resource];
@@ -96,14 +112,14 @@ export class AppDataService extends DataServiceAbstract {
 
   createResource(resource: string, data: any): Promise<{ id: string }> {
     return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data).then((response) => {
-      this.clearResourceSelect(resource)
+      this.clearResourceSelect(resource);
       return response;
     });
   }
 
   updateResource(resource: string, id: string, data: any): Promise<void> {
     return this.api.patch(this.config.appConfig.routes.resourceUpdate.replace('{resource}', resource).replace('{id}', id), data).then((response) => {
-      this.clearResourceSelect(resource)
+      this.clearResourceSelect(resource);
       return response;
     });
   }

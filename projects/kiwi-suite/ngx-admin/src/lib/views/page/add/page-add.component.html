@@ -1,0 +1,29 @@
+<kiwi-content>
+  <ng-template #headerButtons>
+    <ng-container *ngIf="showButton">
+      <button class="btn btn-success" (click)="onSubmit()" [disabled]="!form.valid">
+        <i class="fa fa-plus"></i> Create
+      </button>
+    </ng-container>
+  </ng-template>
+
+  <div class="card card-accent-primary">
+    <div class="card-header custom-card-header">
+      <h6 class="m-0 text-center text-sm-left">Create a <b>Page</b></h6>
+    </div>
+    <div class="card-body">
+      <ng-container *ngIf="form && fields; else isLoading">
+        <formly-form [form]="form" [fields]="fields" class="kiwi-form" (ngSubmit)="onSubmit()">
+        </formly-form>
+      </ng-container>
+      <ng-template #isLoading>
+        <div class="text-center my-3 loading">
+          <kiwi-loading class="big-center"></kiwi-loading>
+        </div>
+      </ng-template>
+    </div>
+    <div class="card-footer text-muted">
+      * Required Field
+    </div>
+  </div>
+</kiwi-content>
