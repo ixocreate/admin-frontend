@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, publishLast, refCount, retryWhen, timeout } from 'rxjs/operators';
-import { AuthService } from './auth.service';
 import { genericRetryStrategy } from './generic-retry-strategy';
 import { _throw } from 'rxjs/observable/throw';
 
@@ -38,8 +37,7 @@ export interface APIResponse {
 export class ApiService {
 
   constructor(protected http: HttpClient,
-              protected config: ConfigService,
-              protected auth: AuthService) {
+              protected config: ConfigService) {
   }
 
   /**
@@ -81,12 +79,6 @@ export class ApiService {
       publishLast(),
       refCount(),
       catchError((error) => {
-        /*
-        if (error.status === 401) {
-          window.location.reload();
-          return null;
-        }
-        */
         return _throw(error.error ? this.errorMapping(error.error) : null);
       }),
       map((response: HttpResponse<any>) => {
