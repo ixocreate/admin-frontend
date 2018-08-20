@@ -2,10 +2,14 @@
   padding: 0 25px;
 }
 
+.card-header {
+  padding: 7px 1.25rem;
+}
+
 .custom-card-header {
   padding-top: 10px;
   padding-bottom: 10px;
-  min-height: 52px;
+  min-height: 50px;
   display: flex;
   align-items: center;
 }

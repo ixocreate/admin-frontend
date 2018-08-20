@@ -54,8 +54,9 @@ import { ResourceCreateComponent } from './views/resource/create/resource-create
 import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
 import { KiwiConfirmModalComponent } from './components/kiwi-confirm-modal/kiwi-confirm-modal.component';
 import { FIELD_TYPE_COMPONENTS, KIWI_BOOTSTRAP_FORMLY_CONFIG } from './forms/bootstrap.config';
-import { ClickStopPropagation } from './directives/click-stop-propagation.directive';
+import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { KiwiSitemapComponent } from './components/kiwi-sitemap/kiwi-sitemap.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -76,8 +77,10 @@ const APP_COMPONENTS = [
   KiwiLoadingComponent,
   KiwiMediaListComponent,
   KiwiPaginationComponent,
+  KiwiSitemapComponent,
+
   PermissionDirective,
-  ClickStopPropagation,
+  ClickStopPropagationDirective,
 
   // Views
   AdminComponent,
