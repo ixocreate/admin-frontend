@@ -14,10 +14,12 @@ import { BehaviorSubject } from 'rxjs';
 export class AccountDataService extends DataServiceAbstract {
 
   user$: Observable<User>;
-  private _isAuthorized$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  isAuthorized$: Observable<boolean>;
 
   constructor(protected api: ApiService, protected config: ConfigService, protected store: Store<AppState>) {
     super(store);
+
+    this.isAuthorized$ = this.api.isAuthorized$;
 
     this.store.addReducer('user', DefaultStore.Handle('USER'));
 
@@ -27,16 +29,9 @@ export class AccountDataService extends DataServiceAbstract {
     });
   }
 
-  get isAuthorized$(): Observable<boolean> {
-    return this._isAuthorized$.asObservable();
-  }
-
   loadUser(): Promise<any> {
     return this.api.get(this.config.appConfig.routes.authUser).then((data: any) => {
-      this._isAuthorized$.next(true);
       this.saveToDefaultStore('USER', data);
-    }).catch(() => {
-      this._isAuthorized$.next(false);
     });
   }
 

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, map, publishLast, refCount, retryWhen, timeout } from 'rxjs/operators';
 import { genericRetryStrategy } from './generic-retry-strategy';
 import { _throw } from 'rxjs/observable/throw';
+import { BehaviorSubject } from 'rxjs';
 
 export enum ApiRequestMethod {
   GET = 'get',
@@ -36,8 +37,14 @@ export interface APIResponse {
 @Injectable()
 export class ApiService {
 
+  private _isAuthorized$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+
   constructor(protected http: HttpClient,
               protected config: ConfigService) {
+  }
+
+  get isAuthorized$(): Observable<boolean> {
+    return this._isAuthorized$.asObservable();
   }
 
   /**
@@ -79,9 +86,15 @@ export class ApiService {
       publishLast(),
       refCount(),
       catchError((error) => {
+        if (error.status === 401) {
+          this._isAuthorized$.next(false);
+        }
         return _throw(error.error ? this.errorMapping(error.error) : null);
       }),
       map((response: HttpResponse<any>) => {
+        if (url !== this.config.appConfig.routes.session && url !== this.config.appConfig.routes.config) {
+          this._isAuthorized$.next(true);
+        }
         const apiResponse: APIResponse = response.body;
         if (typeof apiResponse.success === 'undefined') {
           return apiResponse;
