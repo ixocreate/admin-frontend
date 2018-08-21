@@ -139,7 +139,17 @@
 
   label {
     margin-bottom: 0;
-    font-size: .9em;
+    font-size: .8rem;
+
+    &.col-form-label {
+      padding-top: calc(0.455rem + 1px);
+      padding-bottom: calc(0.455rem + 1px);
+
+      @include media-breakpoint-down(sm) {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
   }
 
   .custom-control-label {

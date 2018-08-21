@@ -7,7 +7,7 @@
 }
 
 .media-container-max-width-container {
-  max-width: 150px;
+  max-width: 140px;
 }
 
 .media-container {
@@ -26,6 +26,10 @@
       color: #fff;
       background: $danger;
     }
+
+    .media-icon .file-icon {
+      color: $danger;
+    }
   }
 
   &:hover {
@@ -34,6 +38,10 @@
     .media-image-title {
       color: #fff;
       background: $primary;
+    }
+
+    .media-icon .file-icon {
+      color: $primary;
     }
   }
 

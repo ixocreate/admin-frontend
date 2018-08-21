@@ -154,7 +154,7 @@ export class SchemaTransformService {
       type: 'select',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
         options: options,
         resource: value.resource,
@@ -180,7 +180,7 @@ export class SchemaTransformService {
       type: 'select',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
         options: options,
         resource: value.resource,
@@ -196,7 +196,7 @@ export class SchemaTransformService {
       type: 'input',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };
@@ -208,7 +208,7 @@ export class SchemaTransformService {
       type: 'checkbox',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };
@@ -220,7 +220,7 @@ export class SchemaTransformService {
       type: 'textarea',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
         rows: 3,
       },
@@ -233,7 +233,7 @@ export class SchemaTransformService {
       type: 'media',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };
@@ -245,7 +245,7 @@ export class SchemaTransformService {
       type: 'date',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };
@@ -257,7 +257,7 @@ export class SchemaTransformService {
       type: 'datetime',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };
@@ -269,7 +269,7 @@ export class SchemaTransformService {
       type: 'wysiwyg',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
         height: 200,
         modules: {
@@ -294,7 +294,7 @@ export class SchemaTransformService {
       type: 'link',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };
@@ -306,7 +306,7 @@ export class SchemaTransformService {
       type: 'youtube',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };
@@ -318,7 +318,7 @@ export class SchemaTransformService {
       type: 'color',
       templateOptions: {
         label: value.label,
-        placeholder: value.label,
+        placeholder: value.label + '...',
         required: value.required,
       },
     };

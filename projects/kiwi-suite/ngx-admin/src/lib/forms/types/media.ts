@@ -11,7 +11,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
       <div class="media-container media-container-max-width" (click)="openModal(modalTemplate)" [class.is-invalid]="showError">
         <ng-container *ngIf="!media; else hasMedia">
           <div class="media-icon">
-            <span class="file-icon fa fa-5x fa-fw fa-plus"></span>
+            <span class="file-icon fa fa-4x fa-fw fa-plus"></span>
           </div>
           <div class="media-image-title">
             <div>no file selected</div>
@@ -27,7 +27,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
           </ng-container>
           <ng-template #noImage class="media-container">
             <div class="media-icon">
-              <span [class]="'file-icon fa fa-5x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
+              <span [class]="'file-icon fa fa-4x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
             </div>
             <div class="media-image-title">
               <div>{{ media.filename }}</div>

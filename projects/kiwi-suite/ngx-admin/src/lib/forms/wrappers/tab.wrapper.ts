@@ -1,6 +1,6 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { FieldWrapper } from '@ngx-formly/core';
-import { FormlyWrapperTabsetComponent } from './tabset';
+import { FormlyWrapperTabsetComponent } from './tabset.wrapper';
 
 @Component({
   selector: 'formly-wrapper-tab',
