@@ -7,16 +7,16 @@
 }
 
 .media-container-max-width-container {
-  max-width: 160px;
+  max-width: 150px;
 }
 
 .media-container {
   display: block;
   position: relative;
   overflow: hidden;
-  border: 2px solid $border-color;
+  border: 1px solid $input-border-color;
   padding-bottom: calc(100% - 24px);
-  border-radius: $border-radius;
+  border-radius: $input-border-radius;
   cursor: pointer;
 
   &.is-invalid {
@@ -45,7 +45,7 @@
     border: 0;
     background: $border-color;
     color: #fff;
-    @include border-radius(0 0 0 $border-radius);
+    @include border-radius(0 0 0 $input-border-radius);
     width: 25px;
     height: 25px;
     text-align: center;
@@ -96,7 +96,7 @@
 
     .file-icon {
       display: block;
-      color: $border-color;
+      color: $input-border-color;
     }
   }
 
@@ -105,7 +105,7 @@
     width: 100%;
     bottom: 0;
     left: 0;
-    background: $border-color;
+    background: $input-border-color;
     font-size: .85em;
     padding: 0 5px;
     height: 25px;
