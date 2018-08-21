@@ -44,7 +44,6 @@ export class ConfigService {
 
   setUserPermissions(permissions: Array<string>) {
     this._userPermissions = permissions;
-    this.parseNavigation();
   }
 
   get userPermissions(): Array<string> {
@@ -70,7 +69,7 @@ export class ConfigService {
   private parseNavigation() {
     const navigation = [];
 
-    if (this.appConfig.navigation && this.userPermissions) {
+    if (this.appConfig.navigation) {
       for (const group of this.appConfig.navigation) {
         navigation.push({
           title: true,

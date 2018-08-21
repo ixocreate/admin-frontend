@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, publishLast, refCount, retryWhen, timeout } from 'rxjs/operators';
-import { genericRetryStrategy } from './generic-retry-strategy';
 import { _throw } from 'rxjs/observable/throw';
 import { BehaviorSubject } from 'rxjs';
+import { APIErrorElement, APIResponse } from '../interfaces/api-response.interface';
 
 export enum ApiRequestMethod {
   GET = 'get',
@@ -17,41 +17,17 @@ export enum ApiRequestMethod {
   OPTIONS = 'options',
 }
 
-export interface APIErrorElement {
-  code: string;
-  data: APIErrorMessages;
-}
-
-export interface APIErrorMessages {
-  title: string;
-  messages: Array<string>;
-}
-
-export interface APIResponse {
-  success: Boolean;
-  result?: any;
-  errorCode?: string;
-  errorMessages?: Array<string>;
-}
-
 @Injectable()
 export class ApiService {
 
   private _isAuthorized$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  constructor(protected http: HttpClient,
-              protected config: ConfigService) {
+  constructor(protected http: HttpClient, protected config: ConfigService) {
   }
 
   get isAuthorized$(): Observable<boolean> {
     return this._isAuthorized$.asObservable();
-  }
-
-  /**
-   * @description Headers for requests
-   */
-  protected get headers(): HttpHeaders {
-    return new HttpHeaders({'Content-Type': 'application/json'});
   }
 
   /**
@@ -82,7 +58,6 @@ export class ApiService {
       withCredentials: !this.config.environment.production,
     }).pipe(
       timeout(10000),
-      retryWhen(genericRetryStrategy()),
       publishLast(),
       refCount(),
       catchError((error) => {

@@ -8,7 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
   selector: 'formly-field-media',
   template: `
     <div class="media-container-max-width-container">
-      <div class="media-container media-container-max-width" (click)="openModal(modalTemplate)">
+      <div class="media-container media-container-max-width" (click)="openModal(modalTemplate)" [class.is-invalid]="showError">
         <ng-container *ngIf="!media; else hasMedia">
           <div class="media-icon">
             <span class="file-icon fa fa-5x fa-fw fa-plus"></span>

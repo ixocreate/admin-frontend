@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
-import { APIErrorElement } from './api.service';
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { FormlyConfig } from '@ngx-formly/core';
+import { APIErrorElement } from '../interfaces/api-response.interface';
 
 @Injectable()
 export class NotificationService {

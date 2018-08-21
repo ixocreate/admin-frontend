@@ -5,7 +5,7 @@ import { FieldType } from '@ngx-formly/core';
   selector: 'formly-field-datetime',
   template: `
     <input class="form-control" [formlyAttributes]="field" [formControl]="formControl" [placement]="placement" [bsConfig]="config"
-           bsDatepicker>
+           [class.is-invalid]="showError" bsDatepicker>
   `,
 })
 export class FormlyFieldDateTimeComponent extends FieldType {

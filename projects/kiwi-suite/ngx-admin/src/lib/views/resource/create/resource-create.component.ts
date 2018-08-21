@@ -19,7 +19,6 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
-  showButton = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -37,7 +36,6 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
         this.resourceName = data.label;
         data.schema = this.schemaTransformService.transformForm(data.schema);
         this.fields = data.schema ? data.schema : [];
-        setTimeout(() => this.showButton = true);
         this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceName}]);
         return data;
       });

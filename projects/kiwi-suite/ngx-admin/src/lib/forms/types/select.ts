@@ -19,6 +19,7 @@ export class SelectOption {
   template: `
     <ng-container *ngIf="selectOptions">
       <ng-select
+        [class.is-invalid]="showError"
         [items]="selectOptions"
         [bindValue]="valueProp"
         [bindLabel]="labelProp"
