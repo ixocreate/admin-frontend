@@ -1,15 +1,15 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FieldType } from '@ngx-formly/core';
+import { Component, TemplateRef } from '@angular/core';
 import { MediaHelper } from '../../helpers/media.helper';
-import { Media } from '../../interfaces/media.interface';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
+import { Media } from '../../interfaces/media.interface';
 
 @Component({
   selector: 'formly-field-media',
   template: `
     <div class="media-container-max-width-container">
       <div class="media-container media-container-max-width" (click)="openModal(modalTemplate)" [class.is-invalid]="showError">
-        <ng-container *ngIf="!media; else hasMedia">
+        <ng-container *ngIf="!value; else hasMedia">
           <div class="media-icon">
             <span class="file-icon fa fa-4x fa-fw fa-plus"></span>
           </div>
@@ -19,18 +19,18 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
         </ng-container>
         <ng-template #hasMedia>
           <button (click)="remove($event)" kiwiClickStopPropagation class="btn-media-remove"><i class="fa fa-close"></i></button>
-          <ng-container *ngIf="isImage(media.mimeType); else noImage">
-            <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + media.thumb + ')'}"></div>
+          <ng-container *ngIf="isImage(value.mimeType); else noImage">
+            <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + value.thumb + ')'}"></div>
             <div class="media-image-title">
-              <div>{{ media.filename }}</div>
+              <div>{{ value.filename }}</div>
             </div>
           </ng-container>
           <ng-template #noImage class="media-container">
             <div class="media-icon">
-              <span [class]="'file-icon fa fa-4x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
+              <span [class]="'file-icon fa fa-4x fa-fw ' + mimeTypeIcon(value.mimeType)"></span>
             </div>
             <div class="media-image-title">
-              <div>{{ media.filename }}</div>
+              <div>{{ value.filename }}</div>
             </div>
           </ng-template>
         </ng-template>
@@ -42,38 +42,24 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
     </ng-template>
   `,
 })
-export class FormlyFieldMediaComponent extends FieldType implements OnInit {
+export class FormlyFieldMediaComponent extends CustomFieldTypeAbstract {
 
-  media: Media;
+  value: Media;
   modalRef: BsModalRef;
 
   isImage = MediaHelper.isImage;
-  isSVG = MediaHelper.isSVG;
   mimeTypeIcon = MediaHelper.mimeTypeIcon;
 
   constructor(protected modalService: BsModalService) {
     super();
   }
 
-  ngOnInit() {
-    this.setValue(this.formControl.value);
-  }
-
-  setValue(media: Media) {
-    this.media = media;
-    this.formControl.setValue(media);
-  }
-
-  remove() {
-    this.setValue(null);
-  }
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-lg modal-empty'});
   }
 
-  onSelect(media: Media) {
+  onSelect(value: any) {
     this.modalRef.hide();
-    this.setValue(media);
+    super.setValue(value);
   }
 }

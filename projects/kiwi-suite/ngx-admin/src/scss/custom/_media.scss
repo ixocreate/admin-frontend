@@ -10,6 +10,21 @@
   max-width: 140px;
 }
 
+.media-inline {
+  .card {
+    margin-top: -1px;
+    border-radius: 0 0 $modal-content-border-radius $modal-content-border-radius;
+    margin-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .card-header:first-child {
+    border-radius: 0;
+  }
+}
+
 .media-container {
   display: block;
   position: relative;
