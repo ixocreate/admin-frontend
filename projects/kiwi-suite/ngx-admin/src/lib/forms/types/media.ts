@@ -47,6 +47,10 @@ export class FormlyFieldMediaComponent extends FieldType implements OnInit {
   media: Media;
   modalRef: BsModalRef;
 
+  isImage = MediaHelper.isImage;
+  isSVG = MediaHelper.isSVG;
+  mimeTypeIcon = MediaHelper.mimeTypeIcon;
+
   constructor(protected modalService: BsModalService) {
     super();
   }
@@ -71,17 +75,5 @@ export class FormlyFieldMediaComponent extends FieldType implements OnInit {
   onSelect(media: Media) {
     this.modalRef.hide();
     this.setValue(media);
-  }
-
-  isImage(mimeType: string): boolean {
-    return MediaHelper.isImage(mimeType);
-  }
-
-  isSVG(mimeType: string): boolean {
-    return MediaHelper.isSVG(mimeType);
-  }
-
-  mimeTypeIcon(mimeType: string): string {
-    return MediaHelper.mimeTypeIcon(mimeType);
   }
 }

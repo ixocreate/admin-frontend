@@ -24,6 +24,10 @@ export class KiwiMediaListComponent implements OnInit {
 
   @Output() select = new EventEmitter<Media>();
 
+  isImage = MediaHelper.isImage;
+  isSVG = MediaHelper.isSVG;
+  mimeTypeIcon = MediaHelper.mimeTypeIcon;
+
   constructor(private config: ConfigService, private appData: AppDataService) {
   }
 
@@ -56,18 +60,6 @@ export class KiwiMediaListComponent implements OnInit {
 
   selectMedia(media: Media) {
     this.select.emit(media);
-  }
-
-  isImage(mimeType: string): boolean {
-    return MediaHelper.isImage(mimeType);
-  }
-
-  isSVG(mimeType: string): boolean {
-    return MediaHelper.isSVG(mimeType);
-  }
-
-  mimeTypeIcon(mimeType: string): string {
-    return MediaHelper.mimeTypeIcon(mimeType);
   }
 
   applyFilter() {
