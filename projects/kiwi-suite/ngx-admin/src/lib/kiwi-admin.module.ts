@@ -26,7 +26,7 @@ import {
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, Router, RouteReuseStrategy, RouterModule } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { KIWI_CONFIG, KiwiConfig } from './services/config.service';
 import { AppDataService } from './services/data/app-data.service';
@@ -59,11 +59,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { KiwiSitemapComponent } from './components/kiwi-sitemap/kiwi-sitemap.component';
 import { KiwiSitemapItemComponent } from './components/kiwi-sitemap-item/kiwi-sitemap-item.component';
 import { PipesModule } from './pipes/pipes.module';
-import { KiwiDatePipe } from './pipes/kiwi-date.pipe';
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
-import { AccountDataService } from './services/data/account-data.service';
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -213,6 +213,8 @@ export class KiwiAdminModule {
       ngModule: KiwiAdminModule,
       providers: [
         PermissionGuard,
+        NoAuthGuard,
+        AuthGuard,
         {
           provide: KIWI_CONFIG,
           useValue: config,

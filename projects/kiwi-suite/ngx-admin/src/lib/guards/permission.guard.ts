@@ -24,19 +24,12 @@ export class PermissionGuard implements CanActivate {
         action = 'create';
       }
       const ability = 'admin.api.' + resource + '.' + action;
-      RxService.getData(this.accountData.isAuthorized$).then((isAuthorized: User) => {
-        if (isAuthorized) {
-          RxService.getData(this.accountData.user$).then((user: User) => {
-            const can = canActivateWithPermissions(user.permissions, [ability]);
-            if (!can) {
-              this.router.navigateByUrl('/');
-              resolve(false);
-            } else {
-              resolve(true);
-            }
-          });
+      RxService.getData(this.accountData.user$).then((user: User) => {
+        const can = canActivateWithPermissions(user.permissions, [ability]);
+        if (can) {
+          resolve(true);
         } else {
-          this.router.navigateByUrl('/login');
+          this.router.navigateByUrl('/');
           resolve(false);
         }
       });

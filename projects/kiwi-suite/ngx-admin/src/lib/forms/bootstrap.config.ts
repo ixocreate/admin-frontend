@@ -1,8 +1,8 @@
 import { ConfigOption } from '@ngx-formly/core';
 import { FormlyFieldMediaComponent } from './types/media';
-import { FormlyWrapperSection } from './wrappers/section';
-import { FormlyWrapperTabset } from './wrappers/tabset';
-import { FormlyWrapperTab } from './wrappers/tab';
+import { FormlyWrapperSectionComponent } from './wrappers/section';
+import { FormlyWrapperTabsetComponent } from './wrappers/tabset';
+import { FormlyWrapperTabComponent } from './wrappers/tab';
 import { FormlyFieldDateTimeComponent } from './types/datetime';
 import { FormlyFieldLinkComponent } from './types/link';
 import { FormlyFieldSelectComponent } from './types/select';
@@ -15,9 +15,9 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldLinkComponent,
 
   // wrappers
-  FormlyWrapperSection,
-  FormlyWrapperTabset,
-  FormlyWrapperTab,
+  FormlyWrapperSectionComponent,
+  FormlyWrapperTabsetComponent,
+  FormlyWrapperTabComponent,
 ];
 
 export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
@@ -139,8 +139,8 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     */
   ],
   wrappers: [
-    {name: 'section', component: FormlyWrapperSection},
-    {name: 'tabset', component: FormlyWrapperTabset},
-    {name: 'tab', component: FormlyWrapperTab},
+    {name: 'section', component: FormlyWrapperSectionComponent},
+    {name: 'tabset', component: FormlyWrapperTabsetComponent},
+    {name: 'tab', component: FormlyWrapperTabComponent},
   ],
 };

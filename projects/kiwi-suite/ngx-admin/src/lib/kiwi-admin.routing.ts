@@ -16,24 +16,20 @@ import { ResourceEditComponent } from './views/resource/edit/resource-edit.compo
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  },
-  {
     path: 'login',
     component: LoginComponent,
-    data: {
-      title: 'Login',
-    },
+    data: {title: 'Login'},
+    canActivate: [NoAuthGuard],
   },
   {
     path: '',
     component: DefaultLayoutComponent,
-    canActivate: [PermissionGuard],
+    canActivate: [AuthGuard, PermissionGuard],
     children: [
       {path: '', redirectTo: 'page', pathMatch: 'full'},
       {
@@ -69,7 +65,7 @@ export const routes: Routes = [
             path: ':id/edit',
             component: PageEditComponent,
             data: {title: 'Edit Page'},
-          }
+          },
         ],
       },
       {
@@ -130,6 +126,10 @@ export const routes: Routes = [
             data: {title: 'Edit'},
           },
         ],
+      },
+      {
+        path: '**',
+        redirectTo: 'page',
       },
       /*
       {
