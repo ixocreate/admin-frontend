@@ -7,8 +7,6 @@ import { DefaultStore } from '../../store/default.store';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../interfaces/user.interface';
 import { ConfigService } from '../config.service';
-import { tap } from 'rxjs/internal/operators';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AccountDataService extends DataServiceAbstract {
@@ -20,6 +18,11 @@ export class AccountDataService extends DataServiceAbstract {
     super(store);
 
     this.isAuthorized$ = this.api.isAuthorized$;
+    this.isAuthorized$.subscribe((isAuthorized) => {
+      if (!isAuthorized) {
+        this.store.dispatch(DefaultStore.Actions.Clear('USER'));
+      }
+    });
 
     this.store.addReducer('user', DefaultStore.Handle('USER'));
 

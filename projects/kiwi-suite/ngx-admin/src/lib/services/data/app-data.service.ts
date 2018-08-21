@@ -44,7 +44,7 @@ export class AppDataService extends DataServiceAbstract {
 
   loadConfig(): Promise<any> {
     return this.api.get(this.config.appConfig.routes.config).then((data: Config) => {
-      this.saveToDefaultStore('CONFIG', Object.assign({}, this.config, DefaultHelper.windowVar('__kiwi'), data));
+      this.saveToDefaultStore('CONFIG', Object.assign({}, DefaultHelper.windowVar('__kiwi'), data));
     });
   }
 

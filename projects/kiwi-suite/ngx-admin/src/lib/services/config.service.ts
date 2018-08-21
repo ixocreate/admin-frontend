@@ -1,9 +1,6 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Config } from '../interfaces/config.interface';
-import { AppState } from '../store/app.state';
-import { Store } from '@ngrx/store';
 import { DefaultHelper } from '../helpers/default.helper';
-import { canActivateWithPermissions } from '../shared/userCanActivate';
 
 export const KIWI_CONFIG = new InjectionToken<KiwiConfig>('KIWI_CONFIG');
 
@@ -20,14 +17,8 @@ export interface EnvironmentConfig {
 @Injectable()
 export class ConfigService {
 
-  private _appConfig: Config = {
-    project: {},
-    navigation: [],
-    routes: null,
-  };
-
+  private _appConfig: Config;
   private _userPermissions: Array<string> = null;
-
   private _navigation: any = [];
 
   private readonly _config: KiwiConfig = {
@@ -38,7 +29,7 @@ export class ConfigService {
     },
   };
 
-  constructor(@Inject(KIWI_CONFIG) config: KiwiConfig, private store: Store<AppState>) {
+  constructor(@Inject(KIWI_CONFIG) config: KiwiConfig) {
     this._config = Object.assign({}, this._config, config);
   }
 
@@ -85,19 +76,11 @@ export class ConfigService {
           title: true,
           name: group.name,
         });
-
-        let hasChild = false;
         for (const item of group.children) {
           if (item.children && item.children.length === 0) {
             delete item.children;
           }
-          if (canActivateWithPermissions(this.userPermissions, item.permissions)) {
-            hasChild = true;
-            navigation.push(item);
-          }
-        }
-        if (!hasChild) {
-          navigation.pop();
+          navigation.push(item);
         }
       }
     }
