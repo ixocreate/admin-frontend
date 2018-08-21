@@ -27,8 +27,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   navigationModel: { navigation: Array<string> };
   navigationFields: FormlyFieldConfig[];
 
-  showButton = false;
-
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -49,7 +47,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     this.detailData$ = this.appData.getResourceDetail('page', this.id).then((data) => {
       data.schema = this.schemaTransformService.transformForm(data.schema);
       this.detailFields = data.schema ? data.schema : [];
-      setTimeout(() => this.showButton = true);
       return data;
     });
   }

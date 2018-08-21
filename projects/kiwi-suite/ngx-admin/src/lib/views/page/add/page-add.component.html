@@ -1,10 +1,8 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <ng-container *ngIf="showButton">
-      <button class="btn btn-success" (click)="onSubmit()" [disabled]="!form.valid">
-        <i class="fa fa-plus"></i> Create
-      </button>
-    </ng-container>
+    <button class="btn btn-success" (click)="onSubmit()" [disabled]="!form.valid">
+      <i class="fa fa-plus"></i> Create
+    </button>
   </ng-template>
 
   <div class="card card-accent-primary">

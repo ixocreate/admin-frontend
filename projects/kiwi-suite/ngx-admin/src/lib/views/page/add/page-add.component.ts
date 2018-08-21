@@ -17,7 +17,6 @@ export class PageAddComponent extends ViewAbstractComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
-  showButton = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -41,7 +40,6 @@ export class PageAddComponent extends ViewAbstractComponent implements OnInit {
           },
         },
       ];
-      setTimeout(() => this.showButton = true);
     });
   }
 

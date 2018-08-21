@@ -18,7 +18,6 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
-  showButton = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -35,7 +34,6 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
       this.data$ = this.appData.getPageCreateSchema(this.parentSitemapId).then((data) => {
         data.schema = this.schemaTransformService.transformForm(data.schema);
         this.fields = data.schema ? data.schema : [];
-        setTimeout(() => this.showButton = true);
         return data;
       });
     });
