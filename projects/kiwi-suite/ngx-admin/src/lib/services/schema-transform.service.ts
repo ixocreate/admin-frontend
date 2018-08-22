@@ -1,86 +1,82 @@
 import { Injectable } from '@angular/core';
 
+export interface Schema {
+  key: string;
+  type: string;
+  templateOptions: { [key: string]: any };
+}
+
 @Injectable()
 export class SchemaTransformService {
-  private transformers: { inputType: string, callback: (value: any, transformer: SchemaTransformService) => any }[] = [];
+
+  private transformers: { [inputType: string]: (value: any, transformer: SchemaTransformService) => any } = {};
 
   constructor() {
     this.registerTransform('section', this.handleSection);
     this.registerTransform('tabbedGroup', this.handleTabbedGroup);
-    this.registerTransform('blockContainer', this.handleBlockContainer);
-    this.registerTransform('collection', this.handleCollection);
+    this.registerTransform('blockContainer', this.handleDynamic);
+    this.registerTransform('collection', this.handleDynamic);
+
+    this.registerTransform('text', this.handleDefault('input'));
+    this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}));
+    this.registerTransform('checkbox', this.handleDefault('checkbox'));
+
+    this.registerTransform('date', this.handleDefault('date'));
+    this.registerTransform('datetime', this.handleDefault('datetime'));
+    this.registerTransform('link', this.handleDefault('link'));
+    this.registerTransform('image', this.handleDefault('media'));
+    this.registerTransform('youtube', this.handleDefault('youtube'));
+    this.registerTransform('color', this.handleDefault('color'));
     this.registerTransform('select', this.handleSelect);
     this.registerTransform('multiselect', this.handleMultiSelect);
-    this.registerTransform('datetime', this.handleDatetime);
-    this.registerTransform('date', this.handleDate);
-    this.registerTransform('image', this.handleImage);
-    this.registerTransform('text', this.handleText);
-    this.registerTransform('youtube', this.handleYouTube);
-    this.registerTransform('color', this.handleColor);
-    this.registerTransform('html', this.handleHtml);
-    this.registerTransform('link', this.handleLink);
-    this.registerTransform('checkbox', this.handleCheckbox);
-    this.registerTransform('textarea', this.handleTextarea);
+
+    this.registerTransform('html', this.handleDefault('wysiwyg', {
+      height: 200,
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{'list': 'ordered'}, {'list': 'bullet'}],
+          [{'script': 'sub'}, {'script': 'super'}],
+          [{'indent': '-1'}, {'indent': '+1'}],
+          [{'header': [1, 2, 3, 4, 5, 6, false]}],
+          [{'align': []}],
+          ['clean'],
+          ['link'],
+        ],
+      },
+    }));
   }
 
   registerTransform(inputType: string, callback: (value: any, transformer: SchemaTransformService) => any) {
-    this.transformers.push({
-      inputType: inputType,
-      callback: callback,
-    });
+    this.transformers[inputType] = callback;
   }
 
-  public transform(apiSchema: any): any {
-    return {
-      name: apiSchema.name,
-      namePlural: apiSchema.namePlural,
-      list: apiSchema.list,
-      form: this.transformForm(apiSchema.form),
-    };
-  }
-
-
-  public transformForm(form: any): any {
+  transformForm(form: any): any {
     const formSchema = [];
-
     form.forEach((value) => {
-      this.transformers.forEach((transformer) => {
-        if (transformer.inputType !== value.inputType) {
-          return;
-        }
-
-        formSchema.push(transformer.callback(value, this));
-      });
+      if (this.transformers[value.inputType]) {
+        formSchema.push(this.transformers[value.inputType](value, this));
+      }
     });
-
     return formSchema;
   }
 
-  private handleBlockContainer(value: any, transformer: SchemaTransformService): any {
-    const groups = [];
-
-    value.elements.forEach((element) => {
-      groups.push({
-        _type: element.name,
+  private handleDefault(type: string, templateOptions: any = {}) {
+    return (value: any): Schema => {
+      return {
+        key: value.name,
+        type: type,
         templateOptions: {
-          label: element.label,
+          label: value.label,
+          placeholder: value.label + '...',
+          required: value.required,
+          ...templateOptions,
         },
-        fieldGroup: transformer.transformForm(element.elements),
-      });
-    });
-
-    return {
-      key: value.name,
-      type: 'dynamic',
-      templateOptions: {
-        label: value.label,
-      },
-      fieldArray: [],
-      fieldGroups: groups,
+      };
     };
   }
 
-  private handleCollection(value: any, transformer: SchemaTransformService): any {
+  private handleDynamic(value: any, transformer: SchemaTransformService): any {
     const groups = [];
 
     value.elements.forEach((element) => {
@@ -137,190 +133,29 @@ export class SchemaTransformService {
     };
   }
 
-  private handleSelect(value: any, transformer: SchemaTransformService): any {
+  private handleSelect(value: any, transformer: SchemaTransformService): Schema {
     const options = [];
 
     for (const key in value.options) {
       if (value.options.hasOwnProperty(key)) {
-        options.push({
-          value: key,
-          label: value.options[key],
-        });
+        options.push({value: key, label: value.options[key]});
       }
     }
 
-    return {
-      key: value.name,
-      type: 'select',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-        options: options,
-        resource: value.resource,
-        clearable: value.clearable || false,
-      },
-    };
+    return transformer.handleDefault('select', {
+      options: options,
+      resource: value.resource,
+      clearable: value.clearable || false,
+    })(value);
   }
 
-  private handleMultiSelect(value: any, transformer: SchemaTransformService): any {
-    const options = [];
-
-    for (const key in value.options) {
-      if (value.options.hasOwnProperty(key)) {
-        options.push({
-          value: key,
-          label: value.options[key],
-        });
-      }
-    }
-
-    return {
-      key: value.name,
-      type: 'select',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-        options: options,
-        resource: value.resource,
-        multiple: true,
-        clearable: value.clearable || true,
-      },
-    };
-  }
-
-  private handleText(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'input',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
-  }
-
-  private handleCheckbox(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'checkbox',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
-  }
-
-  private handleTextarea(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'textarea',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-        rows: 3,
-      },
-    };
-  }
-
-  private handleImage(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'media',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
-  }
-
-  private handleDate(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'date',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
-  }
-
-  private handleDatetime(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'datetime',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
-  }
-
-  private handleHtml(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'wysiwyg',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-        height: 200,
-        modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            [{'list': 'ordered'}, {'list': 'bullet'}],
-            [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-            [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-            [{'header': [1, 2, 3, 4, 5, 6, false]}],
-            [{'align': []}],
-            ['clean'], // remove formatting button
-            ['link'],
-          ],
-        },
-      },
-    };
-  }
-
-  private handleLink(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'link',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
-  }
-
-  private handleYouTube(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'youtube',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
-  }
-
-  private handleColor(value: any, transformer: SchemaTransformService): any {
-    return {
-      key: value.name,
-      type: 'color',
-      templateOptions: {
-        label: value.label,
-        placeholder: value.label + '...',
-        required: value.required,
-      },
-    };
+  private handleMultiSelect(value: any, transformer: SchemaTransformService): Schema {
+    const data = transformer.handleSelect(value, transformer);
+    data.templateOptions = Object.assign({
+      ...data.templateOptions,
+      multiple: true,
+      clearable: value.clearable || true,
+    });
+    return data;
   }
 }
