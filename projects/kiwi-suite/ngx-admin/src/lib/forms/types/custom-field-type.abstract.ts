@@ -15,6 +15,7 @@ export class CustomFieldTypeAbstract extends FieldType implements OnInit {
   }
 
   remove() {
+    this.formControl.markAsTouched();
     this.setValue(null);
   }
 

@@ -5,13 +5,13 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 @Component({
   selector: 'formly-field-link',
   template: `
-    <div class="input-group" *ngIf="value">
+    <div class="input-group cursor-pointer" *ngIf="value" (click)="openModal(modalTemplate)">
       <div class="input-group-prepend">
         <span class="input-group-text">{{ value.type }}</span>
       </div>
       <input type="text" class="form-control pointer-events-none" [value]="valueString">
       <div class="input-group-append">
-        <button type="button" class="btn btn-outline-danger" (click)="remove()">
+        <button type="button" class="btn btn-outline-input" (click)="remove()" kiwiClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>
