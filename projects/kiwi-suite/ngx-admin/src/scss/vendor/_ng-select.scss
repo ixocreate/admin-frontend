@@ -30,3 +30,11 @@
     }
   }
 }
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: $input-border-color transparent transparent;
+}
+
+.ng-select.ng-select-opened > .ng-select-container .ng-arrow {
+  border-color: transparent transparent $input-border-color;
+}
