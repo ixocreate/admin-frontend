@@ -20,7 +20,7 @@ export class PageTitleService {
               private activatedRoute: ActivatedRoute) {
   }
 
-  setPageTitle(replaceData: Array<{ search: string, replace: string}> = [{search: '{resource}', replace: '...'}]) {
+  setPageTitle(replaceData: Array<{ search: string, replace: string}> = [{search: '{resource}', replace: ''}]) {
     let name = this.pageName;
     for (const value of replaceData) {
       name = name.replace(value.search, value.replace);

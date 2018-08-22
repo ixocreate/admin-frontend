@@ -10,6 +10,8 @@ import { BsModalService } from 'ngx-bootstrap';
 import { KiwiConfirmModalComponent } from '../../../components/kiwi-confirm-modal/kiwi-confirm-modal.component';
 import { ConfirmModalData } from '../../../interfaces/confirm-modal-data.interface';
 import { PageTitleService } from '../../../services/page-title.service';
+import { ResourceConfig } from '../../../interfaces/config.interface';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   templateUrl: './resource-edit.component.html',
@@ -18,9 +20,9 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
 
   data$: Promise<any>;
 
-  resourceName: string;
   resourceKey: string;
   resourceId: string;
+  resourceInfo: ResourceConfig;
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
@@ -29,8 +31,9 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
               protected router: Router,
               protected appData: AppDataService,
               protected notification: NotificationService,
-              protected schemaTransformService: SchemaTransformService,
+              protected config: ConfigService,
               protected pageTitle: PageTitleService,
+              protected schemaTransformService: SchemaTransformService,
               protected modalService: BsModalService) {
     super();
   }
@@ -39,13 +42,10 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
     this.route.params.subscribe(params => {
       this.resourceKey = params.type;
       this.resourceId = params.id;
-      this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId).then((data) => {
-        this.resourceName = data.label;
-        data.schema = this.schemaTransformService.transformForm(data.schema);
-        this.fields = data.schema ? data.schema : [];
-        this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceName}]);
-        return data;
-      });
+      this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
+      this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
+      this.fields = this.resourceInfo.updateSchema ?  this.schemaTransformService.transformForm(this.resourceInfo.updateSchema) : [];
+      this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
     });
   }
 
@@ -54,18 +54,18 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
       this.notification.formErrors(this.form);
     } else {
       this.appData.updateResource(this.resourceKey, this.resourceId, this.form.getRawValue()).then(() => {
-        this.notification.success(this.resourceName + ' successfully updated', 'Success');
+        this.notification.success(this.resourceInfo.label + ' successfully updated', 'Success');
       }).catch((error) => this.notification.apiError(error));
     }
   }
 
   doDelete(): void {
     const initialState: ConfirmModalData = {
-      title: 'Delete this ' + this.resourceName + '?',
-      text: 'Do you really want to delete this ' + this.resourceName + '?',
+      title: 'Delete this ' + this.resourceInfo.label + '?',
+      text: 'Do you really want to delete this ' + this.resourceInfo.label + '?',
       onConfirm: () => {
         this.appData.deleteResource(this.resourceKey, this.resourceId).then(() => {
-          this.notification.success(this.resourceName + ' successfully deleted', 'Success');
+          this.notification.success(this.resourceInfo.label + ' successfully deleted', 'Success');
           this.router.navigateByUrl('/resource/' + this.resourceKey);
         }).catch((error) => this.notification.apiError(error));
       },

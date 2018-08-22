@@ -5,8 +5,8 @@ import { FieldWrapper } from '@ngx-formly/core';
   selector: 'formly-wrapper-form-field',
   template: `
     <div class="form-group row" [class.has-error]="showError">
-      <label *ngIf="to.label && to.hideLabel !== true" [attr.for]="id" class="col-sm-2 col-form-label">
-        {{ to.label }}<ng-container *ngIf="to.required && to.hideRequiredMarker !== true"><b class="text-danger">*</b></ng-container>
+      <label *ngIf="to.label && to['hideLabel'] !== true" [attr.for]="id" class="col-sm-2 col-form-label">
+        {{ to.label }}<ng-container *ngIf="to.required && to['hideRequiredMarker'] !== true"><b class="text-danger">*</b></ng-container>
       </label>
 
       <div class="col-sm">

@@ -33,25 +33,25 @@ export class AccountDataService extends DataServiceAbstract {
   }
 
   loadUser(): Promise<any> {
-    return this.api.get(this.config.appConfig.routes.authUser).then((data: any) => {
+    return this.api.get(this.config.config.routes.authUser).then((data: any) => {
       this.saveToDefaultStore('USER', data);
     });
   }
 
   updateEmail(email: string, emailRepeat: string) {
-    return this.api.patch(this.config.appConfig.routes.accountEmail, {email, emailRepeat});
+    return this.api.patch(this.config.config.routes.accountEmail, {email, emailRepeat});
   }
 
   updatePassword(passwordOld: string, password: string, passwordRepeat: string) {
-    return this.api.patch(this.config.appConfig.routes.accountPassword, {passwordOld, password, passwordRepeat});
+    return this.api.patch(this.config.config.routes.accountPassword, {passwordOld, password, passwordRepeat});
   }
 
   login(email: string, password: string) {
-    return this.api.post(this.config.appConfig.routes.authLogin, {email, password});
+    return this.api.post(this.config.config.routes.authLogin, {email, password});
   }
 
   logout() {
-    return this.api.post(this.config.appConfig.routes.authLogout);
+    return this.api.post(this.config.config.routes.authLogout);
   }
 
 }

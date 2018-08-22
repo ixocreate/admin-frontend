@@ -7,6 +7,7 @@ export interface Config {
   project?: Project;
   navigation?: Navigation[];
   routes?: Routes;
+  resources?: Array<ResourceConfig>;
   intl?: { default: string, locales: Locale[] };
 }
 
@@ -34,4 +35,12 @@ export interface Locale {
   locale: string;
   name: string;
   active: boolean;
+}
+
+export interface ResourceConfig {
+  name: string;
+  label: string;
+  listSchema: any;
+  createSchema: any;
+  updateSchema: any;
 }

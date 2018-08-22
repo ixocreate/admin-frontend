@@ -35,7 +35,7 @@ export class KiwiMediaListComponent implements OnInit {
     this.updateMedia();
 
     this.uploader = new FileUploader({
-      url: this.config.appConfig.routes.mediaUpload,
+      url: this.config.config.routes.mediaUpload,
       removeAfterUpload: true,
       autoUpload: true,
       headers: [

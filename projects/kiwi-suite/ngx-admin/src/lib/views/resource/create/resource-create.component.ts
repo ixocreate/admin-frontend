@@ -7,15 +7,16 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
 import { PageTitleService } from '../../../services/page-title.service';
+import { ConfigService } from '../../../services/config.service';
+import { ResourceConfig } from '../../../interfaces/config.interface';
 
 @Component({
   templateUrl: './resource-create.component.html',
 })
 export class ResourceCreateComponent extends ViewAbstractComponent implements OnInit {
 
-  data$: Promise<any>;
   resourceKey: string;
-  resourceName: string;
+  resourceInfo: ResourceConfig;
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
@@ -24,6 +25,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
               protected router: Router,
               protected appData: AppDataService,
               protected notification: NotificationService,
+              protected config: ConfigService,
               protected pageTitle: PageTitleService,
               protected schemaTransformService: SchemaTransformService) {
     super();
@@ -32,13 +34,9 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.resourceKey = params.type;
-      this.data$ = this.appData.createResourceDetail(this.resourceKey).then((data) => {
-        this.resourceName = data.label;
-        data.schema = this.schemaTransformService.transformForm(data.schema);
-        this.fields = data.schema ? data.schema : [];
-        this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceName}]);
-        return data;
-      });
+      this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
+      this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
+      this.fields = this.resourceInfo.createSchema ?  this.schemaTransformService.transformForm(this.resourceInfo.createSchema) : [];
     });
   }
 
@@ -47,7 +45,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
       this.notification.formErrors(this.form);
     } else {
       this.appData.createResource(this.resourceKey, this.form.getRawValue()).then((response) => {
-        this.notification.success(this.resourceName + ' successfully created', 'Success');
+        this.notification.success(this.resourceInfo.label + ' successfully created', 'Success');
         this.router.navigateByUrl('/resource/' + this.resourceKey + '/' + response.id + '/edit');
       }).catch((error) => this.notification.apiError(error));
     }

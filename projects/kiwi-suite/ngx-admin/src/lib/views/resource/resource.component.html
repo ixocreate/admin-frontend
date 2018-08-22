@@ -3,7 +3,7 @@
     <a class="btn btn-success" routerLink="create"><i class="fa fa-plus"></i> Create</a>
   </ng-template>
 
-  <ng-container *ngIf="dataUrl">
-    <kiwi-datatable [apiUrl]="dataUrl" (updatedData)="onUpdatedData($event)"></kiwi-datatable>
+  <ng-container *ngIf="resourceKey">
+    <kiwi-datatable [resource]="resourceKey"></kiwi-datatable>
   </ng-container>
 </kiwi-content>

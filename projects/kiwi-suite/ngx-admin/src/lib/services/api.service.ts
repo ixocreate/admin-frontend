@@ -67,7 +67,7 @@ export class ApiService {
         return _throw(error.error ? this.errorMapping(error.error) : null);
       }),
       map((response: HttpResponse<any>) => {
-        if (url !== this.config.appConfig.routes.session && url !== this.config.appConfig.routes.config) {
+        if (url !== this.config.config.routes.session && url !== this.config.config.routes.config) {
           this._isAuthorized$.next(true);
         }
         const apiResponse: APIResponse = response.body;

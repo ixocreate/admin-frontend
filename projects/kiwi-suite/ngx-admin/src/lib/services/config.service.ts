@@ -1,5 +1,5 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Config } from '../interfaces/config.interface';
+import { Config, ResourceConfig } from '../interfaces/config.interface';
 import { DefaultHelper } from '../helpers/default.helper';
 
 export const KIWI_CONFIG = new InjectionToken<KiwiConfig>('KIWI_CONFIG');
@@ -17,11 +17,11 @@ export interface EnvironmentConfig {
 @Injectable()
 export class ConfigService {
 
-  private _appConfig: Config;
+  private _config: Config;
   private _userPermissions: Array<string> = null;
   private _navigation: any = [];
 
-  private readonly _config: KiwiConfig = {
+  private readonly _kiwiConfig: KiwiConfig = {
     namespace: '@kiwi',
     configVariable: '__kiwi',
     environment: {
@@ -30,16 +30,25 @@ export class ConfigService {
   };
 
   constructor(@Inject(KIWI_CONFIG) config: KiwiConfig) {
-    this._config = Object.assign({}, this._config, config);
+    this._kiwiConfig = Object.assign({}, this._kiwiConfig, config);
   }
 
-  setAppConfig(config: Config) {
-    this._appConfig = Object.assign({}, this.appConfig, DefaultHelper.windowVar('__kiwi'), config);
+  setConfig(config: Config) {
+    this._config = Object.assign({}, this.config, DefaultHelper.windowVar(this._kiwiConfig.configVariable), config);
     this.parseNavigation();
   }
 
-  get appConfig(): Config {
-    return this._appConfig;
+  get config(): Config {
+    return this._config;
+  }
+
+  getResourceConfig(resourceName: string): ResourceConfig {
+    for (const resourceConfig of this.config.resources) {
+      if (resourceConfig.name === resourceName) {
+        return resourceConfig;
+      }
+    }
+    return null;
   }
 
   setUserPermissions(permissions: Array<string>) {
@@ -50,16 +59,12 @@ export class ConfigService {
     return this._userPermissions;
   }
 
-  get config(): KiwiConfig {
-    return this._config;
-  }
-
   get namespace(): string {
-    return this._config.namespace ? this._config.namespace + '/' : '';
+    return this._kiwiConfig.namespace ? this._kiwiConfig.namespace + '/' : '';
   }
 
   get environment(): EnvironmentConfig {
-    return this._config.environment;
+    return this._kiwiConfig.environment;
   }
 
   get navigation() {
@@ -69,8 +74,8 @@ export class ConfigService {
   private parseNavigation() {
     const navigation = [];
 
-    if (this.appConfig.navigation) {
-      for (const group of this.appConfig.navigation) {
+    if (this.config.navigation) {
+      for (const group of this.config.navigation) {
         navigation.push({
           title: true,
           name: group.name,

@@ -1,7 +1,7 @@
 <app-header
   [fixed]="true"
-  [navbarBrandFull]="{src: config.appConfig.project.logo, width: 150, height: 45, alt: config.appConfig.project.name }"
-  [navbarBrandMinimized]="{src: config.appConfig.project.icon, width: 35, height: 35, alt: config.appConfig.project.name }"
+  [navbarBrandFull]="{src: config.config.project.logo, width: 150, height: 45, alt: config.config.project.name }"
+  [navbarBrandMinimized]="{src: config.config.project.icon, width: 35, height: 35, alt: config.config.project.name }"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="false"
   [mobileAsideMenuToggler]="false">
@@ -52,10 +52,8 @@
 </div>
 
 <app-footer>
-  <div><b>{{ config.appConfig.project.name }}</b> / &copy; {{ config.appConfig.project.copyright }} {{
-    config.appConfig.project.author }}.
-  </div>
-  <div *ngIf="config.appConfig.project.poweredBy" class="ml-auto text-muted">
+  <div><b>{{ config.config.project.name }}</b> config.config.project.copyright</div>
+  <div *ngIf="config.config.project.poweredBy" class="ml-auto text-muted">
     powered by <a href="https://github.com/kiwi-suite/kiwi" target="_blank">kiwi</a>
   </div>
 </app-footer>

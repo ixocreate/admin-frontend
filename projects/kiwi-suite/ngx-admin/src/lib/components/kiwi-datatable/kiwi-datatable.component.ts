@@ -3,6 +3,8 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ApiService } from '../../services/api.service';
 import { TableColumnData } from './table-column.interface';
 import { TableResponse } from './table-response.interface';
+import { ConfigService } from '../../services/config.service';
+import { ResourceConfig } from '../../interfaces/config.interface';
 
 @Component({
   selector: 'kiwi-datatable',
@@ -12,6 +14,9 @@ export class KiwiDatatableComponent implements OnInit {
 
   @Input() tableTitle = null;
   @Input() apiUrl = null;
+
+  @Input() resource = null;
+  private resourceInfo: ResourceConfig;
 
   @Output() updatedData = new EventEmitter<any>();
 
@@ -51,10 +56,14 @@ export class KiwiDatatableComponent implements OnInit {
     this.calculateColumns();
   }
 
-  constructor(protected api: ApiService) {
+  constructor(protected api: ApiService, private config: ConfigService) {
   }
 
   ngOnInit() {
+    if (this.resource) {
+      this.apiUrl = this.config.config.routes.resourceIndex.replace('{resource}', this.resource);
+      this.resourceInfo = this.config.getResourceConfig(this.resource);
+    }
     if (this.apiUrl) {
       this.updateElements();
     }
@@ -128,8 +137,15 @@ export class KiwiDatatableComponent implements OnInit {
         this.tableTitle = data.label;
       }
 
-      if (this.hostColumns.length === 0 && data.schema) {
-        const columns = data.schema.elements.map((element) => {
+      let schema = null;
+      if (this.resourceInfo) {
+        schema = this.resourceInfo.listSchema;
+      } else if (data.schema) {
+        schema = data.schema;
+      }
+
+      if (this.hostColumns.length === 0 && schema) {
+        const columns = schema.elements.map((element) => {
           return {
             name: element.label,
             prop: element.name,

@@ -27,57 +27,57 @@ export class AppDataService extends DataServiceAbstract {
     super(store);
 
     this.store.addReducer('session', DefaultStore.Handle('SESSION'));
-    this.config.setAppConfig({});
-    this.store.addReducer('config', DefaultStore.Handle('CONFIG', this.config.appConfig));
+    this.config.setConfig({});
+    this.store.addReducer('config', DefaultStore.Handle('CONFIG', this.config.config));
 
     this.session$ = this.loadFromStore('session', this.loadSession);
     this.config$ = this.store.select('config').pipe(tap((configResponse) => {
-      this.config.setAppConfig(configResponse);
+      this.config.setConfig(configResponse);
     }));
   }
 
   loadSession(): Promise<any> {
-    return this.api.get(this.config.appConfig.routes.session).then((data: any) => {
+    return this.api.get(this.config.config.routes.session).then((data: any) => {
       this.saveToDefaultStore('SESSION', data);
     });
   }
 
   loadConfig(): Promise<any> {
-    return this.api.get(this.config.appConfig.routes.config).then((data: Config) => {
+    return this.api.get(this.config.config.routes.config).then((data: Config) => {
       this.saveToDefaultStore('CONFIG', Object.assign({}, DefaultHelper.windowVar('__kiwi'), data));
     });
   }
 
   getTranslationCatalogue(): Promise<any> {
-    return this.api.get(this.config.appConfig.routes.translationCatalogue);
+    return this.api.get(this.config.config.routes.translationCatalogue);
   }
 
   getTranslationDetail(catalogue: string, definitionId: string): Promise<any> {
-    return this.api.get(this.config.appConfig.routes.translationDetail.replace('{catalogue}', catalogue).replace('{id}', definitionId));
+    return this.api.get(this.config.config.routes.translationDetail.replace('{catalogue}', catalogue).replace('{id}', definitionId));
   }
 
   saveTranslation(locale: string, definitionId: string, id: string, message: string) {
-    return this.api.post(this.config.appConfig.routes.translationSave, {locale, definitionId, id, message});
+    return this.api.post(this.config.config.routes.translationSave, {locale, definitionId, id, message});
   }
 
   getPageVersion() {
-    return this.api.get(this.config.appConfig.routes.pageVersionDetail);
+    return this.api.get(this.config.config.routes.pageVersionDetail);
   }
 
   savePageVersion(data: any) {
-    return this.api.post(this.config.appConfig.routes.pageVersionReplace, data);
+    return this.api.post(this.config.config.routes.pageVersionReplace, data);
   }
 
   getPageCreateSchema(parentSitemapId: string = null) {
-    return this.api.get(this.config.appConfig.routes.pageCreateSchema.replace('[/{parentSitemapId}]', parentSitemapId ? '/' + parentSitemapId : ''));
+    return this.api.get(this.config.config.routes.pageCreateSchema.replace('[/{parentSitemapId}]', parentSitemapId ? '/' + parentSitemapId : ''));
   }
 
   addPage(name: string, locale: string, sitemapId: string): Promise<{ id: string }> {
-    return this.api.post(this.config.appConfig.routes.pageAdd, {name, locale, sitemapId});
+    return this.api.post(this.config.config.routes.pageAdd, {name, locale, sitemapId});
   }
 
   pageNavigationIndex(id: string): Promise<Array<{ name: string, label: string, active: boolean }>> {
-    return this.api.get(this.config.appConfig.routes.pageNavigationIndex.replace('{id}', id));
+    return this.api.get(this.config.config.routes.pageNavigationIndex.replace('{id}', id));
   }
 
   clearResourceSelect(resource: string) {
@@ -103,33 +103,33 @@ export class AppDataService extends DataServiceAbstract {
     if (search && search !== '') {
       params.search = search;
     }
-    return this.api.get(this.config.appConfig.routes.resourceIndex.replace('{resource}', resource) + '?' + parseParams(params));
+    return this.api.get(this.config.config.routes.resourceIndex.replace('{resource}', resource) + '?' + parseParams(params));
   }
 
   getResourceDetail(resource: string, id: string): Promise<Resource> {
-    return this.api.get(this.config.appConfig.routes.resourceDetail.replace('{resource}', resource).replace('{id}', id));
+    return this.api.get(this.config.config.routes.resourceDetail.replace('{resource}', resource).replace('{id}', id));
   }
 
   createResourceDetail(resource: string): Promise<Resource> {
-    return this.api.get(this.config.appConfig.routes.resourceCreateDetail.replace('{resource}', resource));
+    return this.api.get(this.config.config.routes.resourceCreateDetail.replace('{resource}', resource));
   }
 
   createResource(resource: string, data: any): Promise<{ id: string }> {
-    return this.api.post(this.config.appConfig.routes.resourceCreate.replace('{resource}', resource), data).then((response) => {
+    return this.api.post(this.config.config.routes.resourceCreate.replace('{resource}', resource), data).then((response) => {
       this.clearResourceSelect(resource);
       return response;
     });
   }
 
   updateResource(resource: string, id: string, data: any): Promise<void> {
-    return this.api.patch(this.config.appConfig.routes.resourceUpdate.replace('{resource}', resource).replace('{id}', id), data).then((response) => {
+    return this.api.patch(this.config.config.routes.resourceUpdate.replace('{resource}', resource).replace('{id}', id), data).then((response) => {
       this.clearResourceSelect(resource);
       return response;
     });
   }
 
   deleteResource(resource: string, id: string): Promise<void> {
-    return this.api.delete(this.config.appConfig.routes.resourceDelete.replace('{resource}', resource).replace('{id}', id));
+    return this.api.delete(this.config.config.routes.resourceDelete.replace('{resource}', resource).replace('{id}', id));
   }
 
 }

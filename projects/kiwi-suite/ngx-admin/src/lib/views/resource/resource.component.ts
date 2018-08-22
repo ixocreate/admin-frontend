@@ -9,7 +9,6 @@ import { PageTitleService } from '../../services/page-title.service';
 })
 export class ResourceComponent extends ViewAbstractComponent implements OnInit {
 
-  dataUrl: string;
   resourceKey: string;
 
   constructor(protected route: ActivatedRoute, private config: ConfigService, private pageTitle: PageTitleService) {
@@ -19,12 +18,8 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.resourceKey = params.type;
-      this.dataUrl = this.config.appConfig.routes.resourceIndex.replace('{resource}', params.type);
+      this.pageTitle.setPageTitle([{search: '{resource}', replace: this.config.getResourceConfig(this.resourceKey).label}]);
     });
-  }
-
-  onUpdatedData(data) {
-    this.pageTitle.setPageTitle([{search: '{resource}', replace: data.label}]);
   }
 
 }
