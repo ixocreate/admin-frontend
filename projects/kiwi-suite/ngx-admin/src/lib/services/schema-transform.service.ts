@@ -68,7 +68,7 @@ export class SchemaTransformService {
         type: type,
         templateOptions: {
           label: value.label,
-          placeholder: value.label + '...',
+          placeholder: value.placeholder || value.label + '...',
           required: value.required,
           ...templateOptions,
         },

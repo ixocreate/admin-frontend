@@ -23,6 +23,7 @@ export class SelectOption {
         <ng-select
           [class.is-invalid]="showError"
           [items]="selectOptions"
+          [placeholder]="this.to.placeholder"
           [bindValue]="valueProp"
           [bindLabel]="labelProp"
           [clearable]="false"
