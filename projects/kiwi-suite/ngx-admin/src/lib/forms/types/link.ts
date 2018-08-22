@@ -36,10 +36,13 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
       </ng-container>
       <ng-container *ngIf="selectedType === 'external'">
         <div class="modal-body">
-          <input type="text" placeholder="Enter URL of external Link" class="form-control" [(ngModel)]="externalLinkInputValue">
+          <input type="text" placeholder="Enter URL of external Link (http://...)" class="form-control"
+                 [(ngModel)]="externalLinkInputValue">
         </div>
         <div class="modal-footer text-right">
-          <button type="button" class="btn btn-primary" (click)="onSelectType('external', externalLinkInputValue);"><i class="fa fa-check"></i> Select</button>
+          <button type="button" class="btn btn-primary" (click)="onSelectType('external', externalLinkInputValue);"><i
+            class="fa fa-check"></i> Select
+          </button>
         </div>
       </ng-container>
     </ng-template>
@@ -66,6 +69,9 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   openModal(template: TemplateRef<any>) {
+    if (this.value) {
+      this.selectedType = this.value.type;
+    }
     this.externalLinkInputValue = '';
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
   }
