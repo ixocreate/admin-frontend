@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
 import { AppDataService } from '../../services/data/app-data.service';
+import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 
 export class SelectOption {
   label: string;
@@ -18,19 +19,26 @@ export class SelectOption {
   selector: 'formly-field-select',
   template: `
     <ng-container *ngIf="selectOptions">
-      <ng-select
-        [class.is-invalid]="showError"
-        [items]="selectOptions"
-        [bindValue]="valueProp"
-        [bindLabel]="labelProp"
-        [clearable]="clearable"
-        [multiple]="multiple"
-        [formControl]="formControl">
-      </ng-select>
+      <div class="input-group">
+        <ng-select
+          [class.is-invalid]="showError"
+          [items]="selectOptions"
+          [bindValue]="valueProp"
+          [bindLabel]="labelProp"
+          [clearable]="false"
+          [multiple]="multiple"
+          [formControl]="formControl">
+        </ng-select>
+        <div class="input-group-append" *ngIf="clearable">
+          <button type="button" class="btn btn-outline-danger" (click)="remove()">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </div>
     </ng-container>
   `,
 })
-export class FormlyFieldSelectComponent extends FieldType implements OnInit, OnDestroy {
+export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
 
   selectOptions: any;
 
