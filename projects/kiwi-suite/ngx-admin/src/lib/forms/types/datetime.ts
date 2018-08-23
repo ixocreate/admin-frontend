@@ -1,19 +1,48 @@
-import { Component } from '@angular/core';
-import { FieldType } from '@ngx-formly/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
+import * as moment from 'moment';
+import { LocaleSettings } from 'primeng/components/calendar/calendar';
+import { Calendar } from 'primeng/primeng';
 
 @Component({
   selector: 'formly-field-datetime',
   template: `
-    <input class="form-control" [formlyAttributes]="field" [formControl]="formControl" [placement]="placement" [bsConfig]="config"
-           [class.is-invalid]="showError" bsDatepicker>
+    <p-calendar [(ngModel)]="dateValue" [dateFormat]="config.dateFormat" [locale]="locale" [showTime]="config.showTime"></p-calendar>
   `,
 })
-export class FormlyFieldDateTimeComponent extends FieldType {
-  get config() {
-    return this.to.config;
+export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implements OnInit {
+
+  @ViewChild(Calendar) calendar;
+
+  _date: Date;
+  locale: LocaleSettings;
+
+  config = {
+    dateFormat: 'yy-mm-dd',
+    showTime: true,
+    useUtcTime: false,
+  };
+
+  ngOnInit() {
+    super.ngOnInit();
+    this.locale = {
+      ...this.calendar.locale,
+      firstDayOfWeek: 1,
+    };
+    this._date = moment(this.value).toDate();
+
+    this.config = {
+      ...this.config,
+      ...this.to.config,
+    };
   }
 
-  get placement() {
-    return (this.to.placement) ? this.to.placement : 'bottom';
+  set dateValue(value: Date) {
+    this.setValue(moment(value).utc(this.config.useUtcTime).seconds(0).toISOString());
+    this._date = value;
+  }
+
+  get dateValue() {
+    return this._date;
   }
 }

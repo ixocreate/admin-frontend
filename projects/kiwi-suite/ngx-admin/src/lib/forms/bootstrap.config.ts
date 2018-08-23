@@ -46,12 +46,15 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       name: 'datetime',
       component: FormlyFieldDateTimeComponent,
       wrappers: ['form-field'],
+    },
+    {
+      name: 'date',
+      component: FormlyFieldDateTimeComponent,
+      wrappers: ['form-field'],
       defaultOptions: {
         templateOptions: {
           config: {
-            showWeekNumbers: false,
-            containerClass: 'theme-default',
-            dateInputFormat: 'YYYY-MM-DD HH:mm:ss',
+            showTime: false,
           },
         },
       },
