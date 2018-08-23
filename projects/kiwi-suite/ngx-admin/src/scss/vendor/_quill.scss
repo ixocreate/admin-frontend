@@ -116,3 +116,11 @@
   @include border-radius($input-border-radius $input-border-radius 0 0);
   border-color: $input-border-color;
 }
+
+.is-invalid {
+  .ql-toolbar.ql-snow,
+  .ql-container.ql-snow {
+    border-color: $danger;
+  }
+}
+

@@ -1,6 +1,7 @@
-import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { QuillEditorComponent } from 'ngx-quill';
+import { CustomValidators } from '../../validators/CustomValidators';
 
 @Component({
   selector: 'formly-field-quill',
@@ -9,6 +10,9 @@ import { QuillEditorComponent } from 'ngx-quill';
                   [ngModel]="value?.html"
                   [style]="{height: height}"
                   [modules]="modules"
+                  [placeholder]="to.placeholder"
+                  [required]="to.required"
+                  [class.is-invalid]="showError"
                   (onContentChanged)="onContentChanged($event)">
     </quill-editor>
   `,
@@ -28,6 +32,8 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
   }
 
   ngOnInit() {
+    this.formControl.setValidators([CustomValidators.quillRequired]);
+
     setTimeout(() => {
       this.setValue(this.formControl.value || {html: '', quill: []});
     });
@@ -66,7 +72,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
   }
 
   onContentChanged(data: any) {
-    console.log(data);
+    this.formControl.markAsTouched();
     this.setValue({html: data.html, quill: data.content});
   }
 
