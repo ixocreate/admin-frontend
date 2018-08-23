@@ -1,0 +1,56 @@
+import { Component, OnInit } from '@angular/core';
+import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
+
+@Component({
+  selector: 'formly-field-youtube',
+  template: `
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text p-0">
+          <div class="input-youtube-preview" *ngIf="!value"><i class="fa fa-fw fa-video-camera"></i></div>
+          <a [href]="youtubeUrl + value" target="_blank" class="input-youtube-preview" *ngIf="value"
+             [style.backgroundImage]="'url(https://img.youtube.com/vi/' + value + '/sddefault.jpg)'"></a>
+        </span>
+      </div>
+      <input type="text" class="form-control" [(ngModel)]="inputValue" (keyup)="checkYoutubeLink()" [placeholder]="to.placeholder"
+             [class.is-invalid]="showError || !isValid">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-outline-input" (click)="remove()">
+          <i class="fa fa-close"></i>
+        </button>
+      </div>
+    </div>
+    <div class="invalid-feedback d-block" *ngIf="!isValid && !showError">Not a valid Youtube-URL</div>
+  `,
+})
+export class FormlyFieldYouTubeComponent extends CustomFieldTypeAbstract implements OnInit {
+
+  isValid = true;
+  inputValue: any;
+  youtubeUrl = 'https://www.youtube.com/watch?v=';
+
+  ngOnInit() {
+    super.ngOnInit();
+    if (this.value) {
+      this.inputValue = this.youtubeUrl + this.value;
+    }
+  }
+
+  checkYoutubeLink() {
+    this.isValid = true;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = this.inputValue.match(regExp);
+    if (match && match[2].length === 11) {
+      this.setValue(match[2]);
+    } else {
+      this.isValid = false;
+      this.setValue(null);
+    }
+  }
+
+  remove() {
+    this.inputValue = '';
+    super.remove();
+  }
+
+}

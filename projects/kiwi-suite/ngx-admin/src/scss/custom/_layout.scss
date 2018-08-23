@@ -146,44 +146,6 @@
   }
 }
 
-.kiwi-form {
-  label {
-    margin-bottom: 0;
-    font-size: .8rem;
-  }
-
-  .custom-control-label { // fix checkbox label position
-    min-height: 24px;
-    display: flex;
-    align-items: center;
-  }
-
-  .form-group {
-    margin-bottom: .5rem;
-  }
-
-  formly-field:last-child .form-group {
-    margin-bottom: 0;
-  }
-
-  &.kiwi-form-inline {
-    @include media-breakpoint-up(sm) {
-      .form-group {
-        display: flex;
-      }
-
-      .kiwi-form-label {
-        width: 140px + $grid-gutter-width;
-        padding: 8px $grid-gutter-width 8px 0;
-      }
-
-      .kiwi-form-control-container {
-        flex: 1;
-      }
-    }
-  }
-}
-
 .modal-dialog.modal-empty {
   .modal-content {
     background: transparent;

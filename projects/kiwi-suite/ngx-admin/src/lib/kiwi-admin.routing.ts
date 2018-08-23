@@ -100,7 +100,7 @@ export const routes: Routes = [
               {
                 path: ':id/edit',
                 component: TranslationEditComponent,
-                data: {title: 'Edit Translation'},
+                data: {title: 'Edit'},
               },
             ],
           },
@@ -165,48 +165,6 @@ export const routes: Routes = [
         ]
       },
       {
-        path: 'resource/:type',
-        component: FullLayoutComponent,
-        children: [
-          {
-            path: '',
-            children: [
-              {
-                path: '',
-                component: ResourceIndexComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: 'create',
-                component: ResourceCreateComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: ':id/edit',
-                component: ResourceEditComponent,
-                canActivate: [PermissionGuard]
-              }
-            ],
-          },
-        ],
-      },
-      {
-        path: 'media',
-        component: FullLayoutComponent,
-        children: [
-          {
-            path: '',
-            children: [
-              {
-                path: '',
-                component: MediaIndexComponent,
-                canActivate: [PermissionGuard]
-              }
-            ]
-          },
-        ]
-      },
-      {
         path: 'page',
         component: FullLayoutComponent,
         children: [
@@ -237,32 +195,6 @@ export const routes: Routes = [
                 path: ':id/edit',
                 component: PageEditComponent,
                 canActivate: [PermissionGuard]
-              }
-            ]
-          },
-        ]
-      },
-      {
-        path: 'translation',
-        component: FullLayoutComponent,
-        children: [
-          {
-            path: '',
-            children: [
-              {
-                path: '',
-                component: TranslationCatalogueComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: 'catalogue/:catalogue',
-                component: TranslationIndexComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: 'catalogue/:catalogue/:id/edit',
-                component: TranslationEditComponent,
-                canActivate: [PermissionGuard],
               }
             ]
           },

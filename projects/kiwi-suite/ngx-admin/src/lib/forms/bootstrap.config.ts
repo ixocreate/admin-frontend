@@ -8,6 +8,7 @@ import { FormlyFieldDateTimeComponent } from './types/datetime';
 import { FormlyFieldLinkComponent } from './types/link';
 import { FormlyFieldSelectComponent } from './types/select';
 import { FormlyFieldColorComponent } from './types/color';
+import { FormlyFieldYouTubeComponent } from './types/youtube';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -16,6 +17,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldDateTimeComponent,
   FormlyFieldLinkComponent,
   FormlyFieldColorComponent,
+  FormlyFieldYouTubeComponent,
 
   // wrappers
   FormlyWrapperFormFieldComponent,
@@ -27,6 +29,7 @@ export const FIELD_TYPE_COMPONENTS = [
 export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
   validationMessages: [
     {name: 'required', message: 'This field is required'},
+    {name: 'custom', message: (err) => err },
   ],
   types: [
     {
@@ -66,6 +69,11 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       component: FormlyFieldColorComponent,
       wrappers: ['form-field'],
     },
+    {
+      name: 'youtube',
+      component: FormlyFieldYouTubeComponent,
+      wrappers: ['form-field'],
+    },
     /*
     {
       name: 'selectnative',
@@ -77,25 +85,7 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         },
       },
     },
-    {
-      name: 'link',
-      component: FormlyFieldLink,
-      wrappers: ['fieldset', 'label'],
-      defaultOptions: {},
-    },
     // custom
-    {
-      name: 'datetime',
-      component: FormlyFieldDateTime,
-      wrappers: ['fieldset', 'label'],
-      defaultOptions: {
-        templateOptions: {
-          config: {
-            dateInputFormat: 'YYYY-MM-DD HH:mm',
-          },
-        },
-      },
-    },
     {
       name: 'dynamic',
       component: FormlyFieldDynamic,
@@ -104,11 +94,6 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'youtube',
       component: FormlyFieldYouTube,
-      wrappers: ['fieldset', 'label'],
-    },
-    {
-      name: 'color',
-      component: FormlyFieldColor,
       wrappers: ['fieldset', 'label'],
     },
     {
