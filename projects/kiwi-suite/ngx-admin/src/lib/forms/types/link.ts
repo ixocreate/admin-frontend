@@ -9,7 +9,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
       <div class="input-group-prepend">
         <span class="input-group-text">{{ value.type }}</span>
       </div>
-      <input type="text" class="form-control pointer-events-none" [value]="valueString">
+      <input type="text" class="form-control pointer-events-none" [value]="valueString" [class.is-invalid]="showError">
       <div class="input-group-append">
         <button type="button" class="btn btn-outline-input" (click)="remove()" kiwiClickStopPropagation>
           <i class="fa fa-close"></i>

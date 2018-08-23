@@ -7,6 +7,7 @@ import { FormlyFieldMediaComponent } from './types/media';
 import { FormlyFieldDateTimeComponent } from './types/datetime';
 import { FormlyFieldLinkComponent } from './types/link';
 import { FormlyFieldSelectComponent } from './types/select';
+import { FormlyFieldColorComponent } from './types/color';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -14,6 +15,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldMediaComponent,
   FormlyFieldDateTimeComponent,
   FormlyFieldLinkComponent,
+  FormlyFieldColorComponent,
 
   // wrappers
   FormlyWrapperFormFieldComponent,
@@ -59,6 +61,11 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         },
       },
     },
+    {
+      name: 'color',
+      component: FormlyFieldColorComponent,
+      wrappers: ['form-field'],
+    },
     /*
     {
       name: 'selectnative',
@@ -90,18 +97,8 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       },
     },
     {
-      name: 'date',
-      component: FormlyFieldDate,
-      wrappers: ['fieldset', 'label'],
-    },
-    {
       name: 'dynamic',
       component: FormlyFieldDynamic,
-      wrappers: ['fieldset', 'label'],
-    },
-    {
-      name: 'media',
-      component: FormlyFieldMedia,
       wrappers: ['fieldset', 'label'],
     },
     {

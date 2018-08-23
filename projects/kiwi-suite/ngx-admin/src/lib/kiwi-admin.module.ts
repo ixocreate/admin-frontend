@@ -64,7 +64,7 @@ import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
-import { CalendarModule } from 'primeng/primeng';
+import { CalendarModule, ColorPickerModule } from 'primeng/primeng';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -165,7 +165,9 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     FormlyBootstrapModule,
     FileUploadModule,
     NgSelectModule,
+
     CalendarModule,
+    ColorPickerModule,
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),
