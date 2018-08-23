@@ -150,19 +150,9 @@
   label {
     margin-bottom: 0;
     font-size: .8rem;
-
-    &.col-form-label {
-      padding-top: calc(0.455rem + 1px);
-      padding-bottom: calc(0.455rem + 1px);
-
-      @include media-breakpoint-down(sm) {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-    }
   }
 
-  .custom-control-label {
+  .custom-control-label { // fix checkbox label position
     min-height: 24px;
     display: flex;
     align-items: center;
@@ -174,6 +164,23 @@
 
   formly-field:last-child .form-group {
     margin-bottom: 0;
+  }
+
+  &.kiwi-form-inline {
+    @include media-breakpoint-up(sm) {
+      .form-group {
+        display: flex;
+      }
+
+      .kiwi-form-label {
+        width: 140px + $grid-gutter-width;
+        padding: 8px $grid-gutter-width 8px 0;
+      }
+
+      .kiwi-form-control-container {
+        flex: 1;
+      }
+    }
   }
 }
 

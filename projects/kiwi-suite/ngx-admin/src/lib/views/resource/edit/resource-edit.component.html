@@ -15,7 +15,7 @@
       </div>
       <div class="card-body">
         <ng-container *ngIf="form && fields; else isLoading">
-          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form" (ngSubmit)="onSubmit()">
+          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmit()">
           </formly-form>
         </ng-container>
         <ng-template #isLoading>

@@ -7,7 +7,12 @@ import { Calendar } from 'primeng/primeng';
 @Component({
   selector: 'formly-field-datetime',
   template: `
-    <p-calendar [(ngModel)]="dateValue" [dateFormat]="config.dateFormat" [locale]="locale" [showTime]="config.showTime"></p-calendar>
+    <p-calendar [placeholder]="this.to.placeholder"
+                [(ngModel)]="dateValue"
+                [dateFormat]="config.dateFormat"
+                [locale]="locale"
+                [showTime]="config.showTime">
+    </p-calendar>
   `,
 })
 export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implements OnInit {
@@ -29,8 +34,9 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
       ...this.calendar.locale,
       firstDayOfWeek: 1,
     };
-    this._date = moment(this.value).toDate();
-
+    if (this.value) {
+      this._date = moment(this.value).toDate();
+    }
     this.config = {
       ...this.config,
       ...this.to.config,
