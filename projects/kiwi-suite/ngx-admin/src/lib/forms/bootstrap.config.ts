@@ -9,6 +9,7 @@ import { FormlyFieldLinkComponent } from './types/link';
 import { FormlyFieldSelectComponent } from './types/select';
 import { FormlyFieldColorComponent } from './types/color';
 import { FormlyFieldYouTubeComponent } from './types/youtube';
+import { FormlyFieldQuillComponent } from './types/quill';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -18,6 +19,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldLinkComponent,
   FormlyFieldColorComponent,
   FormlyFieldYouTubeComponent,
+  FormlyFieldQuillComponent,
 
   // wrappers
   FormlyWrapperFormFieldComponent,
@@ -29,7 +31,7 @@ export const FIELD_TYPE_COMPONENTS = [
 export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
   validationMessages: [
     {name: 'required', message: 'This field is required'},
-    {name: 'custom', message: (err) => err },
+    {name: 'custom', message: (err) => err},
   ],
   types: [
     {
@@ -74,54 +76,38 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       component: FormlyFieldYouTubeComponent,
       wrappers: ['form-field'],
     },
-    /*
     {
-      name: 'selectnative',
-      component: FormlyFieldSelectNative,
-      wrappers: ['fieldset', 'label'],
+      name: 'wysiwyg',
+      component: FormlyFieldQuillComponent,
+      wrappers: ['form-field'],
       defaultOptions: {
         templateOptions: {
-          options: [],
+          height: 200,
+          modules: {
+            toolbar: [
+              ['bold', 'italic', 'underline', 'strike'],
+              [{'list': 'ordered'}, {'list': 'bullet'}],
+              [{'script': 'sub'}, {'script': 'super'}],
+              [{'indent': '-1'}, {'indent': '+1'}],
+              [{'header': [1, 2, 3, 4, 5, 6, false]}],
+              [{'align': []}],
+              ['clean'],
+              ['link'],
+            ],
+          },
         },
       },
     },
-    // custom
+    /*
     {
       name: 'dynamic',
       component: FormlyFieldDynamic,
       wrappers: ['fieldset', 'label'],
     },
     {
-      name: 'youtube',
-      component: FormlyFieldYouTube,
-      wrappers: ['fieldset', 'label'],
-    },
-    {
       name: 'repeat',
       component: FormlyFieldRepeatable,
       wrappers: ['fieldset', 'label'],
-    },
-    {
-      name: 'wysiwyg',
-      component: FormlyFieldQuill,
-      wrappers: ['fieldset', 'label'],
-      defaultOptions: {
-        templateOptions: {
-          height: 200,
-          modules: {
-            toolbar: [
-              // ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-              // [{'list': 'ordered'}, {'list': 'bullet'}],
-              // [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-              // [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-              // [{'header': [1, 2, 3, 4, 5, 6, false]}],
-              // [{'align': []}],
-              // ['clean'], // remove formatting button
-              // ['link'],
-            ],
-          },
-        },
-      },
     },
     */
   ],

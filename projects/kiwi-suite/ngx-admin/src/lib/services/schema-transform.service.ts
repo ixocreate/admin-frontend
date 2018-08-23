@@ -30,21 +30,7 @@ export class SchemaTransformService {
     this.registerTransform('select', this.handleSelect);
     this.registerTransform('multiselect', this.handleMultiSelect);
 
-    this.registerTransform('html', this.handleDefault('wysiwyg', {
-      height: 200,
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],
-          [{'list': 'ordered'}, {'list': 'bullet'}],
-          [{'script': 'sub'}, {'script': 'super'}],
-          [{'indent': '-1'}, {'indent': '+1'}],
-          [{'header': [1, 2, 3, 4, 5, 6, false]}],
-          [{'align': []}],
-          ['clean'],
-          ['link'],
-        ],
-      },
-    }));
+    this.registerTransform('html', this.handleDefault('wysiwyg'));
   }
 
   registerTransform(inputType: string, callback: (value: any, transformer: SchemaTransformService) => any) {
