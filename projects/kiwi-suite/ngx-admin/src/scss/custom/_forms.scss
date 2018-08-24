@@ -4,6 +4,11 @@
     font-size: .8rem;
   }
 
+  .switch {
+    display: block;
+    margin: 4px 0;
+  }
+
   .custom-control-label { // fix checkbox label position
     min-height: 24px;
     display: flex;

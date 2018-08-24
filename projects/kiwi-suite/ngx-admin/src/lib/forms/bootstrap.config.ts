@@ -10,6 +10,7 @@ import { FormlyFieldSelectComponent } from './types/select';
 import { FormlyFieldColorComponent } from './types/color';
 import { FormlyFieldYouTubeComponent } from './types/youtube';
 import { FormlyFieldQuillComponent } from './types/quill';
+import { FormlyFieldCheckboxComponent } from './types/checkbox';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -20,6 +21,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldColorComponent,
   FormlyFieldYouTubeComponent,
   FormlyFieldQuillComponent,
+  FormlyFieldCheckboxComponent,
 
   // wrappers
   FormlyWrapperFormFieldComponent,
@@ -37,6 +39,11 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'select',
       component: FormlyFieldSelectComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'checkbox',
+      component: FormlyFieldCheckboxComponent,
       wrappers: ['form-field'],
     },
     {
