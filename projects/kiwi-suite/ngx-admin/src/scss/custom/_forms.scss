@@ -14,11 +14,6 @@
     margin-bottom: .5rem;
   }
 
-  .form-control {
-    position: relative;
-    z-index: 10;
-  }
-
   formly-field:last-child .form-group {
     margin-bottom: 0;
   }
@@ -41,8 +36,23 @@
   }
 }
 
+a.input-group-text {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.has-error {
+  .input-group-text {
+    border-color: $danger;
+    background: $danger;
+    color: #fff;
+  }
+}
+
+.input-media-preview,
 .input-youtube-preview {
-  width: 100px;
+  width: 90px;
   padding-bottom: 56.25%;
   background-size: cover;
   background-position: center center;

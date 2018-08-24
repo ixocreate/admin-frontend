@@ -9,4 +9,5 @@ export interface Media {
   type: string;
   url: string;
   thumb: string;
+  original: string;
 }

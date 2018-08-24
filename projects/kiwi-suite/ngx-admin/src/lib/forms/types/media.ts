@@ -7,33 +7,30 @@ import { Media } from '../../interfaces/media.interface';
 @Component({
   selector: 'formly-field-media',
   template: `
-    <div class="media-container-max-width-container">
-      <div class="media-container media-container-max-width" (click)="openModal(modalTemplate)" [class.is-invalid]="showError">
-        <ng-container *ngIf="!value; else hasMedia">
-          <div class="media-icon">
-            <span class="file-icon fa fa-4x fa-fw fa-plus"></span>
-          </div>
-          <div class="media-image-title">
-            <div>no file selected</div>
-          </div>
-        </ng-container>
-        <ng-template #hasMedia>
-          <button (click)="remove($event)" kiwiClickStopPropagation class="btn-media-remove"><i class="fa fa-close"></i></button>
-          <ng-container *ngIf="isImage(value.mimeType); else noImage">
-            <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + value.thumb + ')'}"></div>
-            <div class="media-image-title">
-              <div>{{ value.filename }}</div>
-            </div>
+    <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
+      <div class="input-group-prepend">
+        <span class="input-group-text p-0">
+          <div class="input-media-preview" *ngIf="!value"><i class="fa fa-fw fa-file-o"></i></div>
+          <ng-container *ngIf="value">
+            <ng-container *ngIf="isImage(value.mimeType); else noImage">
+              <a [href]="value.original" target="_blank" class="input-media-preview"
+                 [style.backgroundImage]="'url(' + value.thumb + ')'"></a>
+            </ng-container>
+            <ng-template #noImage class="media-container">
+              <a [href]="value.original" target="_blank" class="input-media-preview">
+                <i [class]="'fa fa-fw ' + mimeTypeIcon(value.mimeType)"></i>
+              </a>
+            </ng-template>
           </ng-container>
-          <ng-template #noImage class="media-container">
-            <div class="media-icon">
-              <span [class]="'file-icon fa fa-4x fa-fw ' + mimeTypeIcon(value.mimeType)"></span>
-            </div>
-            <div class="media-image-title">
-              <div>{{ value.filename }}</div>
-            </div>
-          </ng-template>
-        </ng-template>
+        </span>
+      </div>
+      <input type="text" class="form-control pointer-events-none" [value]="value?.filename" [placeholder]="to.placeholder"
+             [class.is-invalid]="showError">
+      <div class="input-group-append">
+        <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
+                kiwiClickStopPropagation>
+          <i class="fa fa-close"></i>
+        </button>
       </div>
     </div>
 

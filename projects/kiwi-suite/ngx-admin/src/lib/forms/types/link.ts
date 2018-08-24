@@ -5,21 +5,22 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 @Component({
   selector: 'formly-field-link',
   template: `
-    <div class="input-group cursor-pointer" *ngIf="value" (click)="openModal(modalTemplate)">
+    <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
       <div class="input-group-prepend">
-        <span class="input-group-text">{{ value.type }}</span>
+        <span class="input-group-text" *ngIf="!value"><i class="fa fa-fw fa-link"></i></span>
+        <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation><i class="fa fa-fw fa-link"></i></a>
       </div>
-      <input type="text" class="form-control pointer-events-none" [value]="valueString" [class.is-invalid]="showError">
+      <input type="text" class="form-control pointer-events-none" [(ngModel)]="valueString" [placeholder]="to.placeholder"
+             [class.is-invalid]="showError">
       <div class="input-group-append">
-        <button type="button" class="btn btn-outline-input" (click)="remove()" kiwiClickStopPropagation>
+        <span class="input-group-text d-none d-sm-block" *ngIf="value">_blank</span>
+        <span class="input-group-text" *ngIf="value">{{ value.type }}</span>
+        <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
+                kiwiClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>
     </div>
-    <button *ngIf="!value" type="button" class="btn btn-block btn-outline-primary" [class.btn-outline-danger]="showError"
-            (click)="openModal(modalTemplate)">
-      Select a Link
-    </button>
 
     <ng-template #modalTemplate>
       <div class="modal-header bg-primary">
@@ -65,7 +66,27 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   get valueString() {
-    return (this.value.value.filename || this.value.value.name || this.value.value);
+    if (this.value == null) {
+      return '';
+    }
+    return this.value.value.filename || this.value.value.name || this.value.value;
+  }
+
+  get valueLink() {
+    console.log(this.value);
+    if (this.value == null) {
+      return '';
+    }
+    switch (this.value.type) {
+      case 'external':
+        return this.value.value;
+      case 'sitemap':
+        return '/';
+      case 'media':
+        return this.value.value.basePath + this.value.value.filename;
+      default:
+        return null;
+    }
   }
 
   openModal(template: TemplateRef<any>) {
