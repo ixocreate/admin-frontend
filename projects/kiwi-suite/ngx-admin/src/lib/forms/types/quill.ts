@@ -32,8 +32,9 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
   }
 
   ngOnInit() {
-    this.formControl.setValidators([CustomValidators.quillRequired]);
-
+    if (this.to.required) {
+      this.formControl.setValidators([CustomValidators.quillRequired]);
+    }
     setTimeout(() => {
       this.setValue(this.formControl.value || {html: '', quill: []});
     });
