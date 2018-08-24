@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { distinctUntilChanged, filter, first } from 'rxjs/internal/operators';
+import { distinctUntilChanged, filter, first, map } from 'rxjs/internal/operators';
 
 export class RxService {
 
@@ -7,6 +7,7 @@ export class RxService {
     return observable.pipe(
       filter((data) => data !== null),
       first(),
+      map(data => JSON.parse(JSON.stringify(data))),
     ).toPromise();
   }
 
