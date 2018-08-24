@@ -14,10 +14,10 @@ import { Media } from '../../interfaces/media.interface';
           <ng-container *ngIf="value">
             <ng-container *ngIf="isImage(value.mimeType); else noImage">
               <a [href]="value.original" target="_blank" class="input-media-preview"
-                 [style.backgroundImage]="'url(' + value.thumb + ')'"></a>
+                 [style.backgroundImage]="'url(' + value.thumb + ')'" kiwiClickStopPropagation></a>
             </ng-container>
             <ng-template #noImage class="media-container">
-              <a [href]="value.original" target="_blank" class="input-media-preview">
+              <a [href]="value.original" target="_blank" class="input-media-preview" kiwiClickStopPropagation>
                 <i [class]="'fa fa-fw ' + mimeTypeIcon(value.mimeType)"></i>
               </a>
             </ng-template>
