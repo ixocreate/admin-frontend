@@ -64,8 +64,9 @@ import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
-import { CalendarModule, ColorPickerModule } from 'primeng/primeng';
+import { CalendarModule } from 'primeng/primeng';
 import { QuillModule } from 'ngx-quill';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,

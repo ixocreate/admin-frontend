@@ -4,13 +4,18 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 @Component({
   selector: 'formly-field-color',
   template: `
-    <div class="input-group">
+    <div class="input-group cursor-pointer" [(colorPicker)]="value" (colorPickerChange)="onSelect($event)" cpPosition="bottom"
+         [cpPositionRelativeToArrow]="false">
       <div class="input-group-prepend">
-        <p-colorPicker [(ngModel)]="value" class="form-color-picker"></p-colorPicker>
+        <span class="input-group-text" [class.p-0]="value">
+          <i class="fa fa-fw fa-tint" *ngIf="!value"></i>
+          <div class="color-picker-preview" [style.background]="value" *ngIf="value"></div>
+        </span>
       </div>
-      <input type="text" class="form-control" [value]="value || ''" (change)="inputValue($event)" [class.is-invalid]="showError">
-      <div class="input-group-append">
-        <button type="button" class="btn btn-outline-input" (click)="remove()">
+      <input type="text" class="form-control pointer-events-none" [value]="value" [class.is-invalid]="showError">
+      <div class="input-group-append" #button>
+        <button type="button" class="btn btn-outline-input" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError"
+                (click)="remove()" kiwiClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>
@@ -18,16 +23,4 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
   `,
 })
 export class FormlyFieldColorComponent extends CustomFieldTypeAbstract implements OnInit {
-
-  private colorRegex = RegExp('#[0-9A-Fa-f]{6}');
-
-  inputValue(event: any) {
-    const value = event.target.value;
-    if (value !== null && value !== '' && this.colorRegex.test(value)) {
-      return this.setValue(value);
-    }
-    event.target.value = null;
-    this.setValue(null);
-  }
-
 }

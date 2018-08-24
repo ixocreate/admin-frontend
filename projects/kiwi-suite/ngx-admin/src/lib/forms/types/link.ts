@@ -73,7 +73,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   get valueLink() {
-    console.log(this.value);
+    // console.log(this.value);
     if (this.value == null) {
       return '';
     }
