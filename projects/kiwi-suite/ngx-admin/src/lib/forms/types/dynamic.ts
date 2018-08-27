@@ -12,30 +12,22 @@ import { FormlyFieldRepeatableComponent } from './repeatable';
            ngxDraggable
            [model]="fieldGroup">
         <div class="card-header p-0">
-          <button class="btn btn-link text-danger float-right" type="button" (click)="remove(i)"
-                  title="Remove">
+          <button class="btn btn-link text-danger float-right" type="button" (click)="remove(i)" title="Remove">
             <i class="fa fa-times"></i>
           </button>
-          <button class="btn btn-link text-muted" type="button"
-                  ngxDragHandle
-                  title="Move">
+          <button class="btn btn-link text-muted" type="button" ngxDragHandle title="Move">
             <i class="fa fa-bars"></i>
           </button>
           <span class="card-title">
-                        {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}
-                    </span>
+            {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}
+          </span>
         </div>
         <div class="card-body p-3">
-          <formly-group [model]="model[i]"
-                        [field]="fieldGroup"
-                        [options]="options"
-                        [form]="formControl">
-          </formly-group>
-          <!--{{ model[i] | json }}-->
+          <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
         </div>
       </div>
     </div>
-    <div class="form-group" *ngIf="fieldGroups && fieldGroups.length > 0">
+    <div class="form-group mb-0" *ngIf="fieldGroups && fieldGroups.length > 0">
       <div class="input-group">
         <select class="custom-select" (change)="selectFieldGroup($event)">
           <option *ngFor="let fieldGroup of fieldGroups" [value]="fieldGroup._type">
@@ -43,8 +35,7 @@ import { FormlyFieldRepeatableComponent } from './repeatable';
           </option>
         </select>
         <div class="input-group-append">
-          <button class="btn btn-outline-info" type="button"
-                  (click)="add()">
+          <button class="btn btn-outline-success" type="button" (click)="add()">
             <i class="fa fa-plus"></i>
           </button>
         </div>
