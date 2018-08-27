@@ -36,6 +36,10 @@ export class AppDataService extends DataServiceAbstract {
     }));
   }
 
+  clearSavedResourceSelects() {
+    this.savedResourceSelects = {};
+  }
+
   loadSession(): Promise<any> {
     return this.api.get(this.config.config.routes.session).then((data: any) => {
       this.saveToDefaultStore('SESSION', data);

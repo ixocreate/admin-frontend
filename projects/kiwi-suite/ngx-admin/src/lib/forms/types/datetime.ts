@@ -11,7 +11,8 @@ import { Calendar } from 'primeng/primeng';
                 [(ngModel)]="dateValue"
                 [dateFormat]="config.dateFormat"
                 [locale]="locale"
-                [showTime]="config.showTime">
+                [showTime]="config.showTime"
+                [class.is-invalid]="showError">
     </p-calendar>
   `,
 })

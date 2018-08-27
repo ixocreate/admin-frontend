@@ -8,7 +8,8 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
     <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
       <div class="input-group-prepend">
         <span class="input-group-text" *ngIf="!value"><i class="fa fa-fw fa-link"></i></span>
-        <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation><i class="fa fa-fw fa-link"></i></a>
+        <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation><i
+          class="fa fa-fw fa-link"></i></a>
       </div>
       <input type="text" class="form-control pointer-events-none" [(ngModel)]="valueString" [placeholder]="to.placeholder"
              [class.is-invalid]="showError">
@@ -27,10 +28,17 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
         <h5 class="modal-title">Select a Link</h5>
       </div>
       <div class="modal-header d-block">
-        <ng-select [items]="linkTypes" bindValue="name" [(ngModel)]="selectedType" [clearable]="false"></ng-select>
+        <div class="row">
+          <div class="col-sm-8">
+            <ng-select [items]="linkTypes" bindValue="name" [(ngModel)]="selectedType" [clearable]="false"></ng-select>
+          </div>
+          <div class="col-sm">
+            <ng-select [items]="targetTypes" bindValue="name" [(ngModel)]="selectedTarget" [clearable]="false"></ng-select>
+          </div>
+        </div>
       </div>
       <ng-container *ngIf="selectedType === 'media'">
-        <kiwi-media-list class="media-inline" (select)="onSelectType('media', $event)"></kiwi-media-list>
+        <kiwi-media-list class="media-inline" (select)="onSelectType($event)"></kiwi-media-list>
       </ng-container>
       <ng-container *ngIf="selectedType === 'sitemap'">
         <div class="modal-body">sitemap...</div>
@@ -41,7 +49,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
                  [(ngModel)]="externalLinkInputValue">
         </div>
         <div class="modal-footer text-right">
-          <button type="button" class="btn btn-primary" (click)="onSelectType('external', externalLinkInputValue);"><i
+          <button type="button" class="btn btn-primary" (click)="onSelectType(externalLinkInputValue);"><i
             class="fa fa-check"></i> Select
           </button>
         </div>
@@ -59,6 +67,12 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     {name: 'external', label: 'External'},
     {name: 'sitemap', label: 'Sitemap'},
     {name: 'media', label: 'Media'},
+  ];
+
+  selectedTarget = '_self';
+  targetTypes = [
+    {name: '_self', label: '_self (same window)'},
+    {name: '_blank', label: '_blank (new window)'},
   ];
 
   constructor(protected modalService: BsModalService) {
@@ -97,9 +111,9 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
   }
 
-  onSelectType(type: string, value: any) {
+  onSelectType(value: any) {
     this.modalRef.hide();
-    this.onSelect({type: type, value: value});
+    this.onSelect({type: this.selectedType, target: this.selectedTarget, value});
   }
 
 }

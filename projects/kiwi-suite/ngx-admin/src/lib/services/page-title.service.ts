@@ -60,6 +60,7 @@ export class PageTitleService {
       urlElements.reverse();
       this.pageName = urlElements.join(' / ');
       this.setPageTitle();
+      this.appData.clearSavedResourceSelects();
       window.scrollTo(0, 0);
     });
   }

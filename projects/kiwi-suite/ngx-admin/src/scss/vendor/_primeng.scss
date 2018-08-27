@@ -1,6 +1,11 @@
 body .ui-inputtext {
   @extend .form-control;
 }
+
+.is-invalid .ui-inputtext {
+  border-color: $danger;
+}
+
 .ui-calendar {
   display: block;
 }
