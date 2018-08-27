@@ -7,8 +7,10 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
 @Component({
   selector: 'formly-field-dynamic',
   template: `
-    <a href="#" (click)="toggleAll(false)">Collapse all</a> |
-    <a href="#" (click)="toggleAll(true)">Expand all</a>
+    <div class="pb-1">
+      <a href="#" (click)="toggleAll(false)">Collapse all</a> |
+      <a href="#" (click)="toggleAll(true)">Expand all</a>
+    </div>
     <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
       <div class="form-dynamic" *ngFor="let fieldGroup of field.fieldGroup; let i = index;" ngxDraggable [model]="fieldGroup"
            [class.collapsed]="fieldGroup.templateOptions['collapsed']">
