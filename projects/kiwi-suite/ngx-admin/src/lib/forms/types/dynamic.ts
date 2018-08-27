@@ -108,7 +108,6 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
 
   toggleAll(visible: boolean) {
     for (const group of this.field.fieldGroup) {
-      console.log(group);
       group.templateOptions.collapsed = !visible;
     }
     return false;
