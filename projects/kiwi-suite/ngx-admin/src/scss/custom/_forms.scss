@@ -51,6 +51,14 @@ a.input-group-text {
   }
 }
 
+.tabset-content {
+  background: #fff;
+  border: 1px solid $border-color;
+  border-top: 0;
+  @include border-radius(0 0 $border-radius $border-radius);
+  padding: $spacer;
+}
+
 .has-error {
   .input-group-text {
     border-color: $danger;

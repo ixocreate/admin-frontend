@@ -5,18 +5,15 @@ import { FormlyWrapperTabComponent } from './tab.wrapper';
 @Component({
   selector: 'formly-wrapper-tabset',
   template: `
-    <div class="card">
-      <div class="card-header">
-        <ul class="nav nav-pills card-header-pills">
-          <li *ngFor="let tab of groups;let index = index;">
-            <a class="nav-link" [ngClass]="{'active': isActive(index)}" (click)="activate(index)" href="#">{{ tab.templateOptions.label
-              }}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <ng-template #fieldComponent></ng-template>
-      </div>
+    <ul class="nav nav-tabs">
+      <li class="nav-item" *ngFor="let tab of groups;let index = index;">
+        <a class="nav-link" [class.active]="isActive(index)" (click)="activate(index)" href="#">
+          {{ tab.templateOptions.label }}
+        </a>
+      </li>
+    </ul>
+    <div class="tabset-content">
+      <ng-template #fieldComponent></ng-template>
     </div>
   `,
 })
