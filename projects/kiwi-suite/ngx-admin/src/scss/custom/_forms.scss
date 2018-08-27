@@ -27,6 +27,10 @@
     @include media-breakpoint-up(sm) {
       .form-group {
         display: flex;
+
+        &.center-label {
+          align-items: center;
+        }
       }
 
       .kiwi-form-label {
