@@ -5,14 +5,13 @@ import { FormlyWrapperTabsetComponent } from './tabset.wrapper';
 @Component({
   selector: 'formly-wrapper-tab',
   template: `
-    <div [ngClass]="{'d-none': !show}">
+    <div [class.d-none]="!show">
       <ng-template #fieldComponent></ng-template>
     </div>
   `,
 })
 export class FormlyWrapperTabComponent extends FieldWrapper {
-  @ViewChild('fieldComponent', {read: ViewContainerRef})
-  fieldComponent: ViewContainerRef;
+  @ViewChild('fieldComponent', {read: ViewContainerRef}) fieldComponent: ViewContainerRef;
 
   _show = false;
 

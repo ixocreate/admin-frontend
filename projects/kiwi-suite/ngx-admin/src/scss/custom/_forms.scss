@@ -57,6 +57,7 @@ a.input-group-text {
   border-top: 0;
   @include border-radius(0 0 $border-radius $border-radius);
   padding: $spacer;
+  margin-bottom: $spacer;
 }
 
 .has-error {
@@ -115,4 +116,97 @@ color-picker .color-picker {
     @extend .form-control;
     border-color: $input-border-color !important;
   }
+}
+
+$dynamic-form-color: $border-color;
+
+.form-dynamic {
+  @include border-radius($border-radius);
+  box-shadow: $box-shadow-sm;
+  margin-bottom: $spacer;
+
+  &.collapsed {
+    .form-dynamic-header {
+      .btn-move {
+        @include border-radius($border-radius 0 0 $border-radius);
+      }
+
+      .btn-remove {
+        @include border-radius(0 $border-radius $border-radius 0);
+      }
+
+      .btn-toggle {
+        i {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+  }
+
+  .form-dynamic-header {
+    display: flex;
+    color: #fff;
+
+    .btn-move {
+      display: block;
+      border: 0;
+      @include border-radius($border-radius 0 0 0);
+      background: darken($dynamic-form-color, 5%);
+      color: inherit;
+      padding: 0 6px;
+    }
+
+    .btn-toggle {
+      display: block;
+      border: 0;
+      background: darken($dynamic-form-color, 5%);
+      border-left: 2px solid $dynamic-form-color;
+      color: inherit;
+      padding: 0 6px;
+
+      i {
+        transition: transform .2s;
+      }
+
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    .btn-remove {
+      @include button-outline-variant($dynamic-form-color);
+      background: #fff;
+      @include border-radius(0 $border-radius 0 0);
+      border-width: 2px;
+
+      &:hover {
+        color: #fff;
+        background: $danger;
+        border-color: $danger;
+      }
+    }
+
+    .form-dynamic-title {
+      flex: 1;
+      background: $dynamic-form-color;
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+    }
+  }
+
+  .form-dynamic-content {
+    border: 2px solid $dynamic-form-color;
+    border-top: 0;
+    padding: $spacer;
+    @include border-radius(0 0 $border-radius $border-radius);
+  }
+}
+
+.form-dynamic-footer {
+  border-top: 1px solid $dynamic-form-color;
+  padding: $spacer;
+  background: #f6f6f6;
+  margin: 0 (-$spacer) (-$spacer);
+  @include border-radius(0 0 $border-radius $border-radius);
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FieldArrayType, FormlyFormBuilder } from '@ngx-formly/core';
+import { FieldArrayType, FormlyFormBuilder, FormlyTemplateOptions } from '@ngx-formly/core';
 
 @Component({
   selector: 'formly-field-repeat',
@@ -41,23 +41,30 @@ export class FormlyFieldRepeatableComponent extends FieldArrayType {
     /**
      * first, reorder the model and keep the reference (no clone/spread) ...
      */
-    const sortedModels = [];
+    const sortedData = [];
     this.field.fieldGroup.forEach((field, index) => {
       /**
        * index has already changed here, but key has not
        */
       const currentModel = this.model[field['key']];
-      sortedModels.push(currentModel);
+      sortedData.push({
+        model: currentModel,
+        templateOptions: field.templateOptions,
+      });
     });
 
-    for (let i = sortedModels.length - 1; i >= 0; i--) {
+    for (let i = sortedData.length - 1; i >= 0; i--) {
       this.remove(i);
     }
 
-    sortedModels.forEach((model, index) => {
-      this.add(index, model);
+    sortedData.forEach((data, index) => {
+      this.add(index, data.model, data.templateOptions);
     });
 
     (<any> this.options).resetTrackModelChanges();
+  }
+
+  add(i?: number, initialModel?: any, templateOptions?: FormlyTemplateOptions) {
+    super.add(i, initialModel);
   }
 }

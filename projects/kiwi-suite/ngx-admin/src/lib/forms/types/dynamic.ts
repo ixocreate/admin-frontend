@@ -2,40 +2,45 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { clone, isNullOrUndefined } from '../utils';
 import { FormlyFieldRepeatableComponent } from './repeatable';
+import { FormlyTemplateOptions } from '@ngx-formly/core';
 
 @Component({
   selector: 'formly-field-dynamic',
   template: `
+    <a href="#" (click)="toggleAll(false)">Collapse all</a> |
+    <a href="#" (click)="toggleAll(true)">Expand all</a>
     <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
-      <div class="card mb-3"
-           *ngFor="let fieldGroup of field.fieldGroup; let i = index;"
-           ngxDraggable
-           [model]="fieldGroup">
-        <div class="card-header p-0">
-          <button class="btn btn-link text-danger float-right" type="button" (click)="remove(i)" title="Remove">
-            <i class="fa fa-times"></i>
+      <div class="form-dynamic" *ngFor="let fieldGroup of field.fieldGroup; let i = index;" ngxDraggable [model]="fieldGroup"
+           [class.collapsed]="fieldGroup.templateOptions['collapsed']">
+        <div class="form-dynamic-header">
+          <button class="btn-move" type="button" ngxDragHandle title="Move">
+            <i class="fa fa-fw fa-bars"></i>
           </button>
-          <button class="btn btn-link text-muted" type="button" ngxDragHandle title="Move">
-            <i class="fa fa-bars"></i>
+          <button class="btn-toggle" type="button" title="Close/Open" (click)="toggleContent(fieldGroup.templateOptions)">
+            <i class="fa fa-fw fa-chevron-up"></i>
           </button>
-          <span class="card-title">
+          <div class="form-dynamic-title">
             {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}
-          </span>
+          </div>
+          <button class="btn btn-remove btn-sm" type="button" (click)="remove(i)" title="Remove">
+            <i class="fa fa-fw fa-times"></i>
+          </button>
         </div>
-        <div class="card-body p-3">
-          <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
+        <div class="form-dynamic-content" [class.d-none]="fieldGroup.templateOptions['collapsed']">
+          <ng-container *ngIf="fieldGroup.fieldGroup.length > 1; else noChildren">
+            <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
+          </ng-container>
+          <ng-template #noChildren>
+            <i>No options for this block.</i>
+          </ng-template>
         </div>
       </div>
     </div>
-    <div class="form-group mb-0" *ngIf="fieldGroups && fieldGroups.length > 0">
+    <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
       <div class="input-group">
-        <select class="custom-select" (change)="selectFieldGroup($event)">
-          <option *ngFor="let fieldGroup of fieldGroups" [value]="fieldGroup._type">
-            {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup._type }}
-          </option>
-        </select>
+        <ng-select [items]="fieldGroupTypes" bindValue="value" [(ngModel)]="selectedFieldGroupType" [clearable]="false"></ng-select>
         <div class="input-group-append">
-          <button class="btn btn-outline-success" type="button" (click)="add()">
+          <button class="btn btn-success" type="button" (click)="add()">
             <i class="fa fa-plus"></i>
           </button>
         </div>
@@ -46,6 +51,8 @@ import { FormlyFieldRepeatableComponent } from './repeatable';
 export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent implements OnInit {
 
   selectedFieldGroupType: string;
+  fieldGroupTypes: string;
+
   removeControls = [];
 
   ngOnInit() {
@@ -81,6 +88,12 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
      */
     this.removeControls.forEach(index => this.remove(index));
 
+    this.fieldGroupTypes = this.fieldGroups.map((type) => {
+      return {
+        label: (type.templateOptions && type.templateOptions.label) || type._type,
+        value: type._type,
+      };
+    });
   }
 
   get fieldGroups() {
@@ -91,7 +104,23 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     this.selectedFieldGroupType = $event.target.value;
   }
 
-  add(i?: number, initialModel ?: any) {
+  toggleAll(visible: boolean) {
+    for (const group of this.field.fieldGroup) {
+      console.log(group);
+      group.templateOptions.collapsed = !visible;
+    }
+    return false;
+  }
+
+  toggleContent(value, visible: boolean = null) {
+    if (visible === null) {
+      value.collapsed = !value.collapsed;
+    } else {
+      value.collapsed = !visible;
+    }
+  }
+
+  add(i?: number, initialModel ?: any, templateOptions?: FormlyTemplateOptions) {
     i = isNullOrUndefined(i) ? this.field.fieldGroup.length : i;
 
     let model = clone(initialModel);
@@ -116,6 +145,10 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
      */
     if (!typeDefinition) {
       this.removeControls.push(i);
+    }
+
+    if (templateOptions) {
+      typeDefinition.templateOptions = templateOptions;
     }
 
     const typeCopy = typeDefinition ? JSON.parse(JSON.stringify(typeDefinition)) : {fieldGroup: []};

@@ -1,5 +1,6 @@
 .btn-outline-input {
   @include button-outline-variant($input-border-color);
+  background: #fff;
 }
 
 .cursor-pointer {

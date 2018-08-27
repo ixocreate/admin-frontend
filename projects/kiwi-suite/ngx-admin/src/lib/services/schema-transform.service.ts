@@ -70,6 +70,7 @@ export class SchemaTransformService {
         _type: element.name,
         templateOptions: {
           label: element.label,
+          collapsed: false,
         },
         fieldGroup: transformer.transformForm(element.elements),
       });
