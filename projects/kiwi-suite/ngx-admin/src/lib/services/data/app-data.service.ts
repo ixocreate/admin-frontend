@@ -64,8 +64,8 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.config.routes.translationSave, {locale, definitionId, id, message});
   }
 
-  getPageVersion() {
-    return this.api.get(this.config.config.routes.pageVersionDetail);
+  getPageVersionDetail(id: string) {
+    return this.api.get(this.config.config.routes.pageVersionDetail.replace('{id}', id));
   }
 
   savePageVersion(data: any) {

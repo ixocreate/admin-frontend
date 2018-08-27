@@ -12,13 +12,9 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 })
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
-  data$: Promise<any>;
   detailData$: Promise<any>;
 
   id: string;
-
-  form: FormGroup = new FormGroup({});
-  fields: FormlyFieldConfig[];
 
   detailForm: FormGroup = new FormGroup({});
   detailFields: FormlyFieldConfig[];
@@ -85,6 +81,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   onSubmit(): void {
+    /*
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
@@ -97,6 +94,5 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.router.navigateByUrl('/page/' + response.id + '/edit');
       }).catch((error) => this.notification.apiError(error));
       */
-    }
   }
 }

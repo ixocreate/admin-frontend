@@ -67,6 +67,8 @@ import { NoAuthGuard } from './guards/no-auth.guard';
 import { CalendarModule } from 'primeng/primeng';
 import { QuillModule } from 'ngx-quill';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { KiwiPageVersionEditComponent } from './components/kiwi-page-version/kiwi-page-version-edit.component';
+import { NgxDnDModule } from '@swimlane/ngx-dnd';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -89,6 +91,7 @@ const APP_COMPONENTS = [
   KiwiPaginationComponent,
   KiwiSitemapComponent,
   KiwiSitemapItemComponent,
+  KiwiPageVersionEditComponent,
 
   // Directives
   PermissionDirective,
@@ -168,9 +171,9 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     FileUploadModule,
     NgSelectModule,
     QuillModule,
-
     CalendarModule,
     ColorPickerModule,
+    NgxDnDModule,
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),

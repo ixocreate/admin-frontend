@@ -19,7 +19,7 @@
     margin-bottom: .5rem;
   }
 
-  formly-field:last-child .form-group {
+  formly-field:last-child > formly-wrapper-form-field > .form-group {
     margin-bottom: 0;
   }
 

@@ -11,6 +11,9 @@ import { FormlyFieldColorComponent } from './types/color';
 import { FormlyFieldYouTubeComponent } from './types/youtube';
 import { FormlyFieldQuillComponent } from './types/quill';
 import { FormlyFieldCheckboxComponent } from './types/checkbox';
+import { FormlyFieldDynamicComponent } from './types/dynamic';
+import { FormlyFieldRepeatableComponent } from './types/repeatable';
+import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -22,9 +25,12 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldYouTubeComponent,
   FormlyFieldQuillComponent,
   FormlyFieldCheckboxComponent,
+  FormlyFieldRepeatableComponent,
+  FormlyFieldDynamicComponent,
 
   // wrappers
   FormlyWrapperFormFieldComponent,
+  FormlyWrapperFormFieldOnlyComponent,
   FormlyWrapperSectionComponent,
   FormlyWrapperTabsetComponent,
   FormlyWrapperTabComponent,
@@ -105,21 +111,20 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         },
       },
     },
-    /*
     {
       name: 'dynamic',
-      component: FormlyFieldDynamic,
-      wrappers: ['fieldset', 'label'],
+      component: FormlyFieldDynamicComponent,
+      wrappers: ['form-field-only'],
     },
     {
       name: 'repeat',
-      component: FormlyFieldRepeatable,
-      wrappers: ['fieldset', 'label'],
+      component: FormlyFieldRepeatableComponent,
+      wrappers: ['form-field-only'],
     },
-    */
   ],
   wrappers: [
     {name: 'form-field', component: FormlyWrapperFormFieldComponent},
+    {name: 'form-field-only', component: FormlyWrapperFormFieldOnlyComponent},
     {name: 'section', component: FormlyWrapperSectionComponent},
     {name: 'tabset', component: FormlyWrapperTabsetComponent},
     {name: 'tab', component: FormlyWrapperTabComponent},

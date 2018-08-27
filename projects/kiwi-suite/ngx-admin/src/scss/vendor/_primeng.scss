@@ -10,6 +10,10 @@ body .ui-inputtext {
   display: block;
 }
 
+body .ui-shadow {
+  box-shadow: $box-shadow;
+}
+
 .ui-calendar .ui-datepicker {
   min-width: 250px;
   border: 0;
@@ -26,6 +30,12 @@ body .ui-inputtext {
 
   .ui-datepicker-group {
     border-radius: .25rem;
+  }
+
+  .ui-timepicker {
+    border-radius: 0 0 $input-border-radius $input-border-radius;
+    border: 0;
+    border-top: 1px solid $border-color;
   }
 
   td {
