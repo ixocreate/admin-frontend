@@ -5,7 +5,7 @@ import { FormlyWrapperTabsetComponent } from './tabset.wrapper';
 @Component({
   selector: 'formly-wrapper-tab',
   template: `
-    <div [class.d-none]="!show">
+    <div class="tabset-content" [class.is-invalid]="hasError()" [class.d-none]="!show">
       <ng-template #fieldComponent></ng-template>
     </div>
   `,
@@ -26,5 +26,15 @@ export class FormlyWrapperTabComponent extends FieldWrapper {
 
   get show(): boolean {
     return this._show;
+  }
+
+  hasError(): boolean {
+    let hasError = false;
+    this.field['elements'].forEach((value) => {
+      if (this.form.controls[value.name].invalid && this.form.controls[value.name].touched) {
+        hasError = true;
+      }
+    });
+    return hasError;
   }
 }

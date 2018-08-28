@@ -62,12 +62,10 @@ a.input-group-text {
   margin-bottom: $spacer;
 }
 
-.has-error {
-  .input-group-text {
-    border-color: $danger;
-    background: $danger;
-    color: #fff;
-  }
+.input-group-text.is-invalid {
+  border-color: $danger;
+  background: $danger;
+  color: #fff;
 }
 
 .input-media-preview,
@@ -157,6 +155,38 @@ $dynamic-form-color: $border-color;
           transform: rotate(-180deg);
         }
       }
+    }
+  }
+
+  &.is-invalid {
+    .form-dynamic-header {
+      .btn-move {
+        background: darken($danger, 5%);
+      }
+
+      .btn-toggle {
+        border-color: $danger;
+        background: darken($danger, 5%);
+      }
+
+      .btn-remove {
+        @include button-outline-variant($danger);
+        border-width: 2px;
+
+        &:hover {
+          color: #fff;
+          background: $danger;
+          border-color: $danger;
+        }
+      }
+
+      .form-dynamic-title {
+        background: $danger;
+      }
+    }
+
+    .form-dynamic-content {
+      border-color: $danger;
     }
   }
 
@@ -258,4 +288,9 @@ formly-form > formly-field:last-child > formly-wrapper-form-field-only > * > * >
   border-bottom: 0;
   margin-bottom: -$spacer;
   @include border-radius(0 0 $border-radius $border-radius);
+}
+
+.nav-link.is-invalid {
+  color: $danger !important;
+  font-weight: bold;
 }

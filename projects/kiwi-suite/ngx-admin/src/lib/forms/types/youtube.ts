@@ -6,7 +6,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
   template: `
     <div class="input-group" [class.has-error]="showError || !isValid">
       <div class="input-group-prepend">
-        <span class="input-group-text p-0">
+        <span class="input-group-text p-0" [class.is-invalid]="showError">
           <div class="input-youtube-preview" *ngIf="!value"><i class="fa fa-fw fa-video-camera"></i></div>
           <a [href]="youtubeUrl + value" target="_blank" class="input-youtube-preview" *ngIf="value"
              [style.backgroundImage]="'url(https://img.youtube.com/vi/' + value + '/sddefault.jpg)'" kiwiClickStopPropagation></a>

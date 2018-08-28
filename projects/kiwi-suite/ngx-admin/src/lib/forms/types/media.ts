@@ -9,7 +9,7 @@ import { Media } from '../../interfaces/media.interface';
   template: `
     <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
       <div class="input-group-prepend">
-        <span class="input-group-text p-0">
+        <span class="input-group-text p-0" [class.is-invalid]="showError">
           <div class="input-media-preview" *ngIf="!value"><i class="fa fa-fw fa-file-o"></i></div>
           <ng-container *ngIf="value">
             <ng-container *ngIf="isImage(value.mimeType); else noImage">

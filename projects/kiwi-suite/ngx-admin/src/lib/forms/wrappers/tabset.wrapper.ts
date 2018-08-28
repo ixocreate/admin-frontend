@@ -6,15 +6,13 @@ import { FormlyWrapperTabComponent } from './tab.wrapper';
   selector: 'formly-wrapper-tabset',
   template: `
     <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let tab of groups;let index = index;">
-        <a class="nav-link" [class.active]="isActive(index)" (click)="activate(index)" href="#">
-          {{ tab.templateOptions.label }}
+      <li class="nav-item" *ngFor="let tab of tabs;let index = index;">
+        <a class="nav-link" [class.active]="isActive(index)" [class.is-invalid]="hasError(index)" (click)="activate(index)" href="#">
+          {{ tab.to.label }}
         </a>
       </li>
     </ul>
-    <div class="tabset-content">
-      <ng-template #fieldComponent></ng-template>
-    </div>
+    <ng-template #fieldComponent></ng-template>
   `,
 })
 export class FormlyWrapperTabsetComponent extends FieldWrapper implements OnInit {
@@ -22,6 +20,10 @@ export class FormlyWrapperTabsetComponent extends FieldWrapper implements OnInit
 
   private _active = 0;
   private _tabs = [];
+
+  get tabs() {
+    return this._tabs;
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -52,6 +54,10 @@ export class FormlyWrapperTabsetComponent extends FieldWrapper implements OnInit
     });
 
     return false;
+  }
+
+  hasError(index) {
+    return this._tabs[index].hasError();
   }
 
   addTab(tab: FormlyWrapperTabComponent) {

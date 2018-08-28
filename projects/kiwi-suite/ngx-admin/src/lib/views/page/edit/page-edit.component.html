@@ -6,7 +6,7 @@
   </ng-template>
 
   <ng-container *ngIf="detailData$ | async as data">
-    <kiwi-page-version-edit [id]="data.item.id"></kiwi-page-version-edit>
+    <kiwi-page-version-edit [id]="data.item.id" [form]="form"></kiwi-page-version-edit>
   </ng-container>
 
   <ng-template #aside>

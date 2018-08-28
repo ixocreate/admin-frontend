@@ -11,10 +11,10 @@ import { SchemaTransformService } from '../../services/schema-transform.service'
 export class KiwiPageVersionEditComponent implements OnInit {
 
   @Input() private id: string;
+  @Input() private form: FormGroup;
 
   data$: Promise<any>;
 
-  form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
   constructor(private appData: AppDataService,

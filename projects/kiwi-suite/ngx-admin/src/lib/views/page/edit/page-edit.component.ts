@@ -16,6 +16,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   id: string;
 
+  form: FormGroup = new FormGroup({});
+
   detailForm: FormGroup = new FormGroup({});
   detailFields: FormlyFieldConfig[];
 
@@ -81,10 +83,11 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   onSubmit(): void {
-    /*
     if (this.form.valid === false) {
+      console.log(this.form);
       this.notification.formErrors(this.form);
     } else {
+      /*
       const data = this.form.getRawValue();
       /*
       data.locale = this.locale;
@@ -94,5 +97,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.router.navigateByUrl('/page/' + response.id + '/edit');
       }).catch((error) => this.notification.apiError(error));
       */
+    }
   }
 }

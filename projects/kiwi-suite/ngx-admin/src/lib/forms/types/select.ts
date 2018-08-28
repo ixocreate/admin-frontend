@@ -31,7 +31,7 @@ export class SelectOption {
           [formControl]="formControl">
         </ng-select>
         <div class="input-group-append" *ngIf="clearable">
-          <button type="button" class="btn btn-outline-input" (click)="remove()">
+          <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()">
             <i class="fa fa-close"></i>
           </button>
         </div>

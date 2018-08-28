@@ -14,6 +14,7 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
       </div>
       <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
         <div class="form-dynamic" *ngFor="let fieldGroup of field.fieldGroup; let i = index;" ngxDraggable [model]="fieldGroup"
+             [class.is-invalid]="hasError(fieldGroup)"
              [class.collapsed]="fieldGroup.templateOptions['collapsed']">
           <div class="form-dynamic-header">
             <button class="btn-move" type="button" ngxDragHandle title="Move">
@@ -100,6 +101,16 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     });
   }
 
+  hasError(fieldGroup) {
+    let hasError = false;
+    Object.values(fieldGroup.formControl.controls).forEach((value: any) => {
+      if (value.invalid && value.touched) {
+        hasError = true;
+      }
+    });
+    return hasError;
+  }
+
   get fieldGroups() {
     return this.field['fieldGroups'];
   }
@@ -131,7 +142,6 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
       model = {
         _type: this.selectedFieldGroupType,
       };
-      // this.model.splice(i, 0, {...model});
     }
     this.model.splice(i, 0, model);
 

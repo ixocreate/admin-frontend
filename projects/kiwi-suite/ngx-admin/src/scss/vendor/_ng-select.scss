@@ -7,7 +7,7 @@
   }
 }
 
-.has-error .ng-select .ng-select-container {
+.ng-select.is-invalid .ng-select-container {
   border-color: $danger;
 }
 

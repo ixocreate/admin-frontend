@@ -7,15 +7,16 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
   template: `
     <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
       <div class="input-group-prepend">
-        <span class="input-group-text" *ngIf="!value"><i class="fa fa-fw fa-link"></i></span>
-        <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation><i
-          class="fa fa-fw fa-link"></i></a>
+        <span class="input-group-text" *ngIf="!value" [class.is-invalid]="showError"><i class="fa fa-fw fa-link"></i></span>
+        <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation [class.is-invalid]="showError">
+          <i class="fa fa-fw fa-link"></i>
+        </a>
       </div>
       <input type="text" class="form-control pointer-events-none" [(ngModel)]="valueString" [placeholder]="to.placeholder"
              [class.is-invalid]="showError">
       <div class="input-group-append">
-        <span class="input-group-text d-none d-sm-block" *ngIf="value">_blank</span>
-        <span class="input-group-text" *ngIf="value">{{ value.type }}</span>
+        <span class="input-group-text d-none d-sm-block" *ngIf="value" [class.is-invalid]="showError">_blank</span>
+        <span class="input-group-text" *ngIf="value" [class.is-invalid]="showError">{{ value.type }}</span>
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
                 kiwiClickStopPropagation>
           <i class="fa fa-close"></i>

@@ -97,6 +97,7 @@ export class SchemaTransformService {
           label: element.label,
         },
         fieldGroup: transformer.transformForm(element.elements),
+        elements: element.elements,
       });
     });
 
