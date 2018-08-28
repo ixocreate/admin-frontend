@@ -7,8 +7,8 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
 @Component({
   selector: 'formly-field-dynamic',
   template: `
-    <div class="form-dynamic-container">
-      <div class="form-dynamic-toggles">
+    <div class="form-dynamic-container" [class.no-childs]="field.fieldGroup.length === 0">
+      <div class="form-dynamic-toggles" [class.d-none]="field.fieldGroup.length === 0">
         <a href="#" (click)="toggleAll(false)">Collapse all</a> |
         <a href="#" (click)="toggleAll(true)">Expand all</a>
       </div>
@@ -29,7 +29,7 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
               <i class="fa fa-fw fa-times"></i>
             </button>
           </div>
-          <div class="form-dynamic-content" [class.d-none]="fieldGroup.templateOptions['collapsed']">
+          <div class="form-dynamic-content" [class.collapsed]="fieldGroup.templateOptions['collapsed']">
             <ng-container *ngIf="fieldGroup.fieldGroup.length > 1; else noChildren">
               <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
             </ng-container>
