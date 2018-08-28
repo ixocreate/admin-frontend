@@ -7,44 +7,46 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
 @Component({
   selector: 'formly-field-dynamic',
   template: `
-    <div class="pb-1">
-      <a href="#" (click)="toggleAll(false)">Collapse all</a> |
-      <a href="#" (click)="toggleAll(true)">Expand all</a>
-    </div>
-    <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
-      <div class="form-dynamic" *ngFor="let fieldGroup of field.fieldGroup; let i = index;" ngxDraggable [model]="fieldGroup"
-           [class.collapsed]="fieldGroup.templateOptions['collapsed']">
-        <div class="form-dynamic-header">
-          <button class="btn-move" type="button" ngxDragHandle title="Move">
-            <i class="fa fa-fw fa-bars"></i>
-          </button>
-          <button class="btn-toggle" type="button" title="Close/Open" (click)="toggleContent(fieldGroup.templateOptions)">
-            <i class="fa fa-fw fa-chevron-up"></i>
-          </button>
-          <div class="form-dynamic-title">
-            {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}
+    <div class="form-dynamic-container">
+      <div class="form-dynamic-toggles">
+        <a href="#" (click)="toggleAll(false)">Collapse all</a> |
+        <a href="#" (click)="toggleAll(true)">Expand all</a>
+      </div>
+      <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
+        <div class="form-dynamic" *ngFor="let fieldGroup of field.fieldGroup; let i = index;" ngxDraggable [model]="fieldGroup"
+             [class.collapsed]="fieldGroup.templateOptions['collapsed']">
+          <div class="form-dynamic-header">
+            <button class="btn-move" type="button" ngxDragHandle title="Move">
+              <i class="fa fa-fw fa-bars"></i>
+            </button>
+            <button class="btn-toggle" type="button" title="Close/Open" (click)="toggleContent(fieldGroup.templateOptions)">
+              <i class="fa fa-fw fa-chevron-up"></i>
+            </button>
+            <div class="form-dynamic-title">
+              {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}
+            </div>
+            <button class="btn btn-remove btn-sm" type="button" (click)="remove(i)" title="Remove">
+              <i class="fa fa-fw fa-times"></i>
+            </button>
           </div>
-          <button class="btn btn-remove btn-sm" type="button" (click)="remove(i)" title="Remove">
-            <i class="fa fa-fw fa-times"></i>
-          </button>
-        </div>
-        <div class="form-dynamic-content" [class.d-none]="fieldGroup.templateOptions['collapsed']">
-          <ng-container *ngIf="fieldGroup.fieldGroup.length > 1; else noChildren">
-            <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
-          </ng-container>
-          <ng-template #noChildren>
-            <i>No options for this block.</i>
-          </ng-template>
+          <div class="form-dynamic-content" [class.d-none]="fieldGroup.templateOptions['collapsed']">
+            <ng-container *ngIf="fieldGroup.fieldGroup.length > 1; else noChildren">
+              <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
+            </ng-container>
+            <ng-template #noChildren>
+              <i>No options for this block.</i>
+            </ng-template>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
-      <div class="input-group">
-        <ng-select [items]="fieldGroupTypes" bindValue="value" [(ngModel)]="selectedFieldGroupType" [clearable]="false"></ng-select>
-        <div class="input-group-append">
-          <button class="btn btn-success" type="button" (click)="add()">
-            <i class="fa fa-plus"></i>
-          </button>
+      <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
+        <div class="input-group">
+          <ng-select [items]="fieldGroupTypes" bindValue="value" [(ngModel)]="selectedFieldGroupType" [clearable]="false"></ng-select>
+          <div class="input-group-append">
+            <button class="btn btn-success" type="button" (click)="add()">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+$form-element-spacer: .5rem;
+
 .kiwi-form {
   label {
     margin-bottom: 0;
@@ -16,7 +18,7 @@
   }
 
   .form-group {
-    margin-bottom: .5rem;
+    margin-bottom: $form-element-spacer;
   }
 
   formly-field:last-child > formly-wrapper-form-field > .form-group {
@@ -120,10 +122,15 @@ color-picker .color-picker {
 
 $dynamic-form-color: $border-color;
 
+.form-dynamic-container {
+  border-top: 1px solid $border-color;
+  margin: 0 (-$spacer);
+}
+
 .form-dynamic {
   @include border-radius($border-radius);
   box-shadow: $box-shadow-sm;
-  margin-bottom: $spacer;
+  margin: $spacer;
 
   &.collapsed {
     .form-dynamic-header {
@@ -203,10 +210,25 @@ $dynamic-form-color: $border-color;
   }
 }
 
+.form-dynamic-toggles {
+  margin: ($spacer/2) $spacer (-$spacer/2);
+}
+
 .form-dynamic-footer {
   border-top: 1px solid $dynamic-form-color;
-  padding: $spacer;
+  border-bottom: 1px solid $dynamic-form-color;
+  padding: $form-element-spacer $spacer;
   background: #f6f6f6;
-  margin: 0 (-$spacer) (-$spacer);
+  margin-bottom: $form-element-spacer;
+}
+
+formly-form > formly-field:first-child > formly-wrapper-form-field-only > * > * > * > * > * > .form-dynamic-container {
+  border-top: 0;
+  margin-top: -$spacer;
+}
+
+formly-form > formly-field:last-child > formly-wrapper-form-field-only > * > * > * > * > * > * > .form-dynamic-footer {
+  border-bottom: 0;
+  margin-bottom: -$spacer;
   @include border-radius(0 0 $border-radius $border-radius);
 }
