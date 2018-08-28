@@ -294,3 +294,7 @@ formly-form > formly-field:last-child > formly-wrapper-form-field-only > * > * >
   color: $danger !important;
   font-weight: bold;
 }
+
+formly-wrapper-validation-messages > div > .invalid-feedback {
+  display: none !important;
+}
