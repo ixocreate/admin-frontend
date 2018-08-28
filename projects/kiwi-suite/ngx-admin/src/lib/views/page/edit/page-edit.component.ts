@@ -84,7 +84,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid === false) {
-      console.log(this.form);
       this.notification.formErrors(this.form);
     } else {
       /*
