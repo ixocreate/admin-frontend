@@ -36,10 +36,14 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyWrapperTabComponent,
 ];
 
+export function renderCustomError(error) {
+  return error;
+}
+
 export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
   validationMessages: [
     {name: 'required', message: 'This field is required'},
-    {name: 'custom', message: (err) => err},
+    {name: 'custom', message: renderCustomError},
   ],
   types: [
     {
