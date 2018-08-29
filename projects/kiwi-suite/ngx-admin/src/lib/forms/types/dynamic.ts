@@ -24,7 +24,8 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
               <i class="fa fa-fw fa-chevron-up"></i>
             </button>
             <div class="form-dynamic-title">
-              {{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}
+              <input [(ngModel)]="fieldGroup.model._name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
+              <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
             </div>
             <button class="btn btn-remove btn-sm" type="button" (click)="remove(i)" title="Remove">
               <i class="fa fa-fw fa-times"></i>
@@ -142,6 +143,9 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
       model = {
         _type: this.selectedFieldGroupType,
       };
+    }
+    if (!model._name) {
+      model._name = '';
     }
     this.model.splice(i, 0, model);
 

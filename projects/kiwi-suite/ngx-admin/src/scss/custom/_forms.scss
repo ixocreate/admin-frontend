@@ -140,7 +140,6 @@ $dynamic-form-color: $border-color;
 
   &.collapsed {
     .form-dynamic-header {
-      /*
       .btn-move {
         @include border-radius($border-radius 0 0 $border-radius);
       }
@@ -148,7 +147,6 @@ $dynamic-form-color: $border-color;
       .btn-remove {
         @include border-radius(0 $border-radius $border-radius 0);
       }
-      */
 
       .btn-toggle {
         i {
@@ -238,7 +236,20 @@ $dynamic-form-color: $border-color;
       background: $dynamic-form-color;
       display: flex;
       align-items: center;
-      padding: 5px 10px;
+      padding: 0 10px;
+    }
+
+    .form-dynamic-input {
+      border: 0;
+      height: 100%;
+      background: $dynamic-form-color;
+      width: 50%;
+      color: #fff;
+      font-weight: bold;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, .6);
+      }
     }
   }
 
@@ -248,6 +259,11 @@ $dynamic-form-color: $border-color;
     padding: $spacer;
     @include border-radius(0 0 $border-radius $border-radius);
 
+    &.collapsed {
+      display: none;
+    }
+
+    /*
     &.collapsed {
       max-height: 50px;
       overflow: hidden;
@@ -264,6 +280,7 @@ $dynamic-form-color: $border-color;
         @include border-radius(0 0 $border-radius $border-radius);
       }
     }
+    */
   }
 }
 
