@@ -56,8 +56,12 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
   ngOnInit() {
     super.ngOnInit();
 
-    this.latitude = 48.210033;
-    this.longitude = 16.363449;
+    let center = fromLonLat([16.363449, 48.210033]);
+    if (this.value) {
+      this.latitude = this.value.lat;
+      this.longitude = this.value.lng;
+      center = fromLonLat([this.longitude, this.latitude]);
+    }
 
     const map = new Map({
       target: 'map',
@@ -69,7 +73,7 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
         }),
       ],
       view: new View({
-        center: fromLonLat([this.longitude, this.latitude]),
+        center: center,
         zoom: 9,
       }),
     });
@@ -82,7 +86,9 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
     });
 
     setTimeout(() => {
-      this.setMarker();
+      if (this.latitude && this.longitude) {
+        this.setMarker();
+      }
     });
   }
 
