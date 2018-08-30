@@ -88,7 +88,6 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   get valueLink() {
-    // console.log(this.value);
     if (this.value == null) {
       return '';
     }
@@ -96,9 +95,9 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
       case 'external':
         return this.value.value;
       case 'sitemap':
-        return '/';
+        return this.value.link;
       case 'media':
-        return this.value.value.basePath + this.value.value.filename;
+        return this.value.link || this.value.value.original;
       default:
         return null;
     }

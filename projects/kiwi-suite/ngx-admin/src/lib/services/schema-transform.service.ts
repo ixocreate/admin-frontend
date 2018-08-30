@@ -29,6 +29,8 @@ export class SchemaTransformService {
     this.registerTransform('color', this.handleDefault('color'));
     this.registerTransform('select', this.handleSelect);
     this.registerTransform('multiselect', this.handleMultiSelect);
+    this.registerTransform('map', this.handleDefault('map'));
+    this.registerTransform('price', this.handleDefault('price'));
 
     this.registerTransform('html', this.handleDefault('wysiwyg'));
   }

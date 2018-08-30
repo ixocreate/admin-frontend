@@ -14,6 +14,7 @@ import { FormlyFieldCheckboxComponent } from './types/checkbox';
 import { FormlyFieldDynamicComponent } from './types/dynamic';
 import { FormlyFieldRepeatableComponent } from './types/repeatable';
 import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
+import { FormlyFieldInput } from '@ngx-formly/bootstrap';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -91,6 +92,16 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'youtube',
       component: FormlyFieldYouTubeComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'map',
+      component: FormlyFieldInput,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'price',
+      component: FormlyFieldInput,
       wrappers: ['form-field'],
     },
     {
