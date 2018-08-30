@@ -357,3 +357,21 @@ formly-wrapper-validation-messages > div > .invalid-feedback {
   }
 }
 
+.input-map-wrapper {
+  border: 2px solid $input-border-color;
+  border-radius: $border-radius;
+
+  &.is-invalid {
+    border-color: $danger;
+
+    .map {
+      border-color: $danger;
+    }
+  }
+
+  .map {
+    border-top: 2px solid $input-border-color;
+    height: 180px;
+    border-radius: 0 0 $border-radius $border-radius;
+  }
+}

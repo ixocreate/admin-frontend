@@ -14,8 +14,8 @@ import { FormlyFieldCheckboxComponent } from './types/checkbox';
 import { FormlyFieldDynamicComponent } from './types/dynamic';
 import { FormlyFieldRepeatableComponent } from './types/repeatable';
 import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
-import { FormlyFieldInput } from '@ngx-formly/bootstrap';
 import { FormlyFieldPriceComponent } from './types/price';
+import { FormlyFieldGeoPointComponent } from './types/geo-point';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -30,6 +30,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldRepeatableComponent,
   FormlyFieldDynamicComponent,
   FormlyFieldPriceComponent,
+  FormlyFieldGeoPointComponent,
 
   // wrappers
   FormlyWrapperFormFieldComponent,
@@ -98,7 +99,7 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     },
     {
       name: 'map',
-      component: FormlyFieldInput,
+      component: FormlyFieldGeoPointComponent,
       wrappers: ['form-field'],
     },
     {
