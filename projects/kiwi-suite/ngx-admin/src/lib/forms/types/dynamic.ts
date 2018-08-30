@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { clone, isNullOrUndefined } from '../utils';
 import { FormlyFieldRepeatableComponent } from './repeatable';
-import { FormlyTemplateOptions } from '@ngx-formly/core';
+import { FormlyFormBuilder, FormlyTemplateOptions } from '@ngx-formly/core';
+import { CopyService } from '../../services/copy.service';
 
 @Component({
   selector: 'formly-field-dynamic',
@@ -13,33 +14,56 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
         <a href="#" (click)="toggleAll(true)">Expand all</a>
       </div>
       <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
-        <div class="form-dynamic" *ngFor="let fieldGroup of field.fieldGroup; let i = index;" ngxDraggable [model]="fieldGroup"
-             [class.is-invalid]="hasError(fieldGroup)"
-             [class.collapsed]="fieldGroup.templateOptions['collapsed']">
-          <div class="form-dynamic-header">
-            <button class="btn-move" type="button" ngxDragHandle title="Move">
-              <i class="fa fa-fw fa-bars"></i>
-            </button>
-            <button class="btn-toggle" type="button" title="Close/Open" (click)="toggleContent(fieldGroup.templateOptions)">
-              <i class="fa fa-fw fa-chevron-up"></i>
-            </button>
-            <div class="form-dynamic-title">
-              <input [(ngModel)]="fieldGroup.model._name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
-              <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
+        <ng-container *ngFor="let fieldGroup of field.fieldGroup; let i = index;">
+          <div *ngIf="insertCopiedBlockAllowed()" class="px-3">
+            <button type="button" (click)="insertCopiedBlock(i)" class="btn btn-sm btn-outline-info btn-block">Insert copied block here</button>
+          </div>
+          <div class="form-dynamic"  ngxDraggable [model]="fieldGroup"
+               [class.is-invalid]="hasError(fieldGroup)"
+               [class.collapsed]="fieldGroup.templateOptions['collapsed']">
+            <div class="form-dynamic-header">
+              <button class="btn-move" type="button" ngxDragHandle title="Move">
+                <i class="fa fa-fw fa-bars"></i>
+              </button>
+              <button class="btn-toggle" type="button" title="Close/Open" (click)="toggleContent(fieldGroup.templateOptions)">
+                <i class="fa fa-fw fa-chevron-up"></i>
+              </button>
+              <div class="form-dynamic-title">
+                <input [(ngModel)]="fieldGroup.model._name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
+                <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
+              </div>
+              <div class="btn-group" dropdown>
+                <button class="btn-more" type="button" dropdownToggle>
+                  <i class="fa fa-fw fa-ellipsis-h"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                  <button class="dropdown-item" (click)="copyBlock(fieldGroup.model)" type="button">
+                    <i class="fa fa-clone"></i> Copy Block
+                  </button>
+                  <button class="dropdown-item dropdown-item-danger" (click)="remove(i)" type="button">
+                    <i class="fa fa-trash"></i> Delete Block
+                  </button>
+                </div>
+              </div>
+              <!--
+              <button class="btn btn-remove btn-sm" type="button" (click)="remove(i)" title="Remove">
+                <i class="fa fa-fw fa-times"></i>
+              </button>
+              -->
             </div>
-            <button class="btn btn-remove btn-sm" type="button" (click)="remove(i)" title="Remove">
-              <i class="fa fa-fw fa-times"></i>
-            </button>
+            <div class="form-dynamic-content" [class.collapsed]="fieldGroup.templateOptions['collapsed']">
+              <ng-container *ngIf="fieldGroup.fieldGroup.length > 1; else noChildren">
+                <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
+              </ng-container>
+              <ng-template #noChildren>
+                <i>No options for this block.</i>
+              </ng-template>
+            </div>
           </div>
-          <div class="form-dynamic-content" [class.collapsed]="fieldGroup.templateOptions['collapsed']">
-            <ng-container *ngIf="fieldGroup.fieldGroup.length > 1; else noChildren">
-              <formly-group [model]="model[i]" [field]="fieldGroup" [options]="options" [form]="formControl"></formly-group>
-            </ng-container>
-            <ng-template #noChildren>
-              <i>No options for this block.</i>
-            </ng-template>
-          </div>
-        </div>
+        </ng-container>
+      </div>
+      <div *ngIf="insertCopiedBlockAllowed()" class="px-3 mb-3">
+        <button (click)="insertCopiedBlock(0)" type="button" class="btn btn-sm btn-outline-info btn-block">Insert copied block here</button>
       </div>
       <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
         <div class="input-group">
@@ -57,9 +81,13 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
 export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent implements OnInit {
 
   selectedFieldGroupType: string;
-  fieldGroupTypes: string;
+  fieldGroupTypes: Array<{ label: string, value: string}>;
 
   removeControls = [];
+
+  constructor(private copy: CopyService, builder: FormlyFormBuilder) {
+    super(builder);
+  }
 
   ngOnInit() {
     /**
@@ -133,6 +161,27 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     } else {
       value.collapsed = !visible;
     }
+  }
+
+  copyBlock(blockModel: any) {
+    this.copy.setCopiedBlock(blockModel);
+  }
+
+  insertCopiedBlockAllowed() {
+    let isAllowed = false;
+    const copiedBlock = this.copy.getCopiedBlock();
+    if (this.copy.getCopiedBlock()) {
+      this.fieldGroupTypes.forEach((value) => {
+        if (value.value === copiedBlock._type) {
+          isAllowed = true;
+        }
+      });
+    }
+    return isAllowed;
+  }
+
+  insertCopiedBlock(index) {
+    this.add(index, this.copy.getCopiedBlock());
   }
 
   add(i?: number, initialModel ?: any, templateOptions?: FormlyTemplateOptions) {

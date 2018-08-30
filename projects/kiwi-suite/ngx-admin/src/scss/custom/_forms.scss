@@ -144,6 +144,7 @@ $dynamic-form-color: $border-color;
         @include border-radius($border-radius 0 0 $border-radius);
       }
 
+      .btn-more,
       .btn-remove {
         @include border-radius(0 $border-radius $border-radius 0);
       }
@@ -167,6 +168,7 @@ $dynamic-form-color: $border-color;
         background: darken($danger, 5%);
       }
 
+      .btn-more,
       .btn-remove {
         @include button-outline-variant($danger);
         border-width: 2px;
@@ -218,12 +220,15 @@ $dynamic-form-color: $border-color;
       }
     }
 
+    .btn-more,
     .btn-remove {
       @include button-outline-variant($dynamic-form-color);
       background: #fff;
       @include border-radius(0 $border-radius 0 0);
       border-width: 2px;
 
+      &:not(:disabled):not(.disabled):active,
+      &:not(:disabled):not(.disabled).active,
       &:hover {
         color: #fff;
         background: $danger;

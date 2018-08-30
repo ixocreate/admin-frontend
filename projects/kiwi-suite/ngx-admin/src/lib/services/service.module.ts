@@ -7,6 +7,7 @@ import { AccountDataService } from './data/account-data.service';
 import { LocalStorageService } from './local-storage.service';
 import { SchemaTransformService } from './schema-transform.service';
 import { PageTitleService } from './page-title.service';
+import { CopyService } from './copy.service';
 
 @NgModule({
   imports: [],
@@ -24,6 +25,7 @@ export class ServiceModule {
         LocalStorageService,
         SchemaTransformService,
         PageTitleService,
+        CopyService,
 
         AppDataService,
         AccountDataService,
