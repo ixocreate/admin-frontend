@@ -120,11 +120,13 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       component: FormlyFieldDynamicComponent,
       wrappers: ['form-field-only'],
     },
+    /*
     {
       name: 'repeat',
       component: FormlyFieldRepeatableComponent,
       wrappers: ['form-field-only'],
     },
+    */
   ],
   wrappers: [
     {name: 'form-field', component: FormlyWrapperFormFieldComponent},

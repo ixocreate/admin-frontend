@@ -183,6 +183,10 @@ $dynamic-form-color: $border-color;
       .form-dynamic-title {
         background: $danger;
       }
+
+      .form-dynamic-input {
+        background: $danger;
+      }
     }
 
     > .form-dynamic-content {

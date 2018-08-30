@@ -7,7 +7,7 @@ import { FormlyWrapperTabComponent } from './tab.wrapper';
   template: `
     <ul class="nav nav-tabs">
       <li class="nav-item" *ngFor="let tab of tabs;let index = index;">
-        <a class="nav-link" [class.active]="isActive(index)" [class.is-invalid]="hasError(index)" (click)="activate(index)" href="#">
+        <a class="nav-link" [class.active]="isActive(index)" [class.is-invalid]="showSubError(index)" (click)="activate(index)" href="#">
           {{ tab.to.label }}
         </a>
       </li>
@@ -56,8 +56,8 @@ export class FormlyWrapperTabsetComponent extends FieldWrapper implements OnInit
     return false;
   }
 
-  hasError(index) {
-    return this._tabs[index].hasError();
+  showSubError(index) {
+    return this._tabs[index].showSubError();
   }
 
   addTab(tab: FormlyWrapperTabComponent) {
