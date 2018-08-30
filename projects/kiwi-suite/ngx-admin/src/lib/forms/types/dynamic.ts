@@ -35,11 +35,11 @@ export interface BlockSelect {
                 <input [(ngModel)]="fieldGroup.model._meta.name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
                 <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
               </div>
-              <div class="btn-group">
-                <button class="btn-more" type="button" (click)="toggleDropdown(i)" kiwiClickStopPropagation>
+              <div class="btn-group" kiwiDropdown>
+                <button class="btn-more dropdown-btn" type="button">
                   <i class="fa fa-fw fa-ellipsis-h"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" [class.show]="dropdownVisible[i]">
+                <div class="dropdown-menu dropdown-menu-right">
                   <button class="dropdown-item" (click)="copyBlock(fieldGroup.model)" type="button">
                     <i class="fa fa-clone"></i> Copy Block
                   </button>
@@ -89,18 +89,8 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
   fieldGroupTypes: Array<BlockSelect>;
 
   removeControls = [];
-  dropdownVisible = {};
 
-  @HostListener('document:click.out-zone') clickOutside() {
-    if (Object.values(this.dropdownVisible).length) {
-      console.log('was open');
-      this.zone.run(() => {
-        this.dropdownVisible = {};
-      });
-    }
-  }
-
-  constructor(private copy: CopyService, builder: FormlyFormBuilder, private zone: NgZone) {
+  constructor(private copy: CopyService, builder: FormlyFormBuilder) {
     super(builder);
   }
 
@@ -133,16 +123,6 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     this.removeControls.forEach(index => this.remove(index));
 
     this.setFieldGroupTypes();
-  }
-
-  toggleDropdown(index) {
-    setTimeout(() => {
-      if (this.dropdownVisible[index]) {
-        delete this.dropdownVisible[index];
-      } else {
-        this.dropdownVisible[index] = true;
-      }
-    });
   }
 
   get fieldGroups() {
@@ -202,14 +182,12 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
   }
 
   copyBlock(model: any) {
-    this.dropdownVisible = {};
     this.copy.addCopiedBlock(model).then(() => {
       this.setFieldGroupTypes();
     });
   }
 
   remove(i) {
-    this.dropdownVisible = {};
     super.remove(i);
   }
 

@@ -72,6 +72,7 @@ import { KiwiInputModalComponent } from './components/kiwi-input-modal/kiwi-inpu
 
 import { Injectable, Inject, NgZone  } from '@angular/core';
 import { EVENT_MANAGER_PLUGINS, EventManager } from '@angular/platform-browser';
+import { DropdownDirective } from './directives/dropdown.directive';
 
 @Injectable()
 export class CustomEventManager extends EventManager {
@@ -117,6 +118,7 @@ const APP_COMPONENTS = [
   // Directives
   PermissionDirective,
   ClickStopPropagationDirective,
+  DropdownDirective,
 
   // Views
   AdminComponent,
