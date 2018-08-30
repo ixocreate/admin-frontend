@@ -149,11 +149,13 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     });
 
     this.copy.copiedBlocks.forEach((copy) => {
-      this.fieldGroupTypes.push({
-        label: copy.name + ' - ' + nameMap[copy.model._type],
-        value: copy.model,
-        copy: copy,
-      });
+      if (nameMap[copy.model._type]) {
+        this.fieldGroupTypes.push({
+          label: copy.name + ' - ' + nameMap[copy.model._type],
+          value: copy.model,
+          copy: copy,
+        });
+      }
     });
   }
 
