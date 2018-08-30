@@ -15,6 +15,7 @@ import { FormlyFieldDynamicComponent } from './types/dynamic';
 import { FormlyFieldRepeatableComponent } from './types/repeatable';
 import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
 import { FormlyFieldInput } from '@ngx-formly/bootstrap';
+import { FormlyFieldPriceComponent } from './types/price';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -28,6 +29,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldCheckboxComponent,
   FormlyFieldRepeatableComponent,
   FormlyFieldDynamicComponent,
+  FormlyFieldPriceComponent,
 
   // wrappers
   FormlyWrapperFormFieldComponent,
@@ -101,7 +103,7 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     },
     {
       name: 'price',
-      component: FormlyFieldInput,
+      component: FormlyFieldPriceComponent,
       wrappers: ['form-field'],
     },
     {
