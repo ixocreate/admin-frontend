@@ -1,0 +1,15 @@
+<div class="modal-header bg-{{ confirmBtnType }}">
+  <h5 class="modal-title" [innerHtml]="title"></h5>
+</div>
+<div class="modal-body">
+  <div [innerHtml]="text"></div>
+  <input class="form-control" [(ngModel)]="value">
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-{{ confirmBtnType }}" (click)="confirm()">
+    <i class="{{ confirmBtnIcon }}"></i> {{ confirmBtnTitle }}
+  </button>
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">
+    {{ cancelBtnTitle }}
+  </button>
+</div>

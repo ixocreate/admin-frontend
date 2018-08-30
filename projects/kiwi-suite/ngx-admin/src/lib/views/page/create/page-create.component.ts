@@ -23,7 +23,7 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
               protected router: Router,
               protected appData: AppDataService,
               protected notification: NotificationService,
-              protected schemaTransformService: SchemaTransformService) {
+              protected schemaTransform: SchemaTransformService) {
     super();
   }
 
@@ -32,7 +32,7 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
       this.locale = params.locale;
       this.parentSitemapId = params.parentSitemapId;
       this.data$ = this.appData.getPageCreateSchema(this.parentSitemapId).then((data) => {
-        data.schema = this.schemaTransformService.transformForm(data.schema);
+        data.schema = this.schemaTransform.transformForm(data.schema);
         this.fields = data.schema ? data.schema : [];
         return data;
       });

@@ -50,13 +50,6 @@
   </kiwi-aside>
 </div>
 
-<div class="copy-info alert alert-info" *ngIf="copiedBlock">
-  You have copied a block with the type "{{ copiedBlock._type }}". You can add it to any allowed location.
-  <div class="text-right mt-2">
-    <button class="btn btn-link p-0" (click)="cancelCopy()">Cancel Copy</button>
-  </div>
-</div>
-
 <app-footer>
   <div><b>{{ config.config.project.name }}</b> /
     &copy; {{ config.config.project.copyright }} {{ config.config.project.author }}.

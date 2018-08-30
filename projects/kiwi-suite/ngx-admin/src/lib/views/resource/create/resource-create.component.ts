@@ -27,7 +27,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
               protected notification: NotificationService,
               protected config: ConfigService,
               protected pageTitle: PageTitleService,
-              protected schemaTransformService: SchemaTransformService) {
+              protected schemaTransform: SchemaTransformService) {
     super();
   }
 
@@ -36,7 +36,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
       this.resourceKey = params.type;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
-      this.fields = this.resourceInfo.createSchema ?  this.schemaTransformService.transformForm(this.resourceInfo.createSchema) : [];
+      this.fields = this.resourceInfo.createSchema ?  this.schemaTransform.transformForm(this.resourceInfo.createSchema) : [];
     });
   }
 

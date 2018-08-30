@@ -68,6 +68,7 @@ import { QuillModule } from 'ngx-quill';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { KiwiPageVersionEditComponent } from './components/kiwi-page-version/kiwi-page-version-edit.component';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
+import { KiwiInputModalComponent } from './components/kiwi-input-modal/kiwi-input-modal.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -79,6 +80,7 @@ const APP_CONTAINERS = [
 
 const APP_ENTRY_COMPONENTS = [
   KiwiConfirmModalComponent,
+  KiwiInputModalComponent,
 ];
 
 const APP_COMPONENTS = [

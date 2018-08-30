@@ -33,8 +33,8 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
               protected notification: NotificationService,
               protected config: ConfigService,
               protected pageTitle: PageTitleService,
-              protected schemaTransformService: SchemaTransformService,
-              protected modalService: BsModalService) {
+              protected schemaTransform: SchemaTransformService,
+              protected modal: BsModalService) {
     super();
   }
 
@@ -44,7 +44,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
       this.resourceId = params.id;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
-      this.fields = this.resourceInfo.updateSchema ?  this.schemaTransformService.transformForm(this.resourceInfo.updateSchema) : [];
+      this.fields = this.resourceInfo.updateSchema ?  this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
       this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
     });
   }
@@ -70,7 +70,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
         }).catch((error) => this.notification.apiError(error));
       },
     };
-    this.modalService.show(KiwiConfirmModalComponent, {initialState});
+    this.modal.show(KiwiConfirmModalComponent, {initialState});
   }
 
 }

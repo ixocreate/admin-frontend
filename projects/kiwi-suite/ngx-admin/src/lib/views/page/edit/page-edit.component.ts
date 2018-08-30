@@ -29,7 +29,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
               protected router: Router,
               protected appData: AppDataService,
               protected notification: NotificationService,
-              protected schemaTransformService: SchemaTransformService) {
+              protected schemaTransform: SchemaTransformService) {
     super();
   }
 
@@ -43,7 +43,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   private loadDetailData() {
     this.detailData$ = this.appData.getResourceDetail('page', this.id).then((data) => {
-      data.schema = this.schemaTransformService.transformForm(data.schema);
+      data.schema = this.schemaTransform.transformForm(data.schema);
       this.detailFields = data.schema ? data.schema : [];
       return data;
     });

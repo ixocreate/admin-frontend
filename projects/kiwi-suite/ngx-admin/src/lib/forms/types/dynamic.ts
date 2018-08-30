@@ -3,7 +3,13 @@ import { FormArray } from '@angular/forms';
 import { clone, isNullOrUndefined } from '../utils';
 import { FormlyFieldRepeatableComponent } from './repeatable';
 import { FormlyFormBuilder, FormlyTemplateOptions } from '@ngx-formly/core';
-import { CopyService } from '../../services/copy.service';
+import { BlockCopy, CopyService } from '../../services/copy.service';
+
+export interface BlockSelect {
+  label: string;
+  value: any;
+  copy?: BlockCopy;
+}
 
 @Component({
   selector: 'formly-field-dynamic',
@@ -15,10 +21,7 @@ import { CopyService } from '../../services/copy.service';
       </div>
       <div ngxDroppable [model]="field.fieldGroup" (drop)="onDrop($event)">
         <ng-container *ngFor="let fieldGroup of field.fieldGroup; let i = index;">
-          <div *ngIf="insertCopiedBlockAllowed()" class="px-3">
-            <button type="button" (click)="insertCopiedBlock(i)" class="btn btn-sm btn-outline-info btn-block">Insert copied block here</button>
-          </div>
-          <div class="form-dynamic"  ngxDraggable [model]="fieldGroup"
+          <div class="form-dynamic" ngxDraggable [model]="fieldGroup"
                [class.is-invalid]="hasError(fieldGroup)"
                [class.collapsed]="fieldGroup.templateOptions['collapsed']">
             <div class="form-dynamic-header">
@@ -29,7 +32,7 @@ import { CopyService } from '../../services/copy.service';
                 <i class="fa fa-fw fa-chevron-up"></i>
               </button>
               <div class="form-dynamic-title">
-                <input [(ngModel)]="fieldGroup.model._name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
+                <input [(ngModel)]="fieldGroup.model._meta._name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
                 <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
               </div>
               <div class="btn-group" dropdown>
@@ -62,12 +65,19 @@ import { CopyService } from '../../services/copy.service';
           </div>
         </ng-container>
       </div>
-      <div *ngIf="insertCopiedBlockAllowed()" class="px-3 mb-3">
-        <button (click)="insertCopiedBlock(0)" type="button" class="btn btn-sm btn-outline-info btn-block">Insert copied block here</button>
-      </div>
       <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
         <div class="input-group">
-          <ng-select [items]="fieldGroupTypes" bindValue="value" [(ngModel)]="selectedFieldGroupType" [clearable]="false"></ng-select>
+          <ng-select [items]="fieldGroupTypes" [(ngModel)]="selectedFieldGroupType" bindLabel="label" [clearable]="false">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              <div class="d-flex" *ngIf="item.copy">
+                <div class="flex-grow-1">{{ item.label }}</div>
+                <button class="select-remove" (click)="removeCopiedBlock(item)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+              <div *ngIf="!item.copy">{{ item.label }}</div>
+            </ng-template>
+          </ng-select>
           <div class="input-group-append">
             <button class="btn btn-success" type="button" (click)="add()">
               <i class="fa fa-plus"></i>
@@ -80,8 +90,8 @@ import { CopyService } from '../../services/copy.service';
 })
 export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent implements OnInit {
 
-  selectedFieldGroupType: string;
-  fieldGroupTypes: Array<{ label: string, value: string}>;
+  selectedFieldGroupType: BlockSelect;
+  fieldGroupTypes: Array<BlockSelect>;
 
   removeControls = [];
 
@@ -90,10 +100,6 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
   }
 
   ngOnInit() {
-    /**
-     * preselect first fieldGroup type
-     */
-    this.selectedFieldGroupType = this.fieldGroups[0]._type;
 
     /**
      * TODO: add default block(s) by form definition if none yet
@@ -122,11 +128,32 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
      */
     this.removeControls.forEach(index => this.remove(index));
 
+    this.setFieldGroupTypes();
+  }
+
+  private setFieldGroupTypes() {
+    const nameMap = {};
     this.fieldGroupTypes = this.fieldGroups.map((type) => {
-      return {
-        label: (type.templateOptions && type.templateOptions.label) || type._type,
+      nameMap[type._type] = (type.templateOptions && type.templateOptions.label) || type._type;
+      const data = {
+        label: nameMap[type._type],
         value: type._type,
       };
+      /**
+       * preselect first fieldGroup type
+       */
+      if (!this.selectedFieldGroupType) {
+        this.selectedFieldGroupType = data;
+      }
+      return data;
+    });
+
+    this.copy.copiedBlocks.forEach((copy) => {
+      this.fieldGroupTypes.push({
+        label: copy.name + ' - ' + nameMap[copy.model._type],
+        value: copy.model,
+        copy: copy,
+      });
     });
   }
 
@@ -163,38 +190,43 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     }
   }
 
-  copyBlock(blockModel: any) {
-    this.copy.setCopiedBlock(blockModel);
+  copyBlock(model: any) {
+    this.copy.addCopiedBlock(model).then(() => {
+      this.setFieldGroupTypes();
+    });
   }
 
-  insertCopiedBlockAllowed() {
-    let isAllowed = false;
-    const copiedBlock = this.copy.getCopiedBlock();
-    if (this.copy.getCopiedBlock()) {
-      this.fieldGroupTypes.forEach((value) => {
-        if (value.value === copiedBlock._type) {
-          isAllowed = true;
-        }
+  insertCopiedBlock(index, model) {
+    this.add(null, model);
+  }
+
+  removeCopiedBlock(copiedBlock: BlockSelect) {
+    this.copy.removeCopiedBlock(copiedBlock.copy).then(() => {
+      this.setFieldGroupTypes();
+      setTimeout(() => {
+        this.selectedFieldGroupType = this.fieldGroupTypes[0];
       });
-    }
-    return isAllowed;
-  }
-
-  insertCopiedBlock(index) {
-    this.add(index, this.copy.getCopiedBlock());
+    });
   }
 
   add(i?: number, initialModel ?: any, templateOptions?: FormlyTemplateOptions) {
     i = isNullOrUndefined(i) ? this.field.fieldGroup.length : i;
 
+    if (this.selectedFieldGroupType && this.selectedFieldGroupType.copy) {
+      initialModel = this.selectedFieldGroupType.copy.model;
+    }
+
     let model = clone(initialModel);
     if (!model) {
       model = {
-        _type: this.selectedFieldGroupType,
+        _type: this.selectedFieldGroupType.value,
       };
     }
-    if (!model._name) {
-      model._name = '';
+    if (!model._meta) {
+      model._meta = {};
+    }
+    if (!model._meta._name) {
+      model._meta._name = '';
     }
     this.model.splice(i, 0, model);
 

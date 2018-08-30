@@ -39,3 +39,15 @@
 .ng-select.ng-select-opened > .ng-select-container .ng-arrow {
   border-color: transparent transparent $input-border-color;
 }
+
+.select-remove {
+  color: $danger;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  opacity: .4;
+
+  &:hover {
+    opacity: 1;
+  }
+}
