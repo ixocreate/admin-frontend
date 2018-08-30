@@ -21,6 +21,7 @@ export class DropdownDirective implements OnInit {
 
   ngOnInit() {
     this.element.nativeElement.querySelector('.dropdown-btn').addEventListener('click', (event) => {
+      event.preventDefault();
       event.stopPropagation();
       if (this.isOpen) {
         this.close();

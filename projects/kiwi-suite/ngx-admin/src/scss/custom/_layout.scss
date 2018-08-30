@@ -59,6 +59,7 @@
 }
 
 .header-email {
+  display: block;
   max-width: 30vw;
   white-space: nowrap;
   overflow: hidden;
@@ -195,4 +196,8 @@
   box-shadow: $box-shadow;
   z-index: 1100;
   max-width: 240px;
+}
+
+.dropdown-btn:focus {
+  outline: 0;
 }

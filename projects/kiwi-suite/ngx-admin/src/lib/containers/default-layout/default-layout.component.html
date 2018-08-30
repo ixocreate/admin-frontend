@@ -6,11 +6,11 @@
   [asideMenuToggler]="false"
   [mobileAsideMenuToggler]="false">
   <ul class="nav navbar-nav ml-auto pr-2">
-    <li class="nav-item dropdown" dropdown placement="bottom right" *ngIf="accountData.user$ | async as user">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" dropdownToggle (click)="false">
-        <div class="header-email">{{ user.email }}</div>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+    <li class="nav-item dropdown" kiwiDropdown *ngIf="accountData.user$ | async as user">
+      <button class="nav-link dropdown-btn py-2">
+        <span class="header-email">{{ user.email }}</span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-header text-center"><strong>Settings</strong></div>
         <a class="dropdown-item" routerLink="/account" href="#"><i class="fa fa-user"></i> Account</a>
         <button class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Logout</button>

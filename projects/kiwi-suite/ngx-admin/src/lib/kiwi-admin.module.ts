@@ -181,7 +181,6 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),
-    BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
