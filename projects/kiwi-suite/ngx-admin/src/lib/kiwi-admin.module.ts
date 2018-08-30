@@ -4,7 +4,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ToastrModule } from 'ngx-toastr';
 import { StoreModule } from '@ngrx/store';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, EventManager } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppFooterModule, AppHeaderModule, AppSidebarModule } from '@coreui/angular';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -69,27 +69,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { KiwiPageVersionEditComponent } from './components/kiwi-page-version/kiwi-page-version-edit.component';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { KiwiInputModalComponent } from './components/kiwi-input-modal/kiwi-input-modal.component';
-
-import { Injectable, Inject, NgZone  } from '@angular/core';
-import { EVENT_MANAGER_PLUGINS, EventManager } from '@angular/platform-browser';
 import { DropdownDirective } from './directives/dropdown.directive';
-
-@Injectable()
-export class CustomEventManager extends EventManager {
-  constructor(@Inject(EVENT_MANAGER_PLUGINS) plugins: any[], private zone: NgZone) {
-    super(plugins, zone);
-  }
-
-  addGlobalEventListener(element: string, eventName: string, handler: Function): Function {
-    if(eventName.endsWith('out-zone')) {
-      eventName = eventName.split('.')[0];
-      return this.zone.runOutsideAngular(() =>
-        super.addGlobalEventListener(element, eventName, handler));
-    }
-
-    return super.addGlobalEventListener(element, eventName, handler);
-  }
-}
+import { KiwiEventManager } from './events/kiwi.event-manager';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -266,7 +247,10 @@ export class KiwiAdminModule {
           deps: [AppDataService],
           multi: true,
         },
-        { provide: EventManager, useClass: CustomEventManager }
+        {
+          provide: EventManager,
+          useClass: KiwiEventManager,
+        },
       ],
     };
   }
