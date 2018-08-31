@@ -9,10 +9,13 @@
   <meta name="description" content="kiwi [development]">
   <meta name="author" content="kiwi suite GmbH">
   <link rel="shortcut icon" href="assets/img/favicon.png">
+
+  <script src="http://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 </head>
 <body class="app">
 <script>
   window.__kiwi = {
+    googleApiKey: null,
     routes: {
       /**
        * localhost

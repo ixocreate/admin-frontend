@@ -34,3 +34,7 @@
 @import "custom/media";
 @import "custom/sitemap";
 @import "custom/forms";
+
+.pac-container {
+  z-index: 1060;
+}

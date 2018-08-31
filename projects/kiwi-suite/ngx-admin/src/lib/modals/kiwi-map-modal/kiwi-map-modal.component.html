@@ -4,14 +4,7 @@
 <div class="modal-body p-0">
   <div class="pt-3 px-3">
     <div class="input-group">
-      <input [(ngModel)]="selectedLocation"
-             [typeahead]="foundLocations"
-             (typeaheadOnSelect)="onSelectLocation($event)"
-             typeaheadWaitMs="300"
-             [typeaheadOptionsLimit]="7"
-             typeaheadOptionField="display_name"
-             placeholder="Search for a location..."
-             class="form-control">
+      <input placeholder="Search for a location..." class="form-control" type="text" #geoInput>
       <div class="input-group-append">
         <span class="input-group-text"><i class="fa fa-fw fa-search"></i></span>
       </div>
@@ -42,3 +35,5 @@
     {{ cancelBtnTitle }}
   </button>
 </div>
+
+<script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>

@@ -1,5 +1,5 @@
-import { Component, OnInit, } from '@angular/core';
-import { BsModalRef, BsModalService, TypeaheadMatch } from 'ngx-bootstrap';
+import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { GeoPoint } from './map-modal-data.interface';
 
 import Map from 'ol/Map';
@@ -12,15 +12,16 @@ import Vector from 'ol/source/Vector';
 import OSM from 'ol/source/OSM.js';
 import { Icon, Style } from 'ol/style';
 import { fromLonLat, toLonLat } from 'ol/proj.js';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+
+declare var google: any;
 
 @Component({
   selector: 'kiwi-map-modal',
   templateUrl: './kiwi-map-modal.component.html',
 })
 export class KiwiMapModalComponent implements OnInit {
+
+  @ViewChild('geoInput') geoInput: ElementRef;
 
   isValid = true;
 
@@ -39,9 +40,6 @@ export class KiwiMapModalComponent implements OnInit {
   latitude: string | number;
   longitude: string | number;
 
-  foundLocations: Observable<any>;
-  selectedLocation: any;
-
   private markerSource = new Vector();
   private markerStyle = new Style({
     image: new Icon(({
@@ -56,24 +54,21 @@ export class KiwiMapModalComponent implements OnInit {
   onConfirm = (geoPoint: GeoPoint) => {
   };
 
-  constructor(public bsModalRef: BsModalRef, private modal: BsModalService, protected http: HttpClient) {
-    this.foundLocations = Observable.create((observer: any) => {
-      observer.next(this.selectedLocation);
-    }).pipe(mergeMap((token: string) => this.getSearchData(token)));
-  }
-
-  getSearchData(token: string): Observable<any> {
-    return this.http.get('https://nominatim.openstreetmap.org/search?q=' + encodeURIComponent(token) + '&format=json');
-  }
-
-  onSelectLocation(e: TypeaheadMatch): void {
-    this.latitude = e.item.lat;
-    this.longitude = e.item.lon;
-    this.setMarker(true);
-    this.selectedLocation = '';
+  constructor(public bsModalRef: BsModalRef,
+              private modal: BsModalService) {
   }
 
   ngOnInit() {
+    const autocomplete = new google.maps.places.Autocomplete(this.geoInput.nativeElement, {types: ['geocode']});
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      this.latitude = place.geometry.location.lat();
+      this.longitude = place.geometry.location.lng();
+      this.setMarker(true);
+      this.geoInput.nativeElement.value = '';
+    });
+
+
     const sub = this.modal.onShown.subscribe(() => {
       sub.unsubscribe();
       let center = fromLonLat([16.363449, 48.210033]);

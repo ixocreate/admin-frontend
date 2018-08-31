@@ -8,6 +8,7 @@ export interface Config {
   navigation?: Navigation[];
   routes?: Routes;
   resources?: Array<ResourceConfig>;
+  googleApiKey?: string;
   intl?: { default: string, locales: Locale[] };
 }
 
