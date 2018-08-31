@@ -1,17 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap';
 import { GeoPoint } from './map-modal-data.interface';
-
-import Map from 'ol/Map';
-import View from 'ol/View';
-import Feature from 'ol/Feature';
-import TileLayer from 'ol/layer/Tile';
-import VectorLayer from 'ol/layer/Vector';
-import Point from 'ol/geom/Point';
-import Vector from 'ol/source/Vector';
-import OSM from 'ol/source/OSM.js';
-import { Icon, Style } from 'ol/style';
-import { fromLonLat, toLonLat } from 'ol/proj.js';
 
 declare var google: any;
 
@@ -22,6 +11,9 @@ declare var google: any;
 export class KiwiMapModalComponent implements OnInit {
 
   @ViewChild('geoInput') geoInput: ElementRef;
+  @ViewChild('gmap') gmapElement: any;
+
+  map: google.maps.Map;
 
   isValid = true;
 
@@ -35,31 +27,20 @@ export class KiwiMapModalComponent implements OnInit {
 
   geoPoint: GeoPoint = null;
 
-  map: any;
+  marker: google.maps.Marker;
 
   latitude: string | number;
   longitude: string | number;
 
-  private markerSource = new Vector();
-  private markerStyle = new Style({
-    image: new Icon(({
-      anchor: [0.5, 46],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'pixels',
-      opacity: 1,
-      src: '/assets/img/map-pin.png',
-    })),
-  });
-
   onConfirm = (geoPoint: GeoPoint) => {
   };
 
-  constructor(public bsModalRef: BsModalRef,
-              private modal: BsModalService) {
+  constructor(public bsModalRef: BsModalRef) {
   }
 
   ngOnInit() {
     const autocomplete = new google.maps.places.Autocomplete(this.geoInput.nativeElement, {types: ['geocode']});
+
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       this.latitude = place.geometry.location.lat();
@@ -68,45 +49,39 @@ export class KiwiMapModalComponent implements OnInit {
       this.geoInput.nativeElement.value = '';
     });
 
+    let center = new google.maps.LatLng(48.210033, 16.363449);
 
-    const sub = this.modal.onShown.subscribe(() => {
-      sub.unsubscribe();
-      let center = fromLonLat([16.363449, 48.210033]);
+    if (this.geoPoint) {
+      this.latitude = this.geoPoint.latitude;
+      this.longitude = this.geoPoint.longitude;
+      center = new google.maps.LatLng(this.latitude, this.longitude);
+    }
 
-      if (this.geoPoint) {
-        this.latitude = this.geoPoint.latitude;
-        this.longitude = this.geoPoint.longitude;
-        center = fromLonLat([this.longitude, this.latitude]);
-      }
+    const mapProp = {
+      center: center,
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      fullscreenControl: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      styles: [
+        {
+          featureType: 'poi',
+          stylers: [{visibility: 'off'}],
+        },
+      ],
+    };
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 
-      this.map = new Map({
-        target: 'modal_map',
-        layers: [
-          new TileLayer({preload: 4, source: new OSM()}),
-          new VectorLayer({
-            source: this.markerSource,
-            style: this.markerStyle,
-          }),
-        ],
-        view: new View({
-          center: center,
-          zoom: 10,
-        }),
-      });
-
-      this.map.on('singleclick', (event) => {
-        const lonLat = toLonLat(event.coordinate);
-        this.longitude = lonLat[0];
-        this.latitude = lonLat[1];
-        this.setMarker();
-      });
-
-      setTimeout(() => {
-        if (this.latitude && this.longitude) {
-          this.setMarker();
-        }
-      });
+    this.map.addListener('click', (event) => {
+      this.latitude = event.latLng.lat();
+      this.longitude = event.latLng.lng();
+      this.setMarker();
     });
+
+    if (this.latitude && this.longitude) {
+      this.setMarker();
+    }
   }
 
   private hasValidInput() {
@@ -123,20 +98,24 @@ export class KiwiMapModalComponent implements OnInit {
   }
 
   setMarker(centerMap: boolean = false) {
-    this.markerSource.clear();
+    if (this.marker) {
+      this.marker.setMap(null);
+    }
 
     if (this.hasValidInput()) {
       const latitude: any = parseFloat(<any>this.latitude);
       const longitude: any = parseFloat(<any>this.longitude);
 
       this.geoPoint = {latitude, longitude};
-      this.markerSource.addFeature(new Feature({
-        geometry: new Point(fromLonLat([longitude, latitude])),
-        name: 'Position',
-      }));
+
+      this.marker = new google.maps.Marker({
+        position: {lat: this.geoPoint.latitude, lng: this.geoPoint.longitude},
+        map: this.map,
+        title: 'Position',
+      });
 
       if (centerMap) {
-        this.map.getView().setCenter(fromLonLat([longitude, latitude]));
+        this.map.panTo(new google.maps.LatLng(this.geoPoint.latitude, this.geoPoint.longitude));
       }
     } else {
       this.geoPoint = null;

@@ -27,7 +27,7 @@
 
 @import "~@swimlane/ngx-dnd/release/index.css";
 
-@import "~ol/ol.css";
+@import "vendor/map";
 
 @import "custom/layout";
 @import "custom/loading";
@@ -35,6 +35,3 @@
 @import "custom/sitemap";
 @import "custom/forms";
 
-.pac-container {
-  z-index: 1060;
-}
