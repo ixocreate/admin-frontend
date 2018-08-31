@@ -135,12 +135,6 @@ export class ImageCropperComponent implements OnChanges {
     xhr.onload = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const image = new Image();
-        image.onload = () => {
-          //this.imageWidth = image.width;
-          //this.imageHeight = image.height;
-        };
-        image.src = reader.result;
         callback(reader.result);
       };
       reader.readAsDataURL(xhr.response);
