@@ -16,6 +16,16 @@
       <div class="card-body">
         <img [src]="image" class="img-fluid" />
 
+        <ng-container *ngIf="image">
+          {{ cropData | json }}
+          <kiwi-image-cropper
+            [imageUrl]="image"
+            [maintainAspectRatio]="maintainAspectRatio"
+            [aspectRatio]="aspectRatio"
+            [cropper]="cropData"
+            (imageCroppedBase64)="imageCropped($event)">
+          </kiwi-image-cropper>
+        </ng-container>
 
         <ng-container *ngIf="form && fields; else isLoading">
           <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmit()">

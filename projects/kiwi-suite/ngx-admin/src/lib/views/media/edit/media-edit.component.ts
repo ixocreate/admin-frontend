@@ -29,6 +29,18 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
 
   image = 'http://marinomed.proxy.jetzt/media/e1/12/00/z16-4151.jpg';
 
+  imageBase64: string;
+
+  maintainAspectRatio = true;
+  aspectRatio: number = 4 / 3;
+  minWidth = 200;
+  minHeight = 200;
+
+  imageWidth: number;
+  imageHeight: number;
+
+  cropData = {x1: null, y1: null, x2: null, y2: null};
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -40,12 +52,69 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     super();
   }
 
+  private toDataUrl(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const image = new Image();
+        image.onload = () => {
+          this.imageWidth = image.width;
+          this.imageHeight = image.height;
+        };
+        image.src = reader.result;
+        callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  }
+
+  imageCropped(image: string) {
+    console.log(this.imageWidth);
+    this.checkCropData();
+  }
+
+  checkCropData() {
+    if (this.minWidth) {
+      if (this.cropData.x2 - this.cropData.x1 < this.minWidth) {
+        this.cropData.x2 = this.cropData.x1 + this.minWidth;
+      }
+    }
+    if (this.minHeight) {
+      if (this.cropData.y2 - this.cropData.y1 < this.minHeight) {
+        this.cropData.y2 = this.cropData.y1 + this.minHeight;
+      }
+    }
+
+    if (this.maintainAspectRatio && this.aspectRatio) {
+      this.cropData.y2 = this.cropData.y1 + ((this.cropData.x2 - this.cropData.x1) / this.aspectRatio);
+    }
+
+    if (this.cropData.x2 > this.imageWidth) {
+      this.cropData.x1 = this.imageWidth - this.cropData.x2;
+      this.cropData.x2 = this.imageWidth;
+    }
+
+    if (this.cropData.y2 > this.imageHeight) {
+      this.cropData.y1 = this.imageHeight - this.cropData.y2;
+      this.cropData.y2 = this.imageHeight;
+    }
+
+  }
+
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.resourceId = params.id;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
-      this.fields = this.resourceInfo.updateSchema ?  this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
+      this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
       this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
+    });
+
+    this.toDataUrl(this.image, (base64) => {
+      this.imageBase64 = base64;
     });
   }
 

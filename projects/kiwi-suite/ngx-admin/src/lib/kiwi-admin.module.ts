@@ -73,6 +73,8 @@ import { DropdownDirective } from './directives/dropdown.directive';
 import { KiwiEventManager } from './events/kiwi.event-manager';
 import { KiwiMapModalComponent } from './modals/kiwi-map-modal/kiwi-map-modal.component';
 import { MediaEditComponent } from './views/media/edit/media-edit.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { KiwiImageCropperModule } from './components/kiwi-image-cropper/kiwi-image-cropper.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -182,6 +184,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     CalendarModule,
     ColorPickerModule,
     NgxDnDModule,
+    KiwiImageCropperModule,
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),
