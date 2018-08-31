@@ -18,6 +18,7 @@ import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
+import { MediaEditComponent } from './views/media/edit/media-edit.component';
 
 export const routes: Routes = [
   {
@@ -77,6 +78,11 @@ export const routes: Routes = [
             component: MediaComponent,
             data: {title: null},
           },
+          {
+            path: ':id/edit',
+            component: MediaEditComponent,
+            data: {title: 'Edit'},
+          },
         ],
       },
       {
@@ -127,10 +133,18 @@ export const routes: Routes = [
           },
         ],
       },
+      /*
       {
         path: '**',
         redirectTo: 'page',
       },
+      */
+
+
+
+
+
+
       /*
       {
         path: 'admin-user',

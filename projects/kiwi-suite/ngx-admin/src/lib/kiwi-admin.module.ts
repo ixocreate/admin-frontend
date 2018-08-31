@@ -72,6 +72,7 @@ import { KiwiInputModalComponent } from './modals/kiwi-input-modal/kiwi-input-mo
 import { DropdownDirective } from './directives/dropdown.directive';
 import { KiwiEventManager } from './events/kiwi.event-manager';
 import { KiwiMapModalComponent } from './modals/kiwi-map-modal/kiwi-map-modal.component';
+import { MediaEditComponent } from './views/media/edit/media-edit.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -118,6 +119,7 @@ const APP_COMPONENTS = [
   TranslationEditComponent,
 
   MediaComponent,
+  MediaEditComponent,
 
   ResourceComponent,
   ResourceCreateComponent,
