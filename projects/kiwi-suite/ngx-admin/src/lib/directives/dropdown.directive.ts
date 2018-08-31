@@ -9,7 +9,6 @@ export class DropdownDirective implements OnInit {
 
   @HostListener('document:click.out-zone') clickOutside() {
     if (this.isOpen) {
-      console.log('was open');
       this.zone.run(() => {
         this.close();
       });

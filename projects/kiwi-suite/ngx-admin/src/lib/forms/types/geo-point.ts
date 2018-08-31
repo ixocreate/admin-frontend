@@ -1,111 +1,66 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import Feature from 'ol/Feature';
-import TileLayer from 'ol/layer/Tile';
-import VectorLayer from 'ol/layer/Vector';
-import Point from 'ol/geom/Point';
-import Vector from 'ol/source/Vector';
-import OSM from 'ol/source/OSM.js';
 import { Icon, Style } from 'ol/style';
-import { fromLonLat, toLonLat } from 'ol/proj.js';
+import { GeoPoint, MapModalData } from '../../modals/kiwi-map-modal/map-modal-data.interface';
+import { BsModalService } from 'ngx-bootstrap';
+import { KiwiMapModalComponent } from '../../modals/kiwi-map-modal/kiwi-map-modal.component';
 
 declare var ol: any;
 
 @Component({
   selector: 'formly-field-geo-point',
   template: `
-    <div class="input-map-wrapper" [class.is-invalid]="showError || !isValid">
-      <div class="pt-2 px-2">
-        <div class="form-group">
-          <label class="kiwi-form-label">Latitude</label>
-          <div class="kiwi-form-control-container">
-            <input [(ngModel)]="latitude" class="form-control" (change)="setMarker()" [class.is-invalid]="showError || !isValid"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="kiwi-form-label">Longitude</label>
-          <div class="kiwi-form-control-container">
-            <input [(ngModel)]="longitude" class="form-control" (change)="setMarker()" [class.is-invalid]="showError || !isValid">
-          </div>
-        </div>
+    <div class="input-group cursor-pointer" (click)="openMapModal()">
+      <div class="input-group-prepend">
+        <span class="input-group-text" [class.is-invalid]="showError"><i class="fa fa-fw fa-map-marker"></i></span>
       </div>
-      <div id="map" class="map"></div>
+      <input type="text" class="form-control pointer-events-none" [value]="locationString" [placeholder]="to.placeholder"
+             [class.is-invalid]="showError">
+      <div class="input-group-append">
+        <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError">
+          <i class="fa fa-map"></i>
+        </button>
+        <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
+                kiwiClickStopPropagation>
+          <i class="fa fa-close"></i>
+        </button>
+      </div>
     </div>
   `,
 })
 export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implements OnInit {
 
-  isValid = true;
+  locationString: string;
 
-  latitude: string | number;
-  longitude: string | number;
-
-  private markerSource = new Vector();
-  private markerStyle = new Style({
-    image: new Icon(({
-      anchor: [0.5, 46],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'pixels',
-      opacity: 1,
-      src: '/assets/img/map-pin.png',
-    })),
-  });
+  constructor(public modal: BsModalService) {
+    super();
+  }
 
   ngOnInit() {
     super.ngOnInit();
-
-    let center = fromLonLat([16.363449, 48.210033]);
-    if (this.value) {
-      this.latitude = this.value.lat;
-      this.longitude = this.value.lng;
-      center = fromLonLat([this.longitude, this.latitude]);
-    }
-
-    const map = new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({preload: 4, source: new OSM()}),
-        new VectorLayer({
-          source: this.markerSource,
-          style: this.markerStyle,
-        }),
-      ],
-      view: new View({
-        center: center,
-        zoom: 9,
-      }),
-    });
-
-    map.on('singleclick', (event) => {
-      const lonLat = toLonLat(event.coordinate);
-      this.longitude = lonLat[0];
-      this.latitude = lonLat[1];
-      this.setMarker();
-    });
-
-    setTimeout(() => {
-      if (this.latitude && this.longitude) {
-        this.setMarker();
-      }
-    });
+    this.parseLocationString();
   }
 
-  setMarker() {
-    const lat: any = parseFloat(<any>this.latitude);
-    const lng: any = parseFloat(<any>this.longitude);
+  parseLocationString() {
+    const geoPoint: GeoPoint = this.value;
+    if (geoPoint) {
+      this.locationString = geoPoint.latitude + ' / ' + geoPoint.longitude;
+    } else {
+      this.locationString = '';
+    }
+  }
 
-    this.setValue({lat, lng});
-
-    this.markerSource.clear();
-
-    const iconFeature = new Feature({
-      geometry: new Point(fromLonLat([lng, lat])),
-      name: 'Position',
-    });
-
-    this.markerSource.addFeature(iconFeature);
+  openMapModal() {
+    const initialState: MapModalData = {
+      onConfirm: (geoPoint) => {
+        this.setValue(geoPoint);
+        this.parseLocationString();
+      },
+    };
+    if (this.value) {
+      initialState.geoPoint = this.value;
+    }
+    this.modal.show(KiwiMapModalComponent, {initialState});
   }
 
 }

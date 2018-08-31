@@ -26,27 +26,27 @@ export class FormlyFieldPriceComponent extends CustomFieldTypeAbstract implement
   currentPrice;
 
   selectedOption;
-  selectOptions = [
-    {label: 'EUR', value: 'EUR'},
-    {label: 'USD', value: 'USD'},
-  ];
+  selectOptions = [];
 
-  private decimalPlaces = 2;
+  private decimal = 2;
 
   ngOnInit() {
     super.ngOnInit();
+    this.decimal = this.to.decimal;
+    for (const currency of this.to.currencies) {
+      this.selectOptions.push({label: currency, value: currency});
+    }
     this.selectedOption = this.selectOptions[0];
   }
 
   setPrice() {
-    console.log(this.selectedOption);
     this.isValid = true;
     let price: number = parseFloat(this.currentPrice);
     if (isNaN(price)) {
       this.isValid = false;
       this.setValue(null);
     } else {
-      price = parseFloat(price.toFixed(this.decimalPlaces));
+      price = parseFloat(price.toFixed(this.decimal));
       this.setValue({
         currency: this.selectedOption.value,
         price: price,
@@ -59,7 +59,7 @@ export class FormlyFieldPriceComponent extends CustomFieldTypeAbstract implement
     if (isNaN(price)) {
       this.currentPrice = '';
     } else {
-      this.currentPrice = price.toFixed(this.decimalPlaces);
+      this.currentPrice = price.toFixed(this.decimal);
     }
   }
 }

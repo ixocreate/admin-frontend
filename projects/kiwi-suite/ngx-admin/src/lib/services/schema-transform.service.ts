@@ -30,7 +30,7 @@ export class SchemaTransformService {
     this.registerTransform('select', this.handleSelect);
     this.registerTransform('multiselect', this.handleMultiSelect);
     this.registerTransform('map', this.handleDefault('map'));
-    this.registerTransform('price', this.handleDefault('price'));
+    this.registerTransform('price', this.handleDefault('price', {}, ['currencies', 'decimal']));
 
     this.registerTransform('html', this.handleDefault('wysiwyg'));
   }
@@ -49,9 +49,9 @@ export class SchemaTransformService {
     return formSchema;
   }
 
-  private handleDefault(type: string, templateOptions: any = {}) {
+  private handleDefault(type: string, templateOptions: any = {}, keysToTemplateOptions: Array<string> = []) {
     return (value: any): Schema => {
-      return {
+      const data = {
         key: value.name,
         type: type,
         templateOptions: {
@@ -61,6 +61,10 @@ export class SchemaTransformService {
           ...templateOptions,
         },
       };
+      keysToTemplateOptions.forEach((key) => {
+        data.templateOptions[key] = value[key];
+      });
+      return data;
     };
   }
 

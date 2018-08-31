@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { KiwiConfirmModalComponent } from '../components/kiwi-confirm-modal/kiwi-confirm-modal.component';
-import { ConfirmModalData } from '../interfaces/confirm-modal-data.interface';
+import { KiwiConfirmModalComponent } from '../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
+import { ConfirmModalData } from '../modals/kiwi-confirm-modal/confirm-modal-data.interface';
 import { BsModalService } from 'ngx-bootstrap';
 import { LocalStorageService } from './local-storage.service';
-import { KiwiInputModalComponent } from '../components/kiwi-input-modal/kiwi-input-modal.component';
-import { InputModalData } from '../interfaces/input-modal-data.interface';
+import { KiwiInputModalComponent } from '../modals/kiwi-input-modal/kiwi-input-modal.component';
+import { InputModalData } from '../modals/kiwi-input-modal/input-modal-data.interface';
 
 export interface BlockCopy {
   id: string;
@@ -48,7 +48,6 @@ export class CopyService {
   }
 
   removeCopiedBlock(copiedBlock: BlockCopy) {
-    console.log(copiedBlock);
     return new Promise((resolve) => {
       const initialState: ConfirmModalData = {
         title: 'Delete this copied block?',

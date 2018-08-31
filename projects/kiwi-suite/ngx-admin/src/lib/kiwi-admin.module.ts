@@ -20,7 +20,7 @@ import {
   ModalModule,
   PaginationModule,
   ProgressbarModule,
-  TabsModule,
+  TabsModule, TypeaheadModule,
 } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -51,7 +51,7 @@ import { KiwiPaginationComponent } from './components/kiwi-pagination/kiwi-pagin
 import { ResourceComponent } from './views/resource/resource.component';
 import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
 import { ResourceEditComponent } from './views/resource/edit/resource-edit.component';
-import { KiwiConfirmModalComponent } from './components/kiwi-confirm-modal/kiwi-confirm-modal.component';
+import { KiwiConfirmModalComponent } from './modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
 import { FIELD_TYPE_COMPONENTS, KIWI_BOOTSTRAP_FORMLY_CONFIG } from './forms/bootstrap.config';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -68,9 +68,10 @@ import { QuillModule } from 'ngx-quill';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { KiwiPageVersionEditComponent } from './components/kiwi-page-version/kiwi-page-version-edit.component';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
-import { KiwiInputModalComponent } from './components/kiwi-input-modal/kiwi-input-modal.component';
+import { KiwiInputModalComponent } from './modals/kiwi-input-modal/kiwi-input-modal.component';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { KiwiEventManager } from './events/kiwi.event-manager';
+import { KiwiMapModalComponent } from './modals/kiwi-map-modal/kiwi-map-modal.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -83,6 +84,7 @@ const APP_CONTAINERS = [
 const APP_ENTRY_COMPONENTS = [
   KiwiConfirmModalComponent,
   KiwiInputModalComponent,
+  KiwiMapModalComponent,
 ];
 
 const APP_COMPONENTS = [
@@ -185,6 +187,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    TypeaheadModule.forRoot(),
 
     ToastrModule.forRoot({
       autoDismiss: true,
