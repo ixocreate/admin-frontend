@@ -50,6 +50,11 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
     }
   }
 
+  remove() {
+    super.remove();
+    this.parseLocationString();
+  }
+
   openMapModal() {
     const initialState: MapModalData = {
       onConfirm: (geoPoint) => {
