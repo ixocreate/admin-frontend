@@ -23,7 +23,9 @@
             [maintainAspectRatio]="maintainAspectRatio"
             [aspectRatio]="aspectRatio"
             [cropper]="cropData"
-            (imageCroppedBase64)="imageCropped($event)">
+            [minWidth]="minWidth"
+            [minHeight]="minHeight"
+            (cropped)="onCrop($event)">
           </kiwi-image-cropper>
         </ng-container>
 
