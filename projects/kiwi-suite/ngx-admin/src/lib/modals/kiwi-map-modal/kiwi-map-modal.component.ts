@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 import { GeoPoint } from './map-modal-data.interface';
+import {} from '@types/googlemaps';
 
 declare var google: any;
 
