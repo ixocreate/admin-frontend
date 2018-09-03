@@ -33,7 +33,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   maintainAspectRatio = true;
   aspectRatio: number = 4 / 3;
   minWidth = 200;
-  minHeight = 200;
+  minHeight = 300;
 
   cropData = {x1: 10, x2: 400, y1: 10, y2: 600};
 
@@ -45,10 +45,6 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
               protected schemaTransform: SchemaTransformService,
               protected modal: BsModalService) {
     super();
-
-    setTimeout(() => {
-      this.cropData = {x1: 100, x2: 400, y1: 100, y2: 600};
-    }, 3000);
   }
 
   onCrop(data: CropperPosition) {

@@ -114,21 +114,6 @@ export class KiwiImageCropperComponent implements OnChanges {
     }
   }
 
-  private initCropper() {
-    console.log('init');
-    setTimeout(() => {
-      this.setMaxSize();
-      const data = this.cropDataFromOriginal(this.cropData);
-      this.cropper.x1 = data.x1;
-      this.cropper.x2 = data.x2;
-      this.cropper.y1 = data.y1;
-      this.cropper.y2 = data.y2;
-      console.log(this.cropper);
-      //this.checkCropperPosition(true);
-      //this.crop();
-    });
-  }
-
   private toDataUrl(url, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onload = () => {
@@ -259,12 +244,10 @@ export class KiwiImageCropperComponent implements OnChanges {
       this.cropper.y1 = 0;
     }
     if (this.cropper.x2 > this.maxSize.width) {
-      console.log(1);
       this.cropper.x1 -= maintainSize ? (this.cropper.x2 - this.maxSize.width) : 0;
       this.cropper.x2 = this.maxSize.width;
     }
     if (this.cropper.y2 > this.maxSize.height) {
-      console.log(2);
       this.cropper.y1 -= maintainSize ? (this.cropper.y2 - this.maxSize.height) : 0;
       this.cropper.y2 = this.maxSize.height;
     }
@@ -326,11 +309,11 @@ export class KiwiImageCropperComponent implements OnChanges {
         break;
     }
 
+    this.checkMinSize();
+
     if (this.maintainAspectRatio) {
       this.checkAspectRatio();
     }
-
-    this.checkMinSize();
   }
 
   private checkAspectRatio() {
@@ -404,30 +387,13 @@ export class KiwiImageCropperComponent implements OnChanges {
     const width = this.cropper.x2 - this.cropper.x1;
     const height = this.cropper.y2 - this.cropper.y1;
 
-    if (minWidth && width <= minWidth) {
-      if (this.cropper.x2 > this.maxSize.width) {
-      }
-    }
-
-    /*
-    const minWidth = this.minWidth ? this.minWidth * this.ratioToOriginalImage : null;
-    const minHeight = this.minHeight ? this.minHeight * this.ratioToOriginalImage : null;
-
-    const width = this.cropper.x2 - this.cropper.x1;
-    const height = this.cropper.y2 - this.cropper.y1;
-
     const widthToSmall = (minWidth && width <= minWidth);
     const heightToSmall = (minHeight && height <= minHeight);
 
-    if (minWidth && this.cropper.x1 + minWidth > this.maxSize.width) {
-      this.cropper.x2 = this.maxSize.width;
-      this.cropper.x1 = this.maxSize.width - width;
-      console.log(this.cropper);
-    }
+    let maxMinRatio = null;
 
-    if (minHeight && this.cropper.y1 + minHeight > this.maxSize.height) {
-      this.cropper.y2 = this.maxSize.height;
-      this.cropper.y1 = this.maxSize.height - height;
+    if (minWidth && minHeight) {
+      maxMinRatio = minWidth / minHeight;
     }
 
     if (widthToSmall) {
@@ -438,21 +404,28 @@ export class KiwiImageCropperComponent implements OnChanges {
       this.cropper.y2 = this.cropper.y1 + minHeight;
     }
 
-    if (this.maintainAspectRatio) {
-      if (widthToSmall) {
-        const y2 = this.cropper.y1 + ((this.cropper.x2 - this.cropper.x1) / this.aspectRatio);
-        if (y2 - this.cropper.y1 >= minHeight) {
-          this.cropper.y2 = this.cropper.y1 + ((this.cropper.x2 - this.cropper.x1) / this.aspectRatio);
-        }
+    if (maxMinRatio) {
+      if (maxMinRatio < this.aspectRatio) {
+        this.cropper.x2 = this.cropper.x1 + ((this.cropper.y2 - this.cropper.y1) * this.aspectRatio);
+      } else {
+        this.cropper.y2 = this.cropper.y1 + ((this.cropper.x2 - this.cropper.x1) / this.aspectRatio);
       }
-      if (heightToSmall) {
-        const newX2 = this.cropper.x1 + ((this.cropper.y2 - this.cropper.y1) * this.aspectRatio);
-        if (newX2 > this.cropper.x2) {
-          this.cropper.x2 = this.cropper.x1 + ((this.cropper.y2 - this.cropper.y1) * this.aspectRatio);
-        }
+    } else {
+      if (minWidth) {
+        this.cropper.y2 = this.cropper.y1 + ((this.cropper.x2 - this.cropper.x1) / this.aspectRatio);
+      }
+      if (minHeight) {
+        this.cropper.x2 = this.cropper.x1 + ((this.cropper.y2 - this.cropper.y1) * this.aspectRatio);
       }
     }
-    */
+
+    const overflowX = Math.max(this.cropper.x2 - this.maxSize.width, 0);
+    this.cropper.x1 -= overflowX;
+    this.cropper.x2 -= overflowX;
+
+    const overflowY = Math.max(this.cropper.y2 - this.maxSize.height, 0);
+    this.cropper.y1 -= overflowY;
+    this.cropper.y2 -= overflowY;
   }
 
   private crop() {
@@ -500,7 +473,6 @@ export class KiwiImageCropperComponent implements OnChanges {
   }
 
   private emitCropData() {
-
     this.cropped.emit(this.cropDataToOriginal(this.cropper));
   }
 
