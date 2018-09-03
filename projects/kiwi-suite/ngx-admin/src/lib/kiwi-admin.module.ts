@@ -16,11 +16,11 @@ import { LoginComponent } from './views/auth/login/login.component';
 import {
   AlertModule,
   BsDatepickerModule,
-  BsDropdownModule,
   ModalModule,
   PaginationModule,
   ProgressbarModule,
-  TabsModule, TypeaheadModule,
+  TabsModule,
+  TypeaheadModule,
 } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -73,7 +73,6 @@ import { DropdownDirective } from './directives/dropdown.directive';
 import { KiwiEventManager } from './events/kiwi.event-manager';
 import { KiwiMapModalComponent } from './modals/kiwi-map-modal/kiwi-map-modal.component';
 import { MediaEditComponent } from './views/media/edit/media-edit.component';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { KiwiImageCropperModule } from './components/kiwi-image-cropper/kiwi-image-cropper.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
