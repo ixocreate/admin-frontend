@@ -14,15 +14,13 @@
         <h6 class="m-0 text-center text-sm-left">Edit <b>{{ data.label }}</b></h6>
       </div>
       <div class="card-body">
-        <img [src]="image" class="img-fluid" />
-
         <ng-container *ngIf="image">
           {{ cropData | json }}
           <kiwi-image-cropper
             [imageUrl]="image"
             [maintainAspectRatio]="maintainAspectRatio"
             [aspectRatio]="aspectRatio"
-            [cropper]="cropData"
+            [cropData]="cropData"
             [minWidth]="minWidth"
             [minHeight]="minHeight"
             (cropped)="onCrop($event)">

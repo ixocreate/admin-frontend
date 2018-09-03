@@ -35,7 +35,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   minWidth = 200;
   minHeight = 200;
 
-  cropData = {x1: null, y1: null, x2: null, y2: null};
+  cropData = {x1: 10, x2: 400, y1: 10, y2: 600};
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -45,6 +45,10 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
               protected schemaTransform: SchemaTransformService,
               protected modal: BsModalService) {
     super();
+
+    setTimeout(() => {
+      this.cropData = {x1: 100, x2: 400, y1: 100, y2: 600};
+    }, 3000);
   }
 
   onCrop(data: CropperPosition) {

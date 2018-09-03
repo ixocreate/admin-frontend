@@ -42,25 +42,39 @@ export interface CropperPosition {
   styleUrls: ['./kiwi-image-cropper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ImageCropperComponent implements OnChanges {
-  private originalImage: any;
-  private moveStart: MoveStart;
-  private maxSize: Dimensions;
-  private originalSize: Dimensions;
+export class KiwiImageCropperComponent implements OnChanges {
+  private originalImage: any = null;
+  private moveStart: MoveStart = {
+    active: false,
+    type: null,
+    position: null,
+    x1: 0,
+    y1: 0,
+    x2: 0,
+    y2: 0,
+    clientX: 0,
+    clientY: 0,
+  };
+  private maxSize: Dimensions = {width: 0, height: 0};
+  private originalSize: Dimensions = {width: 0, height: 0};
 
-  safeImgDataUrl: SafeUrl | string;
+  safeImgDataUrl: SafeUrl | string = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=';
   marginLeft: SafeStyle | string = '0px';
   imageVisible = false;
+  cropper: CropperPosition = {
+    x1: -100,
+    x2: 10000,
+    y1: -100,
+    y2: 10000,
+  };
 
   @Input()
   set imageUrl(imageUrl: string) {
-    this.initCropper();
     this.loadImage(imageUrl);
   }
 
   @Input()
   set imageBase64(imageBase64: string) {
-    this.initCropper();
     this.loadBase64Image(imageBase64);
   }
 
@@ -68,13 +82,13 @@ export class ImageCropperComponent implements OnChanges {
   @Input() maintainAspectRatio = true;
   @Input() aspectRatio = 1;
   @Input() resizeToWidth = 0;
-  @Input() roundCropper = false;
   @Input() onlyScaleDown = false;
   @Input() imageQuality = 92;
-  @Input() cropper: CropperPosition = {
+
+  @Input() cropData: CropperPosition = {
     x1: -100,
-    y1: -100,
     x2: 10000,
+    y1: -100,
     y2: 10000,
   };
 
@@ -83,18 +97,16 @@ export class ImageCropperComponent implements OnChanges {
 
   @Output() imageCroppedBase64 = new EventEmitter<string>();
   @Output() imageCroppedFile = new EventEmitter<File>();
-  @Output() imageLoaded = new EventEmitter<void>();
-  @Output() loadImageFailed = new EventEmitter<void>();
   @Output() cropped = new EventEmitter<CropperPosition>();
 
   constructor(private elementRef: ElementRef, private sanitizer: DomSanitizer, private cd: ChangeDetectorRef) {
-    this.initCropper();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['cropper']) {
+    if (changes['cropData']) {
       setTimeout(() => {
         this.setMaxSize();
+        this.resetCropperPosition();
         this.checkCropperPosition(false);
         this.crop();
         this.cd.markForCheck();
@@ -103,32 +115,18 @@ export class ImageCropperComponent implements OnChanges {
   }
 
   private initCropper() {
-    this.imageVisible = false;
-    this.originalImage = null;
-    this.safeImgDataUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=';
-    this.moveStart = {
-      active: false,
-      type: null,
-      position: null,
-      x1: 0,
-      y1: 0,
-      x2: 0,
-      y2: 0,
-      clientX: 0,
-      clientY: 0,
-    };
-    this.maxSize = {
-      width: 0,
-      height: 0,
-    };
-    this.originalSize = {
-      width: 0,
-      height: 0,
-    };
-    this.cropper.x1 = -100;
-    this.cropper.y1 = -100;
-    this.cropper.x2 = 10000;
-    this.cropper.y2 = 10000;
+    console.log('init');
+    setTimeout(() => {
+      this.setMaxSize();
+      const data = this.cropDataFromOriginal(this.cropData);
+      this.cropper.x1 = data.x1;
+      this.cropper.x2 = data.x2;
+      this.cropper.y1 = data.y1;
+      this.cropper.y2 = data.y2;
+      console.log(this.cropper);
+      //this.checkCropperPosition(true);
+      //this.crop();
+    });
   }
 
   private toDataUrl(url, callback) {
@@ -164,7 +162,6 @@ export class ImageCropperComponent implements OnChanges {
 
   imageLoadedInView(): void {
     if (this.originalImage != null) {
-      this.imageLoaded.emit();
       setTimeout(() => {
         this.setMaxSize();
         this.resetCropperPosition();
@@ -190,19 +187,27 @@ export class ImageCropperComponent implements OnChanges {
   }
 
   private resetCropperPosition() {
-    const displayedImage = this.elementRef.nativeElement.querySelector('.source-image');
-    if (displayedImage.offsetWidth / this.aspectRatio < displayedImage.offsetHeight) {
-      this.cropper.x1 = 0;
-      this.cropper.x2 = displayedImage.offsetWidth;
-      const cropperHeight = displayedImage.offsetWidth / this.aspectRatio;
-      this.cropper.y1 = (displayedImage.offsetHeight - cropperHeight) / 2;
-      this.cropper.y2 = this.cropper.y1 + cropperHeight;
+    if (this.cropData) {
+      const data = this.cropDataFromOriginal(this.cropData);
+      this.cropper.x1 = data.x1;
+      this.cropper.x2 = data.x2;
+      this.cropper.y1 = data.y1;
+      this.cropper.y2 = data.y2;
     } else {
-      this.cropper.y1 = 0;
-      this.cropper.y2 = displayedImage.offsetHeight;
-      const cropperWidth = displayedImage.offsetHeight * this.aspectRatio;
-      this.cropper.x1 = (displayedImage.offsetWidth - cropperWidth) / 2;
-      this.cropper.x2 = this.cropper.x1 + cropperWidth;
+      const displayedImage = this.elementRef.nativeElement.querySelector('.source-image');
+      if (displayedImage.offsetWidth / this.aspectRatio < displayedImage.offsetHeight) {
+        this.cropper.x1 = 0;
+        this.cropper.x2 = displayedImage.offsetWidth;
+        const cropperHeight = displayedImage.offsetWidth / this.aspectRatio;
+        this.cropper.y1 = (displayedImage.offsetHeight - cropperHeight) / 2;
+        this.cropper.y2 = this.cropper.y1 + cropperHeight;
+      } else {
+        this.cropper.y1 = 0;
+        this.cropper.y2 = displayedImage.offsetHeight;
+        const cropperWidth = displayedImage.offsetHeight * this.aspectRatio;
+        this.cropper.x1 = (displayedImage.offsetWidth - cropperWidth) / 2;
+        this.cropper.x2 = this.cropper.x1 + cropperWidth;
+      }
     }
     this.crop();
     this.imageVisible = true;
@@ -232,6 +237,7 @@ export class ImageCropperComponent implements OnChanges {
         this.resize(event);
         this.checkCropperPosition(false);
       }
+      this.setCropData();
       this.cd.markForCheck();
     }
   }
@@ -253,10 +259,12 @@ export class ImageCropperComponent implements OnChanges {
       this.cropper.y1 = 0;
     }
     if (this.cropper.x2 > this.maxSize.width) {
+      console.log(1);
       this.cropper.x1 -= maintainSize ? (this.cropper.x2 - this.maxSize.width) : 0;
       this.cropper.x2 = this.maxSize.width;
     }
     if (this.cropper.y2 > this.maxSize.height) {
+      console.log(2);
       this.cropper.y1 -= maintainSize ? (this.cropper.y2 - this.maxSize.height) : 0;
       this.cropper.y2 = this.maxSize.height;
     }
@@ -283,44 +291,46 @@ export class ImageCropperComponent implements OnChanges {
   }
 
   private resize(event: any) {
+    const minWidth = this.minWidth ? this.minWidth * this.ratioToOriginalImage : 20;
+    const minHeight = this.minHeight ? this.minHeight * this.ratioToOriginalImage : 20;
     const diffX = this.getClientX(event) - this.moveStart.clientX;
     const diffY = this.getClientY(event) - this.moveStart.clientY;
     switch (this.moveStart.position) {
       case 'left':
-        this.cropper.x1 = Math.min(this.moveStart.x1 + diffX, this.cropper.x2 - 20);
+        this.cropper.x1 = Math.min(this.moveStart.x1 + diffX, this.cropper.x2 - minWidth);
         break;
       case 'topleft':
-        this.cropper.x1 = Math.min(this.moveStart.x1 + diffX, this.cropper.x2 - 20);
-        this.cropper.y1 = Math.min(this.moveStart.y1 + diffY, this.cropper.y2 - 20);
+        this.cropper.x1 = Math.min(this.moveStart.x1 + diffX, this.cropper.x2 - minWidth);
+        this.cropper.y1 = Math.min(this.moveStart.y1 + diffY, this.cropper.y2 - minHeight);
         break;
       case 'top':
-        this.cropper.y1 = Math.min(this.moveStart.y1 + diffY, this.cropper.y2 - 20);
+        this.cropper.y1 = Math.min(this.moveStart.y1 + diffY, this.cropper.y2 - minHeight);
         break;
       case 'topright':
-        this.cropper.x2 = Math.max(this.moveStart.x2 + diffX, this.cropper.x1 + 20);
-        this.cropper.y1 = Math.min(this.moveStart.y1 + diffY, this.cropper.y2 - 20);
+        this.cropper.x2 = Math.max(this.moveStart.x2 + diffX, this.cropper.x1 + minWidth);
+        this.cropper.y1 = Math.min(this.moveStart.y1 + diffY, this.cropper.y2 - minHeight);
         break;
       case 'right':
-        this.cropper.x2 = Math.max(this.moveStart.x2 + diffX, this.cropper.x1 + 20);
+        this.cropper.x2 = Math.max(this.moveStart.x2 + diffX, this.cropper.x1 + minWidth);
         break;
       case 'bottomright':
-        this.cropper.x2 = Math.max(this.moveStart.x2 + diffX, this.cropper.x1 + 20);
-        this.cropper.y2 = Math.max(this.moveStart.y2 + diffY, this.cropper.y1 + 20);
+        this.cropper.x2 = Math.max(this.moveStart.x2 + diffX, this.cropper.x1 + minWidth);
+        this.cropper.y2 = Math.max(this.moveStart.y2 + diffY, this.cropper.y1 + minHeight);
         break;
       case 'bottom':
-        this.cropper.y2 = Math.max(this.moveStart.y2 + diffY, this.cropper.y1 + 20);
+        this.cropper.y2 = Math.max(this.moveStart.y2 + diffY, this.cropper.y1 + minHeight);
         break;
       case 'bottomleft':
-        this.cropper.x1 = Math.min(this.moveStart.x1 + diffX, this.cropper.x2 - 20);
-        this.cropper.y2 = Math.max(this.moveStart.y2 + diffY, this.cropper.y1 + 20);
+        this.cropper.x1 = Math.min(this.moveStart.x1 + diffX, this.cropper.x2 - minWidth);
+        this.cropper.y2 = Math.max(this.moveStart.y2 + diffY, this.cropper.y1 + minHeight);
         break;
     }
-
-    this.checkMinSize();
 
     if (this.maintainAspectRatio) {
       this.checkAspectRatio();
     }
+
+    this.checkMinSize();
   }
 
   private checkAspectRatio() {
@@ -394,8 +404,31 @@ export class ImageCropperComponent implements OnChanges {
     const width = this.cropper.x2 - this.cropper.x1;
     const height = this.cropper.y2 - this.cropper.y1;
 
+    if (minWidth && width <= minWidth) {
+      if (this.cropper.x2 > this.maxSize.width) {
+      }
+    }
+
+    /*
+    const minWidth = this.minWidth ? this.minWidth * this.ratioToOriginalImage : null;
+    const minHeight = this.minHeight ? this.minHeight * this.ratioToOriginalImage : null;
+
+    const width = this.cropper.x2 - this.cropper.x1;
+    const height = this.cropper.y2 - this.cropper.y1;
+
     const widthToSmall = (minWidth && width <= minWidth);
     const heightToSmall = (minHeight && height <= minHeight);
+
+    if (minWidth && this.cropper.x1 + minWidth > this.maxSize.width) {
+      this.cropper.x2 = this.maxSize.width;
+      this.cropper.x1 = this.maxSize.width - width;
+      console.log(this.cropper);
+    }
+
+    if (minHeight && this.cropper.y1 + minHeight > this.maxSize.height) {
+      this.cropper.y2 = this.maxSize.height;
+      this.cropper.y1 = this.maxSize.height - height;
+    }
 
     if (widthToSmall) {
       this.cropper.x2 = this.cropper.x1 + minWidth;
@@ -419,6 +452,7 @@ export class ImageCropperComponent implements OnChanges {
         }
       }
     }
+    */
   }
 
   private crop() {
@@ -454,9 +488,7 @@ export class ImageCropperComponent implements OnChanges {
   }
 
   private getResizeRatio(width: number): number {
-    return this.resizeToWidth > 0 && (!this.onlyScaleDown || width > this.resizeToWidth)
-      ? this.resizeToWidth / width
-      : 1;
+    return this.resizeToWidth > 0 && (!this.onlyScaleDown || width > this.resizeToWidth) ? this.resizeToWidth / width : 1;
   }
 
   private getClientX(event: any) {
@@ -468,12 +500,34 @@ export class ImageCropperComponent implements OnChanges {
   }
 
   private emitCropData() {
-    this.cropped.emit({
-      x1: Math.round(this.cropper.x1 / this.ratioToOriginalImage),
-      x2: Math.round(this.cropper.x2 / this.ratioToOriginalImage),
-      y1: Math.round(this.cropper.y1 / this.ratioToOriginalImage),
-      y2: Math.round(this.cropper.y2 / this.ratioToOriginalImage),
-    });
+
+    this.cropped.emit(this.cropDataToOriginal(this.cropper));
+  }
+
+  private setCropData() {
+    const data = this.cropDataToOriginal(this.cropper);
+    this.cropData.x1 = data.x1;
+    this.cropData.x2 = data.x2;
+    this.cropData.y1 = data.y1;
+    this.cropData.y2 = data.y2;
+  }
+
+  private cropDataFromOriginal(data: CropperPosition) {
+    return {
+      x1: data.x1 ? data.x1 * this.ratioToOriginalImage : -100,
+      x2: data.x2 ? data.x2 * this.ratioToOriginalImage : -100,
+      y1: data.y1 ? data.y1 * this.ratioToOriginalImage : 10000,
+      y2: data.y2 ? data.y2 * this.ratioToOriginalImage : 10000,
+    };
+  }
+
+  private cropDataToOriginal(data: CropperPosition) {
+    return {
+      x1: Math.round(data.x1 / this.ratioToOriginalImage),
+      x2: Math.round(data.x2 / this.ratioToOriginalImage),
+      y1: Math.round(data.y1 / this.ratioToOriginalImage),
+      y2: Math.round(data.y2 / this.ratioToOriginalImage),
+    };
   }
 
   get ratioToOriginalImage() {
