@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { Icon, Style } from 'ol/style';
 import { GeoPoint, MapModalData } from '../../modals/kiwi-map-modal/map-modal-data.interface';
 import { BsModalService } from 'ngx-bootstrap';
 import { KiwiMapModalComponent } from '../../modals/kiwi-map-modal/kiwi-map-modal.component';
