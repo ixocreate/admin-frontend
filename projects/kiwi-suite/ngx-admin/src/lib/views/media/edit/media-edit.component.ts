@@ -46,8 +46,6 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   minWidth: number;
   minHeight: number;
 
-  cropData = null;
-
   activeEntity: Entity;
   entities: Array<Entity> = [
     {
@@ -108,19 +106,17 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     }
   }
 
-  private saveCrop(entity: Entity) {
-    console.log(entity, this.cropData);
-    entity.crop = JSON.parse(JSON.stringify(this.cropData));
+  saveCrop(entity: Entity) {
+    entity.crop = entity.unsavedCrop;
     this.checkUnsavedStatus(entity);
   }
 
-  private resetCrop(entity: Entity) {
+  resetCrop(entity: Entity) {
     this.cropper.setCropperPosition(entity.crop);
     this.checkUnsavedStatus(entity);
   }
 
   onCrop(data: CropperPosition) {
-    this.cropData = data;
     this.activeEntity.unsavedCrop = data;
     this.checkUnsavedStatus(this.activeEntity);
   }
