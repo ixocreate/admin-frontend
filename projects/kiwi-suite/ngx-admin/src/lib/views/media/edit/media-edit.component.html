@@ -14,17 +14,7 @@
         <h6 class="m-0 text-center text-sm-left">Edit <b>{{ data.label }}</b></h6>
       </div>
       <div class="card-body">
-        <ng-container *ngIf="image">
-          {{ cropData | json }}
-          <kiwi-image-cropper
-            [imageUrl]="image"
-            [maintainAspectRatio]="maintainAspectRatio"
-            [aspectRatio]="aspectRatio"
-            [minWidth]="minWidth"
-            [minHeight]="minHeight"
-            (cropped)="onCrop($event)">
-          </kiwi-image-cropper>
-        </ng-container>
+
 
         <ng-container *ngIf="form && fields; else isLoading">
           <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmit()">
@@ -40,5 +30,38 @@
         <b class="text-danger">*</b> Required Field
       </div>
     </div>
+
+    {{ cropData | json }}
+
+    <div class="card card-accent-primary">
+      <div class="card-header custom-card-header">
+        <h6 class="m-0 text-center text-sm-left">Crop <b>Image</b></h6>
+      </div>
+      <div class="card-body p-0">
+        <div class="cropper-container">
+          <div class="cropper">
+            <ng-container *ngIf="image">
+              <kiwi-image-cropper
+                [imageUrl]="image"
+                [maintainAspectRatio]="maintainAspectRatio"
+                [aspectRatio]="aspectRatio"
+                [minWidth]="minWidth"
+                [minHeight]="minHeight"
+                (cropped)="onCrop($event)">
+              </kiwi-image-cropper>
+            </ng-container>
+          </div>
+          <ul class="entity-list">
+            <li *ngFor="let entity of entities" [class.active]="activeEntity === entity" (click)="setActiveEntity(entity)">
+              <div class="entity-name">{{ entity.name }}</div>
+              <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
+              <button class="btn btn-primary btn-block"><i class="fa fa-save"></i> Save Crop</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
   </ng-container>
 </kiwi-content>

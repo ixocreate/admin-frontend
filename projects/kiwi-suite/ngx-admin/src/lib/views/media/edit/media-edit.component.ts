@@ -15,6 +15,7 @@ import { CropperPosition, KiwiImageCropperComponent } from '../../../components/
 
 @Component({
   templateUrl: './media-edit.component.html',
+  styleUrls: ['./media-edit.component.scss'],
 })
 export class MediaEditComponent extends ViewAbstractComponent implements OnInit {
 
@@ -31,12 +32,34 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
 
   image = 'http://marinomed.proxy.jetzt/media/e1/12/00/z16-4151.jpg';
 
-  maintainAspectRatio = true;
-  aspectRatio: number = 4 / 3;
-  minWidth = 200;
-  minHeight = 300;
+  maintainAspectRatio: boolean;
+  aspectRatio: number;
+  minWidth: number;
+  minHeight: number;
 
   cropData = null;
+
+  activeEntity;
+  entities = [
+    {
+      name: 'Header',
+      width: 500,
+      height: 400,
+      crop: {x1: 100, y1: 10, x2: 600, y2: 410},
+    },
+    {
+      name: 'Content Image',
+      width: 700,
+      height: null,
+      crop: {x1: 200, y1: 90, x2: 920, y2: 560},
+    },
+    {
+      name: 'Person',
+      width: 300,
+      height: 300,
+      crop: {x1: 500, y1: 500, x2: 900, y2: 900},
+    },
+  ];
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -48,20 +71,34 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     super();
   }
 
+  setActiveEntity(entity: any) {
+    this.activeEntity = entity;
+    this.minWidth = entity.width;
+    this.minHeight = entity.height;
+    if (entity.width && entity.height) {
+      this.maintainAspectRatio = true;
+      this.aspectRatio = entity.width / entity.height;
+    } else {
+      this.maintainAspectRatio = false;
+    }
+    this.cropper.setCropperPosition(entity.crop);
+  }
+
   onCrop(data: CropperPosition) {
     this.cropData = data;
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.cropper.setCropperPosition({x1: 10, x2: 400, y1: 10, y2: 400});
-    }, 1000);
-
     this.route.params.subscribe(params => {
       this.resourceId = params.id;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
-      this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
+      this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId).then((response) => {
+        setTimeout(() => {
+          this.setActiveEntity(this.entities[0]);
+        });
+        return response;
+      });
     });
   }
 

@@ -88,17 +88,21 @@ export class KiwiImageCropperComponent {
   @Output() imageCroppedFile = new EventEmitter<File>();
   @Output() cropped = new EventEmitter<CropperPosition>();
 
+  private copperPositionInput: CropperPosition;
+
   constructor(private elementRef: ElementRef, private sanitizer: DomSanitizer, private cd: ChangeDetectorRef) {
   }
 
   setCropperPosition(data: CropperPosition) {
-    this.cropper = this.cropDataFromOriginal(data);
-    this.setMaxSize();
-    if (this.cropper.x1 < 0 || this.cropper.y1 < 0 || this.cropper.x2 > this.maxSize.width || this.cropper.y2 > this.maxSize.height) {
-      this.resetCropperPosition();
+    this.copperPositionInput = data;
+    if (this.imageVisible) {
+      this.cropper = this.cropDataFromOriginal(this.copperPositionInput);
+      if (this.cropper.x1 < 0 || this.cropper.y1 < 0 || this.cropper.x2 > this.maxSize.width || this.cropper.y2 > this.maxSize.height) {
+        this.resetCropperPosition();
+      }
+      this.checkCropperPosition(true);
+      this.crop();
     }
-    this.checkCropperPosition(true);
-    this.crop();
   }
 
   private toDataUrl(url, callback) {
@@ -135,8 +139,9 @@ export class KiwiImageCropperComponent {
   imageLoadedInView(): void {
     if (this.originalImage != null) {
       setTimeout(() => {
+        this.imageVisible = true;
         this.setMaxSize();
-        this.resetCropperPosition();
+        this.setCropperPosition(this.copperPositionInput);
         this.crop();
         this.cd.markForCheck();
       });
@@ -174,7 +179,6 @@ export class KiwiImageCropperComponent {
       this.cropper.x1 = (displayedImage.offsetWidth - cropperWidth) / 2;
       this.cropper.x2 = this.cropper.x1 + cropperWidth;
     }
-    this.imageVisible = true;
   }
 
   startMove(event: any, moveType: string, position: string | null = null) {

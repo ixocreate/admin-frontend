@@ -1,0 +1,47 @@
+@import "../../../../scss/variables-include";
+
+.cropper-container {
+  display: flex;
+
+  .cropper {
+    flex: 1;
+  }
+
+  .entity-list {
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-left: 1px solid $border-color;
+
+    > li {
+      cursor: pointer;
+      background: #fff;
+      padding: ($spacer / 2) $spacer;
+      border-bottom: 1px solid $border-color;
+
+      .btn {
+        display: none;
+      }
+
+      &.active {
+        border-left: 1px solid #fff;
+        margin-left: -1px;
+
+        .btn {
+          display: block;
+        }
+      }
+
+      .entity-name {
+        font-weight: bold;
+      }
+
+      .entity-size {
+        margin-top: -4px;
+        font-size: .8rem;
+        opacity: .4;
+      }
+    }
+  }
+}
