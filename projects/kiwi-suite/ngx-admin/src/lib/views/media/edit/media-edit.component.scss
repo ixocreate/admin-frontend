@@ -55,4 +55,13 @@
       }
     }
   }
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+
+    .entity-list {
+      width: auto;
+      padding: 0 5px 5px;
+    }
+  }
 }
