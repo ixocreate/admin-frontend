@@ -3,6 +3,10 @@
   background: #fff;
 }
 
+.btn-outline-white {
+  @include button-outline-variant(#fff);
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

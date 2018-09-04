@@ -38,7 +38,7 @@
         <h6 class="m-0 text-center text-sm-left">Crop <b>Image</b></h6>
       </div>
       <div class="card-body p-0">
-        <div class="cropper-container">
+        <div class="cropper-container" [class.unsaved]="activeEntity && activeEntity.unsaved">
           <div class="cropper">
             <ng-container *ngIf="image">
               <kiwi-image-cropper
@@ -52,10 +52,21 @@
             </ng-container>
           </div>
           <ul class="entity-list">
-            <li *ngFor="let entity of entities" [class.active]="activeEntity === entity" (click)="setActiveEntity(entity)">
+            <li *ngFor="let entity of entities"
+                [class.active]="activeEntity === entity"
+                [class.unsaved]="entity.unsaved"
+                (click)="setActiveEntity(entity)">
               <div class="entity-name">{{ entity.name }}</div>
               <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
-              <button class="btn btn-primary btn-block"><i class="fa fa-save"></i> Save Crop</button>
+              <div class="entity-buttons mt-1">
+                <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2" kiwiClickStopPropagation>
+                  <i class="fa fa-save"></i> Save Crop
+                </button>
+                <button type="button" class="btn btn-outline-white btn-sm" kiwiClickStopPropagation>
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+
             </li>
           </ul>
         </div>

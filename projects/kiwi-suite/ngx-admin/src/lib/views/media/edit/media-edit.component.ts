@@ -13,6 +13,14 @@ import { ResourceConfig } from '../../../interfaces/config.interface';
 import { BsModalService } from 'ngx-bootstrap';
 import { CropperPosition, KiwiImageCropperComponent } from '../../../components/kiwi-image-cropper/kiwi-image-cropper.component';
 
+interface Entity {
+  name: string;
+  width: number;
+  height: number;
+  crop: CropperPosition;
+  unsaved: boolean,
+}
+
 @Component({
   templateUrl: './media-edit.component.html',
   styleUrls: ['./media-edit.component.scss'],
@@ -39,25 +47,28 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
 
   cropData = null;
 
-  activeEntity;
-  entities = [
+  activeEntity: Entity;
+  entities: Array<Entity> = [
     {
       name: 'Header',
       width: 500,
       height: 400,
       crop: {x1: 100, y1: 10, x2: 600, y2: 410},
+      unsaved: false,
     },
     {
       name: 'Content Image',
       width: 700,
       height: null,
       crop: {x1: 200, y1: 90, x2: 920, y2: 560},
+      unsaved: false,
     },
     {
       name: 'Person',
       width: 300,
       height: 300,
       crop: {x1: 500, y1: 500, x2: 900, y2: 900},
+      unsaved: false,
     },
   ];
 
@@ -71,7 +82,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     super();
   }
 
-  setActiveEntity(entity: any) {
+  setActiveEntity(entity: Entity) {
     this.activeEntity = entity;
     this.minWidth = entity.width;
     this.minHeight = entity.height;
@@ -84,7 +95,12 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     this.cropper.setCropperPosition(entity.crop);
   }
 
+  private isSameCropPosition(crop1: CropperPosition, crop2: CropperPosition): boolean {
+    return !(crop1.x1 !== crop2.x1 || crop1.x2 !== crop2.x2 || crop1.y1 !== crop2.y1 || crop1.y2 !== crop2.y2);
+  }
+
   onCrop(data: CropperPosition) {
+    this.activeEntity.unsaved = !this.isSameCropPosition(data, this.activeEntity.crop);
     this.cropData = data;
   }
 

@@ -10,26 +10,37 @@
   .entity-list {
     width: 200px;
     margin: 0;
-    padding: 0;
+    padding: 5px 5px 0 0;
     list-style: none;
-    border-left: 1px solid $border-color;
 
     > li {
       cursor: pointer;
       background: #fff;
       padding: ($spacer / 2) $spacer;
-      border-bottom: 1px solid $border-color;
+      border: 1px solid $border-color;
+      margin-bottom: 5px;
+      border-radius: $border-color;
 
-      .btn {
+      .entity-buttons {
         display: none;
       }
 
       &.active {
-        border-left: 1px solid #fff;
-        margin-left: -1px;
+        border-color: $primary;
+        background: lighten($primary, 45%);
+      }
 
-        .btn {
-          display: block;
+      &.unsaved {
+        background: $danger;
+        color: #fff;
+        border-color: $danger;
+
+        &.active {
+          .entity-buttons {
+            display: flex;
+          }
+
+          border-left-color: $danger;
         }
       }
 
