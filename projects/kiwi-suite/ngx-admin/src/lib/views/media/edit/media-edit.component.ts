@@ -18,7 +18,8 @@ interface Entity {
   width: number;
   height: number;
   crop: CropperPosition;
-  unsaved: boolean,
+  unsavedCrop?: CropperPosition;
+  unsaved: boolean;
 }
 
 @Component({
@@ -92,31 +93,36 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     } else {
       this.maintainAspectRatio = false;
     }
-    this.cropper.setCropperPosition(entity.crop);
+    this.cropper.setCropperPosition(entity.unsavedCrop || entity.crop);
   }
 
   private isSameCropPosition(crop1: CropperPosition, crop2: CropperPosition): boolean {
     return !(crop1.x1 !== crop2.x1 || crop1.x2 !== crop2.x2 || crop1.y1 !== crop2.y1 || crop1.y2 !== crop2.y2);
   }
 
-  private checkUnsavedStatus(newPosition: CropperPosition, storedPosition: CropperPosition) {
-    this.activeEntity.unsaved = !this.isSameCropPosition(newPosition, storedPosition);
+  private checkUnsavedStatus(entity: Entity) {
+    if (entity.unsavedCrop) {
+      this.activeEntity.unsaved = !this.isSameCropPosition(entity.crop, entity.unsavedCrop);
+    } else {
+      this.activeEntity.unsaved = false;
+    }
   }
 
   private saveCrop(entity: Entity) {
     console.log(entity, this.cropData);
     entity.crop = JSON.parse(JSON.stringify(this.cropData));
-    this.checkUnsavedStatus(entity.crop, this.cropData);
+    this.checkUnsavedStatus(entity);
   }
 
   private resetCrop(entity: Entity) {
     this.cropper.setCropperPosition(entity.crop);
-    this.checkUnsavedStatus(entity.crop, this.cropData);
+    this.checkUnsavedStatus(entity);
   }
 
   onCrop(data: CropperPosition) {
     this.cropData = data;
-    this.checkUnsavedStatus(this.cropData, this.activeEntity.crop);
+    this.activeEntity.unsavedCrop = data;
+    this.checkUnsavedStatus(this.activeEntity);
   }
 
   ngOnInit() {
