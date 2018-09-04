@@ -6,9 +6,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { DomSanitizer, SafeStyle, SafeUrl } from '@angular/platform-browser';
 
@@ -95,12 +93,12 @@ export class KiwiImageCropperComponent {
 
   setCropperPosition(data: CropperPosition) {
     this.cropper = this.cropDataFromOriginal(data);
-    console.log(this.cropper);
     this.setMaxSize();
-    this.resetCropperPosition();
+    if (this.cropper.x1 < 0 || this.cropper.y1 < 0 || this.cropper.x2 > this.maxSize.width || this.cropper.y2 > this.maxSize.height) {
+      this.resetCropperPosition();
+    }
     this.checkCropperPosition(true);
     this.crop();
-    console.log(data);
   }
 
   private toDataUrl(url, callback) {
@@ -139,6 +137,7 @@ export class KiwiImageCropperComponent {
       setTimeout(() => {
         this.setMaxSize();
         this.resetCropperPosition();
+        this.crop();
         this.cd.markForCheck();
       });
     }

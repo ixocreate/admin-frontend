@@ -49,12 +49,12 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   }
 
   onCrop(data: CropperPosition) {
-    console.log(data);
+    this.cropData = data;
   }
 
   ngOnInit() {
     setTimeout(() => {
-      this.cropper.setCropperPosition({x1: 10, x2: 400, y1: 10, y2: 600});
+      this.cropper.setCropperPosition({x1: 10, x2: 400, y1: 10, y2: 400});
     }, 1000);
 
     this.route.params.subscribe(params => {
