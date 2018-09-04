@@ -31,8 +31,6 @@
       </div>
     </div>
 
-    {{ cropData | json }}
-
     <div class="card card-accent-primary">
       <div class="card-header custom-card-header">
         <h6 class="m-0 text-center text-sm-left">Crop <b>Image</b></h6>
@@ -59,10 +57,10 @@
               <div class="entity-name">{{ entity.name }}</div>
               <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
               <div class="entity-buttons mt-1">
-                <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2" kiwiClickStopPropagation>
+                <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2" (click)="saveCrop(entity)" kiwiClickStopPropagation>
                   <i class="fa fa-save"></i> Save Crop
                 </button>
-                <button type="button" class="btn btn-outline-white btn-sm" kiwiClickStopPropagation>
+                <button type="button" class="btn btn-outline-white btn-sm" (click)="resetCrop(entity)" kiwiClickStopPropagation>
                   <i class="fa fa-times"></i>
                 </button>
               </div>

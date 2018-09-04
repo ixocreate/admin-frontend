@@ -99,9 +99,24 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     return !(crop1.x1 !== crop2.x1 || crop1.x2 !== crop2.x2 || crop1.y1 !== crop2.y1 || crop1.y2 !== crop2.y2);
   }
 
+  private checkUnsavedStatus(newPosition: CropperPosition, storedPosition: CropperPosition) {
+    this.activeEntity.unsaved = !this.isSameCropPosition(newPosition, storedPosition);
+  }
+
+  private saveCrop(entity: Entity) {
+    console.log(entity, this.cropData);
+    entity.crop = JSON.parse(JSON.stringify(this.cropData));
+    this.checkUnsavedStatus(entity.crop, this.cropData);
+  }
+
+  private resetCrop(entity: Entity) {
+    this.cropper.setCropperPosition(entity.crop);
+    this.checkUnsavedStatus(entity.crop, this.cropData);
+  }
+
   onCrop(data: CropperPosition) {
-    this.activeEntity.unsaved = !this.isSameCropPosition(data, this.activeEntity.crop);
     this.cropData = data;
+    this.checkUnsavedStatus(this.cropData, this.activeEntity.crop);
   }
 
   ngOnInit() {
