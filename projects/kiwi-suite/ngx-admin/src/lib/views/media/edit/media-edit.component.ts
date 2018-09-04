@@ -30,7 +30,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
-  image = 'http://marinomed.proxy.jetzt/media/e1/12/00/z16-4151.jpg';
+  image = 'https://i.imgur.com/emBm6jv.jpg';
 
   maintainAspectRatio: boolean;
   aspectRatio: number;
