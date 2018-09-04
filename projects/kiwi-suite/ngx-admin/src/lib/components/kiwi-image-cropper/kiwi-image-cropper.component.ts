@@ -42,7 +42,7 @@ export interface CropperPosition {
   styleUrls: ['./kiwi-image-cropper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KiwiImageCropperComponent implements OnChanges {
+export class KiwiImageCropperComponent {
   private originalImage: any = null;
   private moveStart: MoveStart = {
     active: false,
@@ -68,13 +68,11 @@ export class KiwiImageCropperComponent implements OnChanges {
     y2: 10000,
   };
 
-  @Input()
-  set imageUrl(imageUrl: string) {
+  @Input() set imageUrl(imageUrl: string) {
     this.loadImage(imageUrl);
   }
 
-  @Input()
-  set imageBase64(imageBase64: string) {
+  @Input() set imageBase64(imageBase64: string) {
     this.loadBase64Image(imageBase64);
   }
 
@@ -84,13 +82,6 @@ export class KiwiImageCropperComponent implements OnChanges {
   @Input() resizeToWidth = 0;
   @Input() onlyScaleDown = false;
   @Input() imageQuality = 92;
-
-  @Input() cropData: CropperPosition = {
-    x1: -100,
-    x2: 10000,
-    y1: -100,
-    y2: 10000,
-  };
 
   @Input() minWidth: number = null;
   @Input() minHeight: number = null;
@@ -102,16 +93,14 @@ export class KiwiImageCropperComponent implements OnChanges {
   constructor(private elementRef: ElementRef, private sanitizer: DomSanitizer, private cd: ChangeDetectorRef) {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['cropData']) {
-      setTimeout(() => {
-        this.setMaxSize();
-        this.resetCropperPosition();
-        this.checkCropperPosition(false);
-        this.crop();
-        this.cd.markForCheck();
-      });
-    }
+  setCropperPosition(data: CropperPosition) {
+    this.cropper = this.cropDataFromOriginal(data);
+    console.log(this.cropper);
+    this.setMaxSize();
+    this.resetCropperPosition();
+    this.checkCropperPosition(true);
+    this.crop();
+    console.log(data);
   }
 
   private toDataUrl(url, callback) {
@@ -172,29 +161,20 @@ export class KiwiImageCropperComponent implements OnChanges {
   }
 
   private resetCropperPosition() {
-    if (this.cropData) {
-      const data = this.cropDataFromOriginal(this.cropData);
-      this.cropper.x1 = data.x1;
-      this.cropper.x2 = data.x2;
-      this.cropper.y1 = data.y1;
-      this.cropper.y2 = data.y2;
+    const displayedImage = this.elementRef.nativeElement.querySelector('.source-image');
+    if (displayedImage.offsetWidth / this.aspectRatio < displayedImage.offsetHeight) {
+      this.cropper.x1 = 0;
+      this.cropper.x2 = displayedImage.offsetWidth;
+      const cropperHeight = displayedImage.offsetWidth / this.aspectRatio;
+      this.cropper.y1 = (displayedImage.offsetHeight - cropperHeight) / 2;
+      this.cropper.y2 = this.cropper.y1 + cropperHeight;
     } else {
-      const displayedImage = this.elementRef.nativeElement.querySelector('.source-image');
-      if (displayedImage.offsetWidth / this.aspectRatio < displayedImage.offsetHeight) {
-        this.cropper.x1 = 0;
-        this.cropper.x2 = displayedImage.offsetWidth;
-        const cropperHeight = displayedImage.offsetWidth / this.aspectRatio;
-        this.cropper.y1 = (displayedImage.offsetHeight - cropperHeight) / 2;
-        this.cropper.y2 = this.cropper.y1 + cropperHeight;
-      } else {
-        this.cropper.y1 = 0;
-        this.cropper.y2 = displayedImage.offsetHeight;
-        const cropperWidth = displayedImage.offsetHeight * this.aspectRatio;
-        this.cropper.x1 = (displayedImage.offsetWidth - cropperWidth) / 2;
-        this.cropper.x2 = this.cropper.x1 + cropperWidth;
-      }
+      this.cropper.y1 = 0;
+      this.cropper.y2 = displayedImage.offsetHeight;
+      const cropperWidth = displayedImage.offsetHeight * this.aspectRatio;
+      this.cropper.x1 = (displayedImage.offsetWidth - cropperWidth) / 2;
+      this.cropper.x2 = this.cropper.x1 + cropperWidth;
     }
-    this.crop();
     this.imageVisible = true;
   }
 
@@ -222,7 +202,6 @@ export class KiwiImageCropperComponent implements OnChanges {
         this.resize(event);
         this.checkCropperPosition(false);
       }
-      this.setCropData();
       this.cd.markForCheck();
     }
   }
@@ -274,8 +253,17 @@ export class KiwiImageCropperComponent implements OnChanges {
   }
 
   private resize(event: any) {
-    const minWidth = this.minWidth ? this.minWidth * this.ratioToOriginalImage : 20;
-    const minHeight = this.minHeight ? this.minHeight * this.ratioToOriginalImage : 20;
+    let minWidth = this.minWidth ? this.minWidth * this.ratioToOriginalImage : 10;
+    let minHeight = this.minHeight ? this.minHeight * this.ratioToOriginalImage : 10;
+
+    if (this.minWidth && this.minHeight) {
+      if (minWidth / minHeight < this.aspectRatio) {
+        minWidth = minHeight * this.aspectRatio;
+      } else {
+        minHeight = minWidth / this.aspectRatio;
+      }
+    }
+
     const diffX = this.getClientX(event) - this.moveStart.clientX;
     const diffY = this.getClientY(event) - this.moveStart.clientY;
     switch (this.moveStart.position) {
@@ -308,8 +296,6 @@ export class KiwiImageCropperComponent implements OnChanges {
         this.cropper.y2 = Math.max(this.moveStart.y2 + diffY, this.cropper.y1 + minHeight);
         break;
     }
-
-    this.checkMinSize();
 
     if (this.maintainAspectRatio) {
       this.checkAspectRatio();
@@ -380,54 +366,6 @@ export class KiwiImageCropperComponent implements OnChanges {
     }
   }
 
-  private checkMinSize() {
-    const minWidth = this.minWidth ? this.minWidth * this.ratioToOriginalImage : null;
-    const minHeight = this.minHeight ? this.minHeight * this.ratioToOriginalImage : null;
-
-    const width = this.cropper.x2 - this.cropper.x1;
-    const height = this.cropper.y2 - this.cropper.y1;
-
-    const widthToSmall = (minWidth && width <= minWidth);
-    const heightToSmall = (minHeight && height <= minHeight);
-
-    let maxMinRatio = null;
-
-    if (minWidth && minHeight) {
-      maxMinRatio = minWidth / minHeight;
-    }
-
-    if (widthToSmall) {
-      this.cropper.x2 = this.cropper.x1 + minWidth;
-    }
-
-    if (heightToSmall) {
-      this.cropper.y2 = this.cropper.y1 + minHeight;
-    }
-
-    if (maxMinRatio) {
-      if (maxMinRatio < this.aspectRatio) {
-        this.cropper.x2 = this.cropper.x1 + ((this.cropper.y2 - this.cropper.y1) * this.aspectRatio);
-      } else {
-        this.cropper.y2 = this.cropper.y1 + ((this.cropper.x2 - this.cropper.x1) / this.aspectRatio);
-      }
-    } else {
-      if (minWidth) {
-        this.cropper.y2 = this.cropper.y1 + ((this.cropper.x2 - this.cropper.x1) / this.aspectRatio);
-      }
-      if (minHeight) {
-        this.cropper.x2 = this.cropper.x1 + ((this.cropper.y2 - this.cropper.y1) * this.aspectRatio);
-      }
-    }
-
-    const overflowX = Math.max(this.cropper.x2 - this.maxSize.width, 0);
-    this.cropper.x1 -= overflowX;
-    this.cropper.x2 -= overflowX;
-
-    const overflowY = Math.max(this.cropper.y2 - this.maxSize.height, 0);
-    this.cropper.y1 -= overflowY;
-    this.cropper.y2 -= overflowY;
-  }
-
   private crop() {
     const displayedImage = this.elementRef.nativeElement.querySelector('.source-image');
     if (displayedImage && this.originalImage != null) {
@@ -474,14 +412,6 @@ export class KiwiImageCropperComponent implements OnChanges {
 
   private emitCropData() {
     this.cropped.emit(this.cropDataToOriginal(this.cropper));
-  }
-
-  private setCropData() {
-    const data = this.cropDataToOriginal(this.cropper);
-    this.cropData.x1 = data.x1;
-    this.cropData.x2 = data.x2;
-    this.cropData.y1 = data.y1;
-    this.cropData.y2 = data.y2;
   }
 
   private cropDataFromOriginal(data: CropperPosition) {

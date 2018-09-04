@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewAbstractComponent } from '../../../components/view.abstract.component';
 import { AppDataService } from '../../../services/data/app-data.service';
@@ -11,13 +11,14 @@ import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-mod
 import { ConfigService } from '../../../services/config.service';
 import { ResourceConfig } from '../../../interfaces/config.interface';
 import { BsModalService } from 'ngx-bootstrap';
-import { PageTitleService } from '../../../services/page-title.service';
-import { CropperPosition } from '../../../components/kiwi-image-cropper/kiwi-image-cropper.component';
+import { CropperPosition, KiwiImageCropperComponent } from '../../../components/kiwi-image-cropper/kiwi-image-cropper.component';
 
 @Component({
   templateUrl: './media-edit.component.html',
 })
 export class MediaEditComponent extends ViewAbstractComponent implements OnInit {
+
+  @ViewChild(KiwiImageCropperComponent) cropper: KiwiImageCropperComponent;
 
   data$: Promise<any>;
 
@@ -35,7 +36,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   minWidth = 200;
   minHeight = 300;
 
-  cropData = {x1: 10, x2: 400, y1: 10, y2: 600};
+  cropData = null;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -52,6 +53,10 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.cropper.setCropperPosition({x1: 10, x2: 400, y1: 10, y2: 600});
+    }, 1000);
+
     this.route.params.subscribe(params => {
       this.resourceId = params.id;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
