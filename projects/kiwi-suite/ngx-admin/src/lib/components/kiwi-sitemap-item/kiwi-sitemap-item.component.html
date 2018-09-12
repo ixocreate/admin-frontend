@@ -6,7 +6,8 @@
     <div class="btn-collapse" *ngIf="page.children.length === 0"></div>
     <div class="sitemap-item-content-container">
       <div class="sitemap-item-content" [innerHtml]="pageName"></div>
-      <div class="sitemap-item-icons" *ngIf="pageData">
+      <div class="sitemap-item-handle d-none d-sm-block" *ngIf="page.handle">{{ page.handle }}</div>
+      <div class="sitemap-item-icons d-none d-sm-block" *ngIf="pageData">
         <ng-container *ngIf="pageData.status === 'online'; else offline">
           <i class="fa fa-fw fa-power-off text-success" title="online"></i>
         </ng-container>
@@ -20,7 +21,7 @@
           <i class="fa fa-fw fa-clock-o" style="opacity: .2;"></i>
         </ng-template>
       </div>
-      <a class="btn btn-primary btn-sitemap btn-sitemap" [routerLink]="pageData.id + '/edit'" *ngIf="pageData">
+      <a class="btn btn-primary btn-sitemap btn-sitemap d-none d-sm-block" [routerLink]="pageData.id + '/edit'" *ngIf="pageData">
         <i class="fa fa-fw fa-pencil"></i> Edit
       </a>
       <div class="btn-group" kiwiDropdown>
@@ -28,13 +29,16 @@
           <i class="fa fa-fw fa-ellipsis-h"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" [routerLink]="'add/' + locale + '/' + this.page.sitemap.id" *ngIf="!pageData">
+          <a class="dropdown-item dropdown-item-primary d-block d-sm-none" [routerLink]="pageData.id + '/edit'" *ngIf="pageData">
+            <i class="fa fa-fw fa-pencil"></i> Edit
+          </a>
+          <a class="dropdown-item dropdown-item-success" [routerLink]="'add/' + locale + '/' + this.page.sitemap.id" *ngIf="!pageData">
             <i class="fa fa-fw fa-plus"></i> Add Page for this Language
           </a>
-          <a class="dropdown-item" [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
+          <a class="dropdown-item dropdown-item-success" *ngIf="pageData && page.childrenAllowed" [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
             <i class="fa fa-fw fa-plus"></i> Add Sub-Page
           </a>
-          <a class="dropdown-item" [href]="pageUrl" target="_blank">
+          <a class="dropdown-item dropdown-item-info" *ngIf="pageUrl" [href]="pageUrl" target="_blank">
             <i class="fa fa-fw fa-eye"></i> View Page
           </a>
         </div>
