@@ -7,6 +7,16 @@
   @include button-outline-variant(#fff);
 }
 
+.btn-more {
+  color: #aaa;
+  border: 0;
+  background: transparent;
+
+  &:hover {
+    color: $body-color;
+  }
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

@@ -9,9 +9,9 @@
     </div>
   </div>
   <div class="card-body">
-    <ng-container *ngIf="data$ | async as data; else isLoading">
-      <ng-container *ngIf="data.length > 0; else noPages">
-        <ng-container *ngFor="let page of data">
+    <ng-container *ngIf="pages$ | async as pages; else isLoading">
+      <ng-container *ngIf="pages.length > 0; else noPages">
+        <ng-container *ngFor="let page of pages">
           <kiwi-sitemap-item [page]="page" [locale]="selectedLocale"></kiwi-sitemap-item>
         </ng-container>
       </ng-container>

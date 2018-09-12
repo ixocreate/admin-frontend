@@ -41,10 +41,10 @@ export interface BlockSelect {
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <button class="dropdown-item" (click)="copyBlock(fieldGroup.model)" type="button">
-                    <i class="fa fa-clone"></i> Copy Block
+                    <i class="fa fa-fw fa-clone"></i> Copy Block
                   </button>
                   <button class="dropdown-item dropdown-item-danger" (click)="remove(i)" type="button">
-                    <i class="fa fa-trash"></i> Delete Block
+                    <i class="fa fa-fw fa-trash"></i> Delete Block
                   </button>
                 </div>
               </div>

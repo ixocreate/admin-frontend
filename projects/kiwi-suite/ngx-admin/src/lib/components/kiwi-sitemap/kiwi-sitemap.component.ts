@@ -10,6 +10,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 export class KiwiSitemapComponent implements OnInit {
 
   data$: Promise<any>;
+  pages$: Promise<any>;
+
   selectedLocale: string;
 
   @Output() changeLocale = new EventEmitter<any>();
@@ -27,8 +29,9 @@ export class KiwiSitemapComponent implements OnInit {
   ngOnInit() {
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
     this.onChangeLocale();
-    this.data$ = this.appData.getResourceIndex('page', 500).then((response) => {
-      return response.items;
+    this.pages$ = this.appData.getPageIndex().then((response) => {
+      console.log(response);
+      return response;
     });
   }
 

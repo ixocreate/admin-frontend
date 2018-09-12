@@ -4,7 +4,6 @@
   display: flex;
   position: relative;
   min-height: 35px;
-  opacity: .3;
 
   > * {
     display: flex;
@@ -12,13 +11,24 @@
     justify-content: center;
   }
 
-  &.is-created {
-    opacity: 1;
+  &.not-created {
+    .sitemap-item-content {
+      color: #aaa;
+    }
+  }
+
+  .sitemap-item-content-container {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    flex: 1;
+    display: flex;
   }
 
   .btn-sitemap {
-    border-radius: 0;
-    padding: 0 5px;
+    font-size: .7rem;
+    padding: 3px 5px;
+    margin: 0 3px;
   }
 
   .btn-collapse {
@@ -46,14 +56,10 @@
     flex: 1;
     padding: 5px 10px;
     justify-content: start;
-    border-top: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
     font-size: .9em;
   }
 
   .sitemap-item-icons {
-    border-top: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
     padding: 0 10px;
   }
 }

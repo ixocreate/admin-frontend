@@ -12,6 +12,8 @@ import { tap } from 'rxjs/internal/operators';
 import { parseParams } from '../../shared/parseParams';
 import { ResourceList } from '../../interfaces/resource-list.interface';
 import { Resource } from '../../interfaces/resource.interface';
+import { Page } from '../../interfaces/page.interface';
+import { APIResponse } from '../../interfaces/api-response.interface';
 
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
@@ -50,6 +52,10 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.config).then((data: Config) => {
       this.saveToDefaultStore('CONFIG', Object.assign({}, DefaultHelper.windowVar('__kiwi'), data));
     });
+  }
+
+  getPageIndex(): Promise<Array<Page>> {
+    return this.api.get(this.config.config.routes.pageIndex);
   }
 
   getTranslationCatalogue(): Promise<any> {

@@ -19,8 +19,12 @@ export class KiwiSitemapItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  get pageUrl(): string {
+    return this.page.pages[this.locale] ? this.page.pages[this.locale].url : null;
+  }
+
   get pageData(): PageElement {
-    return this.page.pages[this.locale];
+    return this.page.pages[this.locale] ? this.page.pages[this.locale].page : null;
   }
 
   get pageName(): string {
@@ -29,7 +33,7 @@ export class KiwiSitemapItemComponent implements OnInit {
     }
     const pages = [];
     for (const locale of Object.keys(this.page.pages)) {
-      pages.push(locale + ': ' + this.page.pages[locale].name);
+      pages.push(locale + ': ' + this.page.pages[locale].page.name);
     }
     return '<div class="other-languages">' + pages.join(' / ') + '</div>';
   }

@@ -1,33 +1,45 @@
 <div class="sitemap-item-container">
-  <div class="sitemap-item" [class.is-created]="pageData">
+  <div class="sitemap-item" [class.not-created]="!pageData">
     <button class="btn-collapse toggle" (click)="collapsed = !collapsed" *ngIf="page.children.length > 0">
       <i class="fa fa-fw" [ngClass]="{'fa-minus': !collapsed, 'fa-plus': collapsed}"></i>
     </button>
     <div class="btn-collapse" *ngIf="page.children.length === 0"></div>
-    <div class="sitemap-item-content" [innerHtml]="pageName"></div>
-    <div class="sitemap-item-icons" *ngIf="pageData">
-      <ng-container *ngIf="pageData.status === 'online'; else offline">
-        <i class="fa fa-fw fa-power-off text-success" title="online"></i>
-      </ng-container>
-      <ng-template #offline>
-        <i class="fa fa-fw fa-power-off text-danger" title="offline"></i>
-      </ng-template>
-      <ng-container *ngIf="publishedString; else noPublishTime">
-        <i class="fa fa-fw fa-clock-o" [title]="publishedString"></i>
-      </ng-container>
-      <ng-template #noPublishTime>
-        <i class="fa fa-fw fa-clock-o" style="opacity: .2;"></i>
-      </ng-template>
+    <div class="sitemap-item-content-container">
+      <div class="sitemap-item-content" [innerHtml]="pageName"></div>
+      <div class="sitemap-item-icons" *ngIf="pageData">
+        <ng-container *ngIf="pageData.status === 'online'; else offline">
+          <i class="fa fa-fw fa-power-off text-success" title="online"></i>
+        </ng-container>
+        <ng-template #offline>
+          <i class="fa fa-fw fa-power-off text-danger" title="offline"></i>
+        </ng-template>
+        <ng-container *ngIf="publishedString; else noPublishTime">
+          <i class="fa fa-fw fa-clock-o" [title]="publishedString"></i>
+        </ng-container>
+        <ng-template #noPublishTime>
+          <i class="fa fa-fw fa-clock-o" style="opacity: .2;"></i>
+        </ng-template>
+      </div>
+      <a class="btn btn-primary btn-sitemap btn-sitemap" [routerLink]="pageData.id + '/edit'" *ngIf="pageData">
+        <i class="fa fa-fw fa-pencil"></i> Edit
+      </a>
+      <div class="btn-group" kiwiDropdown>
+        <button class="btn-more dropdown-btn" type="button">
+          <i class="fa fa-fw fa-ellipsis-h"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" [routerLink]="'add/' + locale + '/' + this.page.sitemap.id" *ngIf="!pageData">
+            <i class="fa fa-fw fa-plus"></i> Add Page for this Language
+          </a>
+          <a class="dropdown-item" [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
+            <i class="fa fa-fw fa-plus"></i> Add Sub-Page
+          </a>
+          <a class="dropdown-item" [href]="pageUrl" target="_blank">
+            <i class="fa fa-fw fa-eye"></i> View Page
+          </a>
+        </div>
+      </div>
     </div>
-    <a class="btn btn-success btn-sitemap" [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
-      <i class="fa fa-fw fa-plus"></i>
-    </a>
-    <a class="btn btn-primary btn-sitemap" [routerLink]="pageData.id + '/edit'" *ngIf="pageData">
-      <i class="fa fa-fw fa-pencil"></i>
-    </a>
-    <a class="btn btn-warning btn-sitemap" [routerLink]="'add/' + locale + '/' + this.page.sitemap.id" *ngIf="!pageData">
-      <i class="fa fa-fw fa-pencil"></i>
-    </a>
   </div>
   <div class="sitemap-sub-item" *ngIf="page.children.length > 0" [hidden]="collapsed">
     <ng-container *ngFor="let subPage of page.children">

@@ -1,8 +1,15 @@
 export interface Page {
-  pages: { [key: string]: PageElement };
+  pages: { [key: string]: PageInfo };
   sitemap: Sitemap;
   pageType: PageType;
   children: Array<Page>;
+  childrenAllowed: boolean;
+  handle: string;
+}
+
+export interface PageInfo {
+  page: PageElement;
+  url: string;
 }
 
 export interface PageElement {
@@ -28,9 +35,8 @@ export interface Sitemap {
 }
 
 export interface PageType {
-  name: string;
-  handle?: any;
+  handle: string;
+  isRoot: boolean;
   label: string;
   allowedChildren: string[];
-  isRoot: boolean;
 }
