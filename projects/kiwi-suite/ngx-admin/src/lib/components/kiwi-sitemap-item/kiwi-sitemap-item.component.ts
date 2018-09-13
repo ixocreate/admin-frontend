@@ -50,6 +50,10 @@ export class KiwiSitemapItemComponent implements OnInit {
     return null;
   }
 
+  get moveType() {
+    return this.copy.moveType;
+  }
+
   get copyPage() {
     return this.copy.copyPage;
   }
@@ -83,6 +87,12 @@ export class KiwiSitemapItemComponent implements OnInit {
     if (this.isCopiedPageCurrentPageOrChildren(this.copyPage)) {
       isAllowed = false;
     }
+    if (this.copyPage.pageType.isRoot === true && this.parentPage) {
+      isAllowed = false;
+    }
+    if (this.copyPage.pageType.isRoot === false && !this.parentPage) {
+      isAllowed = false;
+    }
     return isAllowed;
   }
 
@@ -91,13 +101,16 @@ export class KiwiSitemapItemComponent implements OnInit {
       return false;
     }
     let isAllowed = true;
+    if (!this.page.childrenAllowed) {
+      isAllowed = false;
+    }
     if (this.page.pageType.allowedChildren.indexOf(this.copyPage.pageType.name) === -1) {
       isAllowed = false;
     }
-    if (this.page.children && this.page.children.length > 0) {
+    if (this.isCopiedPageCurrentPageOrChildren(this.copyPage)) {
       isAllowed = false;
     }
-    if (this.isCopiedPageCurrentPageOrChildren(this.copyPage)) {
+    if (this.copyPage.pageType.isRoot === true && this.parentPage) {
       isAllowed = false;
     }
     return isAllowed;

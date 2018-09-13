@@ -56,16 +56,16 @@
     </div>
   </div>
 
-  <button class="sitemap-insert-btn as-child" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">insert as child</button>
+  <button class="sitemap-insert-btn as-child" *ngIf="page.children.length === 0 && allowedInsertChild" (click)="movePageEnd(null, page)">{{ moveType }} as child</button>
 
   <div class="sitemap-sub-item" *ngIf="page.children.length > 0" [hidden]="collapsed">
-    <button class="sitemap-insert-btn 2" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">insert here</button>
+    <button class="sitemap-insert-btn 2" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">{{ moveType }} here</button>
 
     <ng-container *ngFor="let subPage of page.children">
       <kiwi-sitemap-item [page]="subPage" [parentPage]="page" [locale]="locale" (moved)="triggerMoved($event)"></kiwi-sitemap-item>
     </ng-container>
   </div>
 
-  <button class="sitemap-insert-btn 2" *ngIf="allowedInsertSibling" (click)="movePageEnd(page, null)">insert here</button>
+  <button class="sitemap-insert-btn 2" *ngIf="allowedInsertSibling" (click)="movePageEnd(page, null)">{{ moveType }} here</button>
 
 </div>
