@@ -54,7 +54,7 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
-  getPageIndex(): Promise<Array<Page>> {
+  getPageIndex(): Promise<{allowedAddingRoot: boolean, items: Array<Page>}> {
     return this.api.get(this.config.config.routes.pageIndex);
   }
 

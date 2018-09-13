@@ -23,6 +23,8 @@ export interface Routes {
    * page
    */
   pageIndex?: string;
+  pageMove?: string;
+
   flatPagesIndex?: string;
   pageAdd?: string;
   pageCreateSchema?: string;

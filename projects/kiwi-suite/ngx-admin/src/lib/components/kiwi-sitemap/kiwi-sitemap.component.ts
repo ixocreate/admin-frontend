@@ -30,8 +30,7 @@ export class KiwiSitemapComponent implements OnInit {
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
     this.onChangeLocale();
     this.pages$ = this.appData.getPageIndex().then((response) => {
-      console.log(response);
-      return response;
+      return response.items;
     });
   }
 

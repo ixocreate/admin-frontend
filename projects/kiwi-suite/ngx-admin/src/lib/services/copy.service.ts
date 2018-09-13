@@ -5,6 +5,7 @@ import { BsModalService } from 'ngx-bootstrap';
 import { LocalStorageService } from './local-storage.service';
 import { KiwiInputModalComponent } from '../modals/kiwi-input-modal/kiwi-input-modal.component';
 import { InputModalData } from '../modals/kiwi-input-modal/input-modal-data.interface';
+import { Page } from '../interfaces/page.interface';
 
 export interface BlockCopy {
   id: string;
@@ -17,11 +18,22 @@ export class CopyService {
 
   private readonly COPIED_BLOCKS_STORAGE_KEY = 'copiedBlocks';
 
+  private copiedPage: Page;
+
   constructor(private modal: BsModalService, private localStorage: LocalStorageService) {
   }
 
   private getRandomString(): string {
     return Math.random().toString(36).substring(3);
+  }
+
+  setCopyPage(page: Page) {
+    console.log(page);
+    this.copiedPage = page;
+  }
+
+  get copyPage(): Page {
+    return this.copiedPage;
   }
 
   addCopiedBlock(model: any): Promise<boolean> {

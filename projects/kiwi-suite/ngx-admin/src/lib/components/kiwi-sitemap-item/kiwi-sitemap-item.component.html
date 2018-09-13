@@ -38,6 +38,12 @@
           <a class="dropdown-item dropdown-item-success" *ngIf="pageData && page.childrenAllowed" [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
             <i class="fa fa-fw fa-plus"></i> Add Sub-Page
           </a>
+          <button class="dropdown-item" type="button" (click)="movePage('move')">
+            <i class="fa fa-fw fa-sort"></i> Move Page
+          </button>
+          <button class="dropdown-item" type="button" (click)="movePage('copy')" *ngIf="!page.pageType.handle">
+            <i class="fa fa-fw fa-clone"></i> Copy Page
+          </button>
           <a class="dropdown-item dropdown-item-info" *ngIf="pageUrl" [href]="pageUrl" target="_blank">
             <i class="fa fa-fw fa-eye"></i> View Page
           </a>
@@ -45,9 +51,23 @@
       </div>
     </div>
   </div>
+
+  <ng-container *ngIf="copiedPage">
+    <button class="sitemap-insert-btn as-child" *ngIf="allowedInsertChild">insert as child</button>
+  </ng-container>
+
   <div class="sitemap-sub-item" *ngIf="page.children.length > 0" [hidden]="collapsed">
+    <ng-container *ngIf="copiedPage">
+      <button class="sitemap-insert-btn" *ngIf="allowedInsertSibling">insert here</button>
+    </ng-container>
+
     <ng-container *ngFor="let subPage of page.children">
-      <kiwi-sitemap-item [page]="subPage" [locale]="locale"></kiwi-sitemap-item>
+      <kiwi-sitemap-item [page]="subPage" [parentPage]="page" [locale]="locale"></kiwi-sitemap-item>
+    </ng-container>
+
+    <ng-container *ngIf="copiedPage">
+      <button class="sitemap-insert-btn" *ngIf="allowedInsertSibling">insert here</button>
     </ng-container>
   </div>
+
 </div>

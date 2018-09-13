@@ -38,5 +38,6 @@ export interface PageType {
   handle: string;
   isRoot: boolean;
   label: string;
+  name: string;
   allowedChildren: string[];
 }
