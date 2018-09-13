@@ -20,6 +20,8 @@ export class CopyService {
 
   private copiedPage: Page;
 
+  moveType: string;
+
   constructor(private modal: BsModalService, private localStorage: LocalStorageService) {
   }
 
@@ -27,8 +29,8 @@ export class CopyService {
     return Math.random().toString(36).substring(3);
   }
 
-  setCopyPage(page: Page) {
-    console.log(page);
+  setCopyPage(page: Page, type: string) {
+    this.moveType = type;
     this.copiedPage = page;
   }
 

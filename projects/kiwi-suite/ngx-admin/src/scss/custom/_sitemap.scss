@@ -1,3 +1,13 @@
+.sitemap-item-container {
+  &.is-copy-page {
+    background: #eee;
+    border: 1px dashed #ddd;
+    opacity: .3;
+    padding: 10px 10px 0;
+    margin-bottom: 10px;
+  }
+}
+
 .sitemap-item {
   background: #f9f9f9;
   margin-bottom: 10px;

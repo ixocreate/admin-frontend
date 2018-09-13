@@ -13,7 +13,6 @@ import { parseParams } from '../../shared/parseParams';
 import { ResourceList } from '../../interfaces/resource-list.interface';
 import { Resource } from '../../interfaces/resource.interface';
 import { Page } from '../../interfaces/page.interface';
-import { APIResponse } from '../../interfaces/api-response.interface';
 
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
@@ -54,8 +53,16 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
-  getPageIndex(): Promise<{allowedAddingRoot: boolean, items: Array<Page>}> {
+  getPageIndex(): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
     return this.api.get(this.config.config.routes.pageIndex);
+  }
+
+  postPageMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
+    return this.api.post(this.config.config.routes.pageMove, {
+      id: sitemapId,
+      prevSibling: prevSiblingSitemapId,
+      parent: parentSitemapId,
+    });
   }
 
   getTranslationCatalogue(): Promise<any> {

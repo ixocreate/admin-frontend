@@ -12,7 +12,7 @@
     <ng-container *ngIf="pages$ | async as pages; else isLoading">
       <ng-container *ngIf="pages.length > 0; else noPages">
         <ng-container *ngFor="let page of pages">
-          <kiwi-sitemap-item [page]="page" [locale]="selectedLocale"></kiwi-sitemap-item>
+          <kiwi-sitemap-item [page]="page" [locale]="selectedLocale" (moved)="pageMoved()"></kiwi-sitemap-item>
         </ng-container>
       </ng-container>
       <ng-template #noPages>

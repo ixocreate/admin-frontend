@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Page, PageElement } from '../../interfaces/page.interface';
 import { KiwiDateTimePipe } from '../../pipes/kiwi-date-time.pipe';
 import { CopyService } from '../../services/copy.service';
+import { AppDataService } from '../../services/data/app-data.service';
 
 @Component({
   selector: 'kiwi-sitemap-item',
@@ -13,12 +14,11 @@ export class KiwiSitemapItemComponent implements OnInit {
   @Input() page: Page;
   @Input() parentPage: Page = null;
 
+  @Output() moved = new EventEmitter<Page>();
+
   collapsed = false;
 
-  moveType: string;
-
-
-  constructor(private dateTimePipe: KiwiDateTimePipe, private copy: CopyService) {
+  constructor(private dateTimePipe: KiwiDateTimePipe, private copy: CopyService, private appData: AppDataService) {
   }
 
   ngOnInit() {
@@ -50,8 +50,12 @@ export class KiwiSitemapItemComponent implements OnInit {
     return null;
   }
 
-  get copiedPage() {
+  get copyPage() {
     return this.copy.copyPage;
+  }
+
+  get isCopyPage() {
+    return this.copyPage && this.copyPage === this.page;
   }
 
   isCopiedPageCurrentPageOrChildren(page: Page): boolean {
@@ -69,32 +73,55 @@ export class KiwiSitemapItemComponent implements OnInit {
   }
 
   get allowedInsertSibling() {
+    if (!this.copyPage) {
+      return false;
+    }
     let isAllowed = true;
-    if (this.parentPage && this.parentPage.pageType.allowedChildren.indexOf(this.copy.copyPage.pageType.name) === -1) {
+    if (this.parentPage && this.parentPage.pageType.allowedChildren.indexOf(this.copyPage.pageType.name) === -1) {
       isAllowed = false;
     }
-    if (this.isCopiedPageCurrentPageOrChildren(this.copy.copyPage)) {
+    if (this.isCopiedPageCurrentPageOrChildren(this.copyPage)) {
       isAllowed = false;
     }
     return isAllowed;
   }
 
   get allowedInsertChild() {
+    if (!this.copyPage) {
+      return false;
+    }
     let isAllowed = true;
-    if (this.page.pageType.allowedChildren.indexOf(this.copy.copyPage.pageType.name) === -1) {
+    if (this.page.pageType.allowedChildren.indexOf(this.copyPage.pageType.name) === -1) {
       isAllowed = false;
     }
     if (this.page.children && this.page.children.length > 0) {
       isAllowed = false;
     }
-    if (this.isCopiedPageCurrentPageOrChildren(this.copy.copyPage)) {
+    if (this.isCopiedPageCurrentPageOrChildren(this.copyPage)) {
       isAllowed = false;
     }
     return isAllowed;
   }
 
-  movePage(type: string) {
-    this.moveType = type;
-    this.copy.setCopyPage(this.page);
+  movePageStart(type: string) {
+    this.copy.setCopyPage(this.page, type);
+  }
+
+  movePageEnd(prevSibling: Page, parent: Page) {
+    const prevSiblingSitemapId: string = prevSibling ? prevSibling.sitemap.id : null;
+    const parentSitemapId: string = parent ? parent.sitemap.id : null;
+
+    if (this.copy.moveType === 'copy') {
+      alert('copy call missing');
+    } else {
+      this.appData.postPageMove(this.copyPage.sitemap.id, prevSiblingSitemapId, parentSitemapId).then(() => {
+        this.copy.setCopyPage(null, null);
+        this.triggerMoved(this.page);
+      });
+    }
+  }
+
+  triggerMoved(page) {
+    this.moved.emit(page);
   }
 }

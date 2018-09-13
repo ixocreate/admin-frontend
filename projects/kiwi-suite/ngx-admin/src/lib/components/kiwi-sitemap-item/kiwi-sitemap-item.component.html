@@ -1,4 +1,4 @@
-<div class="sitemap-item-container">
+<div class="sitemap-item-container" [class.is-copy-page]="isCopyPage">
   <div class="sitemap-item" [class.not-created]="!pageData">
     <button class="btn-collapse toggle" (click)="collapsed = !collapsed" *ngIf="page.children.length > 0">
       <i class="fa fa-fw" [ngClass]="{'fa-minus': !collapsed, 'fa-plus': collapsed}"></i>
@@ -7,6 +7,7 @@
     <div class="sitemap-item-content-container">
       <div class="sitemap-item-content" [innerHtml]="pageName"></div>
       <div class="sitemap-item-handle d-none d-sm-block" *ngIf="page.handle">{{ page.handle }}</div>
+      <div class="sitemap-item-handle d-none d-sm-block">{{ page.pageType.allowedChildren | json }}</div>
       <div class="sitemap-item-icons d-none d-sm-block" *ngIf="pageData">
         <ng-container *ngIf="pageData.status === 'online'; else offline">
           <i class="fa fa-fw fa-power-off text-success" title="online"></i>
@@ -21,7 +22,8 @@
           <i class="fa fa-fw fa-clock-o" style="opacity: .2;"></i>
         </ng-template>
       </div>
-      <a class="btn btn-primary btn-sitemap btn-sitemap d-none d-sm-block" [routerLink]="pageData.id + '/edit'" *ngIf="pageData">
+      <a class="btn btn-primary btn-sitemap btn-sitemap d-none d-sm-block" [routerLink]="pageData.id + '/edit'"
+         *ngIf="pageData">
         <i class="fa fa-fw fa-pencil"></i> Edit
       </a>
       <div class="btn-group" kiwiDropdown>
@@ -29,19 +31,22 @@
           <i class="fa fa-fw fa-ellipsis-h"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item dropdown-item-primary d-block d-sm-none" [routerLink]="pageData.id + '/edit'" *ngIf="pageData">
+          <a class="dropdown-item dropdown-item-primary d-block d-sm-none" [routerLink]="pageData.id + '/edit'"
+             *ngIf="pageData">
             <i class="fa fa-fw fa-pencil"></i> Edit
           </a>
-          <a class="dropdown-item dropdown-item-success" [routerLink]="'add/' + locale + '/' + this.page.sitemap.id" *ngIf="!pageData">
+          <a class="dropdown-item dropdown-item-success" [routerLink]="'add/' + locale + '/' + this.page.sitemap.id"
+             *ngIf="!pageData">
             <i class="fa fa-fw fa-plus"></i> Add Page for this Language
           </a>
-          <a class="dropdown-item dropdown-item-success" *ngIf="pageData && page.childrenAllowed" [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
+          <a class="dropdown-item dropdown-item-success" *ngIf="pageData && page.childrenAllowed"
+             [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
             <i class="fa fa-fw fa-plus"></i> Add Sub-Page
           </a>
-          <button class="dropdown-item" type="button" (click)="movePage('move')">
+          <button class="dropdown-item" type="button" (click)="movePageStart('move')">
             <i class="fa fa-fw fa-sort"></i> Move Page
           </button>
-          <button class="dropdown-item" type="button" (click)="movePage('copy')" *ngIf="!page.pageType.handle">
+          <button class="dropdown-item" type="button" (click)="movePageStart('copy')" *ngIf="!page.pageType.handle">
             <i class="fa fa-fw fa-clone"></i> Copy Page
           </button>
           <a class="dropdown-item dropdown-item-info" *ngIf="pageUrl" [href]="pageUrl" target="_blank">
@@ -52,22 +57,16 @@
     </div>
   </div>
 
-  <ng-container *ngIf="copiedPage">
-    <button class="sitemap-insert-btn as-child" *ngIf="allowedInsertChild">insert as child</button>
-  </ng-container>
+  <button class="sitemap-insert-btn as-child" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">insert as child</button>
 
   <div class="sitemap-sub-item" *ngIf="page.children.length > 0" [hidden]="collapsed">
-    <ng-container *ngIf="copiedPage">
-      <button class="sitemap-insert-btn" *ngIf="allowedInsertSibling">insert here</button>
-    </ng-container>
+    <button class="sitemap-insert-btn 2" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">insert here</button>
 
     <ng-container *ngFor="let subPage of page.children">
-      <kiwi-sitemap-item [page]="subPage" [parentPage]="page" [locale]="locale"></kiwi-sitemap-item>
-    </ng-container>
-
-    <ng-container *ngIf="copiedPage">
-      <button class="sitemap-insert-btn" *ngIf="allowedInsertSibling">insert here</button>
+      <kiwi-sitemap-item [page]="subPage" [parentPage]="page" [locale]="locale" (moved)="triggerMoved($event)"></kiwi-sitemap-item>
     </ng-container>
   </div>
+
+  <button class="sitemap-insert-btn 2" *ngIf="allowedInsertSibling" (click)="movePageEnd(page, null)">insert here</button>
 
 </div>
