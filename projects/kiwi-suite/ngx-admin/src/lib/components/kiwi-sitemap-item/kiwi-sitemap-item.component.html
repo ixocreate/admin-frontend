@@ -7,7 +7,6 @@
     <div class="sitemap-item-content-container">
       <div class="sitemap-item-content" [innerHtml]="pageName"></div>
       <div class="sitemap-item-handle d-none d-sm-block" *ngIf="page.handle">{{ page.handle }}</div>
-      <div class="sitemap-item-handle d-none d-sm-block">{{ page.pageType.allowedChildren | json }}</div>
       <div class="sitemap-item-icons d-none d-sm-block" *ngIf="pageData">
         <ng-container *ngIf="pageData.status === 'online'; else offline">
           <i class="fa fa-fw fa-power-off text-success" title="online"></i>
