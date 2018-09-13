@@ -86,18 +86,18 @@
 }
 
 .sitemap-insert-btn {
-  border: 1px dashed #ddd;
+  border: 2px dashed $warning;
   background: #f9f9f9;
   text-align: center;
   display: block;
-  width: 100%;
+  //width: 100%;
   margin-bottom: 10px;
-  color: #aaa;
+  color: $warning;
   font-size: .7rem;
-  padding: 2px 10px;
+  padding: 3px 15px;
 
   &.as-child {
-    width: calc(100% - 25px);
+    //width: calc(100% - 25px);
     margin-left: 25px;
   }
 
