@@ -10,6 +10,7 @@ export interface Page {
 export interface PageInfo {
   page: PageElement;
   url: string;
+  isOnline: boolean;
 }
 
 export interface PageElement {

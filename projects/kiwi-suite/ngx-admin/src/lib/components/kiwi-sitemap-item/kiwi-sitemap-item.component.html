@@ -6,7 +6,7 @@
     <div class="btn-collapse" *ngIf="page.children.length === 0"></div>
     <div class="sitemap-item-content-container">
       <div class="sitemap-item-content" [innerHtml]="pageName"></div>
-      <div class="sitemap-item-handle d-none d-sm-block" *ngIf="page.handle">{{ page.handle }}</div>
+      <div class="sitemap-item-handle d-none d-sm-block">{{ page.pageType.label }}</div>
       <div class="sitemap-item-icons d-none d-sm-block" *ngIf="pageData">
         <ng-container *ngIf="pageData.status === 'online'; else offline">
           <i class="fa fa-fw fa-power-off text-success" title="online"></i>
@@ -48,7 +48,7 @@
           <button class="dropdown-item" type="button" (click)="movePageStart('copy')" *ngIf="!page.pageType.handle">
             <i class="fa fa-fw fa-clone"></i> Copy Page
           </button>
-          <a class="dropdown-item dropdown-item-info" *ngIf="pageUrl" [href]="pageUrl" target="_blank">
+          <a class="dropdown-item dropdown-item-info" *ngIf="pageUrl && isOnline" [href]="pageUrl" target="_blank">
             <i class="fa fa-fw fa-eye"></i> View Page
           </a>
         </div>

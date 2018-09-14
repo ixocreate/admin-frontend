@@ -24,6 +24,10 @@ export class KiwiSitemapItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  get isOnline(): boolean {
+    return this.page.pages[this.locale] ? this.page.pages[this.locale].isOnline : false;
+  }
+
   get pageUrl(): string {
     return this.page.pages[this.locale] ? this.page.pages[this.locale].url : null;
   }
@@ -33,14 +37,20 @@ export class KiwiSitemapItemComponent implements OnInit {
   }
 
   get pageName(): string {
+    let dotClass = 'text-danger';
+    if (this.isOnline) {
+      dotClass = 'text-success';
+    }
+    const dot = '<span class="' + dotClass + ' mr-1"><i class="fa fa-circle"></i></span>';
+
     if (this.pageData) {
-      return this.pageData.name + ' <span class="page-type-info">(' + this.page.pageType.label + ')</span>';
+      return dot + this.pageData.name;
     }
     const pages = [];
     for (const locale of Object.keys(this.page.pages)) {
       pages.push(locale + ': ' + this.page.pages[locale].page.name);
     }
-    return '<span class="other-languages">' + pages.join(' / ') + '</span> <span class="page-type-info">(' + this.page.pageType.label + ')</span>';
+    return '<span class="other-languages">' + pages.join(' / ') + '</span>';
   }
 
   get publishedString() {
