@@ -12,14 +12,16 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 })
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
-  detailData$: Promise<any>;
+  versionData$: Promise<any>;
+  data$: Promise<any>;
 
   id: string;
 
   form: FormGroup = new FormGroup({});
+  fields: FormlyFieldConfig[];
 
-  detailForm: FormGroup = new FormGroup({});
-  detailFields: FormlyFieldConfig[];
+  versionForm: FormGroup = new FormGroup({});
+  versionFields: FormlyFieldConfig[];
 
   navigationForm: FormGroup = new FormGroup({});
   navigationModel: { navigation: Array<string> };
@@ -37,45 +39,47 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.loadDetailData();
-      this.loadNavigationData();
     });
   }
 
   private loadDetailData() {
-    this.detailData$ = this.appData.getResourceDetail('page', this.id).then((data) => {
+    this.data$ = this.appData.getPageDetail(this.id).then((data) => {
       data.schema = this.schemaTransform.transformForm(data.schema);
-      this.detailFields = data.schema ? data.schema : [];
+      this.versionFields = data.schema ? data.schema : [];
+      this.loadNavigationData(data.navigation);
+      this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
+        console.log(versionData);
+        return versionData;
+      });
       return data;
     });
   }
 
-  private loadNavigationData() {
-    this.appData.pageNavigationIndex(this.id).then((data) => {
-      this.navigationFields = [
-        {
-          wrappers: ['section'],
-          templateOptions: {
-            label: 'Navigation',
-            icon: 'fa fa-fw fa-compass',
-          },
-          fieldGroup: [
-            {
-              key: 'navigation',
-              type: 'select',
-              templateOptions: {
-                multiple: true,
-                label: '',
-                valueProp: 'name',
-                options: data,
-              },
-            },
-          ],
+  private loadNavigationData(navigation) {
+    this.navigationFields = [
+      {
+        wrappers: ['section'],
+        templateOptions: {
+          label: 'Navigation',
+          icon: 'fa fa-fw fa-compass',
         },
-      ];
-      this.navigationModel = {
-        navigation: data.filter((element) => element.active).map((element) => element.name),
-      };
-    });
+        fieldGroup: [
+          {
+            key: 'navigation',
+            type: 'select',
+            templateOptions: {
+              multiple: true,
+              label: '',
+              valueProp: 'name',
+              options: navigation,
+            },
+          },
+        ],
+      },
+    ];
+    this.navigationModel = {
+      navigation: navigation.filter((element) => element.active).map((element) => element.name),
+    };
   }
 
   onReplaceContentModal(fromPage) {

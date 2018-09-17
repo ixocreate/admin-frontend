@@ -65,6 +65,14 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
+  getPageDetail(pageId: string): Promise<any> {
+    return this.api.get(this.config.config.routes.pageDetail.replace('{id}', pageId));
+  }
+
+  getPageVersionDetail(pageId: string, pageVersionId: string): Promise<any> {
+    return this.api.get(this.config.config.routes.pageVersionDetail.replace('{pageId}', pageId).replace('{id}', pageVersionId));
+  }
+
   getTranslationCatalogue(): Promise<any> {
     return this.api.get(this.config.config.routes.translationCatalogue);
   }
@@ -75,10 +83,6 @@ export class AppDataService extends DataServiceAbstract {
 
   saveTranslation(locale: string, definitionId: string, id: string, message: string) {
     return this.api.post(this.config.config.routes.translationSave, {locale, definitionId, id, message});
-  }
-
-  getPageVersionDetail(id: string) {
-    return this.api.get(this.config.config.routes.pageVersionDetail.replace('{id}', id));
   }
 
   savePageVersion(data: any) {

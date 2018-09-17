@@ -5,9 +5,16 @@
     </button>
   </ng-template>
 
-  <ng-container *ngIf="detailData$ | async as data">
-    <kiwi-page-version-edit [id]="data.item.id" [form]="form"></kiwi-page-version-edit>
+  <ng-container *ngIf="versionData$ | async as versionData; else isLoading">
+    <ng-container *ngIf="versionForm && versionFields">
+      <formly-form [form]="versionForm" [fields]="versionFields" [model]="versionData.content" class="kiwi-form kiwi-form-inline"></formly-form>
+    </ng-container>
   </ng-container>
+  <ng-template #isLoading>
+    <div class="text-center my-3 loading">
+      <kiwi-loading class="big-center"></kiwi-loading>
+    </div>
+  </ng-template>
 
   <ng-template #aside>
     <tabset>
@@ -16,9 +23,10 @@
           <i class="fa fa-cog"></i>
         </ng-template>
         <div class="p-3">
-          <ng-container *ngIf="detailData$ | async as detailData">
-            <ng-container *ngIf="detailForm && detailFields; else isDetailsLoading">
-              <formly-form [form]="detailForm" [fields]="detailFields" [model]="detailData.item"
+
+          <ng-container *ngIf="data$ | async as data">
+            <ng-container *ngIf="form && fields; else isDetailsLoading">
+              <formly-form [form]="form" [fields]="fields" [model]="data.item"
                            class="kiwi-form"></formly-form>
             </ng-container>
             <ng-container *ngIf="navigationForm && navigationFields; else isDetailsLoading">

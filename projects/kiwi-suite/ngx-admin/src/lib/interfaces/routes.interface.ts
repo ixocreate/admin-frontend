@@ -24,7 +24,11 @@ export interface Routes {
    */
   pageIndex?: string;
   pageMove?: string;
+  pageDetail?: string;
+  pageVersionIndex?: string;
+  pageVersionDetail?: string;
 
+  /*
   flatPagesIndex?: string;
   pageAdd?: string;
   pageCreateSchema?: string;
@@ -34,6 +38,8 @@ export interface Routes {
   pageVersionCreate?: string;
   pageVersionDetail?: string;
   pageVersionReplace?: string;
+  */
+
   /**
    * resource
    */
