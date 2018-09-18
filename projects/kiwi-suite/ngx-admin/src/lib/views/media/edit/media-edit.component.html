@@ -70,7 +70,7 @@
       <div class="card-body p-0">
         <div class="cropper-container" [class.unsaved]="activeEntity && activeEntity.unsaved">
           <div class="cropper">
-            <ng-container *ngIf="image && activeEntity">
+            <ng-container *ngIf="image">
               <kiwi-image-cropper
                 [imageUrl]="image"
                 [maintainAspectRatio]="maintainAspectRatio"

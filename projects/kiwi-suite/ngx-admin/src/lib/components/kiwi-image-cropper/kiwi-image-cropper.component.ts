@@ -419,10 +419,10 @@ export class KiwiImageCropperComponent {
 
   private cropDataFromOriginal(data: CropperPosition) {
     return {
-      x1: data.x1 ? data.x1 * this.ratioToOriginalImage : -100,
-      x2: data.x2 ? data.x2 * this.ratioToOriginalImage : -100,
-      y1: data.y1 ? data.y1 * this.ratioToOriginalImage : 10000,
-      y2: data.y2 ? data.y2 * this.ratioToOriginalImage : 10000,
+      x1: typeof data.x1 !== 'undefined' ? data.x1 * this.ratioToOriginalImage : -100,
+      x2: typeof data.x2 !== 'undefined' ? data.x2 * this.ratioToOriginalImage : -100,
+      y1: typeof data.y1 !== 'undefined' ? data.y1 * this.ratioToOriginalImage : 10000,
+      y2: typeof data.y2 !== 'undefined' ? data.y2 * this.ratioToOriginalImage : 10000,
     };
   }
 

@@ -60,6 +60,15 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     super();
   }
 
+  private getDefinitionByName(definitions, name): { cropParameter: CropperPosition, isCropable: boolean, name: string } {
+    for (const definition of definitions) {
+      if (name === definition.name) {
+        return definition;
+      }
+    }
+    return null;
+  }
+
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.resourceId = params.id;
@@ -70,16 +79,18 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
           this.image = response.media.original;
           this.entities = [];
           for (const media of this.config.config.media) {
-            this.entities.push({
-              name: media.label,
-              width: media.width,
-              height: media.height,
-              crop: {x1: -100, x2: -100, y1: 10000, y2: 10000},
-              unsaved: false,
-              isCropable: false,
-            });
+            const definition = this.getDefinitionByName(response.definitions, media.name);
+            if (definition) {
+              this.entities.push({
+                name: media.label,
+                width: media.width,
+                height: media.height,
+                crop: definition.cropParameter,
+                unsaved: false,
+                isCropable: definition.isCropable,
+              });
+            }
           }
-
           setTimeout(() => {
             for (const entity of this.entities) {
               if (entity.isCropable) {
