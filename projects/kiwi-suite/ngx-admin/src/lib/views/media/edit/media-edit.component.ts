@@ -81,6 +81,20 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     super();
   }
 
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.resourceId = params.id;
+      this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
+      this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
+      this.data$ = this.appData.getMediaDetail(this.resourceId).then((response) => {
+        setTimeout(() => {
+          this.setActiveEntity(this.entities[0]);
+        });
+        return response;
+      });
+    });
+  }
+
   setActiveEntity(entity: Entity) {
     this.activeEntity = entity;
     this.minWidth = entity.width;
@@ -119,20 +133,6 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   onCrop(data: CropperPosition) {
     this.activeEntity.unsavedCrop = data;
     this.checkUnsavedStatus(this.activeEntity);
-  }
-
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.resourceId = params.id;
-      this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
-      this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
-      this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId).then((response) => {
-        setTimeout(() => {
-          this.setActiveEntity(this.entities[0]);
-        });
-        return response;
-      });
-    });
   }
 
   onSubmit(): void {

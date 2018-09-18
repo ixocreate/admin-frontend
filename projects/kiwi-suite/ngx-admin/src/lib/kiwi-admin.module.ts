@@ -74,7 +74,7 @@ import { KiwiMapModalComponent } from './modals/kiwi-map-modal/kiwi-map-modal.co
 import { MediaEditComponent } from './views/media/edit/media-edit.component';
 import { KiwiImageCropperComponent } from './components/kiwi-image-cropper/kiwi-image-cropper.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { KiwiDatePickerComponent } from './components/kiwi-datepicker/kiwi-date-picker.component';
+import { KiwiDatePickerComponent } from './components/kiwi-date-picker/kiwi-date-picker.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,

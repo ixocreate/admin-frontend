@@ -58,9 +58,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   private loadNavigationData(navigation) {
-    console.log(navigation);
     this.navigationOptions = navigation;
     this.selectedNavigationOptions = navigation.filter((element) => element.active).map((element) => element.name);
+    console.log(this.navigationOptions, this.selectedNavigationOptions);
   }
 
   onReplaceContentModal(fromPage) {

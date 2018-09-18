@@ -7,13 +7,21 @@ import { Calendar } from 'primeng/primeng';
 @Component({
   selector: 'formly-field-datetime',
   template: `
-    <p-calendar [placeholder]="this.to.placeholder"
-                [(ngModel)]="dateValue"
-                [dateFormat]="config.dateFormat"
-                [locale]="locale"
-                [showTime]="config.showTime"
-                [class.is-invalid]="showError">
-    </p-calendar>
+    <div class="input-group">
+      <p-calendar class="date-picker"
+                  [placeholder]="this.to.placeholder"
+                  [(ngModel)]="dateValue"
+                  [dateFormat]="config.dateFormat"
+                  [locale]="locale"
+                  [showTime]="config.showTime"
+                  [class.is-invalid]="showError">
+      </p-calendar>
+      <div class="input-group-append" *ngIf="!to.required">
+        <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()">
+          <i class="fa fa-close"></i>
+        </button>
+      </div>
+    </div>
   `,
 })
 export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implements OnInit {

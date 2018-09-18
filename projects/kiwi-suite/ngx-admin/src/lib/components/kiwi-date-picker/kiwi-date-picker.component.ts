@@ -28,6 +28,8 @@ export class KiwiDatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() useUtcTime = false;
   @Input() showError = false;
 
+  @HostBinding('class.date-picker') datePickerClass = true;
+
   _date: Date;
   locale: LocaleSettings;
 

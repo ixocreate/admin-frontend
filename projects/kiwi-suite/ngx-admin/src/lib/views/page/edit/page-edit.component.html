@@ -23,22 +23,6 @@
           <i class="fa fa-cog"></i>
         </ng-template>
         <div class="p-3">
-          <ng-container *ngIf="data$ | async as data">
-            <ng-container *ngIf="form && fields; else isDetailsLoading">
-              <formly-form [form]="form" [fields]="fields" [model]="data.item"
-                           class="kiwi-form"></formly-form>
-            </ng-container>
-            <ng-container *ngIf="navigationForm && navigationFields; else isDetailsLoading">
-              <formly-form [form]="navigationForm" [fields]="navigationFields" [model]="navigationModel"></formly-form>
-            </ng-container>
-            <ng-template #isDetailsLoading>
-              <div class="text-center my-3 loading">
-                <kiwi-loading class="big-center"></kiwi-loading>
-              </div>
-            </ng-template>
-          </ng-container>
-
-
           <div class="kiwi-form">
             <h6><i class="fa fa-fw fa-cog"></i> General</h6>
 
@@ -92,6 +76,22 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Published Until<b class="text-danger">*</b>
+              </label>
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <kiwi-date-picker placeholder="Published Until"></kiwi-date-picker>
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <hr/>
 
             <h6><i class="fa fa-fw fa-compass"></i> Navigation</h6>
@@ -102,7 +102,7 @@
                   [(ngModel)]="selectedNavigationOptions"
                   [items]="navigationOptions"
                   placeholder="Navigation"
-                  bindValue="value"
+                  bindValue="name"
                   bindLabel="label"
                   [multiple]="true">
                 </ng-select>

@@ -153,4 +153,8 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.delete(this.config.config.routes.resourceDelete.replace('{resource}', resource).replace('{id}', id));
   }
 
+  getMediaDetail(id: string): Promise<void> {
+    return this.api.delete(this.config.config.routes.mediaDetail.replace('{id}', id));
+  }
+
 }

@@ -365,3 +365,15 @@ formly-wrapper-validation-messages > div > .invalid-feedback {
     content: '';
   }
 }
+
+.input-group > .date-picker {
+  flex: 1;
+  position: relative;
+
+  &:not(:last-child) {
+    .ui-inputtext {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}

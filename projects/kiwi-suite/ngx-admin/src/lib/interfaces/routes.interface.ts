@@ -18,6 +18,10 @@ export interface Routes {
   /**
    * media
    */
+  mediaFilter: string;
+  mediaDelete: string;
+  mediaDetail: string;
+  mediaPublicStatus: string;
   mediaUpload?: string;
   /**
    * page
