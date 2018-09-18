@@ -17,9 +17,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   id: string;
 
-  form: FormGroup = new FormGroup({});
-  fields: FormlyFieldConfig[];
-
   versionForm: FormGroup = new FormGroup({});
   versionFields: FormlyFieldConfig[];
 
@@ -68,19 +65,14 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.form.valid === false) {
-      this.notification.formErrors(this.form);
+    if (this.versionForm.valid === false) {
+      this.notification.formErrors(this.versionForm);
     } else {
-      /*
-      const data = this.form.getRawValue();
-      /*
-      data.locale = this.locale;
-      data.parentSitemapId = this.parentSitemapId;
-      this.appData.createResource('page', data).then((response) => {
-        this.notification.success('Page successfully created', 'Success');
-        this.router.navigateByUrl('/page/' + response.id + '/edit');
+      const data = this.versionForm.getRawValue();
+      console.log(data);
+      this.appData.createPageVersion(this.id, {content: data}).then((response) => {
+        this.notification.success('Page Version successfully created', 'Success');
       }).catch((error) => this.notification.apiError(error));
-      */
     }
   }
 }

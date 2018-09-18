@@ -97,6 +97,14 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.config.routes.pageAdd, {name, locale, sitemapId});
   }
 
+  updatePage(data: any): Promise<any> {
+    return this.api.patch(this.config.config.routes.pagePageUpdate, data);
+  }
+
+  createPageVersion(pageId: string, data: any): Promise<any> {
+    return this.api.post(this.config.config.routes.pageVersionCreate.replace('{pageId}', pageId), data);
+  }
+
   pageNavigationIndex(id: string): Promise<Array<{ name: string, label: string, active: boolean }>> {
     return this.api.get(this.config.config.routes.pageNavigationIndex.replace('{id}', id));
   }

@@ -31,7 +31,16 @@ export interface Routes {
   pageDetail?: string;
   pageVersionIndex?: string;
   pageVersionDetail?: string;
+  pageAdd: string; // New Page for Language
 
+  // pageCopy: string; TODO
+
+  pageCreate: string; // New Page
+  pageAvailablePageTypes: string;
+  pageDelete: string;
+  pagePageUpdate: string;
+  pageVersionCreate: string;
+  pageVersionReplace: string;
   /*
   flatPagesIndex?: string;
   pageAdd?: string;

@@ -7,7 +7,8 @@
 
   <ng-container *ngIf="versionData$ | async as versionData; else isLoading">
     <ng-container *ngIf="versionForm && versionFields">
-      <formly-form [form]="versionForm" [fields]="versionFields" [model]="versionData.content" class="kiwi-form kiwi-form-inline"></formly-form>
+      <formly-form [form]="versionForm" [fields]="versionFields" [model]="versionData.content"
+                   class="kiwi-form kiwi-form-inline"></formly-form>
     </ng-container>
   </ng-container>
   <ng-template #isLoading>
@@ -23,6 +24,13 @@
           <i class="fa fa-cog"></i>
         </ng-template>
         <div class="p-3">
+
+          <ng-container *ngIf="data$ | async as data">
+            <a class="btn btn-primary btn-block mb-3" [href]="data.page.url" target="_blank">
+              <i class="fa fa-eye"></i> Open Page
+            </a>
+          </ng-container>
+
           <div class="kiwi-form">
             <h6><i class="fa fa-fw fa-cog"></i> General</h6>
 
@@ -50,7 +58,7 @@
 
               <div class="kiwi-form-control-container">
                 <label class="switch switch-primary">
-                  <input type="checkbox" class="switch-input" [(ngModel)]="value" (change)="setValue(value)">
+                  <input type="checkbox" class="switch-input">
                   <span class="switch-slider"></span>
                 </label>
               </div>
