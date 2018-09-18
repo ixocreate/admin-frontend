@@ -23,7 +23,6 @@
           <i class="fa fa-cog"></i>
         </ng-template>
         <div class="p-3">
-
           <ng-container *ngIf="data$ | async as data">
             <ng-container *ngIf="form && fields; else isDetailsLoading">
               <formly-form [form]="form" [fields]="fields" [model]="data.item"
@@ -38,6 +37,83 @@
               </div>
             </ng-template>
           </ng-container>
+
+
+          <div class="kiwi-form">
+            <h6><i class="fa fa-fw fa-cog"></i> General</h6>
+
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Name<b class="text-danger">*</b>
+              </label>
+
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Name">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group kiwi-toggle-right">
+              <label class="kiwi-form-label">
+                Online<b class="text-danger">*</b>
+              </label>
+
+              <div class="kiwi-form-control-container">
+                <label class="switch switch-primary">
+                  <input type="checkbox" class="switch-input" [(ngModel)]="value" (change)="setValue(value)">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <hr/>
+
+            <h6><i class="fa fa-fw fa-calendar"></i> Scheduling</h6>
+
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Published From<b class="text-danger">*</b>
+              </label>
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <kiwi-date-picker placeholder="Published From"></kiwi-date-picker>
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr/>
+
+            <h6><i class="fa fa-fw fa-compass"></i> Navigation</h6>
+
+            <div class="form-group">
+              <div class="input-group">
+                <ng-select
+                  [(ngModel)]="selectedNavigationOptions"
+                  [items]="navigationOptions"
+                  placeholder="Navigation"
+                  bindValue="value"
+                  bindLabel="label"
+                  [multiple]="true">
+                </ng-select>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-primary">
+                    <i class="fa fa-save"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </tab>
       <tab>
@@ -45,6 +121,7 @@
           <i class="fa fa-wrench"></i>
         </ng-template>
         <div class="p-3">
+          <!--
           <ng-container *ngIf="detailData$ | async as detailData">
             <ng-container *ngIf="detailData.meta.otherLanguages.length > 0">
               <h6><i class="fa fa-fw fa-clone"></i> Replace Content</h6>
@@ -71,6 +148,7 @@
               <hr>
             </ng-container>
           </ng-container>
+          -->
         </div>
       </tab>
     </tabset>

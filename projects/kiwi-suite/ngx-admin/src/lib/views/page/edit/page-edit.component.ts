@@ -27,6 +27,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   navigationModel: { navigation: Array<string> };
   navigationFields: FormlyFieldConfig[];
 
+  navigationOptions: Array<any>;
+  selectedNavigationOptions: Array<any>;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -48,7 +51,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       this.versionFields = data.schema ? data.schema : [];
       this.loadNavigationData(data.navigation);
       this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
-        console.log(versionData);
         return versionData;
       });
       return data;
@@ -56,30 +58,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   private loadNavigationData(navigation) {
-    this.navigationFields = [
-      {
-        wrappers: ['section'],
-        templateOptions: {
-          label: 'Navigation',
-          icon: 'fa fa-fw fa-compass',
-        },
-        fieldGroup: [
-          {
-            key: 'navigation',
-            type: 'select',
-            templateOptions: {
-              multiple: true,
-              label: '',
-              valueProp: 'name',
-              options: navigation,
-            },
-          },
-        ],
-      },
-    ];
-    this.navigationModel = {
-      navigation: navigation.filter((element) => element.active).map((element) => element.name),
-    };
+    console.log(navigation);
+    this.navigationOptions = navigation;
+    this.selectedNavigationOptions = navigation.filter((element) => element.active).map((element) => element.name);
   }
 
   onReplaceContentModal(fromPage) {
@@ -103,3 +84,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     }
   }
 }
+
+
+

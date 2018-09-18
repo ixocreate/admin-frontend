@@ -73,6 +73,8 @@ import { KiwiEventManager } from './events/kiwi.event-manager';
 import { KiwiMapModalComponent } from './modals/kiwi-map-modal/kiwi-map-modal.component';
 import { MediaEditComponent } from './views/media/edit/media-edit.component';
 import { KiwiImageCropperComponent } from './components/kiwi-image-cropper/kiwi-image-cropper.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { KiwiDatePickerComponent } from './components/kiwi-datepicker/kiwi-date-picker.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -98,6 +100,7 @@ const APP_COMPONENTS = [
   KiwiSitemapComponent,
   KiwiSitemapItemComponent,
   KiwiImageCropperComponent,
+  KiwiDatePickerComponent,
 
   // Directives
   PermissionDirective,
@@ -159,7 +162,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
 @NgModule({
   imports: [
     BrowserModule,
-    // BrowserAnimationsModule,
+    BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
 

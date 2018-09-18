@@ -45,6 +45,15 @@ $form-element-spacer: .5rem;
       }
     }
   }
+
+  .kiwi-toggle-right {
+    display: flex;
+
+    .kiwi-form-label {
+      padding: 8px $grid-gutter-width 8px 0;
+      flex: 1;
+    }
+  }
 }
 
 a.input-group-text {
