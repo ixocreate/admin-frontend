@@ -46,6 +46,7 @@
 
       &.not-cropable {
         opacity: .3;
+        cursor: default;
       }
 
       .entity-name {
