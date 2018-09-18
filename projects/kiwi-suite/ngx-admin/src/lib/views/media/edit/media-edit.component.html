@@ -11,11 +11,42 @@
   <ng-container *ngIf="data$ | async as data">
     <div class="card card-accent-primary">
       <div class="card-header custom-card-header">
+        <h6 class="m-0 text-center text-sm-left">Media Info</h6>
+      </div>
+      <div class="card-body">
+        <div class="row mb-1">
+          <div class="col-sm-3 font-weight-bold">Filename</div>
+          <div class="col-sm">{{ data.media.filename }}</div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-3 font-weight-bold">MimeType</div>
+          <div class="col-sm">{{ data.media.mimeType }}</div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-3 font-weight-bold">Size</div>
+          <div class="col-sm">{{ data.media.size | kiwiFileSize }}</div>
+        </div>
+        <div class="row mb-1">
+          <div class="col-sm-3 font-weight-bold">Uploaded At</div>
+          <div class="col-sm">{{ data.media.createdAt | date:'yyyy-MM-dd hh:mm' }}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 font-weight-bold">Original File</div>
+          <div class="col-sm"><a [href]="data.media.original" target="_blank">{{ data.media.original }}</a></div>
+        </div>
+
+      </div>
+      <div class="card-footer text-muted">
+        <b class="text-danger">*</b> Required Field
+      </div>
+    </div>
+
+    <!--
+    <div class="card card-accent-primary">
+      <div class="card-header custom-card-header">
         <h6 class="m-0 text-center text-sm-left">Edit <b>{{ data.label }}</b></h6>
       </div>
       <div class="card-body">
-
-
         <ng-container *ngIf="form && fields; else isLoading">
           <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmit()">
           </formly-form>
@@ -30,8 +61,9 @@
         <b class="text-danger">*</b> Required Field
       </div>
     </div>
+    -->
 
-    <div class="card card-accent-primary">
+    <div class="card card-accent-primary" *ngIf="data.isCropable">
       <div class="card-header custom-card-header">
         <h6 class="m-0 text-center text-sm-left">Crop <b>Image</b></h6>
       </div>

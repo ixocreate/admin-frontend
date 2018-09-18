@@ -5,11 +5,21 @@ export interface Config {
     production: boolean;
   };
   project?: Project;
-  navigation?: Navigation[];
+  media?: Array<Media>;
+  navigation?: Array<Navigation>;
   routes?: Routes;
   resources?: Array<ResourceConfig>;
   googleApiKey?: string;
-  intl?: { default: string, locales: Locale[] };
+  intl?: { default: string, locales: Array<Locale> };
+}
+
+export interface Media {
+  height: number;
+  width: number;
+  label: string;
+  mode: string;
+  name: string;
+  upscale: boolean;
 }
 
 export interface Project {

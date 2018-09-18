@@ -20,6 +20,7 @@ interface Entity {
   crop: CropperPosition;
   unsavedCrop?: CropperPosition;
   unsaved: boolean;
+  isCropable: boolean;
 }
 
 @Component({
@@ -39,7 +40,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
-  image = 'https://i.imgur.com/emBm6jv.jpg';
+  image;
 
   maintainAspectRatio: boolean;
   aspectRatio: number;
@@ -47,29 +48,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   minHeight: number;
 
   activeEntity: Entity;
-  entities: Array<Entity> = [
-    {
-      name: 'Header',
-      width: 500,
-      height: 400,
-      crop: {x1: 100, y1: 10, x2: 600, y2: 410},
-      unsaved: false,
-    },
-    {
-      name: 'Content Image',
-      width: 700,
-      height: null,
-      crop: {x1: 200, y1: 90, x2: 920, y2: 560},
-      unsaved: false,
-    },
-    {
-      name: 'Person',
-      width: 300,
-      height: 300,
-      crop: {x1: 500, y1: 500, x2: 900, y2: 900},
-      unsaved: false,
-    },
-  ];
+  entities: Array<Entity> = [];
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -86,10 +65,25 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
       this.resourceId = params.id;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
-      this.data$ = this.appData.getMediaDetail(this.resourceId).then((response) => {
-        setTimeout(() => {
-          this.setActiveEntity(this.entities[0]);
-        });
+      this.data$ = this.appData.getMediaDetail(this.resourceId).then((response: any) => {
+        if (response.isCropable) {
+          this.image = response.media.original;
+          this.entities = [];
+          for (const media of this.config.config.media) {
+            this.entities.push({
+              name: media.label,
+              width: media.width,
+              height: media.height,
+              crop: {x1: -100, x2: -100, y1: 10000, y2: 10000},
+              unsaved: false,
+              isCropable: false,
+            });
+          }
+
+          setTimeout(() => {
+            this.setActiveEntity(this.entities[0]);
+          });
+        }
         return response;
       });
     });
