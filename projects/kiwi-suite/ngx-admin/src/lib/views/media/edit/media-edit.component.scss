@@ -44,6 +44,10 @@
         }
       }
 
+      &.not-cropable {
+        opacity: .3;
+      }
+
       .entity-name {
         font-weight: bold;
       }

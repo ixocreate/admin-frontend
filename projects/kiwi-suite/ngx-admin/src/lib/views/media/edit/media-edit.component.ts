@@ -81,7 +81,12 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
           }
 
           setTimeout(() => {
-            this.setActiveEntity(this.entities[0]);
+            for (const entity of this.entities) {
+              if (entity.isCropable) {
+                this.setActiveEntity(entity);
+                break;
+              }
+            }
           });
         }
         return response;

@@ -70,7 +70,7 @@
       <div class="card-body p-0">
         <div class="cropper-container" [class.unsaved]="activeEntity && activeEntity.unsaved">
           <div class="cropper">
-            <ng-container *ngIf="image">
+            <ng-container *ngIf="image && activeEntity">
               <kiwi-image-cropper
                 [imageUrl]="image"
                 [maintainAspectRatio]="maintainAspectRatio"
@@ -82,22 +82,29 @@
             </ng-container>
           </div>
           <ul class="entity-list">
-            <li *ngFor="let entity of entities"
-                [class.active]="activeEntity === entity"
-                [class.unsaved]="entity.unsaved"
-                (click)="setActiveEntity(entity)">
-              <div class="entity-name">{{ entity.name }}</div>
-              <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
-              <div class="entity-buttons mt-1">
-                <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2" (click)="saveCrop(entity)" kiwiClickStopPropagation>
-                  <i class="fa fa-save"></i> Save Crop
-                </button>
-                <button type="button" class="btn btn-outline-white btn-sm" (click)="resetCrop(entity)" kiwiClickStopPropagation>
-                  <i class="fa fa-times"></i>
-                </button>
-              </div>
+            <ng-container *ngFor="let entity of entities">
+              <li *ngIf="entity.isCropable"
+                  [class.active]="activeEntity === entity"
+                  [class.unsaved]="entity.unsaved"
+                  (click)="setActiveEntity(entity)">
+                <div class="entity-name">{{ entity.name }}</div>
+                <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
+                <div class="entity-buttons mt-1">
+                  <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2" (click)="saveCrop(entity)" kiwiClickStopPropagation>
+                    <i class="fa fa-save"></i> Save Crop
+                  </button>
+                  <button type="button" class="btn btn-outline-white btn-sm" (click)="resetCrop(entity)" kiwiClickStopPropagation>
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
 
-            </li>
+              </li>
+              <li *ngIf="!entity.isCropable" class="not-cropable">
+                <div class="entity-name">{{ entity.name }}</div>
+                <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
+              </li>
+            </ng-container>
+
           </ul>
         </div>
       </div>
