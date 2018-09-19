@@ -105,8 +105,8 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.config.routes.pageVersionCreate.replace('{pageId}', pageId), data);
   }
 
-  pageNavigationIndex(id: string): Promise<Array<{ name: string, label: string, active: boolean }>> {
-    return this.api.get(this.config.config.routes.pageNavigationIndex.replace('{id}', id));
+  pageDelete(pageId: string): Promise<any> {
+    return this.api.delete(this.config.config.routes.pageDelete.replace('{id}', pageId));
   }
 
   clearResourceSelect(resource: string) {

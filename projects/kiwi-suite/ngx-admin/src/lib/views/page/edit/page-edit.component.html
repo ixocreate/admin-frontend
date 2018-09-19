@@ -1,8 +1,14 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <button class="btn btn-primary" (click)="onSubmit()">
-      <i class="fa fa-save"></i> Update
-    </button>
+    <ng-container *ngIf="data$ | async as data">
+      <button class="btn btn-primary" (click)="onSubmit()">
+        <i class="fa fa-save"></i> Update
+      </button>
+      <button class="btn btn-danger" (click)="doDelete()">
+        <i class="fa fa-trash"></i>
+      </button>
+    </ng-container>
+
   </ng-template>
 
   <ng-container *ngIf="versionData$ | async as versionData; else isLoading">

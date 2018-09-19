@@ -6,6 +6,9 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
+import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
+import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
+import { BsModalService } from 'ngx-bootstrap';
 
 @Component({
   templateUrl: './page-edit.component.html',
@@ -27,13 +30,17 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   navigationOptions: Array<any>;
   selectedNavigationOptions: Array<any>;
 
+  hasChildren = true;
+
+
   pageData: { name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
               protected notification: NotificationService,
-              protected schemaTransform: SchemaTransformService) {
+              protected schemaTransform: SchemaTransformService,
+              protected modal: BsModalService) {
     super();
   }
 
@@ -49,6 +56,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       data.schema = this.schemaTransform.transformForm(data.schema);
       this.versionFields = data.schema ? data.schema : [];
       this.loadNavigationData(data.navigation);
+
+      this.hasChildren = data.hasChildren;
 
       this.pageData = {
         name: data.page.page.name,
@@ -84,6 +93,24 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.notification.success('Page Version successfully created', 'Success');
       }).catch((error) => this.notification.apiError(error));
     }
+  }
+
+  doDelete(): void {
+    if (this.hasChildren) {
+      this.notification.error('You can\'t delete a page having child pages', 'Error');
+      return;
+    }
+    const initialState: ConfirmModalData = {
+      title: 'Delete this Page?',
+      text: 'Do you really want to delete this Page?',
+      onConfirm: () => {
+        this.appData.pageDelete(this.id).then(() => {
+          this.notification.success('Page successfully deleted', 'Success');
+          this.router.navigateByUrl('/page');
+        }).catch((error) => this.notification.apiError(error));
+      },
+    };
+    this.modal.show(KiwiConfirmModalComponent, {initialState});
   }
 
   savePageData(key: string, value: any) {
