@@ -94,6 +94,7 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   /* PAGE */
+
   updatePage(pageId: string, data: any): Promise<any> {
     return this.api.patch(this.config.config.routes.pagePageUpdate.replace('{id}', pageId), data);
   }
@@ -110,10 +111,15 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.pageAvailablePageTypes.replace('[/{parentSitemapId}]', '/' + parentSitemapId));
   }
 
-  pageAdd(name: string, locale: string, sitemapId: string): Promise<{ id: string }> {
+  pageCreate(name: string, pageType: string, locale: string, parentSitemapId: string): Promise<string> {
+    return this.api.post(this.config.config.routes.pageCreate, {name, pageType, locale, parentSitemapId});
+  }
+
+  pageAdd(name: string, locale: string, sitemapId: string): Promise<string> {
     return this.api.post(this.config.config.routes.pageAdd, {name, locale, sitemapId});
   }
 
+  /* RESOURCE */
 
   clearResourceSelect(resource: string) {
     if (this.savedResourceSelects[resource]) {

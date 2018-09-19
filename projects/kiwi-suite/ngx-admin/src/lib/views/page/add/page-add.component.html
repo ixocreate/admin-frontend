@@ -1,13 +1,13 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <button class="btn btn-success" (click)="onSubmit()" [disabled]="!form.valid">
-      <i class="fa fa-plus"></i> Create
+    <button class="btn btn-success" (click)="onSubmit()">
+      <i class="fa fa-plus"></i> Add
     </button>
   </ng-template>
 
   <div class="card card-accent-primary">
     <div class="card-header custom-card-header">
-      <h6 class="m-0 text-center text-sm-left">Create a <b>Page</b></h6>
+      <h6 class="m-0 text-center text-sm-left">Add a <b>Page</b></h6>
     </div>
     <div class="card-body">
       <ng-container *ngIf="form && fields; else isLoading">

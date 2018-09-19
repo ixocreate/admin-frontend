@@ -61,11 +61,9 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
       this.notification.formErrors(this.form);
     } else {
       const data = this.form.getRawValue();
-      data.locale = this.locale;
-      data.parentSitemapId = this.parentSitemapId;
-      this.appData.createResource('page', data).then((response) => {
+      this.appData.pageCreate(data.name, data.pageType, this.locale, this.parentSitemapId).then((response) => {
         this.notification.success('Page successfully created', 'Success');
-        this.router.navigateByUrl('/page/' + response.id + '/edit');
+        this.router.navigateByUrl('/page/' + response + '/edit');
       }).catch((error) => this.notification.apiError(error));
     }
   }
