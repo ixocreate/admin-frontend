@@ -12,7 +12,6 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 })
 export class PageCreateComponent extends ViewAbstractComponent implements OnInit {
 
-  data$: Promise<any>;
   locale: string;
   parentSitemapId: string;
 
@@ -31,10 +30,28 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
     this.route.params.subscribe(params => {
       this.locale = params.locale;
       this.parentSitemapId = params.parentSitemapId;
-      this.data$ = this.appData.getPageCreateSchema(this.parentSitemapId).then((data) => {
-        data.schema = this.schemaTransform.transformForm(data.schema);
-        this.fields = data.schema ? data.schema : [];
-        return data;
+
+      this.appData.pageAvailablePageTypes(this.parentSitemapId).then((response) => {
+        this.fields = [
+          {
+            key: 'pageType',
+            type: 'select',
+            templateOptions: {
+              label: 'PageType',
+              valueProp: 'name',
+              options: response,
+              required: true,
+            },
+          },
+          {
+            key: 'name',
+            type: 'input',
+            templateOptions: {
+              label: 'Name',
+              required: true,
+            },
+          },
+        ];
       });
     });
   }

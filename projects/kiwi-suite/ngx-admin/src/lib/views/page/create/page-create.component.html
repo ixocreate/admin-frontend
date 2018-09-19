@@ -1,18 +1,18 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <button class="btn btn-success" (click)="onSubmit()" [disabled]="!form.valid">
+    <button class="btn btn-success" (click)="onSubmit()">
       <i class="fa fa-plus"></i> Create
     </button>
   </ng-template>
 
-  <ng-container *ngIf="data$ | async as data">
+  <ng-container>
     <div class="card card-accent-primary">
       <div class="card-header custom-card-header">
         <h6 class="m-0 text-center text-sm-left">Create a <b>Page</b></h6>
       </div>
       <div class="card-body">
         <ng-container *ngIf="form && fields; else isLoading">
-          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form" (ngSubmit)="onSubmit()">
+          <formly-form [form]="form" [fields]="fields" class="kiwi-form" (ngSubmit)="onSubmit()">
           </formly-form>
         </ng-container>
         <ng-template #isLoading>
