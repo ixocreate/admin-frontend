@@ -27,6 +27,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   navigationOptions: Array<any>;
   selectedNavigationOptions: Array<any>;
 
+  pageData: { name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -47,6 +49,15 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       data.schema = this.schemaTransform.transformForm(data.schema);
       this.versionFields = data.schema ? data.schema : [];
       this.loadNavigationData(data.navigation);
+
+      this.pageData = {
+        name: data.page.page.name,
+        publishedFrom: data.page.page.publishedFrom,
+        publishedUntil: data.page.page.publishedUntil,
+        slug: data.page.page.slug,
+        online: data.page.page.status === 'online',
+      };
+
       this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
         return versionData;
       });
@@ -69,11 +80,18 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       this.notification.formErrors(this.versionForm);
     } else {
       const data = this.versionForm.getRawValue();
-      console.log(data);
       this.appData.createPageVersion(this.id, {content: data}).then((response) => {
         this.notification.success('Page Version successfully created', 'Success');
       }).catch((error) => this.notification.apiError(error));
     }
+  }
+
+  savePageData(key: string, value: any) {
+    const postData = {};
+    postData[key] = value;
+    this.appData.updatePage(this.id, postData).then((response) => {
+      this.notification.success(key + ' successfully saved', 'Success');
+    }).catch((error) => this.notification.apiError(error));
   }
 }
 

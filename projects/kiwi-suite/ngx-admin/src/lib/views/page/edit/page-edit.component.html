@@ -31,7 +31,7 @@
             </a>
           </ng-container>
 
-          <div class="kiwi-form">
+          <div class="kiwi-form" *ngIf="pageData">
             <h6><i class="fa fa-fw fa-cog"></i> General</h6>
 
             <div class="form-group">
@@ -41,13 +41,31 @@
 
               <div class="kiwi-form-control-container">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Name">
+                  <input type="text" class="form-control" placeholder="Name" [(ngModel)]="pageData.name">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('name', pageData.name)">
                       <i class="fa fa-save"></i>
                     </button>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Slug<b class="text-danger">*</b>
+              </label>
+
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Slug" [(ngModel)]="pageData.slug">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('slug', pageData.slug)">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+                <small class="form-text text-muted">The slug is used to create the Website URL</small>
               </div>
             </div>
 
@@ -58,7 +76,7 @@
 
               <div class="kiwi-form-control-container">
                 <label class="switch switch-primary">
-                  <input type="checkbox" class="switch-input">
+                  <input type="checkbox" class="switch-input" [(ngModel)]="pageData.online" (change)="savePageData('status', pageData.online ? 'online' : 'offline')">
                   <span class="switch-slider"></span>
                 </label>
               </div>
@@ -74,9 +92,9 @@
               </label>
               <div class="kiwi-form-control-container">
                 <div class="input-group">
-                  <kiwi-date-picker placeholder="Published From"></kiwi-date-picker>
+                  <kiwi-date-picker placeholder="Published From" [(ngModel)]="pageData.publishedFrom"></kiwi-date-picker>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('publishedFrom', pageData.publishedFrom)">
                       <i class="fa fa-save"></i>
                     </button>
                   </div>
@@ -90,9 +108,9 @@
               </label>
               <div class="kiwi-form-control-container">
                 <div class="input-group">
-                  <kiwi-date-picker placeholder="Published Until"></kiwi-date-picker>
+                  <kiwi-date-picker placeholder="Published Until" [(ngModel)]="pageData.publishedUntil"></kiwi-date-picker>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('publishedUntil', pageData.publishedUntil)">
                       <i class="fa fa-save"></i>
                     </button>
                   </div>
@@ -115,7 +133,7 @@
                   [multiple]="true">
                 </ng-select>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-outline-primary">
+                  <button type="button" class="btn btn-outline-primary" (click)="savePageData('navigation', selectedNavigationOptions)">
                     <i class="fa fa-save"></i>
                   </button>
                 </div>

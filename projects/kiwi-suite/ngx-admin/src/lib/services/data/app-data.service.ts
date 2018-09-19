@@ -97,8 +97,8 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.post(this.config.config.routes.pageAdd, {name, locale, sitemapId});
   }
 
-  updatePage(data: any): Promise<any> {
-    return this.api.patch(this.config.config.routes.pagePageUpdate, data);
+  updatePage(pageId: string, data: any): Promise<any> {
+    return this.api.patch(this.config.config.routes.pagePageUpdate.replace('{id}', pageId), data);
   }
 
   createPageVersion(pageId: string, data: any): Promise<any> {
