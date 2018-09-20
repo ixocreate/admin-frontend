@@ -43,8 +43,4 @@ export class KiwiSitemapComponent implements OnInit {
   pageMoved() {
     this.loadPages();
   }
-
-  addRootPage() {
-    this.loadPages();
-  }
 }
