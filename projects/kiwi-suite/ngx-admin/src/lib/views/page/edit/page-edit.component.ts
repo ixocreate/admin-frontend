@@ -15,6 +15,7 @@ import { BsModalService } from 'ngx-bootstrap';
 })
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
+  versionIndex$: Promise<any>;
   versionData$: Promise<any>;
   data$: Promise<any>;
 
@@ -48,7 +49,12 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.loadDetailData();
+      this.updateVersionIndex();
     });
+  }
+
+  private updateVersionIndex() {
+    this.versionIndex$ = this.appData.pageVersionIndex(this.id);
   }
 
   private loadDetailData() {
@@ -77,7 +83,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   private loadNavigationData(navigation) {
     this.navigationOptions = navigation;
     this.selectedNavigationOptions = navigation.filter((element) => element.active).map((element) => element.name);
-    console.log(this.navigationOptions, this.selectedNavigationOptions);
   }
 
   onReplaceContentModal(fromPage) {

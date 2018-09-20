@@ -4,9 +4,6 @@
       <button class="btn btn-primary" (click)="onSubmit()">
         <i class="fa fa-save"></i> Update
       </button>
-      <button class="btn btn-danger" (click)="doDelete()">
-        <i class="fa fa-trash"></i>
-      </button>
     </ng-container>
 
   </ng-template>
@@ -32,9 +29,18 @@
         <div class="p-3">
 
           <ng-container *ngIf="data$ | async as data">
-            <a class="btn btn-primary btn-block mb-3" [href]="data.page.url" target="_blank">
-              <i class="fa fa-eye"></i> Open Page
-            </a>
+            <div class="row mb-3">
+              <div class="col">
+                <a class="btn btn-primary btn-block" [href]="data.page.url" target="_blank">
+                  <i class="fa fa-eye"></i> Open Page
+                </a>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-danger" (click)="doDelete()">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
           </ng-container>
 
           <div class="kiwi-form" *ngIf="pageData">
@@ -82,7 +88,8 @@
 
               <div class="kiwi-form-control-container">
                 <label class="switch switch-primary">
-                  <input type="checkbox" class="switch-input" [(ngModel)]="pageData.online" (change)="savePageData('status', pageData.online ? 'online' : 'offline')">
+                  <input type="checkbox" class="switch-input" [(ngModel)]="pageData.online"
+                         (change)="savePageData('status', pageData.online ? 'online' : 'offline')">
                   <span class="switch-slider"></span>
                 </label>
               </div>
@@ -98,9 +105,11 @@
               </label>
               <div class="kiwi-form-control-container">
                 <div class="input-group">
-                  <kiwi-date-picker placeholder="Published From" [(ngModel)]="pageData.publishedFrom"></kiwi-date-picker>
+                  <kiwi-date-picker placeholder="Published From"
+                                    [(ngModel)]="pageData.publishedFrom"></kiwi-date-picker>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('publishedFrom', pageData.publishedFrom)">
+                    <button type="button" class="btn btn-outline-primary"
+                            (click)="savePageData('publishedFrom', pageData.publishedFrom)">
                       <i class="fa fa-save"></i>
                     </button>
                   </div>
@@ -114,9 +123,11 @@
               </label>
               <div class="kiwi-form-control-container">
                 <div class="input-group">
-                  <kiwi-date-picker placeholder="Published Until" [(ngModel)]="pageData.publishedUntil"></kiwi-date-picker>
+                  <kiwi-date-picker placeholder="Published Until"
+                                    [(ngModel)]="pageData.publishedUntil"></kiwi-date-picker>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('publishedUntil', pageData.publishedUntil)">
+                    <button type="button" class="btn btn-outline-primary"
+                            (click)="savePageData('publishedUntil', pageData.publishedUntil)">
                       <i class="fa fa-save"></i>
                     </button>
                   </div>
@@ -139,7 +150,8 @@
                   [multiple]="true">
                 </ng-select>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-outline-primary" (click)="savePageData('navigation', selectedNavigationOptions)">
+                  <button type="button" class="btn btn-outline-primary"
+                          (click)="savePageData('navigation', selectedNavigationOptions)">
                     <i class="fa fa-save"></i>
                   </button>
                 </div>
@@ -182,6 +194,43 @@
           </ng-container>
           -->
         </div>
+      </tab>
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-list"></i>
+        </ng-template>
+        <ng-container *ngIf="data$ | async as data">
+          <ng-container *ngIf="versionIndex$ | async as versionIndex">
+            <div class="list-group list-group-accent">
+              <ng-container *ngFor="let element of versionIndex; let i = index">
+                <div class="list-group-item"
+                     [class.list-group-item-accent-success]="data.page.version.approved === element.id"
+                     [class.list-group-item-accent-primary]="data.page.version.approved !== element.id">
+                  <div class="row">
+                    <div class="col">
+                      <div>
+                        <b>#{{ versionIndex.length - i }}</b>
+                        <small class="text-muted">{{ element.createdAt | date:'yyyy-MM-dd HH:mm' }}</small>
+                      </div>
+                      <div class="mt-1">
+                        <button class="btn btn-sm btn-outline-success mr-1" title="Approve"><i class="fa fa-thumbs-up"></i></button>
+                        <button class="btn btn-sm btn-outline-primary mr-1" title="Replace"><i class="fa fa-history"></i></button>
+                        <button class="btn btn-sm btn-outline-danger" title="Delete"><i class="fa fa-trash"></i></button>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <div class="avatar">
+                        <img class="img-avatar" [src]="element.userAvatar" [alt]="element.userEmail" [title]="element.userEmail">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+
+            </div>
+          </ng-container>
+        </ng-container>
       </tab>
     </tabset>
   </ng-template>

@@ -1,6 +1,5 @@
 import { Component, } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
-import { GeoPoint } from '../kiwi-map-modal/map-modal-data.interface';
 
 @Component({
   selector: 'kiwi-confirm-modal',
