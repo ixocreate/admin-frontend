@@ -15,6 +15,7 @@ import { CropperPosition, KiwiImageCropperComponent } from '../../../components/
 
 interface Entity {
   name: string;
+  label: string;
   width: number;
   height: number;
   crop: CropperPosition;
@@ -82,7 +83,8 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
             const definition = this.getDefinitionByName(response.definitions, media.name);
             if (definition) {
               this.entities.push({
-                name: media.label,
+                name: media.name,
+                label: media.label,
                 width: media.width,
                 height: media.height,
                 crop: definition.cropParameter,
@@ -131,8 +133,10 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   }
 
   saveCrop(entity: Entity) {
-    entity.crop = entity.unsavedCrop;
-    this.checkUnsavedStatus(entity);
+    this.appData.editMediaDetail(this.resourceId, entity.name, entity.unsavedCrop).then(() => {
+      entity.crop = entity.unsavedCrop;
+      this.checkUnsavedStatus(entity);
+    });
   }
 
   resetCrop(entity: Entity) {

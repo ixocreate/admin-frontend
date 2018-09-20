@@ -89,7 +89,7 @@
                   [class.active]="activeEntity === entity"
                   [class.unsaved]="entity.unsaved"
                   (click)="setActiveEntity(entity)">
-                <div class="entity-name">{{ entity.name }}</div>
+                <div class="entity-name">{{ entity.label }}</div>
                 <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
                 <div class="entity-buttons mt-1">
                   <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2" (click)="saveCrop(entity)" kiwiClickStopPropagation>

@@ -23,6 +23,7 @@ export interface Routes {
   mediaDetail: string;
   mediaPublicStatus: string;
   mediaUpload?: string;
+  mediaEditor?: string;
   /**
    * page
    */
