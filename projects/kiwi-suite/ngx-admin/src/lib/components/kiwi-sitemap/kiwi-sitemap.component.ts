@@ -10,7 +10,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 export class KiwiSitemapComponent implements OnInit {
 
   data$: Promise<any>;
-  pages$: Promise<any>;
+  pageIndex$: Promise<any>;
 
   selectedLocale: string;
 
@@ -33,9 +33,7 @@ export class KiwiSitemapComponent implements OnInit {
   }
 
   loadPages() {
-    this.pages$ = this.appData.getPageIndex().then((response) => {
-      return response.items;
-    });
+    this.pageIndex$ = this.appData.getPageIndex();
   }
 
   get locales() {
@@ -43,6 +41,10 @@ export class KiwiSitemapComponent implements OnInit {
   }
 
   pageMoved() {
+    this.loadPages();
+  }
+
+  addRootPage() {
     this.loadPages();
   }
 }

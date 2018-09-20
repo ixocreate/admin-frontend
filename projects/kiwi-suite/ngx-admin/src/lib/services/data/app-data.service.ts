@@ -113,7 +113,13 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   pageAvailablePageTypes(parentSitemapId: string): Promise<any> {
-    return this.api.get(this.config.config.routes.pageAvailablePageTypes.replace('[/{parentSitemapId}]', '/' + parentSitemapId));
+    let url = this.config.config.routes.pageAvailablePageTypes;
+    if (parentSitemapId) {
+      url = url.replace('[/{parentSitemapId}]', '/' + parentSitemapId);
+    } else {
+      url = url.replace('[/{parentSitemapId}]', '');
+    }
+    return this.api.get(url);
   }
 
   pageCreate(name: string, pageType: string, locale: string, parentSitemapId: string): Promise<string> {
