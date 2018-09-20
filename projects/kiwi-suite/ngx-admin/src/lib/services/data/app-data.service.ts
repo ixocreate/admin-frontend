@@ -182,8 +182,12 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.mediaDetail.replace('{id}', id));
   }
 
-  editMediaDetail(id: string, imageDefinition: string, crop: CropperPosition): Promise<void> {
+  mediaEditor(id: string, imageDefinition: string, crop: CropperPosition): Promise<void> {
     return this.api.post(this.config.config.routes.mediaEditor, {id, imageDefinition, crop});
+  }
+
+  mediaDelete(id: string): Promise<void> {
+    return this.api.delete(this.config.config.routes.mediaDelete.replace('{id}', id));
   }
 
 }

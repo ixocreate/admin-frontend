@@ -34,8 +34,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
 
   data$: Promise<any>;
 
-  resourceKey = 'media';
-  resourceId: string;
+  id: string;
   resourceInfo: ResourceConfig;
 
   form: FormGroup = new FormGroup({});
@@ -72,10 +71,10 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.resourceId = params.id;
-      this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
+      this.id = params.id;
+      this.resourceInfo = this.config.getResourceConfig('media');
       this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
-      this.data$ = this.appData.getMediaDetail(this.resourceId).then((response: any) => {
+      this.data$ = this.appData.getMediaDetail(this.id).then((response: any) => {
         if (response.isCropable) {
           this.image = response.media.original;
           this.entities = [];
@@ -133,7 +132,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   }
 
   saveCrop(entity: Entity) {
-    this.appData.editMediaDetail(this.resourceId, entity.name, entity.unsavedCrop).then(() => {
+    this.appData.mediaEditor(this.id, entity.name, entity.unsavedCrop).then(() => {
       entity.crop = entity.unsavedCrop;
       this.checkUnsavedStatus(entity);
     });
@@ -153,20 +152,22 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
-      this.appData.updateResource(this.resourceKey, this.resourceId, this.form.getRawValue()).then(() => {
+      /*
+      this.appData.mediaEdit(this.id, this.form.getRawValue()).then(() => {
         this.notification.success(this.resourceInfo.label + ' successfully updated', 'Success');
       }).catch((error) => this.notification.apiError(error));
+      */
     }
   }
 
   doDelete(): void {
     const initialState: ConfirmModalData = {
-      title: 'Delete this ' + this.resourceInfo.label + '?',
-      text: 'Do you really want to delete this ' + this.resourceInfo.label + '?',
+      title: 'Delete this Media?',
+      text: 'Do you really want to delete this Media?',
       onConfirm: () => {
-        this.appData.deleteResource(this.resourceKey, this.resourceId).then(() => {
-          this.notification.success(this.resourceInfo.label + ' successfully deleted', 'Success');
-          this.router.navigateByUrl('/resource/' + this.resourceKey);
+        this.appData.mediaDelete(this.id).then(() => {
+          this.notification.success('Media successfully deleted', 'Success');
+          this.router.navigateByUrl('/media');
         }).catch((error) => this.notification.apiError(error));
       },
     };
