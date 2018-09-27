@@ -1,15 +1,17 @@
 <div class="card card-accent-primary">
   <div class="card-header">
     <div class="row align-items-center">
-      <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left">Media Files</h6></div>
-      <div class="col-sm mt-2 mt-sm-0">
-        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue"
-               (keyup)="applyFilter()"/>
+      <div class="col-sm-4"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left">Media Files</h6></div>
+      <div class="col-sm-4 mt-2 mt-sm-0">
+        <ng-select *ngIf="showTypeFilter" [items]="types" bindLabel="label" bindValue="name" [(ngModel)]="selectedType" [clearable]="false" (change)="onChangeType()"></ng-select>
+      </div>
+      <div class="col-sm-4 mt-2 mt-sm-0">
+        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue" (keyup)="applyFilter()"/>
       </div>
     </div>
   </div>
   <div class="card-body p-0">
-    <div *kiwiCan="['admin.api.' + resourceKey + '.upload']">
+    <div *kiwiCan="['admin.api.media.upload']">
       <div ng2FileDrop [uploader]="uploader">
         <div class="upload-container">
           <div class="drop-box">

@@ -9,7 +9,6 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
 import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
 import { ConfigService } from '../../../services/config.service';
-import { ResourceConfig } from '../../../interfaces/config.interface';
 import { BsModalService } from 'ngx-bootstrap';
 import { CropperPosition, KiwiImageCropperComponent } from '../../../components/kiwi-image-cropper/kiwi-image-cropper.component';
 
@@ -35,7 +34,6 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   data$: Promise<any>;
 
   id: string;
-  resourceInfo: ResourceConfig;
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
@@ -72,9 +70,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params.id;
-      this.resourceInfo = this.config.getResourceConfig('media');
-      this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
-      this.data$ = this.appData.getMediaDetail(this.id).then((response: any) => {
+          this.data$ = this.appData.getMediaDetail(this.id).then((response: any) => {
         if (response.isCropable) {
           this.image = response.media.original;
           this.entities = [];

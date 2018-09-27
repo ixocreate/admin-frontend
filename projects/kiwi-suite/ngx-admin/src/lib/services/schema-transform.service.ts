@@ -24,7 +24,11 @@ export class SchemaTransformService {
     this.registerTransform('date', this.handleDefault('date'));
     this.registerTransform('datetime', this.handleDefault('datetime'));
     this.registerTransform('link', this.handleDefault('link'));
-    this.registerTransform('image', this.handleDefault('media', {centerLabel: true}));
+    this.registerTransform('media', this.handleDefault('media', {centerLabel: true}));
+    this.registerTransform('image', this.handleDefault('image', {centerLabel: true}));
+    this.registerTransform('document', this.handleDefault('document', {centerLabel: true}));
+    this.registerTransform('audio', this.handleDefault('audio', {centerLabel: true}));
+    this.registerTransform('video', this.handleDefault('video', {centerLabel: true}));
     this.registerTransform('youtube', this.handleDefault('youtube', {centerLabel: true}));
     this.registerTransform('color', this.handleDefault('color'));
     this.registerTransform('select', this.handleSelect);

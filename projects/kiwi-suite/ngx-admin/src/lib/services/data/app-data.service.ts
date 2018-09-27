@@ -184,6 +184,22 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.delete(this.config.config.routes.resourceDelete.replace('{resource}', resource).replace('{id}', id));
   }
 
+  getMediaIndex(limit: number = 10, pageNumber: number = 1, search: string = null, type: string = null): Promise<ResourceList> {
+    const params: any = {
+      offset: (pageNumber - 1) * limit,
+      limit: limit,
+    };
+    if (search && search !== '') {
+      params.filter = {};
+      params.filter.filename = search;
+    }
+    if (type && type !== '') {
+      params.type = type;
+    }
+
+    return this.api.get(this.config.config.routes.mediaIndex + '?' + parseParams(params));
+  }
+
   getMediaDetail(id: string): Promise<void> {
     return this.api.get(this.config.config.routes.mediaDetail.replace('{id}', id));
   }

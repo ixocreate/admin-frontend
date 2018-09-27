@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { ɵgetDOM as getDOM } from '@angular/platform-browser';
 import { FileUploader } from 'ng2-file-upload';
 import { ConfigService } from '../../services/config.service';
@@ -14,11 +14,39 @@ export class KiwiMediaListComponent implements OnInit {
 
   data$: Promise<Media>;
   uploader: FileUploader;
-  resourceKey = 'media';
   filterValue = '';
   itemsPerPage = 18;
   currentPage = 1;
   totalItems = 0;
+
+  types = [
+    {
+      name: '',
+      label: 'All'
+    },
+    {
+      name: 'image',
+      label: 'Images'
+    },
+    {
+      name: 'document',
+      label: 'Documents'
+    },
+    {
+      name: 'video',
+      label: 'Video files'
+    },
+    {
+      name: 'audio',
+      label: 'Audio files'
+    }
+  ];
+
+  @Input()
+  selectedType = '';
+
+  @Input()
+  showTypeFilter = true;
 
   private inputTimeout = null;
 
@@ -52,8 +80,8 @@ export class KiwiMediaListComponent implements OnInit {
   }
 
   updateMedia() {
-    this.data$ = this.appData.getResourceIndex(this.resourceKey, this.itemsPerPage, this.currentPage, this.filterValue).then((response: any) => {
-      this.totalItems = response.meta.count;
+    this.data$ = this.appData.getMediaIndex(this.itemsPerPage, this.currentPage, this.filterValue, this.selectedType).then((response: any) => {
+      this.totalItems = response.count;
       return response;
     });
   }
@@ -77,6 +105,11 @@ export class KiwiMediaListComponent implements OnInit {
       this.currentPage = event.page;
       this.updateMedia();
     }
+  }
+
+  onChangeType() {
+    this.currentPage = 1;
+    this.updateMedia();
   }
 
 }

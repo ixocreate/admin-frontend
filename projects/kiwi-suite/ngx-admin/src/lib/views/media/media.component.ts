@@ -13,7 +13,6 @@ export class MediaComponent extends ViewAbstractComponent {
 
   onSelect(element) {
     this.router.navigateByUrl('media/' + element.id + '/edit');
-    console.log(element);
   }
 
 }
