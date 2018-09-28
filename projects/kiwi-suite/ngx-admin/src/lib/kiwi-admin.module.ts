@@ -75,6 +75,9 @@ import { MediaEditComponent } from './views/media/edit/media-edit.component';
 import { KiwiImageCropperComponent } from './components/kiwi-image-cropper/kiwi-image-cropper.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KiwiDatePickerComponent } from './components/kiwi-date-picker/kiwi-date-picker.component';
+import {UserComponent} from "./views/user/user.component";
+import {UserEditComponent} from "./views/user/edit/user-edit.component";
+import {UserCreateComponent} from "./views/user/create/user-create.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -127,6 +130,10 @@ const APP_COMPONENTS = [
   ResourceComponent,
   ResourceCreateComponent,
   ResourceEditComponent,
+
+  UserComponent,
+  UserEditComponent,
+  UserCreateComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {

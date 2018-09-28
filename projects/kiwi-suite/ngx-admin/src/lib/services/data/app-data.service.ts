@@ -212,4 +212,27 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.delete(this.config.config.routes.mediaDelete.replace('{id}', id));
   }
 
+  getUserConfig(): Promise<ResourceList> {
+    return this.api.get(this.config.config.routes.userConfig);
+  }
+
+  createUser(data: any): Promise<{ id: string }> {
+    return this.api.post(this.config.config.routes.userCreate, data).then((response) => {
+      return response;
+    });
+  }
+
+  getUserDetail(id: string): Promise<Resource> {
+    return this.api.get(this.config.config.routes.userDetail.replace('{id}', id));
+  }
+
+  deleteUser(id: string): Promise<void> {
+    return this.api.delete(this.config.config.routes.userDelete.replace('{id}', id));
+  }
+
+  updateUser(id: string, data: any): Promise<void> {
+    return this.api.patch(this.config.config.routes.userUpdate.replace('{id}', id), data).then((response) => {
+      return response;
+    });
+  }
 }

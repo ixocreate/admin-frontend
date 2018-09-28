@@ -19,6 +19,9 @@ import { PageEditComponent } from './views/page/edit/page-edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { MediaEditComponent } from './views/media/edit/media-edit.component';
+import {UserComponent} from "./views/user/user.component";
+import {UserCreateComponent} from "./views/user/create/user-create.component";
+import {UserEditComponent} from "./views/user/edit/user-edit.component";
 
 export const routes: Routes = [
   {
@@ -129,6 +132,27 @@ export const routes: Routes = [
           {
             path: ':id/edit',
             component: ResourceEditComponent,
+            data: {title: 'Edit'},
+          },
+        ],
+      },
+      {
+        path: 'admin-user',
+        data: {title: 'Users'},
+        children: [
+          {
+            path: '',
+            component: UserComponent,
+            data: {title: null},
+          },
+          {
+            path: 'create',
+            component: UserCreateComponent,
+            data: {title: 'Create'},
+          },
+          {
+            path: ':id/edit',
+            component: UserEditComponent,
             data: {title: 'Edit'},
           },
         ],
