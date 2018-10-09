@@ -75,9 +75,15 @@ import { MediaEditComponent } from './views/media/edit/media-edit.component';
 import { KiwiImageCropperComponent } from './components/kiwi-image-cropper/kiwi-image-cropper.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KiwiDatePickerComponent } from './components/kiwi-date-picker/kiwi-date-picker.component';
-import {UserComponent} from "./views/user/user.component";
-import {UserEditComponent} from "./views/user/edit/user-edit.component";
-import {UserCreateComponent} from "./views/user/create/user-create.component";
+import { UserComponent } from './views/user/user.component';
+import { UserEditComponent } from './views/user/edit/user-edit.component';
+import { UserCreateComponent } from './views/user/create/user-create.component';
+import { SubComponent } from './views/page/sub/sub.component';
+import { FlatComponent } from './views/page/flat/flat.component';
+import {SubCreateComponent} from "./views/page/sub/sub-create.component";
+import {SubAddComponent} from "./views/page/sub/sub-add.component";
+import {FlatCreateComponent} from "./views/page/flat/flat-create.component";
+import {FlatAddComponent} from "./views/page/flat/flat-add.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -119,6 +125,12 @@ const APP_COMPONENTS = [
   PageCreateComponent,
   PageAddComponent,
   PageEditComponent,
+  SubComponent,
+  FlatComponent,
+  SubCreateComponent,
+  SubAddComponent,
+  FlatCreateComponent,
+  FlatAddComponent,
 
   TranslationComponent,
   TranslationListComponent,

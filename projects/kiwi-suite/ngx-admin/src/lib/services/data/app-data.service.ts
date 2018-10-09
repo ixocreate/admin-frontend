@@ -58,6 +58,14 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.pageIndex);
   }
 
+  getSubPageIndex(handle: string): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
+    return this.api.get(this.config.config.routes.pageIndexSub.replace('{handle}', handle));
+  }
+
+  getFlatPageIndex(handle: string, params: any = {}): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
+    return this.api.get(this.config.config.routes.pageIndexFlat.replace('{handle}', handle) + '?' + parseParams(params));
+  }
+
   postPageMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
     return this.api.post(this.config.config.routes.pageMove, {
       id: sitemapId,

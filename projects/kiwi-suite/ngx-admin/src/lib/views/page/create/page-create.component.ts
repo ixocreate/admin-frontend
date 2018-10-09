@@ -63,8 +63,12 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
       const data = this.form.getRawValue();
       this.appData.pageCreate(data.name, data.pageType, this.locale, this.parentSitemapId).then((response) => {
         this.notification.success('Page successfully created', 'Success');
-        this.router.navigateByUrl('/page/' + response + '/edit');
+        this.router.navigateByUrl(this.getRedirectUrl(response));
       }).catch((error) => this.notification.apiError(error));
     }
+  }
+
+  getRedirectUrl(response) {
+    return '/page/' + response + '/edit';
   }
 }

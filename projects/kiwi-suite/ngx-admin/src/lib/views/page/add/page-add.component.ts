@@ -50,8 +50,12 @@ export class PageAddComponent extends ViewAbstractComponent implements OnInit {
       const data = this.form.getRawValue();
       this.appData.pageAdd(data.name, this.locale, this.sitemapId).then((response) => {
         this.notification.success('Page successfully added', 'Success');
-        this.router.navigateByUrl('/page/' + response + '/edit');
+        this.router.navigateByUrl(this.getRedirectUrl(response));
       }).catch((error) => this.notification.apiError(error));
     }
+  }
+
+  getRedirectUrl(response) {
+    return '/page/' + response + '/edit';
   }
 }

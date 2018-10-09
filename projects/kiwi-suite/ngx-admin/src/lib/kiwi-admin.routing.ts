@@ -22,6 +22,12 @@ import { MediaEditComponent } from './views/media/edit/media-edit.component';
 import {UserComponent} from "./views/user/user.component";
 import {UserCreateComponent} from "./views/user/create/user-create.component";
 import {UserEditComponent} from "./views/user/edit/user-edit.component";
+import {SubComponent} from "./views/page/sub/sub.component";
+import {FlatComponent} from "./views/page/flat/flat.component";
+import {FlatCreateComponent} from "./views/page/flat/flat-create.component";
+import {FlatAddComponent} from "./views/page/flat/flat-add.component";
+import {SubCreateComponent} from "./views/page/sub/sub-create.component";
+import {SubAddComponent} from "./views/page/sub/sub-add.component";
 
 export const routes: Routes = [
   {
@@ -63,6 +69,63 @@ export const routes: Routes = [
           {
             path: 'add/:locale/:sitemapId',
             component: PageAddComponent,
+            data: {title: 'Add Page'},
+          },
+          {
+            path: ':id/edit',
+            component: PageEditComponent,
+            data: {title: 'Edit Page'},
+          },
+        ],
+      },
+      {
+        path: 'page-sub/:handle',
+        data: {title: null},
+        children: [
+          {
+            path: '',
+            component: SubComponent,
+            data: {title: 'Sitemap'},
+          },
+          {
+            path: 'create/:locale',
+            component: PageCreateComponent,
+            data: {title: 'Create Page'},
+          },
+          {
+            path: 'create/:locale/:parentSitemapId',
+            component: FlatCreateComponent,
+            data: {title: 'Create Page'},
+          },
+          {
+            path: 'add/:locale/:sitemapId',
+            component: FlatAddComponent,
+            data: {title: 'Add Page'},
+          },
+          {
+            path: ':id/edit',
+            component: PageEditComponent,
+            data: {title: 'Edit Page'},
+          },
+        ],
+      },
+      {
+        path: 'page-flat/:handle',
+        data: {title: null},
+        children: [
+          {
+            path: '',
+            component: FlatComponent,
+            data: {title: 'Pages'},
+          },
+          {
+            path: 'create/:locale/:parentSitemapId',
+            component: SubCreateComponent,
+            data: {title: 'Create Page'},
+          },
+          {
+            path: 'add/:locale/:sitemapId',
+            component: SubAddComponent,
             data: {title: 'Add Page'},
           },
           {
