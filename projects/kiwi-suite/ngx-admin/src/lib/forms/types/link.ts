@@ -20,7 +20,7 @@ import { AppDataService } from '../../services/data/app-data.service';
              [class.is-invalid]="showError">
       <div class="input-group-append">
         <span class="input-group-text d-none d-sm-block" *ngIf="value" [class.is-invalid]="showError">{{ target }}</span>
-        <span class="input-group-text" *ngIf="value" [class.is-invalid]="showError">{{ value.type }}</span>
+        <span class="input-group-text" *ngIf="value" [class.is-invalid]="showError">{{ value.type || '-' }}</span>
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
                 kiwiClickStopPropagation>
           <i class="fa fa-close"></i>
@@ -116,7 +116,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
         }
       }
     }
-    return '';
+    return ' - ';
   }
 
   get locales() {
@@ -124,7 +124,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   get valueString() {
-    if (this.value == null) {
+    if (this.value == null || !this.value.value) {
       return '';
     }
     return this.value.value.filename || this.value.value.name || this.value.value;
