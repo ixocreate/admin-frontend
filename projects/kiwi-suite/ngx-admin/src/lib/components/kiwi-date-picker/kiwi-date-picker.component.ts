@@ -72,9 +72,11 @@ export class KiwiDatePickerComponent implements ControlValueAccessor, OnInit {
       ...this.calendar.locale,
       firstDayOfWeek: 1,
     };
-    if (this.value) {
-      this._date = moment(this.value).toDate();
-    }
+    setTimeout(() => {
+      if (this.value) {
+        this._date = moment(this.value).toDate();
+      }
+    });
   }
 
   set dateValue(value: Date) {

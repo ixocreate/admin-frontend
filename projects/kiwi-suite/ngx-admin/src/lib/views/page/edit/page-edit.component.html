@@ -47,7 +47,7 @@
           </ng-container>
 
           <ng-container *ngIf="data$ | async as data" >
-            <a class="btn btn-default btn-block" [href]="data.page.url" target="_blank" *ngIf="data.page.isOnline">
+            <a class="btn btn-outline-primary btn-block mb-3" [href]="data.page.url" target="_blank" *ngIf="data.page.isOnline">
               <i class="fa fa-expand"></i> Open Page
             </a>
           </ng-container>
@@ -236,8 +236,6 @@
                   </div>
                 </div>
               </ng-container>
-
-
             </div>
           </ng-container>
         </ng-container>
