@@ -19,7 +19,7 @@ import { AppDataService } from '../../services/data/app-data.service';
       <input type="text" class="form-control pointer-events-none" [value]="valueString" [placeholder]="to.placeholder"
              [class.is-invalid]="showError">
       <div class="input-group-append">
-        <span class="input-group-text d-none d-sm-block" *ngIf="value" [class.is-invalid]="showError">_blank</span>
+        <span class="input-group-text d-none d-sm-block" *ngIf="value" [class.is-invalid]="showError">{{ target }}</span>
         <span class="input-group-text" *ngIf="value" [class.is-invalid]="showError">{{ value.type }}</span>
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
                 kiwiClickStopPropagation>
@@ -87,8 +87,8 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
 
   selectedTarget = '_self';
   targetTypes = [
-    {name: '_self', label: '_self (same window)'},
-    {name: '_blank', label: '_blank (new window)'},
+    {name: '_self', label: 'Same window'},
+    {name: '_blank', label: 'New window'},
   ];
 
   selectedLocale: string;
@@ -105,6 +105,17 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     super.ngOnInit();
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
     this.loadSitemap();
+  }
+
+  get target() {
+    if (this.value) {
+      for (const targetType of this.targetTypes) {
+        if (targetType.name === this.value.target) {
+          return targetType.label;
+        }
+      }
+    }
+    return '';
   }
 
   get locales() {
