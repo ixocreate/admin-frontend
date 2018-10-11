@@ -14,7 +14,7 @@ export class SchemaTransformService {
   constructor() {
     this.registerTransform('section', this.handleSection);
     this.registerTransform('tabbedGroup', this.handleTabbedGroup);
-    this.registerTransform('blockContainer', this.handleDynamic);
+    this.registerTransform('blockContainer', this.handleBlockContainer);
     this.registerTransform('collection', this.handleDynamic);
 
     this.registerTransform('text', this.handleDefault('input'));
@@ -81,6 +81,33 @@ export class SchemaTransformService {
         templateOptions: {
           label: element.label,
           collapsed: false,
+          allowCopy: false,
+        },
+        fieldGroup: transformer.transformForm(element.elements),
+      });
+    });
+
+    return {
+      key: value.name,
+      type: 'dynamic',
+      templateOptions: {
+        label: value.label,
+      },
+      fieldArray: [],
+      fieldGroups: groups,
+    };
+  }
+
+  private handleBlockContainer(value: any, transformer: SchemaTransformService): any {
+    const groups = [];
+
+    value.elements.forEach((element) => {
+      groups.push({
+        _type: element.name,
+        templateOptions: {
+          label: element.label,
+          collapsed: false,
+          allowCopy: true,
         },
         fieldGroup: transformer.transformForm(element.elements),
       });

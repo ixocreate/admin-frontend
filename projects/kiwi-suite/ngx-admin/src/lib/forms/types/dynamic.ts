@@ -32,15 +32,17 @@ export interface BlockSelect {
                 <i class="fa fa-fw fa-chevron-up"></i>
               </button>
               <div class="form-dynamic-title">
+                <!--
                 <input [(ngModel)]="fieldGroup.model._meta.name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
                 <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
+                -->
               </div>
               <div class="btn-group" kiwiDropdown>
                 <button class="btn-more dropdown-btn" type="button">
                   <i class="fa fa-fw fa-ellipsis-h"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <button class="dropdown-item" (click)="copyBlock(fieldGroup.model)" type="button">
+                  <button *ngIf="fieldGroup.templateOptions['allowCopy']" class="dropdown-item" (click)="copyBlock(fieldGroup.model)" type="button">
                     <i class="fa fa-fw fa-clone"></i> Copy Block
                   </button>
                   <button class="dropdown-item dropdown-item-danger" (click)="remove(i)" type="button">
