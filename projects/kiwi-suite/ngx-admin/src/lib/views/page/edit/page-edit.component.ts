@@ -9,6 +9,7 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
 import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
 import { BsModalService } from 'ngx-bootstrap';
+import {ConfigService} from "../../../services/config.service";
 
 @Component({
   templateUrl: './page-edit.component.html',
@@ -34,10 +35,11 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   hasChildren = true;
 
 
-  pageData: { name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
+  pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
+              protected config: ConfigService,
               protected appData: AppDataService,
               protected notification: NotificationService,
               protected schemaTransform: SchemaTransformService,
@@ -53,6 +55,10 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     });
   }
 
+  get previewUrl() {
+    return this.config.config['cms']['preview'];
+  }
+
   private updateVersionIndex() {
     this.versionIndex$ = this.appData.pageVersionIndex(this.id);
   }
@@ -66,6 +72,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       this.hasChildren = data.hasChildren;
 
       this.pageData = {
+        id: data.page.page.id,
         name: data.page.page.name,
         publishedFrom: data.page.page.publishedFrom,
         publishedUntil: data.page.page.publishedUntil,
@@ -95,6 +102,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     } else {
       const data = this.versionForm.getRawValue();
       this.appData.createPageVersion(this.id, {content: data}).then((response) => {
+        this.loadDetailData();
+        this.updateVersionIndex();
         this.notification.success('Page Version successfully created', 'Success');
       }).catch((error) => this.notification.apiError(error));
     }
@@ -122,6 +131,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     const postData = {};
     postData[key] = value;
     this.appData.updatePage(this.id, postData).then((response) => {
+      this.loadDetailData();
       this.notification.success(key + ' successfully saved', 'Success');
     }).catch((error) => this.notification.apiError(error));
   }
