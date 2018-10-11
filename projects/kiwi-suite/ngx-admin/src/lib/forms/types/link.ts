@@ -48,14 +48,15 @@ import { AppDataService } from '../../services/data/app-data.service';
       <ng-container *ngIf="selectedType === 'sitemap'">
         <div class="modal-body">
           <div class="row align-items-center mb-3">
-            <div class="col-sm"></div>
-            <div class="col-sm-5 mt-2 mt-sm-0" *ngIf="locales.length > 1">
+            <div class="col-sm">
+              <ng-select [items]="sitemap$ | async" [(ngModel)]="sitemapLinkInputValue" bindLabel="name" (change)="onSitemapLinkSelect()">
+              </ng-select>
+            </div>
+            <div class="col-sm-4 mt-2 mt-sm-0" *ngIf="locales.length > 1">
               <ng-select [items]="locales" bindLabel="name" bindValue="locale" [(ngModel)]="selectedLocale"
                          [clearable]="false" (change)="onChangeLocale()"></ng-select>
             </div>
           </div>
-          <ng-select [items]="sitemap$ | async" [(ngModel)]="sitemapLinkInputValue" bindLabel="name" (change)="onSitemapLinkSelect()">
-          </ng-select>
         </div>
       </ng-container>
       <ng-container *ngIf="selectedType === 'external'">
