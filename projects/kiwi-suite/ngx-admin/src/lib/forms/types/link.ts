@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { Observable } from 'rxjs';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ConfigService } from '../../services/config.service';
 import { AppDataService } from '../../services/data/app-data.service';
@@ -103,6 +102,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
     this.loadSitemap();
   }
