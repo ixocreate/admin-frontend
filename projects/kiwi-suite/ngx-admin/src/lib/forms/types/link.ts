@@ -1,6 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
+import { Observable } from 'rxjs';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { ConfigService } from '../../services/config.service';
+import { AppDataService } from '../../services/data/app-data.service';
 
 @Component({
   selector: 'formly-field-link',
@@ -8,7 +12,8 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
     <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
       <div class="input-group-prepend">
         <span class="input-group-text" *ngIf="!value" [class.is-invalid]="showError"><i class="fa fa-fw fa-link"></i></span>
-        <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation [class.is-invalid]="showError">
+        <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation
+           [class.is-invalid]="showError">
           <i class="fa fa-fw fa-link"></i>
         </a>
       </div>
@@ -42,7 +47,17 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
         <kiwi-media-list class="media-inline" (select)="onSelectType($event)"></kiwi-media-list>
       </ng-container>
       <ng-container *ngIf="selectedType === 'sitemap'">
-        <div class="modal-body">sitemap...</div>
+        <div class="modal-body">
+          <div class="row align-items-center mb-3">
+            <div class="col-sm"></div>
+            <div class="col-sm-5 mt-2 mt-sm-0" *ngIf="locales.length > 1">
+              <ng-select [items]="locales" bindLabel="name" bindValue="locale" [(ngModel)]="selectedLocale"
+                         [clearable]="false" (change)="onChangeLocale()"></ng-select>
+            </div>
+          </div>
+          <ng-select [items]="sitemap$ | async" [(ngModel)]="sitemapLinkInputValue" bindLabel="name" (change)="onSitemapLinkSelect()">
+          </ng-select>
+        </div>
       </ng-container>
       <ng-container *ngIf="selectedType === 'external'">
         <div class="modal-body">
@@ -60,6 +75,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 })
 export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements OnInit {
 
+  sitemapLinkInputValue = '';
   externalLinkInputValue = '';
 
   modalRef: BsModalRef;
@@ -76,8 +92,23 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     {name: '_blank', label: '_blank (new window)'},
   ];
 
-  constructor(protected modalService: BsModalService) {
+  selectedLocale: string;
+  sitemap$: Promise<any>;
+
+  constructor(protected modalService: BsModalService,
+              private config: ConfigService,
+              private appData: AppDataService,
+              private localStorage: LocalStorageService) {
     super();
+  }
+
+  ngOnInit() {
+    this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
+    this.loadSitemap();
+  }
+
+  get locales() {
+    return this.config.config.intl.locales;
   }
 
   get valueString() {
@@ -116,4 +147,16 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     this.onSelect({type: this.selectedType, target: this.selectedTarget, value});
   }
 
+  onSitemapLinkSelect() {
+    this.onSelectType(this.sitemapLinkInputValue);
+  }
+
+  loadSitemap() {
+    this.sitemapLinkInputValue = '';
+    this.sitemap$ = this.appData.getSitemap(this.selectedLocale);
+  }
+
+  onChangeLocale() {
+    this.loadSitemap();
+  }
 }

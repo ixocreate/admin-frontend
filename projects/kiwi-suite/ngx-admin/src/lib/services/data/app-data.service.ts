@@ -54,6 +54,10 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
+  getSitemap(locale: string): Promise<any> {
+    return this.api.get(this.config.config.routes.pageList, {locale: locale});
+  }
+
   getPageIndex(): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
     return this.api.get(this.config.config.routes.pageIndex);
   }

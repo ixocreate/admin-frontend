@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Observable } from 'rxjs/Observable';
-import { catchError, map, publishLast, refCount, retryWhen, timeout } from 'rxjs/operators';
+import { catchError, map, publishLast, refCount, timeout } from 'rxjs/operators';
 import { _throw } from 'rxjs/observable/throw';
 import { BehaviorSubject } from 'rxjs';
 import { APIErrorElement, APIResponse } from '../interfaces/api-response.interface';
@@ -83,7 +83,16 @@ export class ApiService {
     );
   }
 
-  get(url: string): Promise<any> {
+  get(url: string, params: any = {}): Promise<any> {
+    const urlParams = new URLSearchParams();
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        urlParams.set(key, params[key]);
+      }
+    }
+    if (urlParams.toString() !== '') {
+      url = url + '?' + urlParams.toString();
+    }
     return this.request(ApiRequestMethod.GET, url, null).toPromise();
   }
 

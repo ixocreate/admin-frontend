@@ -33,6 +33,7 @@ export interface Routes {
   pageVersionIndex?: string;
   pageVersionDetail?: string;
   pageAdd: string; // New Page for Language
+  pageList: string; // New Page for Language
 
   // pageCopy: string; TODO
 
