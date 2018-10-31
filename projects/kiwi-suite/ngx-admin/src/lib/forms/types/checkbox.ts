@@ -11,4 +11,12 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
   `,
 })
 export class FormlyFieldCheckboxComponent extends CustomFieldTypeAbstract implements OnInit {
+
+  ngOnInit() {
+    super.ngOnInit();
+    if (this.value === null) {
+      this.setValue(false);
+    }
+  }
+
 }
