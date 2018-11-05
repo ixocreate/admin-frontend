@@ -28,6 +28,7 @@ import {FlatCreateComponent} from "./views/page/flat/flat-create.component";
 import {FlatAddComponent} from "./views/page/flat/flat-add.component";
 import {SubCreateComponent} from "./views/page/sub/sub-create.component";
 import {SubAddComponent} from "./views/page/sub/sub-add.component";
+import {DashboardComponent} from "./views/dashboard/dashboard.component";
 
 export const routes: Routes = [
   {
@@ -132,6 +133,17 @@ export const routes: Routes = [
             path: ':id/edit',
             component: PageEditComponent,
             data: {title: 'Edit Page'},
+          },
+        ],
+      },
+      {
+        path: 'dashboard',
+        data: {title: 'Dashboard'},
+        children: [
+          {
+            path: '',
+            component: DashboardComponent,
+            data: {title: null},
           },
         ],
       },

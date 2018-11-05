@@ -247,4 +247,8 @@ export class AppDataService extends DataServiceAbstract {
       return response;
     });
   }
+
+  getDashboard(): Promise<any> {
+    return this.api.get(this.config.config.routes.dashboardIndex);
+  }
 }

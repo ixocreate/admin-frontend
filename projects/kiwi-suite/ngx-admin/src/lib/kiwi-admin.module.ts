@@ -21,6 +21,7 @@ import {
   ProgressbarModule,
   TabsModule,
   TypeaheadModule,
+  CarouselModule
 } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -84,6 +85,10 @@ import {SubCreateComponent} from "./views/page/sub/sub-create.component";
 import {SubAddComponent} from "./views/page/sub/sub-add.component";
 import {FlatCreateComponent} from "./views/page/flat/flat-create.component";
 import {FlatAddComponent} from "./views/page/flat/flat-add.component";
+import {DashboardComponent} from "./views/dashboard/dashboard.component";
+import {KiwiDashboardSlideshowComponent} from "./dashboard/kiwi-slideshow/kiwi-slideshow.component";
+import {KiwiDashboardCounterComponent} from "./dashboard/kiwi-counter/kiwi-counter.component";
+import {KiwiDashboardStatisticsOverviewComponent} from "./dashboard/kiwi-statistics-overview/kiwi-statistics-overview.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -146,6 +151,12 @@ const APP_COMPONENTS = [
   UserComponent,
   UserEditComponent,
   UserCreateComponent,
+
+  DashboardComponent,
+
+  KiwiDashboardSlideshowComponent,
+  KiwiDashboardCounterComponent,
+  KiwiDashboardStatisticsOverviewComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
@@ -212,6 +223,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TypeaheadModule.forRoot(),
+    CarouselModule.forRoot(),
 
     ToastrModule.forRoot({
       autoDismiss: true,

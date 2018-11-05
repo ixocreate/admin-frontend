@@ -1,0 +1,21 @@
+<div class="card" *ngIf="data">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6" *ngIf="data.progress.length > 0">
+        <div *ngFor="let progress of data.progress">
+          <progressbar [max]="progress.max" [value]="progress.current" type="warning">
+            <span class="text-nowrap">{{progress.current}} / {{progress.max}} {{ progress.title }}</span>
+          </progressbar>
+        </div>
+      </div>
+
+      <div class="col-sm-2" *ngFor="let counter of data.counter">
+        <div class="callout" [ngStyle]="{'border-left-color': counter.color }">
+          <small class="text-muted">{{ counter.title }}</small>
+          <br>
+          <strong class="h4">{{ counter.counter }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
