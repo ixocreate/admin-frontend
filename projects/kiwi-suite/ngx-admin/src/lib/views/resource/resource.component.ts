@@ -10,6 +10,7 @@ import { PageTitleService } from '../../services/page-title.service';
 export class ResourceComponent extends ViewAbstractComponent implements OnInit {
 
   resourceKey: string;
+  canCreate = false;
 
   constructor(protected route: ActivatedRoute, private config: ConfigService, private pageTitle: PageTitleService) {
     super();
@@ -19,6 +20,7 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.resourceKey = params.type;
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.config.getResourceConfig(this.resourceKey).label}]);
+      this.canCreate = this.config.getResourceConfig(this.resourceKey).canCreate;
     });
   }
 

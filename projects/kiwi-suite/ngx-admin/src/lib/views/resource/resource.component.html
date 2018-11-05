@@ -1,6 +1,6 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <a class="btn btn-success" routerLink="create"><i class="fa fa-plus"></i> Create</a>
+    <a class="btn btn-success" routerLink="create" *ngIf="canCreate"><i class="fa fa-plus"></i> Create</a>
   </ng-template>
 
   <ng-container *ngIf="resourceKey">

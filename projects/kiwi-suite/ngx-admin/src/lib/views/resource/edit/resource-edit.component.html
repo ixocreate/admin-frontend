@@ -1,9 +1,9 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <button class="btn btn-primary" (click)="onSubmit()">
+    <button *ngIf="resourceInfo && resourceInfo.canEdit" class="btn btn-primary" (click)="onSubmit()">
       <i class="fa fa-save"></i> Update
     </button>
-    <button class="btn btn-danger" (click)="doDelete()">
+    <button *ngIf="resourceInfo && resourceInfo.canDelete" class="btn btn-danger" (click)="doDelete()">
       <i class="fa fa-trash"></i>
     </button>
   </ng-template>

@@ -54,4 +54,7 @@ export interface ResourceConfig {
   listSchema: any;
   createSchema: any;
   updateSchema: any;
+  canCreate: boolean;
+  canEdit: boolean;
+  canDelete: boolean;
 }
