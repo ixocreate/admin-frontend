@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-sm-6" *ngIf="data.progress.length > 0">
-        <div *ngFor="let progress of data.progress">
+        <div *ngFor="let progress of data.progress" class="mb-3">
           <progressbar [max]="progress.max" [value]="progress.current" type="warning">
             <span class="text-nowrap">{{progress.current}} / {{progress.max}} {{ progress.title }}</span>
           </progressbar>
