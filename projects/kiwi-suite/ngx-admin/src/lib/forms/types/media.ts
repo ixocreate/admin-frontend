@@ -25,7 +25,7 @@ import { Media } from '../../interfaces/media.interface';
         </span>
       </div>
       <input type="text" class="form-control pointer-events-none" [value]="value?.filename" [placeholder]="to.placeholder"
-             [class.is-invalid]="showError" [attr.disabled]="to.disabled">
+             [class.is-invalid]="showError" [disabled]="to.disabled">
       <div class="input-group-append" *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
                 kiwiClickStopPropagation>

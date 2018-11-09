@@ -12,7 +12,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
           <div class="color-picker-preview" [style.background]="value" *ngIf="value"></div>
         </span>
       </div>
-      <input type="text" class="form-control pointer-events-none" [value]="value" [class.is-invalid]="showError" [attr.disabled]="to.disabled">
+      <input type="text" class="form-control pointer-events-none" [value]="value" [class.is-invalid]="showError" [disabled]="to.disabled">
       <div class="input-group-append" #button *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError"
                 (click)="remove()" kiwiClickStopPropagation>

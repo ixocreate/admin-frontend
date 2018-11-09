@@ -17,7 +17,7 @@ import { AppDataService } from '../../services/data/app-data.service';
         </a>
       </div>
       <input type="text" class="form-control pointer-events-none" [value]="valueString" [placeholder]="to.placeholder"
-             [class.is-invalid]="showError" [attr.disabled]="to.disabled">
+             [class.is-invalid]="showError" [disabled]="to.disabled">
       <div class="input-group-append">
         <span class="input-group-text d-none d-sm-block" *ngIf="value" [class.is-invalid]="showError">{{ target }}</span>
         <span class="input-group-text" *ngIf="value" [class.is-invalid]="showError">{{ value.type || '-' }}</span>

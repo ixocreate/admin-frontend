@@ -8,14 +8,14 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
       <div class="input-group-prepend">
         <div class="input-group-text" [class.is-invalid]="showError || !isValid">
           <div class="input-group-select-wrapper">
-            <select class="input-group-select" [(ngModel)]="selectedOption" (change)="setPrice()" [attr.disabled]="to.disabled">
+            <select class="input-group-select" [(ngModel)]="selectedOption" (change)="setPrice()" [disabled]="to.disabled">
               <option *ngFor="let option of selectOptions" [ngValue]="option">{{ option.label }}</option>
             </select>
           </div>
         </div>
       </div>
       <input type="text" class="form-control" [(ngModel)]="currentPrice" (change)="updateInput()" (keyup)="setPrice()"
-             [placeholder]="to.placeholder" [class.is-invalid]="showError || !isValid" [attr.disabled]="to.disabled">
+             [placeholder]="to.placeholder" [class.is-invalid]="showError || !isValid" [disabled]="to.disabled">
     </div>
   `,
 })
