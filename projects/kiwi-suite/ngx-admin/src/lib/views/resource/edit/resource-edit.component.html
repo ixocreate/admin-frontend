@@ -1,11 +1,13 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <button *ngIf="resourceInfo && resourceInfo.canEdit" class="btn btn-primary" (click)="onSubmit()">
-      <i class="fa fa-save"></i> Update
-    </button>
-    <button *ngIf="resourceInfo && resourceInfo.canDelete" class="btn btn-danger" (click)="doDelete()">
-      <i class="fa fa-trash"></i>
-    </button>
+    <ng-container *ngIf="loaded">
+      <button *ngIf="resourceInfo && resourceInfo.canEdit" class="btn btn-primary" (click)="onSubmit()">
+        <i class="fa fa-save"></i> Update
+      </button>
+      <button *ngIf="resourceInfo && resourceInfo.canDelete" class="btn btn-danger" (click)="doDelete()">
+        <i class="fa fa-trash"></i>
+      </button>
+    </ng-container>
   </ng-template>
 
   <ng-container *ngIf="data$ | async as data">

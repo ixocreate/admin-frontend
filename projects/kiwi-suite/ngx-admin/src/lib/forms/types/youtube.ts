@@ -13,8 +13,8 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
         </span>
       </div>
       <input type="text" class="form-control" [(ngModel)]="inputValue" (keyup)="checkYoutubeLink()" [placeholder]="to.placeholder"
-             [class.is-invalid]="showError || !isValid">
-      <div class="input-group-append">
+             [class.is-invalid]="showError || !isValid" [attr.disabled]="to.disabled">
+      <div class="input-group-append" *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError && isValid"
                 [class.btn-outline-danger]="showError || !isValid" (click)="remove()">
           <i class="fa fa-close"></i>

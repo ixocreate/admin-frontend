@@ -20,15 +20,11 @@ export class SchemaTransformService {
     this.registerTransform('text', this.handleDefault('input'));
     this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}));
     this.registerTransform('checkbox', this.handleDefault('checkbox'));
+    this.registerTransform('radio', this.handleRadio);
 
     this.registerTransform('date', this.handleDefault('date'));
     this.registerTransform('datetime', this.handleDefault('datetime'));
     this.registerTransform('link', this.handleDefault('link'));
-    this.registerTransform('media', this.handleDefault('media', {centerLabel: true}));
-    this.registerTransform('image', this.handleDefault('image', {centerLabel: true}));
-    this.registerTransform('document', this.handleDefault('document', {centerLabel: true}));
-    this.registerTransform('audio', this.handleDefault('audio', {centerLabel: true}));
-    this.registerTransform('video', this.handleDefault('video', {centerLabel: true}));
     this.registerTransform('youtube', this.handleDefault('youtube', {centerLabel: true}));
     this.registerTransform('color', this.handleDefault('color'));
     this.registerTransform('select', this.handleSelect);
@@ -37,6 +33,12 @@ export class SchemaTransformService {
     this.registerTransform('price', this.handleDefault('price', {}, ['currencies', 'decimal']));
 
     this.registerTransform('html', this.handleDefault('wysiwyg'));
+
+    this.registerTransform('media', this.handleDefault('media', {centerLabel: true, type: ''}));
+    this.registerTransform('image', this.handleDefault('media', {centerLabel: true, type: 'image'}));
+    this.registerTransform('document', this.handleDefault('media', {centerLabel: true, type: 'document'}));
+    this.registerTransform('audio', this.handleDefault('media', {centerLabel: true, type: 'audio'}));
+    this.registerTransform('video', this.handleDefault('media', {centerLabel: true, type: 'video'}));
   }
 
   registerTransform(inputType: string, callback: (value: any, transformer: SchemaTransformService) => any) {
@@ -62,6 +64,7 @@ export class SchemaTransformService {
           label: value.label,
           placeholder: value.placeholder || value.label + '...',
           required: value.required,
+          disabled: value.disabled,
           ...templateOptions,
         },
       };
@@ -171,6 +174,24 @@ export class SchemaTransformService {
       options: options,
       resource: value.resource,
       clearable: value.clearable || false,
+    })(value);
+  }
+
+  private handleRadio(value: any, transformer: SchemaTransformService): Schema {
+    const options = [];
+
+    for (const key in value.options) {
+      if (value.options.hasOwnProperty(key)) {
+        options.push({value: key, label: value.options[key]});
+      }
+    }
+
+    return transformer.handleDefault('radio', {
+      options: options,
+      resource: value.resource,
+      clearable: value.clearable || false,
+      labelProp: 'label',
+      valueProp: 'value',
     })(value);
   }
 

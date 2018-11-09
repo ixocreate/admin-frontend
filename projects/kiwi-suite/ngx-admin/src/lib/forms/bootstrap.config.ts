@@ -16,19 +16,11 @@ import { FormlyFieldRepeatableComponent } from './types/repeatable';
 import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
 import { FormlyFieldPriceComponent } from './types/price';
 import { FormlyFieldGeoPointComponent } from './types/geo-point';
-import { FormlyFieldDocumentComponent } from './types/document';
-import {FormlyFieldImageComponent} from './types/image';
-import {FormlyFieldAudioComponent} from "./types/audio";
-import {FormlyFieldVideoComponent} from "./types/video";
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
   FormlyFieldSelectComponent,
   FormlyFieldMediaComponent,
-  FormlyFieldDocumentComponent,
-  FormlyFieldVideoComponent,
-  FormlyFieldAudioComponent,
-  FormlyFieldImageComponent,
   FormlyFieldDateTimeComponent,
   FormlyFieldLinkComponent,
   FormlyFieldColorComponent,
@@ -71,26 +63,6 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'media',
       component: FormlyFieldMediaComponent,
-      wrappers: ['form-field'],
-    },
-    {
-      name: 'image',
-      component: FormlyFieldImageComponent,
-      wrappers: ['form-field'],
-    },
-    {
-      name: 'audio',
-      component: FormlyFieldAudioComponent,
-      wrappers: ['form-field'],
-    },
-    {
-      name: 'video',
-      component: FormlyFieldVideoComponent,
-      wrappers: ['form-field'],
-    },
-    {
-      name: 'document',
-      component: FormlyFieldDocumentComponent,
       wrappers: ['form-field'],
     },
     {

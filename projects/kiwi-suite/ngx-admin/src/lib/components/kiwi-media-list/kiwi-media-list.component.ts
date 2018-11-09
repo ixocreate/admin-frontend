@@ -42,11 +42,8 @@ export class KiwiMediaListComponent implements OnInit {
     }
   ];
 
-  @Input()
-  selectedType = '';
-
-  @Input()
-  showTypeFilter = true;
+  @Input() selectedType = '';
+  @Input() showTypeFilter = true;
 
   private inputTimeout = null;
 

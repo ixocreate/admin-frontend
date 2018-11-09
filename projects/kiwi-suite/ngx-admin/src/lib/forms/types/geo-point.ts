@@ -9,13 +9,13 @@ declare var ol: any;
 @Component({
   selector: 'formly-field-geo-point',
   template: `
-    <div class="input-group cursor-pointer" (click)="openMapModal()">
+    <div class="input-group" (click)="openMapModal()" [class.cursor-pointer]="!to.disabled">
       <div class="input-group-prepend">
         <span class="input-group-text" [class.is-invalid]="showError"><i class="fa fa-fw fa-map-marker"></i></span>
       </div>
       <input type="text" class="form-control pointer-events-none" [value]="locationString" [placeholder]="to.placeholder"
-             [class.is-invalid]="showError">
-      <div class="input-group-append">
+             [class.is-invalid]="showError" [attr.disabled]="to.disabled">
+      <div class="input-group-append" *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError">
           <i class="fa fa-map"></i>
         </button>
@@ -55,6 +55,9 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
   }
 
   openMapModal() {
+    if (this.to.disabled) {
+      return;
+    }
     const initialState: MapModalData = {
       onConfirm: (geoPoint) => {
         this.setValue(geoPoint);

@@ -1,4 +1,6 @@
 .ql-editor {
+  color: $input-color;
+
   p, ul, ol {
     margin-top: 10px;
 
@@ -25,7 +27,7 @@
 
 
 .ql-snow .ql-stroke {
-  stroke: $body-color;
+  stroke: $input-color;
 }
 
 .ql-snow.ql-toolbar button:hover,
@@ -121,6 +123,16 @@
   .ql-toolbar.ql-snow,
   .ql-container.ql-snow {
     border-color: $danger;
+  }
+}
+
+.read-only {
+  .ql-toolbar .ql-formats {
+    opacity: .3;
+  }
+
+  .ql-editor {
+    background: $input-disabled-bg;
   }
 }
 

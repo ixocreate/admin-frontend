@@ -91,7 +91,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   }
 
   get clearable() {
-    return this.to.clearable;
+    return this.to.clearable && !this.to.disabled;
   }
 
   get multiple() {

@@ -4,18 +4,18 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 @Component({
   selector: 'formly-field-price',
   template: `
-    <div class="input-group mb-3">
+    <div class="input-group">
       <div class="input-group-prepend">
         <div class="input-group-text" [class.is-invalid]="showError || !isValid">
           <div class="input-group-select-wrapper">
-            <select class="input-group-select" [(ngModel)]="selectedOption" (change)="setPrice()">
+            <select class="input-group-select" [(ngModel)]="selectedOption" (change)="setPrice()" [attr.disabled]="to.disabled">
               <option *ngFor="let option of selectOptions" [ngValue]="option">{{ option.label }}</option>
             </select>
           </div>
         </div>
       </div>
       <input type="text" class="form-control" [(ngModel)]="currentPrice" (change)="updateInput()" (keyup)="setPrice()"
-             [placeholder]="to.placeholder" [class.is-invalid]="showError || !isValid">
+             [placeholder]="to.placeholder" [class.is-invalid]="showError || !isValid" [attr.disabled]="to.disabled">
     </div>
   `,
 })

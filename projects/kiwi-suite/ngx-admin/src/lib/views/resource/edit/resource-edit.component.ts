@@ -26,6 +26,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
+  loaded = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -46,6 +47,9 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
       this.fields = this.resourceInfo.updateSchema ?  this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
       this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
+    });
+    setTimeout(() => {
+      this.loaded = true;
     });
   }
 

@@ -1,6 +1,7 @@
-.ng-select .ng-select-container {
+body .ng-select .ng-select-container {
   min-height: 35px;
   border-color: $input-border-color;
+  color: $input-color;
 
   &:hover {
     box-shadow: none;
@@ -49,5 +50,15 @@
 
   &:hover {
     opacity: 1;
+  }
+}
+
+.ng-select.ng-select-disabled {
+  & > .ng-select-container {
+    background: $input-disabled-bg;
+  }
+
+  .ng-arrow-wrapper .ng-arrow {
+    border-color: darken($input-disabled-bg, 10%) transparent transparent;
   }
 }

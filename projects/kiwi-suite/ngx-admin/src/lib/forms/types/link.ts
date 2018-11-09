@@ -8,7 +8,7 @@ import { AppDataService } from '../../services/data/app-data.service';
 @Component({
   selector: 'formly-field-link',
   template: `
-    <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
+    <div class="input-group" (click)="openModal(modalTemplate)" [class.cursor-pointer]="!to.disabled">
       <div class="input-group-prepend">
         <span class="input-group-text" *ngIf="!value" [class.is-invalid]="showError"><i class="fa fa-fw fa-link"></i></span>
         <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation
@@ -17,12 +17,12 @@ import { AppDataService } from '../../services/data/app-data.service';
         </a>
       </div>
       <input type="text" class="form-control pointer-events-none" [value]="valueString" [placeholder]="to.placeholder"
-             [class.is-invalid]="showError">
+             [class.is-invalid]="showError" [attr.disabled]="to.disabled">
       <div class="input-group-append">
         <span class="input-group-text d-none d-sm-block" *ngIf="value" [class.is-invalid]="showError">{{ target }}</span>
         <span class="input-group-text" *ngIf="value" [class.is-invalid]="showError">{{ value.type || '-' }}</span>
-        <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
-                kiwiClickStopPropagation>
+        <button *ngIf="!to.required && !to.disabled" type="button" class="btn" [class.btn-outline-input]="!showError"
+                [class.btn-outline-danger]="showError" (click)="remove()" kiwiClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>
@@ -147,6 +147,9 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   openModal(template: TemplateRef<any>) {
+    if (this.to.disabled) {
+      return;
+    }
     if (this.value) {
       this.selectedType = this.value.type;
     }

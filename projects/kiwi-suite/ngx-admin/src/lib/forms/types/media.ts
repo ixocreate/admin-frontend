@@ -7,7 +7,7 @@ import { Media } from '../../interfaces/media.interface';
 @Component({
   selector: 'formly-field-media',
   template: `
-    <div class="input-group cursor-pointer" (click)="openModal(modalTemplate)">
+    <div class="input-group" (click)="openModal(modalTemplate)" [class.cursor-pointer]="!to.disabled">
       <div class="input-group-prepend">
         <span class="input-group-text p-0" [class.is-invalid]="showError">
           <div class="input-media-preview" *ngIf="!value"><i class="fa fa-fw fa-file-o"></i></div>
@@ -25,8 +25,8 @@ import { Media } from '../../interfaces/media.interface';
         </span>
       </div>
       <input type="text" class="form-control pointer-events-none" [value]="value?.filename" [placeholder]="to.placeholder"
-             [class.is-invalid]="showError">
-      <div class="input-group-append">
+             [class.is-invalid]="showError" [attr.disabled]="to.disabled">
+      <div class="input-group-append" *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
                 kiwiClickStopPropagation>
           <i class="fa fa-close"></i>
@@ -35,7 +35,7 @@ import { Media } from '../../interfaces/media.interface';
     </div>
 
     <ng-template #modalTemplate>
-      <kiwi-media-list (select)="onSelect($event)"></kiwi-media-list>
+      <kiwi-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></kiwi-media-list>
     </ng-template>
   `,
 })
@@ -52,6 +52,9 @@ export class FormlyFieldMediaComponent extends CustomFieldTypeAbstract {
   }
 
   openModal(template: TemplateRef<any>) {
+    if (this.to.disabled) {
+      return;
+    }
     this.modalRef = this.modalService.show(template, {class: 'modal-lg modal-empty'});
   }
 

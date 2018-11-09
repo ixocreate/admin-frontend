@@ -9,10 +9,12 @@ import { CustomValidators } from '../../validators/CustomValidators';
     <quill-editor #editor
                   [ngModel]="value?.html"
                   [style]="{height: height}"
+                  [readOnly]="to.disabled"
                   [modules]="modules"
                   [placeholder]="to.placeholder"
                   [required]="to.required"
                   [class.is-invalid]="showError"
+                  [class.read-only]="to.disabled"
                   (onContentChanged)="onContentChanged($event)">
     </quill-editor>
   `,

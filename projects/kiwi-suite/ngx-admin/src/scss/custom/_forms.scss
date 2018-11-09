@@ -377,3 +377,8 @@ formly-wrapper-validation-messages > div > .invalid-feedback {
     }
   }
 }
+
+.input-disabled {
+  pointer-events: none;
+  opacity: .3;
+}

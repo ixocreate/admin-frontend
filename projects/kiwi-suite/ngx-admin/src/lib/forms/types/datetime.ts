@@ -9,14 +9,15 @@ import { Calendar } from 'primeng/primeng';
   template: `
     <div class="input-group">
       <p-calendar class="date-picker"
-                  [placeholder]="this.to.placeholder"
+                  [placeholder]="to.placeholder"
                   [(ngModel)]="dateValue"
                   [dateFormat]="config.dateFormat"
                   [locale]="locale"
                   [showTime]="config.showTime"
+                  [disabled]="to.disabled"
                   [class.is-invalid]="showError">
       </p-calendar>
-      <div class="input-group-append" *ngIf="!to.required">
+      <div class="input-group-append" *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()">
           <i class="fa fa-close"></i>
         </button>
