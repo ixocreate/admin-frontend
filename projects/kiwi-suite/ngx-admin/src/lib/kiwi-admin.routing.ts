@@ -41,7 +41,7 @@ export const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
-    canActivate: [AuthGuard, PermissionGuard],
+    canActivate: [AuthGuard],
     children: [
       {path: '', component: RedirectComponent},
       {
