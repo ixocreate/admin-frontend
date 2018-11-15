@@ -29,6 +29,7 @@ import {FlatAddComponent} from "./views/page/flat/flat-add.component";
 import {SubCreateComponent} from "./views/page/sub/sub-create.component";
 import {SubAddComponent} from "./views/page/sub/sub-add.component";
 import {DashboardComponent} from "./views/dashboard/dashboard.component";
+import {RedirectComponent} from "./views/auth/redirect/redirect.component";
 
 export const routes: Routes = [
   {
@@ -42,7 +43,7 @@ export const routes: Routes = [
     component: DefaultLayoutComponent,
     canActivate: [AuthGuard, PermissionGuard],
     children: [
-      {path: '', redirectTo: 'page', pathMatch: 'full'},
+      {path: '', component: RedirectComponent},
       {
         path: 'account',
         component: AccountComponent,
