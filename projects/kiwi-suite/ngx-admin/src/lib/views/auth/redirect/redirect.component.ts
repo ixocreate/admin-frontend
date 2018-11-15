@@ -6,7 +6,7 @@ import { ConfigService } from '../../../services/config.service';
   selector: 'app-redirect',
   template: '<div></div>',
 })
-export class RedirectComponent implements OnInit{
+export class RedirectComponent implements OnInit {
 
 
   constructor(private router: Router,
@@ -14,33 +14,25 @@ export class RedirectComponent implements OnInit{
   }
 
   ngOnInit() {
-    if (this.config.navigation.length === 0) {
-      this.router.navigate(['/account']);
-      return;
-    }
-
     let url = null;
 
-    this.config.navigation.forEach((value) => {
-      if (url !== null) {
-        return;
-      }
-
+    for (const value of this.config.navigation) {
       if (value.hasOwnProperty('title') && value.title === true) {
-        return;
+        continue;
       }
 
-      if (value.hasOwnProperty('url') ) {
+      if (value.hasOwnProperty('url')) {
         url = value.url;
+        break;
       }
-    });
+    }
 
     if (url !== null) {
-      this.router.navigate([url]);
+      this.router.navigateByUrl(url);
       return;
     }
 
-    this.router.navigate(['/account']);
+    this.router.navigateByUrl('/account');
   }
 
 }

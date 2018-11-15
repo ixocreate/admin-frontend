@@ -8,7 +8,6 @@ import { PageComponent } from './views/page/page.component';
 import { TranslationComponent } from './views/translation/translation.component';
 import { TranslationListComponent } from './views/translation/list/translation-list.component';
 import { TranslationEditComponent } from './views/translation/edit/translation-edit.component';
-import { PermissionGuard } from './guards/permission.guard';
 import { MediaComponent } from './views/media/media.component';
 import { ResourceComponent } from './views/resource/resource.component';
 import { ResourceCreateComponent } from './views/resource/create/resource-create.component';
@@ -19,17 +18,17 @@ import { PageEditComponent } from './views/page/edit/page-edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { MediaEditComponent } from './views/media/edit/media-edit.component';
-import {UserComponent} from "./views/user/user.component";
-import {UserCreateComponent} from "./views/user/create/user-create.component";
-import {UserEditComponent} from "./views/user/edit/user-edit.component";
-import {SubComponent} from "./views/page/sub/sub.component";
-import {FlatComponent} from "./views/page/flat/flat.component";
-import {FlatCreateComponent} from "./views/page/flat/flat-create.component";
-import {FlatAddComponent} from "./views/page/flat/flat-add.component";
-import {SubCreateComponent} from "./views/page/sub/sub-create.component";
-import {SubAddComponent} from "./views/page/sub/sub-add.component";
-import {DashboardComponent} from "./views/dashboard/dashboard.component";
-import {RedirectComponent} from "./views/auth/redirect/redirect.component";
+import { UserComponent } from './views/user/user.component';
+import { UserCreateComponent } from './views/user/create/user-create.component';
+import { UserEditComponent } from './views/user/edit/user-edit.component';
+import { SubComponent } from './views/page/sub/sub.component';
+import { FlatComponent } from './views/page/flat/flat.component';
+import { FlatCreateComponent } from './views/page/flat/flat-create.component';
+import { FlatAddComponent } from './views/page/flat/flat-add.component';
+import { SubCreateComponent } from './views/page/sub/sub-create.component';
+import { SubAddComponent } from './views/page/sub/sub-add.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { RedirectComponent } from './views/auth/redirect/redirect.component';
 
 export const routes: Routes = [
   {
@@ -233,12 +232,10 @@ export const routes: Routes = [
           },
         ],
       },
-      /*
       {
         path: '**',
-        redirectTo: 'page',
+        component: RedirectComponent,
       },
-      */
 
 
 
