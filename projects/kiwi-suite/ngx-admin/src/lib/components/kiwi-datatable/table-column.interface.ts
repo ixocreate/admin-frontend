@@ -6,7 +6,7 @@ export interface TableColumnData<T> {
   prop?: keyof T;
   width?: number;
   align?: 'left' | 'right' | 'center';
-  type?: TableColumnType;
+  type?: string;
   render?: (value, row) => {};
   cellTemplate?: TemplateRef<any>;
   moveToDetailBelow?: 'xs' | 'sm' | 'md' | 'lg' | 'always';

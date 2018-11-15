@@ -73,7 +73,22 @@
             [width]="data.width || 150" *ngIf="!data.cellTemplate">
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
               <span *ngIf="data.render" [innerHtml]="data.render(value, row)"></span>
-              <ng-container *ngIf="!data.render">{{ value }}</ng-container>
+              <ng-container *ngIf="!data.render">
+                <ng-container *ngIf="data.type === 'string'">
+                  {{ value }}
+                </ng-container>
+                <ng-container *ngIf="data.type === 'image'">
+                  <div style="max-width: 100px;">
+                    <img class="img-fluid" [src]="value.thumb">
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="data.type === 'date'">
+                  <i>{{ value | kiwiDate }}</i>
+                </ng-container>
+                <ng-container *ngIf="data.type === 'datetime'">
+                  <i>{{ value | kiwiDateTime }}</i>
+                </ng-container>
+              </ng-container>
             </ng-template>
           </ngx-datatable-column>
         </ng-container>

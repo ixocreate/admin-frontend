@@ -74,7 +74,7 @@ export class KiwiDatatableComponent implements OnInit {
       column.headerClass = column.headerClass || '';
       column.cellClass = column.cellClass || '';
       if (column.type) {
-        delete column.type;
+        //delete column.type;
       }
       if (column.align) {
         column.headerClass += ' text-' + column.align;
@@ -146,9 +146,11 @@ export class KiwiDatatableComponent implements OnInit {
 
       if (this.hostColumns.length === 0 && schema) {
         const columns = schema.elements.map((element) => {
+          console.log(element);
           return {
             name: element.label,
             prop: element.name,
+            type: element.type,
           };
         });
         columns.push({
