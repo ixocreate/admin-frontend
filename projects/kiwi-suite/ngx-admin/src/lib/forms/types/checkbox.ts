@@ -4,7 +4,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 @Component({
   selector: 'formly-field-checkbox',
   template: `
-    <label class="switch switch-primary input-disabled">
+    <label class="switch switch-primary" [class.input-disabled]="to.disabled">
       <input type="checkbox" class="switch-input" [(ngModel)]="value" (change)="setValue(value)">
       <span class="switch-slider"></span>
     </label>
