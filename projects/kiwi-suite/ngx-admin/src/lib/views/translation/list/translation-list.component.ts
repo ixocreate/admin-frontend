@@ -32,6 +32,7 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
       {
         name: 'Name',
         prop: 'name',
+        type: 'string',
       },
     ];
 
