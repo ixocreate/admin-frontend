@@ -10,6 +10,9 @@
       <ng-container *ngIf="widget.type === 'statistic-overview'">
         <kiwi-dashboard-statistics-overview [data]="widget.data"></kiwi-dashboard-statistics-overview>
       </ng-container>
+      <ng-container *ngIf="widget.type === 'gallery'">
+        <kiwi-dashboard-gallery [data]="widget.data"></kiwi-dashboard-gallery>
+      </ng-container>
     </div>
   </div>
 </ng-container>

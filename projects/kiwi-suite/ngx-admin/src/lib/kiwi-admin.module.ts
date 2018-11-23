@@ -91,6 +91,7 @@ import {KiwiDashboardCounterComponent} from "./dashboard/kiwi-counter/kiwi-count
 import {KiwiDashboardStatisticsOverviewComponent} from "./dashboard/kiwi-statistics-overview/kiwi-statistics-overview.component";
 import {RedirectComponent} from "./views/auth/redirect/redirect.component";
 import {KiwiDashboardComponent} from "./components/kiwi-dashboard/kiwi-dashboard.component";
+import {KiwiDashboardGalleryComponent} from "./dashboard/kiwi-gallery/kiwi-gallery.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -161,6 +162,7 @@ const APP_COMPONENTS = [
   KiwiDashboardSlideshowComponent,
   KiwiDashboardCounterComponent,
   KiwiDashboardStatisticsOverviewComponent,
+  KiwiDashboardGalleryComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {

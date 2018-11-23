@@ -1,0 +1,12 @@
+<div class="row no-gutters media-grid" *ngIf="data">
+  <div *ngFor="let item of data" class="col-xl-2 col-sm-4 col-6">
+    <a [href]="item.image.original" target="_blank">
+      <div class="media-container">
+        <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + item.image.thumb + ')'}"></div>
+        <div class="media-image-title">
+          <div>{{ item.title }} <i *ngIf="item.icon" [class]="item.icon"></i></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
