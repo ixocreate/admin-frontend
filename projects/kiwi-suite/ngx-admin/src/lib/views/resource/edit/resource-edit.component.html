@@ -10,6 +10,10 @@
     </ng-container>
   </ng-template>
 
+  <ng-container *ngIf="aboveWidgetData$ | async as data">
+    <kiwi-dashboard [data]="data"></kiwi-dashboard>
+  </ng-container>
+
   <ng-container *ngIf="data$ | async as data">
     <div class="card card-accent-primary">
       <div class="card-header custom-card-header">
@@ -30,5 +34,8 @@
         <b class="text-danger">*</b> Required Field
       </div>
     </div>
+  </ng-container>
+  <ng-container *ngIf="belowWidgetData$ | async as data">
+    <kiwi-dashboard [data]="data"></kiwi-dashboard>
   </ng-container>
 </kiwi-content>

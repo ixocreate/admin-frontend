@@ -28,6 +28,9 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
   fields: FormlyFieldConfig[];
   loaded = false;
 
+  aboveWidgetData$: Promise<any>;
+  belowWidgetData$: Promise<any>;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -47,6 +50,8 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
       this.fields = this.resourceInfo.updateSchema ?  this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
       this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
+      this.aboveWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'above', 'edit', this.resourceId);
+      this.belowWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'below', 'edit', this.resourceId);
     });
     setTimeout(() => {
       this.loaded = true;

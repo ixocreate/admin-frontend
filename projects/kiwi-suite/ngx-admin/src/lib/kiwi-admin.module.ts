@@ -90,6 +90,7 @@ import {KiwiDashboardSlideshowComponent} from "./dashboard/kiwi-slideshow/kiwi-s
 import {KiwiDashboardCounterComponent} from "./dashboard/kiwi-counter/kiwi-counter.component";
 import {KiwiDashboardStatisticsOverviewComponent} from "./dashboard/kiwi-statistics-overview/kiwi-statistics-overview.component";
 import {RedirectComponent} from "./views/auth/redirect/redirect.component";
+import {KiwiDashboardComponent} from "./components/kiwi-dashboard/kiwi-dashboard.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -116,6 +117,7 @@ const APP_COMPONENTS = [
   KiwiSitemapItemComponent,
   KiwiImageCropperComponent,
   KiwiDatePickerComponent,
+  KiwiDashboardComponent,
 
   // Directives
   PermissionDirective,
