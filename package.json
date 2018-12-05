@@ -33,6 +33,7 @@
     "@ngx-formly/bootstrap": "^4.7.2",
     "@ngx-formly/core": "^4.7.2",
     "@swimlane/dragula": "^3.7.3",
+    "@swimlane/ngx-charts": "^10.0.0",
     "@swimlane/ngx-datatable": "^13.1.0",
     "@swimlane/ngx-dnd": "^5.0.6",
     "@types/googlemaps": "^3.30.12",

@@ -81,17 +81,19 @@ import { UserEditComponent } from './views/user/edit/user-edit.component';
 import { UserCreateComponent } from './views/user/create/user-create.component';
 import { SubComponent } from './views/page/sub/sub.component';
 import { FlatComponent } from './views/page/flat/flat.component';
-import {SubCreateComponent} from "./views/page/sub/sub-create.component";
-import {SubAddComponent} from "./views/page/sub/sub-add.component";
-import {FlatCreateComponent} from "./views/page/flat/flat-create.component";
-import {FlatAddComponent} from "./views/page/flat/flat-add.component";
-import {DashboardComponent} from "./views/dashboard/dashboard.component";
-import {KiwiDashboardSlideshowComponent} from "./dashboard/kiwi-slideshow/kiwi-slideshow.component";
-import {KiwiDashboardCounterComponent} from "./dashboard/kiwi-counter/kiwi-counter.component";
-import {KiwiDashboardStatisticsOverviewComponent} from "./dashboard/kiwi-statistics-overview/kiwi-statistics-overview.component";
-import {RedirectComponent} from "./views/auth/redirect/redirect.component";
-import {KiwiDashboardComponent} from "./components/kiwi-dashboard/kiwi-dashboard.component";
-import {KiwiDashboardGalleryComponent} from "./dashboard/kiwi-gallery/kiwi-gallery.component";
+import {SubCreateComponent} from './views/page/sub/sub-create.component';
+import {SubAddComponent} from './views/page/sub/sub-add.component';
+import {FlatCreateComponent} from './views/page/flat/flat-create.component';
+import {FlatAddComponent} from './views/page/flat/flat-add.component';
+import {DashboardComponent} from './views/dashboard/dashboard.component';
+import {KiwiDashboardSlideshowComponent} from './dashboard/kiwi-slideshow/kiwi-slideshow.component';
+import {KiwiDashboardCounterComponent} from './dashboard/kiwi-counter/kiwi-counter.component';
+import {KiwiDashboardStatisticsOverviewComponent} from './dashboard/kiwi-statistics-overview/kiwi-statistics-overview.component';
+import {RedirectComponent} from './views/auth/redirect/redirect.component';
+import {KiwiDashboardComponent} from './components/kiwi-dashboard/kiwi-dashboard.component';
+import {KiwiDashboardGalleryComponent} from './dashboard/kiwi-gallery/kiwi-gallery.component';
+import {KiwiDashboardGraphComponent} from './dashboard/kiwi-graph/kiwi-graph.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -163,6 +165,7 @@ const APP_COMPONENTS = [
   KiwiDashboardCounterComponent,
   KiwiDashboardStatisticsOverviewComponent,
   KiwiDashboardGalleryComponent,
+  KiwiDashboardGraphComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {
@@ -221,6 +224,7 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
     CalendarModule,
     ColorPickerModule,
     NgxDnDModule,
+    NgxChartsModule,
 
     TabsModule.forRoot(),
     AlertModule.forRoot(),
