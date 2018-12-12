@@ -1,4 +1,10 @@
 <kiwi-content>
+  <ng-template #headerButtons>
+    <a [routerLink]="'../../'" class="btn btn-outline-dark">
+      <i class="fa fa-ban"></i> Cancel
+    </a>
+  </ng-template>
+
   <ng-container *ngIf="data$ | async as data">
     <div class="card card-accent-primary" *ngFor="let locale of data.locales">
       <div class="card-header">

@@ -146,7 +146,6 @@ export class KiwiDatatableComponent implements OnInit {
 
       if (this.hostColumns.length === 0 && schema) {
         const columns = schema.elements.map((element) => {
-          console.log(element);
           return {
             name: element.label,
             prop: element.name,

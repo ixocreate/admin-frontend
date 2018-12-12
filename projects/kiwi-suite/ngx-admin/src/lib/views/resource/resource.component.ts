@@ -20,7 +20,9 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.resourceKey = params.type;
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.config.getResourceConfig(this.resourceKey).label}]);
-      this.canCreate = this.config.getResourceConfig(this.resourceKey).canCreate;
+      setTimeout(() => {
+        this.canCreate = this.config.getResourceConfig(this.resourceKey).canCreate;
+      });
     });
   }
 

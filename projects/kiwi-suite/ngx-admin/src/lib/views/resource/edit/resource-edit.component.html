@@ -1,6 +1,9 @@
 <kiwi-content>
   <ng-template #headerButtons>
     <ng-container *ngIf="loaded">
+      <a [routerLink]="'../../'" class="btn btn-outline-dark">
+        <i class="fa fa-ban"></i> Cancel
+      </a>
       <button *ngIf="resourceInfo && resourceInfo.canEdit" class="btn btn-primary" (click)="onSubmit()">
         <i class="fa fa-save"></i> Update
       </button>

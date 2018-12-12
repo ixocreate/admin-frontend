@@ -1,5 +1,8 @@
 <kiwi-content>
   <ng-template #headerButtons>
+    <a [routerLink]="'../../'" class="btn btn-outline-dark">
+      <i class="fa fa-ban"></i> Cancel
+    </a>
     <button class="btn btn-primary" (click)="onSubmit()">
       <i class="fa fa-save"></i> Update
     </button>
