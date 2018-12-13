@@ -253,9 +253,13 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   getResourceWidgets(resource: string, position: string, type: string, id: string = null): Promise<any> {
-    if (id === null) {
-      return this.api.get(this.config.config.routes.resourceWidgets.replace("{resource}", resource). replace("{position}", position).replace("{type}", type));
+    if (!this.config.config.routes.resourceWidgets) {
+      return Promise.resolve([]);
     }
-    return this.api.get(this.config.config.routes.resourceWidgets.replace("{resource}", resource). replace("{position}", position).replace("{type}", type).replace('[/{id}]', '/' + id));
+    if (id === null) {
+      return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource).replace('{position}', position).replace('{type}', type));
+    }
+    return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource)
+      .replace('{position}', position).replace('{type}', type).replace('[/{id}]', '/' + id));
   }
 }

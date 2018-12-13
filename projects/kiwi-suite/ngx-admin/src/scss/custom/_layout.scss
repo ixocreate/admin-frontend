@@ -80,6 +80,15 @@
   text-overflow: ellipsis;
 }
 
+.main .nav-tabs {
+  .nav-link {
+    &.active {
+      font-weight: bold;
+      color: $primary;
+    }
+  }
+}
+
 .aside-menu {
   top: $navbar-height;
 
