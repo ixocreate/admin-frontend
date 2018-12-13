@@ -80,6 +80,15 @@
   text-overflow: ellipsis;
 }
 
+.main .nav-tabs {
+  .nav-link {
+    &.active {
+      font-weight: bold;
+      color: $primary;
+    }
+  }
+}
+
 .aside-menu {
   top: $navbar-height;
 
@@ -261,5 +270,23 @@
     font-weight: bold;
     color: #fff;
     z-index: 2;
+  }
+}
+
+.current-media {
+  background: $primary;
+  padding: ($spacer / 1.5) ($spacer * 2);
+  margin-bottom: -2px;
+  color: #fff;
+  line-height: 1.1em;
+
+  .is-top {
+    @include border-top-radius($border-radius);
+  }
+
+  img {
+    width: auto;
+    height: 50px;
+    border-radius: $border-radius;
   }
 }

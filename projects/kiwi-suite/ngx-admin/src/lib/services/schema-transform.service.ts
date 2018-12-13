@@ -18,6 +18,7 @@ export class SchemaTransformService {
     this.registerTransform('collection', this.handleDynamic);
 
     this.registerTransform('text', this.handleDefault('input'));
+    this.registerTransform('number', this.handleDefault('input', {type: 'number'}));
     this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}));
     this.registerTransform('checkbox', this.handleDefault('checkbox'));
     this.registerTransform('radio', this.handleRadio);

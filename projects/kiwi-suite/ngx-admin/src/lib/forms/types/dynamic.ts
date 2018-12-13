@@ -15,6 +15,9 @@ export interface BlockSelect {
   selector: 'formly-field-dynamic',
   template: `
     <div class="form-dynamic-container" [class.no-childs]="field.fieldGroup.length === 0">
+      <div class="form-dynamic-label" *ngIf="field.templateOptions.label">
+        {{ field.templateOptions.label }}
+      </div>
       <div class="form-dynamic-toggles" [class.d-none]="field.fieldGroup.length === 0">
         <a href="#" (click)="toggleAll(false)">Collapse all</a> |
         <a href="#" (click)="toggleAll(true)">Expand all</a>
@@ -63,24 +66,33 @@ export interface BlockSelect {
         </ng-container>
       </div>
       <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
-        <div class="input-group">
-          <ng-select [items]="fieldGroupTypes" [(ngModel)]="selectedFieldGroupType" bindLabel="label" [clearable]="false">
-            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-              <div class="d-flex" *ngIf="item.copy">
-                <div class="flex-grow-1">{{ item.label }}</div>
-                <button class="select-remove" (click)="removeCopiedBlock(item)">
-                  <i class="fa fa-times"></i>
-                </button>
-              </div>
-              <div *ngIf="!item.copy">{{ item.label }}</div>
-            </ng-template>
-          </ng-select>
-          <div class="input-group-append">
-            <button class="btn btn-success" type="button" (click)="add()">
-              <i class="fa fa-plus"></i>
+        <ng-container *ngIf="fieldGroupTypes.length > 1; else singleField">
+          <div class="input-group">
+            <ng-select [items]="fieldGroupTypes" [(ngModel)]="selectedFieldGroupType" bindLabel="label" [clearable]="false">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="d-flex" *ngIf="item.copy">
+                  <div class="flex-grow-1">{{ item.label }}</div>
+                  <button class="select-remove" (click)="removeCopiedBlock(item)">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
+                <div *ngIf="!item.copy">{{ item.label }}</div>
+              </ng-template>
+            </ng-select>
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button" (click)="add()">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #singleField>
+          <div class="text-right">
+            <button class="btn btn-success" type="button" (click)="add()" *ngIf="fieldGroupTypes[0]">
+              <i class="fa fa-plus"></i> Add {{ fieldGroupTypes[0].label }}
             </button>
           </div>
-        </div>
+        </ng-template>
       </div>
     </div>
   `,
