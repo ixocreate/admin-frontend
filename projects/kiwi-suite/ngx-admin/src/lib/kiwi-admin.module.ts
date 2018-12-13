@@ -266,6 +266,8 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
   ],
   exports: [
     RouterModule,
+    ...APP_CONTAINERS,
+    ...APP_COMPONENTS,
   ],
 })
 export class KiwiAdminModule {
