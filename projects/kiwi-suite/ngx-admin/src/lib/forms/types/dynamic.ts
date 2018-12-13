@@ -15,6 +15,9 @@ export interface BlockSelect {
   selector: 'formly-field-dynamic',
   template: `
     <div class="form-dynamic-container" [class.no-childs]="field.fieldGroup.length === 0">
+      <div class="form-dynamic-label" *ngIf="field.templateOptions.label">
+        {{ field.templateOptions.label }}
+      </div>
       <div class="form-dynamic-toggles" [class.d-none]="field.fieldGroup.length === 0">
         <a href="#" (click)="toggleAll(false)">Collapse all</a> |
         <a href="#" (click)="toggleAll(true)">Expand all</a>

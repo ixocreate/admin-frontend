@@ -302,6 +302,17 @@ $dynamic-form-color: $border-color;
   }
 }
 
+.form-dynamic-label {
+  background: #f9f9f9;
+  font-size: 1rem;
+  font-weight: $font-weight-bold;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  margin: ($spacer/2) 0 ($spacer/2);
+  padding: 3px $spacer 3px;
+  text-align: center;
+}
+
 .form-dynamic-toggles {
   margin: ($spacer/2) $spacer ($spacer/2);
 }

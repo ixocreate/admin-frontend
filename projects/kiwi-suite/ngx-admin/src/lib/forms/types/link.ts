@@ -4,6 +4,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ConfigService } from '../../services/config.service';
 import { AppDataService } from '../../services/data/app-data.service';
+import { MediaHelper } from '../../helpers/media.helper';
 
 @Component({
   selector: 'formly-field-link',
@@ -43,6 +44,18 @@ import { AppDataService } from '../../services/data/app-data.service';
         </div>
       </div>
       <ng-container *ngIf="selectedType === 'media'">
+        <div class="current-media" *ngIf="value">
+          <div class="row align-items-center">
+            <div class="col-auto text-center">
+              <ng-container *ngIf="isImage(value.value.mimeType); else noImage"><img [src]="value.value.thumb" class="img-fluid" /></ng-container>
+              <ng-template #noImage class="media-container"><i [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.value.mimeType)"></i></ng-template>
+            </div>
+            <div class="col">
+              <b>Current File:</b><br/>
+              {{ value.value.filename }}
+            </div>
+          </div>
+        </div>
         <kiwi-media-list class="media-inline" (select)="onSelectType($event)"></kiwi-media-list>
       </ng-container>
       <ng-container *ngIf="selectedType === 'sitemap'">
@@ -77,6 +90,9 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
 
   sitemapLinkInputValue = '';
   externalLinkInputValue = '';
+
+  isImage = MediaHelper.isImage;
+  mimeTypeIcon = MediaHelper.mimeTypeIcon;
 
   modalRef: BsModalRef;
   selectedType = 'external';

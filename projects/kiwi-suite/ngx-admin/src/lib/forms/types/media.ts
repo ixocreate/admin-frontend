@@ -35,6 +35,18 @@ import { Media } from '../../interfaces/media.interface';
     </div>
 
     <ng-template #modalTemplate>
+      <div class="current-media is-top" *ngIf="value">
+        <div class="row align-items-center">
+          <div class="col-auto text-center">
+            <ng-container *ngIf="isImage(value.mimeType); else noImage"><img [src]="value.thumb" class="img-fluid" /></ng-container>
+            <ng-template #noImage class="media-container"><i [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.mimeType)"></i></ng-template>
+          </div>
+          <div class="col">
+            <b>Current File:</b><br/>
+            {{ value.filename }}
+          </div>
+        </div>
+      </div>
       <kiwi-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></kiwi-media-list>
     </ng-template>
   `,
