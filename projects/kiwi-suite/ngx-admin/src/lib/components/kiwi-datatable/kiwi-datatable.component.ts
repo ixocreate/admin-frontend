@@ -150,6 +150,8 @@ export class KiwiDatatableComponent implements OnInit {
             name: element.label,
             prop: element.name,
             type: element.type,
+            sortable: element.sortable,
+            searchable: element.searchable,
           };
         });
         columns.push({

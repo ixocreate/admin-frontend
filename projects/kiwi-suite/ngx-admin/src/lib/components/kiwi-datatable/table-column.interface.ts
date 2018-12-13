@@ -13,4 +13,5 @@ export interface TableColumnData<T> {
   headerClass?: string;
   cellClass?: string;
   canAutoResize?: boolean;
+  sortable?: boolean;
 }
