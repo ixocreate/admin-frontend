@@ -136,6 +136,7 @@ export class SchemaTransformService {
         wrappers: ['tab'],
         templateOptions: {
           label: element.label,
+          icon: element.icon,
         },
         fieldGroup: transformer.transformForm(element.elements),
         elements: element.elements,

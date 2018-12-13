@@ -8,6 +8,7 @@ import { FormlyWrapperTabComponent } from './tab.wrapper';
     <ul class="nav nav-tabs">
       <li class="nav-item" *ngFor="let tab of tabs;let index = index;">
         <a class="nav-link" [class.active]="isActive(index)" [class.is-invalid]="showSubError(index)" (click)="activate(index)" href="#">
+          <i *ngIf="tab.to.icon" [class]="'mr-2 ' + tab.to.icon"></i>
           {{ tab.to.label }}
         </a>
       </li>
