@@ -44,7 +44,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.resourceKey = params.type;
+      this.resourceKey = params.type || this.resourceKey;
       this.resourceId = params.id;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);

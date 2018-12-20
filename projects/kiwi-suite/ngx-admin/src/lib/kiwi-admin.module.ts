@@ -266,6 +266,12 @@ export class KiwiReuseStrategy implements RouteReuseStrategy {
   ],
   exports: [
     RouterModule,
+
+    FormsModule,
+    ReactiveFormsModule,
+    FormlyModule,
+    FormlyBootstrapModule,
+
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
   ],

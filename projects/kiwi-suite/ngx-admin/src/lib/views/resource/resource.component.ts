@@ -12,7 +12,7 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
   resourceKey: string;
   canCreate = false;
 
-  constructor(protected route: ActivatedRoute, private config: ConfigService, private pageTitle: PageTitleService) {
+  constructor(protected route: ActivatedRoute, protected config: ConfigService, protected pageTitle: PageTitleService) {
     super();
   }
 
