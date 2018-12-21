@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountDataService } from '../../../services/data/account-data.service';
@@ -9,10 +9,11 @@ import { ConfigService } from '../../../services/config.service';
   selector: 'app-dashboard',
   templateUrl: 'login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   form: FormGroup;
   error: string = null;
+  loginMessage: string = "";
 
   constructor(private router: Router,
               public appData: AppDataService,
@@ -24,6 +25,10 @@ export class LoginComponent {
       email: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
+  }
+
+  ngOnInit() {
+    this.loginMessage = this.config.config.project.loginMessage;
   }
 
   onLogin() {

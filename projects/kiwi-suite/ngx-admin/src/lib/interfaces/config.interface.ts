@@ -31,6 +31,7 @@ export interface Project {
   background?: string;
   icon?: string;
   logo?: string;
+  loginMessage?: string;
 }
 
 export interface Navigation {

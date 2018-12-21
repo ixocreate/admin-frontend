@@ -37,6 +37,10 @@
               </div>
             </div>
           </div>
+
+          <div *ngIf="loginMessage.length > 0" class="alert alert-info mt-3">
+            <div [innerHTML]="loginMessage"></div>
+          </div>
         </div>
       </div>
     </div>
