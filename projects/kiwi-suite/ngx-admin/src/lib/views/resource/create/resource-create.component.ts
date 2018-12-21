@@ -21,6 +21,9 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
+  aboveWidgetData$: Promise<any>;
+  belowWidgetData$: Promise<any>;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -37,6 +40,9 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
       this.fields = this.resourceInfo.createSchema ?  this.schemaTransform.transformForm(this.resourceInfo.createSchema) : [];
+      this.aboveWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'above', 'create');
+      this.belowWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'below', 'create');
+
     });
   }
 

@@ -257,7 +257,7 @@ export class AppDataService extends DataServiceAbstract {
       return Promise.resolve([]);
     }
     if (id === null) {
-      return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource).replace('{position}', position).replace('{type}', type));
+      return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource).replace('{position}', position).replace('{type}', type).replace('[/{id}]', ''));
     }
     return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource)
       .replace('{position}', position).replace('{type}', type).replace('[/{id}]', '/' + id));

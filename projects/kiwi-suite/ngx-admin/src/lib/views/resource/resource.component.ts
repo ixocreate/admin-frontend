@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
 import { PageTitleService } from '../../services/page-title.service';
+import {AppDataService} from "../../services/data/app-data.service";
 
 @Component({
   templateUrl: './resource.component.html',
@@ -12,7 +13,10 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
   resourceKey: string;
   canCreate = false;
 
-  constructor(protected route: ActivatedRoute, protected config: ConfigService, protected pageTitle: PageTitleService) {
+  aboveWidgetData$: Promise<any>;
+  belowWidgetData$: Promise<any>;
+
+  constructor(protected route: ActivatedRoute, protected config: ConfigService, protected pageTitle: PageTitleService, protected appData: AppDataService) {
     super();
   }
 
@@ -23,6 +27,8 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
       setTimeout(() => {
         this.canCreate = this.config.getResourceConfig(this.resourceKey).canCreate;
       });
+      this.aboveWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'above', 'list');
+      this.belowWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'below', 'list');
     });
   }
 
