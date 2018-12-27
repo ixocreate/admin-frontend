@@ -1,0 +1,292 @@
+.btn-outline-input {
+  @include button-outline-variant($input-border-color);
+  background: #fff;
+}
+
+.btn-outline-white {
+  @include button-outline-variant(#fff);
+}
+
+.btn-more {
+  color: #aaa;
+  border-width: 0;
+  background: transparent;
+
+  &:hover {
+    color: $body-color;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.main .container-fluid {
+  padding: 0 25px;
+}
+
+.card-header {
+  padding: 7px 1.25rem;
+}
+
+@each $color, $value in $theme-colors {
+  .dropdown-item-#{$color} {
+    &, i {
+      color: $value;
+    }
+
+    &:focus,
+    &:hover {
+      color: $value;
+    }
+
+    &:active,
+    &.active {
+      background: $value;
+
+      &, i {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.custom-card-header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.app-footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+}
+
+.header-email {
+  display: block;
+  max-width: 30vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main .nav-tabs {
+  .nav-link {
+    &.active {
+      font-weight: bold;
+      color: $primary;
+    }
+  }
+}
+
+.aside-menu {
+  top: $navbar-height;
+
+  .nav-tabs {
+    position: relative;
+    z-index: 1;
+    border-color: #c8ced3;
+    background: #f9f9f9;
+
+    .nav-link {
+      border: 1px solid $border-color;
+      border-top: 0;
+      border-left: 0;
+      color: rgba(0, 0, 0, .2);
+
+      &.active {
+        border-bottom-color: #fff;
+      }
+    }
+  }
+}
+
+.app-body-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  z-index: -1;
+}
+
+.page-title {
+  background-color: $title-container-background;
+  @include border-radius($breadcrumb-border-radius);
+  @include borders($breadcrumb-borders);
+  position: fixed;
+  top: $navbar-height;
+  right: 0;
+  left: 0;
+  z-index: $zindex-sticky - 3;
+  transition: left $layout-transition-speed, right $layout-transition-speed, width $layout-transition-speed;
+
+  .breadcrumb {
+    border: 0;
+    margin-bottom: 0;
+  }
+
+  .page-title-buttons {
+    flex: 1;
+    text-align: right;
+    padding: 5px 15px;
+
+    .btn {
+      margin-left: 5px;
+    }
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    html:not([dir="rtl"]) {
+      .sidebar#{$infix}-show {
+        @include media-breakpoint-up(sm) {
+          .page-title {
+            left: $sidebar-width;
+          }
+          &.sidebar-compact {
+            .page-title {
+              left: $sidebar-compact-width;
+            }
+          }
+          &.sidebar-minimized {
+            .page-title {
+              left: $sidebar-minimized-width;
+            }
+          }
+        }
+      }
+
+      .aside-menu#{$infix}-show {
+        @include media-breakpoint-up(sm) {
+          .page-title {
+            right: $aside-menu-width;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pagination-container {;
+
+  pagination {
+    display: inline-block;
+  }
+
+  .pagination {
+    margin-bottom: 0;
+  }
+}
+
+.modal-dialog.modal-empty {
+  .modal-content {
+    background: transparent;
+
+    .card {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modal-content {
+  border: 0;
+
+  .modal-header {
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+  }
+}
+
+.copy-info {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  box-shadow: $box-shadow;
+  z-index: 1100;
+  max-width: 240px;
+}
+
+.dropdown-btn:focus {
+  outline: 0;
+}
+
+.modal-map {
+  height: 250px;
+}
+
+.custom-progress {
+  height: 21px;
+  line-height: 21px;
+  overflow: hidden;
+  font-size: 0.8rem;
+  border-radius: 0.25rem;
+  background: #fff;
+  position: relative;
+
+  .custom-progress-bar-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: .4;
+    background: $primary;
+    z-index: 0;
+  }
+
+  .custom-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    max-width: 100%;
+    background: $primary;
+    z-index: 1;
+    border-radius: 0.25rem;
+  }
+
+  .custom-progress-text {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+    color: #fff;
+    z-index: 2;
+  }
+}
+
+.current-media {
+  background: $primary;
+  padding: ($spacer / 1.5) ($spacer * 2);
+  margin-bottom: -2px;
+  color: #fff;
+  line-height: 1.1em;
+
+  .is-top {
+    @include border-top-radius($border-radius);
+  }
+
+  img {
+    width: auto;
+    height: 50px;
+    border-radius: $border-radius;
+  }
+}

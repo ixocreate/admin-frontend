@@ -1,121 +1,95 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs/operators';
-import {AccountService} from '../../services';
-import {ResourceEditComponent} from '../resource';
-import {User} from "../../models/resource.model";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { AccountDataService } from '../../services/data/account-data.service';
+import { NotificationService } from '../../services/notification.service';
+import { User } from '../../interfaces/user.interface';
+import { ViewAbstractComponent } from '../../components/view.abstract.component';
 
 @Component({
-    selector: 'app-account',
-    templateUrl: './account.component.html',
+  templateUrl: './account.component.html',
 })
-export class AccountComponent extends ResourceEditComponent implements OnInit {
-    account: User;
+export class AccountComponent extends ViewAbstractComponent {
+  account: User;
 
-    passwordForm: FormGroup;
-    passwordFormFields: FormlyFieldConfig[];
-    passwordFormModel = {password: '', passwordRepeat: '', passwordOld: ''};
+  passwordForm: FormGroup = new FormGroup({});
+  passwordFormOptions: FormlyFormOptions = {};
+  passwordFormFields: FormlyFieldConfig[] = [
+    {
+      key: 'passwordOld',
+      type: 'input',
+      templateOptions: {
+        type: 'password',
+        label: 'Enter your current password',
+        placeholder: 'Enter your current password',
+        required: true,
+      },
+    },
+    {
+      key: 'password',
+      type: 'input',
+      templateOptions: {
+        type: 'password',
+        label: 'New password',
+        placeholder: 'New password',
+        required: true,
+      },
+    },
+    {
+      key: 'passwordRepeat',
+      type: 'input',
+      templateOptions: {
+        type: 'password',
+        label: 'Repeat password',
+        placeholder: 'Repeat password',
+        required: true,
+      },
+    },
+  ];
 
-    emailForm: FormGroup;
-    emailFormFields: FormlyFieldConfig[];
-    emailFormModel = {email: '', emailRepeat: ''};
+  emailForm: FormGroup = new FormGroup({});
+  emailFormOptions: FormlyFormOptions = {};
+  emailFormFields: FormlyFieldConfig[] = [
+    {
+      key: 'email',
+      type: 'input',
+      templateOptions: {
+        type: 'email',
+        label: 'New email address',
+        placeholder: 'New email address',
+        required: true,
+      },
+    },
+    {
+      key: 'emailRepeat',
+      type: 'input',
+      templateOptions: {
+        type: 'email',
+        label: 'Repeat email address',
+        placeholder: 'Repeat email address',
+        required: true,
+      },
+    },
+  ];
 
-    constructor(protected route: ActivatedRoute,
-                protected dataService: AccountService) {
-        super(route);
-    }
+  constructor(protected notification: NotificationService,
+              public accountData: AccountDataService) {
+    super();
+  }
 
-    protected initModel() {
-        this.dataService.user$.pipe(takeUntil(this.destroyed$))
-            .subscribe(user => {
-                if (!user) {
-                    return;
-                }
-                this.account = user;
-                this.initForm();
-            });
-    }
+  onSubmitEmail() {
+    const data = this.emailForm.getRawValue();
+    this.accountData.updateEmail(data.email, data.emailRepeat).then(() => {
+      this.emailFormOptions.resetModel();
+      this.notification.success('The email was successfully updated', 'Success');
+    }).catch((error) => this.notification.apiError(error));
+  }
 
-    initForm() {
-        this.emailForm = new FormGroup({});
-        this.emailFormFields = [
-            {
-                key: 'email',
-                type: 'input',
-                templateOptions: {
-                    type: 'email',
-                    label: 'New email address',
-                    placeholder: 'New email address',
-                    required: true,
-                }
-            },
-            {
-                key: 'emailRepeat',
-                type: 'input',
-                templateOptions: {
-                    type: 'email',
-                    label: 'Repeat email address',
-                    placeholder: 'Repeat email address',
-                    required: true,
-                }
-            }
-        ];
-
-        this.passwordForm = new FormGroup({});
-        this.passwordFormFields = [
-            {
-                key: 'passwordOld',
-                type: 'input',
-                templateOptions: {
-                    type: 'password',
-                    label: 'Enter your current password',
-                    placeholder: 'Enter your current password',
-                    required: true,
-                }
-            },
-            {
-                key: 'password',
-                type: 'input',
-                templateOptions: {
-                    type: 'password',
-                    label: 'New password',
-                    placeholder: 'New password',
-                    required: true,
-                }
-            },
-            {
-                key: 'passwordRepeat',
-                type: 'input',
-                templateOptions: {
-                    type: 'password',
-                    label: 'Repeat password',
-                    placeholder: 'Repeat password',
-                    required: true,
-                }
-            }
-
-        ];
-    }
-
-    onSubmitEmail() {
-        this.dataService.updateEmail(this.account, this.emailForm.getRawValue())
-            .subscribe(() => {
-                this.dataService.load();
-                this.toastr.success('The email was successfully updated ', 'Success');
-            }, () => {
-                this.toastr.error('There was an error in updating the email', 'Error');
-            });
-    }
-
-    onSubmitPassword() {
-        this.dataService.updatePassword(this.account, this.passwordForm.getRawValue())
-            .subscribe(() => {
-                this.dataService.load();
-                this.toastr.success('The password was successfully updated ', 'Success');
-            }, () => {
-                this.toastr.error('There was an error in updating the password', 'Error');
-            });
-    }
+  onSubmitPassword() {
+    const data = this.passwordForm.getRawValue();
+    this.accountData.updatePassword(data.passwordOld, data.password, data.passwordRepeat).then(() => {
+      this.passwordFormOptions.resetModel();
+      this.notification.success('The password was successfully updated', 'Success');
+    }).catch((error) => this.notification.apiError(error));
+  }
 }

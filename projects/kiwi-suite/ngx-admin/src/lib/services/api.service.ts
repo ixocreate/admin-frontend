@@ -1,102 +1,123 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ConfigService } from './config.service';
+import { Observable } from 'rxjs/Observable';
+import { catchError, map, publishLast, refCount, timeout } from 'rxjs/operators';
+import { _throw } from 'rxjs/observable/throw';
+import { BehaviorSubject } from 'rxjs';
+import { APIErrorElement, APIResponse } from '../interfaces/api-response.interface';
 
-import {BehaviorSubject, Observable, throwError as observableThrowError} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {ApiResponse} from '../models';
-import {LoggerService} from './logger.service';
+export enum ApiRequestMethod {
+  GET = 'get',
+  POST = 'post',
+  PUT = 'put',
+  DELETE = 'delete',
+  PATCH = 'patch',
+  HEAD = 'head',
+  OPTIONS = 'options',
+}
 
+@Injectable()
 export class ApiService {
 
-    protected _loading$ = new BehaviorSubject<boolean>(false);
+  private _isAuthorized$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    constructor(protected http: HttpClient, public logger: LoggerService) {
+  constructor(protected http: HttpClient, protected config: ConfigService) {
+  }
+
+  get isAuthorized$(): Observable<boolean> {
+    return this._isAuthorized$.asObservable();
+  }
+
+  /**
+   * @description Headers for requests
+   */
+  private errorMapping(response: APIResponse): APIErrorElement {
+    const errors: APIErrorElement = {
+      code: response.errorCode,
+      data: {
+        title: 'Error',
+        messages: [],
+      },
+    };
+    for (const message of response.errorMessages) {
+      errors.data.messages.push(message);
     }
+    return errors;
+  }
 
-    get loading$() {
-        return this._loading$.asObservable();
-    }
-
-    /**
-     * handle kiwi admin api responses
-     * @param response
-     */
-    private handleResponse(response) {
-        if (this._loading$) {
-            this._loading$.next(false);
+  /**
+   * @description Sends a request to the server
+   */
+  protected request(method: ApiRequestMethod, url: string, body: any = null): Observable<any> {
+    return this.http.request(<string>method, url, {
+      body,
+      headers: this.headers,
+      observe: 'events',
+      withCredentials: !this.config.environment.production,
+    }).pipe(
+      timeout(10000),
+      publishLast(),
+      refCount(),
+      catchError((error) => {
+        if (error.status === 401) {
+          this._isAuthorized$.next(false);
         }
-        if (response.success === true) {
-            return response.result;
+        return _throw(error.error ? this.errorMapping(error.error) : null);
+      }),
+      map((response: HttpResponse<any>) => {
+        if (url !== this.config.config.routes.session && url !== this.config.config.routes.config) {
+          this._isAuthorized$.next(true);
         }
-        throw new Error(response.errorCode);
-    }
-
-    /**
-     * handle kiwi admin api error responses
-     * @param error
-     */
-    private handleError(error) {
-        if (this._loading$) {
-            this._loading$.next(false);
+        const apiResponse: APIResponse = response.body;
+        if (typeof apiResponse.success === 'undefined') {
+          return apiResponse;
         }
-        return observableThrowError(error);
-    }
-
-    get<T>(url: string, params: any = {}): Observable<T> {
-
-        this._loading$.next(true);
-
-        let httpParams = new HttpParams();
-        /**
-         * omit empty params
-         */
-        for (const key of Object.keys(params)) {
-            if (params[key] === null) {
-                continue;
-            }
-            httpParams = httpParams.set(<string>key, <string>params[key]);
+        if (apiResponse.success) {
+          return apiResponse.result;
+        } else {
+          throw apiResponse ? this.errorMapping(apiResponse) : null;
         }
-        return this.http.get(url, {params: httpParams}).pipe(
-            map(response => this.handleResponse(response)),
-            catchError(error => this.handleError(error))
-        );
-    }
+      }),
+    );
+  }
 
-    post<T>(url: string, params?: any): Observable<T> {
-        this._loading$.next(true);
-        return this.http.post<ApiResponse<T>>(url, params, {}).pipe(
-            map(response => this.handleResponse(response)),
-            catchError(error => this.handleError(error))
-        );
+  get(url: string, params: any = {}): Promise<any> {
+    const urlParams = new URLSearchParams();
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        urlParams.set(key, params[key]);
+      }
     }
+    if (urlParams.toString() !== '') {
+      url = url + '?' + urlParams.toString();
+    }
+    return this.request(ApiRequestMethod.GET, url, null).toPromise();
+  }
 
-    put<T>(url: string, params?: any): Observable<T> {
-        this._loading$.next(true);
-        return this.http.put<ApiResponse<T>>(url, params, {}).pipe(
-            map(response => this.handleResponse(response)),
-            catchError(error => this.handleError(error))
-        );
-    }
+  post(url: string, body: any = {}): Promise<any> {
+    return this.request(ApiRequestMethod.POST, url, body).toPromise();
+  }
 
-    patch<T>(url: string, params?: any): Observable<{}> {
-        this._loading$.next(true);
-        return this.http.patch<ApiResponse<T>>(url, params, {}).pipe(
-            map(response => this.handleResponse(response)),
-            catchError(error => this.handleError(error))
-        );
-    }
+  put(url: string, body: any = {}): Promise<any> {
+    return this.request(ApiRequestMethod.PUT, url, body).toPromise();
+  }
 
-    delete<T>(url: string, params: any = {}): Observable<T> {
-        this._loading$.next(true);
-        let httpParams = new HttpParams();
-        for (const key of Object.keys(params)) {
-            if (params[key] === null) {
-                continue;
-            }
-            httpParams = httpParams.set(<string>key, <string>params[key]);
-        }
-        return this.http.delete<ApiResponse<T>>(url, {params: httpParams}).pipe(
-            map(response => this.handleResponse(response)),
-            catchError(error => this.handleError(error))
-        );
-    }
+  delete(url: string): Promise<any> {
+    return this.request(ApiRequestMethod.DELETE, url, null).toPromise();
+  }
+
+  patch(url: string, body: any = {}): Promise<any> {
+    return this.request(ApiRequestMethod.PATCH, url, body).toPromise();
+  }
+
+  head(url: string): Promise<any> {
+    return this.request(ApiRequestMethod.HEAD, url, null).toPromise();
+  }
+
+  options(url: string): Promise<any> {
+    return this.request(ApiRequestMethod.OPTIONS, url, null).toPromise();
+  }
+
 }

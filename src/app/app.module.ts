@@ -1,38 +1,17 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {AdminComponent, AdminModule} from '@kiwi-suite/ngx-admin';
-import {environment} from '../environments/environment';
-import {AppRoutingModule} from './app.routing';
-
-/**
- * register your custom data services here
- */
-const DATA_SERVICES = [
-
-];
-
-/**
- * register your custom components here
- */
-const APP_COMPONENTS = [
-
-];
+import { NgModule } from '@angular/core';
+import { AdminComponent } from '../../projects/kiwi-suite/ngx-admin/src/lib/admin.component';
+import { environment } from '../environments/environment';
+import { KiwiAdminModule } from '../../projects/kiwi-suite/ngx-admin/src/lib/kiwi-admin.module';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        AdminModule.forRoot({
-            environment: environment
-        }),
-    ],
-    declarations: [
-        ...APP_COMPONENTS,
-    ],
-    providers: [
-        ...DATA_SERVICES
-    ],
-    bootstrap: [AdminComponent]
+  imports: [
+    KiwiAdminModule.forRoot({
+      environment: environment,
+    }),
+  ],
+  declarations: [],
+  providers: [],
+  bootstrap: [AdminComponent],
 })
 export class AppModule {
 }

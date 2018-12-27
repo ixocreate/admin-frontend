@@ -1,0 +1,37 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import '~@swimlane/ngx-datatable/src/themes/bootstrap';
+@import 'vendor/ngx-datatable';
+
+@import '~ngx-toastr/toastr.css';
+@import 'vendor/toastr';
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "vendor/ng-select";
+
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/primeng.css";
+@import "~primeng/resources/themes/bootstrap/theme.css";
+@import "vendor/primeng";
+
+@import "~quill/dist/quill.snow.css";
+@import "vendor/quill";
+
+@import "~@swimlane/ngx-dnd/release/index.css";
+
+@import "vendor/map";
+
+@import "custom/layout";
+@import "custom/loading";
+@import "custom/media";
+@import "custom/sitemap";
+@import "custom/forms";
+

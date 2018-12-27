@@ -1,0 +1,191 @@
+.media-grid {
+  margin: 10px;
+
+  .media-container {
+    margin: 10px;
+  }
+}
+
+.media-container-max-width-container {
+  max-width: 140px;
+}
+
+.media-inline {
+  .card {
+    margin-top: -1px;
+    border-radius: 0 0 $modal-content-border-radius $modal-content-border-radius;
+    margin-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .card-header:first-child {
+    border-radius: 0;
+  }
+}
+
+.media-container {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid $input-border-color;
+  padding-bottom: calc(100% - 24px);
+  border-radius: $input-border-radius;
+  cursor: pointer;
+
+  &.is-invalid {
+    border-color: $danger;
+
+    .media-image-title {
+      color: #fff;
+      background: $danger;
+    }
+
+    .media-icon .file-icon {
+      color: $danger;
+    }
+  }
+
+  &:hover {
+    border-color: $primary;
+
+    .media-image-title {
+      color: #fff;
+      background: $primary;
+    }
+
+    .media-icon .file-icon {
+      color: $primary;
+    }
+  }
+
+  .btn-media-remove {
+    position: absolute;
+    z-index: 1;
+    right: -1px;
+    top: -1px;
+    border: 0;
+    background: $border-color;
+    color: #fff;
+    @include border-radius(0 0 0 $input-border-radius);
+    width: 25px;
+    height: 25px;
+    text-align: center;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:hover {
+      background: $danger;
+    }
+  }
+
+  .progress-bar-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+
+    .progress,
+    .progress-bar {
+      border-radius: 0;
+    }
+  }
+
+  .media-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 25px;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .media-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .file-icon {
+      display: block;
+      color: $input-border-color;
+    }
+  }
+
+  .media-image-title {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: $input-border-color;
+    font-size: .85em;
+    padding: 0 5px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+
+    & > div {
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.upload-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-bottom: 1px dashed $border-color;
+  background: #fafafa;
+  height: 90px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f2f2f2;
+    border-color: $primary;
+  }
+
+  .drop-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .upload-center {
+      p {
+        margin: 10px 0 0;
+        opacity: .6;
+      }
+    }
+
+    .file-upload {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      margin: 0;
+    }
+  }
+}
+

@@ -1,14 +1,14 @@
-import { DashboardPage } from './app.po';
+import { CoreUIPage } from './app.po';
 
-describe('start with Dashboard', () => {
-  let page: DashboardPage;
+describe('core-ui App', function() {
+  let page: CoreUIPage;
 
   beforeEach(() => {
-    page = new DashboardPage();
+    page = new CoreUIPage();
   });
 
-  // it('should display welcome message', () => {
-  //   page.navigateTo();
-  //   expect(page.getActiveNavLinkText()).toEqual('Dashboard');
-  // });
+  it('should display message saying app works', () => {
+    page.navigateTo();
+    expect(page.getParagraphText()).toEqual('app works!');
+  });
 });

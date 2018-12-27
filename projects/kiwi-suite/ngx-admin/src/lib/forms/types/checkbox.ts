@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
-import { FieldType } from '@ngx-formly/core';
+import { Component, OnInit } from '@angular/core';
+import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 
 @Component({
   selector: 'formly-field-checkbox',
   template: `
-    <label class="custom-control custom-checkbox">
-      <input type="checkbox" [formControl]="formControl"
-        [attr.invalid]="showError"
-        [indeterminate]="to.indeterminate && model[key] === undefined"
-        [formlyAttributes]="field" class="custom-control-input">
-        <span class="custom-control-label">
-          {{ to.label }}
-          <ng-container *ngIf="to.required && to.hideRequiredMarker !== true">*</ng-container>
-        </span>
-        <span class="custom-control-indicator"></span>
+    <label class="switch switch-primary" [class.input-disabled]="to.disabled">
+      <input type="checkbox" class="switch-input" [(ngModel)]="value" (change)="setValue(value)">
+      <span class="switch-slider"></span>
     </label>
   `,
 })
-export class FormlyFieldCheckbox extends FieldType {}
+export class FormlyFieldCheckboxComponent extends CustomFieldTypeAbstract implements OnInit {
+
+  ngOnInit() {
+    super.ngOnInit();
+    if (this.value === null) {
+      this.setValue(false);
+    }
+  }
+
+}

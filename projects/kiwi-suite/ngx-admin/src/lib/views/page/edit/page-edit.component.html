@@ -1,0 +1,249 @@
+<kiwi-content>
+  <ng-template #headerButtons>
+    <a [routerLink]="'../../'" class="btn btn-outline-dark">
+      <i class="fa fa-ban"></i> Cancel
+    </a>
+    <ng-container *ngIf="data$ | async as data">
+      <button class="btn btn-primary" (click)="onSubmit()">
+        <i class="fa fa-save"></i> Update
+      </button>
+    </ng-container>
+
+  </ng-template>
+
+  <ng-container *ngIf="versionData$ | async as versionData; else isLoading">
+    <ng-container *ngIf="versionForm && versionFields">
+      <formly-form [form]="versionForm" [fields]="versionFields" [model]="versionData.content"
+                   class="kiwi-form kiwi-form-inline"></formly-form>
+    </ng-container>
+  </ng-container>
+  <ng-template #isLoading>
+    <div class="text-center my-3 loading">
+      <kiwi-loading class="big-center"></kiwi-loading>
+    </div>
+  </ng-template>
+
+  <ng-template #aside>
+    <tabset>
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-cog"></i>
+        </ng-template>
+        <div class="p-3">
+
+          <ng-container *ngIf="pageData">
+            <div class="row mb-3">
+              <div class="col">
+                <form ngNoForm method="post" [action]="previewUrl + '?pageId=' + pageData.id" target="preview" *ngIf="versionForm">
+                    <input type="hidden" name="preview" value="{{ versionForm.getRawValue() | json }}">
+                    <button type="submit" class="btn btn-primary btn-block">
+                      <i class="fa fa-eye"></i> Preview
+                    </button>
+                </form>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-danger" (click)="doDelete()" >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="data$ | async as data" >
+            <a class="btn btn-outline-primary btn-block mb-3" [href]="data.page.url" target="_blank" *ngIf="data.page.isOnline">
+              <i class="fa fa-expand"></i> Open Page
+            </a>
+          </ng-container>
+
+          <div class="kiwi-form" *ngIf="pageData">
+            <h6><i class="fa fa-fw fa-cog"></i> General</h6>
+
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Name<b class="text-danger">*</b>
+              </label>
+
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Name" [(ngModel)]="pageData.name">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('name', pageData.name)">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Slug<b class="text-danger">*</b>
+              </label>
+
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Slug" [(ngModel)]="pageData.slug">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('slug', pageData.slug)">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+                <small class="form-text text-muted">The slug is used to create the Website URL</small>
+              </div>
+            </div>
+            <div class="form-group kiwi-toggle-right">
+              <label class="kiwi-form-label">
+                Online<b class="text-danger">*</b>
+              </label>
+
+              <div class="kiwi-form-control-container">
+                <label class="switch switch-primary">
+                  <input type="checkbox" class="switch-input" [(ngModel)]="pageData.online"
+                         (change)="savePageData('status', pageData.online ? 'online' : 'offline')">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <hr/>
+
+            <h6><i class="fa fa-fw fa-calendar"></i> Scheduling</h6>
+
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Published From<b class="text-danger">*</b>
+              </label>
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <kiwi-date-picker placeholder="Published From" [(ngModel)]="pageData.publishedFrom"></kiwi-date-picker>
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary"
+                            (click)="savePageData('publishedFrom', pageData.publishedFrom)">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="kiwi-form-label">
+                Published Until<b class="text-danger">*</b>
+              </label>
+              <div class="kiwi-form-control-container">
+                <div class="input-group">
+                  <kiwi-date-picker placeholder="Published Until"
+                                    [(ngModel)]="pageData.publishedUntil"></kiwi-date-picker>
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary"
+                            (click)="savePageData('publishedUntil', pageData.publishedUntil)">
+                      <i class="fa fa-save"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr/>
+
+            <h6><i class="fa fa-fw fa-compass"></i> Navigation</h6>
+
+            <div class="form-group">
+              <div class="input-group">
+                <ng-select
+                  [(ngModel)]="selectedNavigationOptions"
+                  [items]="navigationOptions"
+                  placeholder="Navigation"
+                  bindValue="name"
+                  bindLabel="label"
+                  [multiple]="true">
+                </ng-select>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-primary"
+                          (click)="savePageData('navigation', selectedNavigationOptions)">
+                    <i class="fa fa-save"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <!--
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-wrench"></i>
+        </ng-template>
+        <div class="p-3">
+
+          <ng-container *ngIf="detailData$ | async as detailData">
+            <ng-container *ngIf="detailData.meta.otherLanguages.length > 0">
+              <h6><i class="fa fa-fw fa-clone"></i> Replace Content</h6>
+              <ng-container *ngIf="detailData.meta.otherLanguages.length > 0">
+                <div>
+                  <small><b>From other language</b></small>
+                </div>
+                <div class="row mb-3">
+                  <div class="col" *ngFor="let language of detailData.meta.otherLanguages">
+                    <a style="cursor: pointer;" (click)="onReplaceContentModal(language)">
+                      <i class="flag-icon flag-icon-{{ language.locale.substr(3) | lowercase }}"></i>
+                    </a>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="detailData.meta.samePageTypePages.length > 0">
+                <div>
+                  <small><b>From other page</b></small>
+                </div>
+                <ng-select [items]="detailData.meta.samePageTypePages" (change)="onReplaceContentModal($event)"
+                           bindLabel="name" bindValue="id" [clearable]="false">
+                </ng-select>
+              </ng-container>
+              <hr>
+            </ng-container>
+          </ng-container>
+
+        </div>
+      </tab>
+      -->
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-list"></i>
+        </ng-template>
+        <ng-container *ngIf="data$ | async as data">
+          <ng-container *ngIf="versionIndex$ | async as versionIndex">
+            <div class="list-group list-group-accent">
+              <ng-container *ngFor="let element of versionIndex; let i = index">
+                <div class="list-group-item"
+                     [class.list-group-item-accent-success]="data.page.version.approved === element.id"
+                     [class.list-group-item-accent-primary]="data.page.version.approved !== element.id">
+                  <div class="row">
+                    <div class="col">
+                      <div>
+                        <b>#{{ versionIndex.length - i }}</b>
+                        <small class="text-muted">{{ element.createdAt | date:'yyyy-MM-dd HH:mm' }}</small>
+                      </div>
+                      <div class="mt-1">
+                        <a *ngIf="pageData" [href]="previewUrl + '?pageId=' + pageData.id + '&versionId=' + element.id" class="btn btn-sm btn-outline-success mr-1" title="Preview" target="preview"><i class="fa fa-eye"></i></a>
+                        <!--<button class="btn btn-sm btn-outline-success mr-1" title="Approve"><i class="fa fa-thumbs-up"></i></button>-->
+                        <!--<button class="btn btn-sm btn-outline-primary mr-1" title="Replace"><i class="fa fa-history"></i></button>-->
+                        <!--<button class="btn btn-sm btn-outline-danger" title="Delete"><i class="fa fa-trash"></i></button>-->
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <div class="avatar">
+                        <img class="img-avatar" [src]="element.userAvatar" [alt]="element.userEmail" [title]="element.userEmail">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+      </tab>
+    </tabset>
+  </ng-template>
+
+</kiwi-content>

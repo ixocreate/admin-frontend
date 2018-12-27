@@ -1,0 +1,15 @@
+<kiwi-content>
+  <ng-template #headerButtons>
+    <a class="btn btn-success" routerLink="create" *ngIf="canCreate"><i class="fa fa-plus"></i> Create</a>
+  </ng-template>
+
+  <ng-container *ngIf="resourceKey">
+    <ng-container *ngIf="aboveWidgetData$ | async as data">
+      <kiwi-dashboard [data]="data"></kiwi-dashboard>
+    </ng-container>
+    <kiwi-datatable [resource]="resourceKey"></kiwi-datatable>
+    <ng-container *ngIf="belowWidgetData$ | async as data">
+      <kiwi-dashboard [data]="data"></kiwi-dashboard>
+    </ng-container>
+  </ng-container>
+</kiwi-content>

@@ -1,48 +1,40 @@
-<ng-container>
-    <app-content [title]="'Account'">
-        <ng-template #content>
-            <div class="card card-accent-primary">
-                <div class="card-body">
-                    <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail(emailFormModel)" *ngIf="emailForm" novalidate>
-                        <div class="card card-accent-primary">
-                            <div class="card-header">
-                                Email
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="{{ account.email }}" readonly>
-                                </div>
-                                <formly-form [form]="emailForm" [fields]="emailFormFields" [model]="emailFormModel"></formly-form>
-
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-save"></i>
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword(passwordFormModel)" *ngIf="passwordForm" novalidate>
-                        <div class="card card-accent-primary">
-                            <div class="card-header">
-                                Password
-                            </div>
-                            <div class="card-body">
-                                <formly-form [form]="passwordForm" [fields]="passwordFormFields" [model]="passwordFormModel"></formly-form>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-save"></i>
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<kiwi-content>
+  <ng-container *ngIf="accountData.user$ | async as user">
+    <div class="row">
+      <div class="col-md">
+        <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()" class="kiwi-form">
+          <div class="card card-accent-primary">
+            <div class="card-header">Change <b>Email</b></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Your current email *</label>
+                <input type="text" class="form-control" placeholder="{{ user.email }}" readonly>
+              </div>
+              <formly-form [form]="emailForm" [fields]="emailFormFields" [options]="emailFormOptions"></formly-form>
             </div>
-        </ng-template>
-
-    </app-content>
-</ng-container>
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-primary" [disabled]="!emailForm.valid">
+                <i class="fa fa-save"></i> Change Email
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md">
+        <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()" class="kiwi-form">
+          <div class="card card-accent-primary">
+            <div class="card-header">Change <b>Password</b></div>
+            <div class="card-body">
+              <formly-form [form]="passwordForm" [fields]="passwordFormFields" [options]="passwordFormOptions"></formly-form>
+            </div>
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-primary" [disabled]="!passwordForm.valid">
+                <i class="fa fa-save"></i> Change Password
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</kiwi-content>

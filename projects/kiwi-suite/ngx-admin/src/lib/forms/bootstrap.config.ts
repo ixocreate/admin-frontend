@@ -1,227 +1,152 @@
-import {ConfigOption} from '@ngx-formly/core';
-import {TemplateAddons} from './run/addon';
-import {TemplateDescription} from './run/description';
-import {TemplateValidation} from './run/validation';
-import {
-    FormlyFieldCheckbox,
-    FormlyFieldDateTime,
-    FormlyFieldDynamic,
-    FormlyFieldInput,
-    FormlyFieldMedia,
-    FormlyFieldMultiCheckbox,
-    FormlyFieldLink,
-    FormlyFieldQuill,
-    FormlyFieldRadio,
-    FormlyFieldRepeatable,
-    FormlyFieldSelect,
-    FormlyFieldSelectNative,
-    FormlyFieldTextArea,
-    FormlyFieldYouTube
-} from './types/index';
-import {
-    FormlyWrapperAddons,
-    FormlyWrapperDescription,
-    FormlyWrapperFieldset,
-    FormlyWrapperLabel,
-    FormlyWrapperSection,
-    FormlyWrapperValidationMessages,
-    FormlyWrapperTab,
-    FormlyWrapperTabset,
-} from './wrappers/index';
-import {FormlyFieldColor} from "./types/color";
-import {FormlyFieldDate} from "./types/date";
+import { ConfigOption } from '@ngx-formly/core';
+import { FormlyWrapperFormFieldComponent } from './wrappers/form-field.wrapper';
+import { FormlyWrapperSectionComponent } from './wrappers/section.wrapper';
+import { FormlyWrapperTabsetComponent } from './wrappers/tabset.wrapper';
+import { FormlyWrapperTabComponent } from './wrappers/tab.wrapper';
+import { FormlyFieldMediaComponent } from './types/media';
+import { FormlyFieldDateTimeComponent } from './types/datetime';
+import { FormlyFieldLinkComponent } from './types/link';
+import { FormlyFieldSelectComponent } from './types/select';
+import { FormlyFieldColorComponent } from './types/color';
+import { FormlyFieldYouTubeComponent } from './types/youtube';
+import { FormlyFieldQuillComponent } from './types/quill';
+import { FormlyFieldCheckboxComponent } from './types/checkbox';
+import { FormlyFieldDynamicComponent } from './types/dynamic';
+import { FormlyFieldRepeatableComponent } from './types/repeatable';
+import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
+import { FormlyFieldPriceComponent } from './types/price';
+import { FormlyFieldGeoPointComponent } from './types/geo-point';
 
 export const FIELD_TYPE_COMPONENTS = [
-    // types
-    FormlyFieldCheckbox,
-    FormlyFieldDateTime,
-    FormlyFieldDate,
-    FormlyFieldDynamic,
-    FormlyFieldInput,
-    FormlyFieldMedia,
-    FormlyFieldMultiCheckbox,
-    FormlyFieldLink,
-    FormlyFieldYouTube,
-    FormlyFieldRadio,
-    FormlyFieldRepeatable,
-    FormlyFieldSelectNative,
-    FormlyFieldSelect,
-    FormlyFieldTextArea,
-    FormlyFieldQuill,
-    FormlyFieldColor,
+  // types
+  FormlyFieldSelectComponent,
+  FormlyFieldMediaComponent,
+  FormlyFieldDateTimeComponent,
+  FormlyFieldLinkComponent,
+  FormlyFieldColorComponent,
+  FormlyFieldYouTubeComponent,
+  FormlyFieldQuillComponent,
+  FormlyFieldCheckboxComponent,
+  FormlyFieldRepeatableComponent,
+  FormlyFieldDynamicComponent,
+  FormlyFieldPriceComponent,
+  FormlyFieldGeoPointComponent,
 
-    // wrappers
-    FormlyWrapperLabel,
-    FormlyWrapperDescription,
-    FormlyWrapperValidationMessages,
-    FormlyWrapperFieldset,
-    FormlyWrapperAddons,
-    FormlyWrapperSection,
-    FormlyWrapperTabset,
-    FormlyWrapperTab,
+  // wrappers
+  FormlyWrapperFormFieldComponent,
+  FormlyWrapperFormFieldOnlyComponent,
+  FormlyWrapperSectionComponent,
+  FormlyWrapperTabsetComponent,
+  FormlyWrapperTabComponent,
 ];
 
-export const BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
-    types: [
-        {
-            name: 'input',
-            component: FormlyFieldInput,
-            wrappers: ['fieldset', 'label'],
-        },
-        {
-            name: 'checkbox',
-            component: FormlyFieldCheckbox,
-            wrappers: ['fieldset'],
-            defaultOptions: {
-                templateOptions: {
-                    indeterminate: true,
-                },
-            },
-        },
-        {
-            name: 'radio',
-            component: FormlyFieldRadio,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
-                templateOptions: {
-                    options: [],
-                },
-            },
-        },
-        {
-            name: 'select',
-            component: FormlyFieldSelect,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
-                templateOptions: {
-                    options: [],
-                },
-            },
-        },
-        {
-            name: 'selectnative',
-            component: FormlyFieldSelectNative,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
-                templateOptions: {
-                    options: [],
-                },
-            },
-        },
-        {
-            name: 'textarea',
-            component: FormlyFieldTextArea,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
-                templateOptions: {
-                    cols: 1,
-                    rows: 1,
-                },
-            },
-        },
-        {
-            name: 'multicheckbox',
-            component: FormlyFieldMultiCheckbox,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
-                templateOptions: {
-                    options: [],
-                },
-            },
-        },
-        {
-            name: 'link',
-            component: FormlyFieldLink,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
+export function renderCustomError(error) {
+  return error;
+}
 
-            },
+export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
+  validationMessages: [
+    {name: 'required', message: 'This field is required'},
+    {name: 'custom', message: renderCustomError},
+  ],
+  types: [
+    {
+      name: 'select',
+      component: FormlyFieldSelectComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'checkbox',
+      component: FormlyFieldCheckboxComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'media',
+      component: FormlyFieldMediaComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'link',
+      component: FormlyFieldLinkComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'datetime',
+      component: FormlyFieldDateTimeComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'date',
+      component: FormlyFieldDateTimeComponent,
+      wrappers: ['form-field'],
+      defaultOptions: {
+        templateOptions: {
+          config: {
+            showTime: false,
+          },
         },
-        // custom
-        {
-            name: 'datetime',
-            component: FormlyFieldDateTime,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
-                templateOptions: {
-                    /**
-                     * bsConfig
-                     */
-                    config: {
-                        dateInputFormat: 'YYYY-MM-DD HH:mm'
-                    }
-                }
-            },
+      },
+    },
+    {
+      name: 'color',
+      component: FormlyFieldColorComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'youtube',
+      component: FormlyFieldYouTubeComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'map',
+      component: FormlyFieldGeoPointComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'price',
+      component: FormlyFieldPriceComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'wysiwyg',
+      component: FormlyFieldQuillComponent,
+      wrappers: ['form-field'],
+      defaultOptions: {
+        templateOptions: {
+          height: 200,
+          modules: {
+            toolbar: [
+              ['bold', 'italic', 'underline', 'strike'],
+              [{'list': 'ordered'}, {'list': 'bullet'}],
+              [{'script': 'sub'}, {'script': 'super'}],
+              [{'indent': '-1'}, {'indent': '+1'}],
+              [{'header': [1, 2, 3, 4, 5, 6, false]}],
+              [{'align': []}],
+              ['clean'],
+              ['link'],
+            ],
+          },
         },
-        {
-            name: 'date',
-            component: FormlyFieldDate,
-            wrappers: ['fieldset', 'label'],
-        },
-        {
-            name: 'dynamic',
-            component: FormlyFieldDynamic,
-            wrappers: ['fieldset', 'label'],
-        },
-        {
-            name: 'media',
-            component: FormlyFieldMedia,
-            wrappers: ['fieldset', 'label'],
-        },
-        {
-            name: 'youtube',
-            component: FormlyFieldYouTube,
-            wrappers: ['fieldset', 'label'],
-        },
-        {
-            name: 'color',
-            component: FormlyFieldColor,
-            wrappers: ['fieldset', 'label'],
-        },
-        {
-            name: 'repeat',
-            component: FormlyFieldRepeatable,
-            wrappers: ['fieldset', 'label'],
-        },
-        {
-            name: 'wysiwyg',
-            component: FormlyFieldQuill,
-            wrappers: ['fieldset', 'label'],
-            defaultOptions: {
-                templateOptions: {
-                    height: 200,
-                    /**
-                     * quill config
-                     */
-                    modules: {
-                        toolbar: [
-                            // ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                            // [{'list': 'ordered'}, {'list': 'bullet'}],
-                            // [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-                            // [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-                            // [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                            // [{'align': []}],
-                            // ['clean'], // remove formatting button
-                            // ['link'],
-                        ],
-                    }
-                },
-            },
-        },
-    ],
-    wrappers: [
-        {name: 'label', component: FormlyWrapperLabel},
-        {name: 'description', component: FormlyWrapperDescription},
-        {name: 'validation-message', component: FormlyWrapperValidationMessages},
-        {name: 'fieldset', component: FormlyWrapperFieldset},
-        {name: 'addons', component: FormlyWrapperAddons},
-        {name: 'section', component: FormlyWrapperSection},
-        {name: 'tabset', component: FormlyWrapperTabset},
-        {name: 'tab', component: FormlyWrapperTab},
-    ],
-    manipulators: [
-        {class: TemplateDescription, method: 'run'},
-        {class: TemplateValidation, method: 'run'},
-        {class: TemplateAddons, method: 'run'},
-    ],
+      },
+    },
+    {
+      name: 'dynamic',
+      component: FormlyFieldDynamicComponent,
+      wrappers: ['form-field-only'],
+    },
+    /*
+    {
+      name: 'repeat',
+      component: FormlyFieldRepeatableComponent,
+      wrappers: ['form-field-only'],
+    },
+    */
+  ],
+  wrappers: [
+    {name: 'form-field', component: FormlyWrapperFormFieldComponent},
+    {name: 'form-field-only', component: FormlyWrapperFormFieldOnlyComponent},
+    {name: 'section', component: FormlyWrapperSectionComponent},
+    {name: 'tabset', component: FormlyWrapperTabsetComponent},
+    {name: 'tab', component: FormlyWrapperTabComponent},
+  ],
 };

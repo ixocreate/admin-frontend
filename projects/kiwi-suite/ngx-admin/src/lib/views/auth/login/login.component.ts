@@ -1,61 +1,48 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {map} from 'rxjs/operators';
-import {AccountService, ConfigurationService} from '../../../services';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccountDataService } from '../../../services/data/account-data.service';
+import { AppDataService } from '../../../services/data/app-data.service';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
+  selector: 'app-dashboard',
+  templateUrl: 'login.component.html',
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
-    form: FormGroup;
-    password: string;
-    email: string;
-    showError = false;
+  form: FormGroup;
+  error: string = null;
+  loginMessage: string = "";
 
-    constructor(private account: AccountService,
-                private config: ConfigurationService,
-                private formBuilder: FormBuilder,
-                private route: ActivatedRoute,
-                private router: Router) {
-        this.form = this.formBuilder.group({
-            email: new FormControl(this.email, [
-                Validators.required,
-            ]),
-            password: new FormControl(this.password, [
-                Validators.required,
-            ])
+  constructor(private router: Router,
+              public appData: AppDataService,
+              public config: ConfigService,
+              private accountData: AccountDataService,
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  ngOnInit() {
+    this.loginMessage = this.config.config.project.loginMessage;
+  }
+
+  onLogin() {
+    this.accountData.login(this.form.value.email, this.form.value.password).then(() => {
+      this.appData.loadConfig().then(() => {
+        this.accountData.loadUser().then(() => {
+          this.route.queryParams.subscribe(query => {
+            this.router.navigateByUrl(query.intended || '/');
+          });
         });
-    }
+      });
+    }).catch((error) => {
+      this.error = error.errorCode;
+    });
+  }
 
-    ngOnInit() {
-    }
-
-    ngOnDestroy(): void {
-    }
-
-    get ready$() {
-        return this.config.ready$;
-    }
-
-    get config$() {
-        return this.config.params$.pipe(map(config => config.project));
-    }
-
-    onSubmit() {
-        this.account.login(this.form.getRawValue()).subscribe(
-            () => {
-                this.account.ready$.subscribe(user => {
-                    this.route.queryParams.subscribe(query => {
-                        this.router.navigate([query.intended || '/']);
-                    });
-                });
-                this.account.load();
-            },
-            () => {
-                this.showError = true;
-            });
-    }
 }

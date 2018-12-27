@@ -1,0 +1,60 @@
+body .ui-inputtext {
+  @extend .form-control;
+}
+
+.is-invalid .ui-inputtext {
+  border-color: $danger;
+}
+
+.ui-calendar {
+  display: block;
+}
+
+body .ui-shadow {
+  box-shadow: $box-shadow;
+}
+
+.ui-calendar .ui-datepicker {
+  min-width: 250px;
+  border: 0;
+
+  .ui-datepicker-header {
+    .ui-datepicker-prev,
+    .ui-datepicker-next {
+      &:hover {
+        color: #111;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .ui-datepicker-group {
+    border-radius: .25rem;
+  }
+
+  .ui-timepicker {
+    border-radius: 0 0 $input-border-radius $input-border-radius;
+    border: 0;
+    border-top: 1px solid $border-color;
+  }
+
+  td {
+    width: (100% / 7);
+  }
+
+  .ui-state-default {
+    cursor: pointer;
+    @include border-radius(3px);
+  }
+
+  table.ui-datepicker-calendar td:not(.ui-state-disabled) a.ui-state-active {
+    background: $primary;
+  }
+}
+
+.form-color-picker {
+  .ui-colorpicker-preview {
+    width: 44px;
+    border-radius: $input-border-radius 0 0 $input-border-radius;
+  }
+}

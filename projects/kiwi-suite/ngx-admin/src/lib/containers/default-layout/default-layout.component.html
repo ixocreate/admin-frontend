@@ -1,0 +1,60 @@
+<app-header
+  [fixed]="true"
+  [navbarBrandFull]="{src: config.config.project.logo, width: 150, height: 45, alt: config.config.project.name }"
+  [navbarBrandMinimized]="{src: config.config.project.icon, width: 35, height: 35, alt: config.config.project.name }"
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]="false"
+  [mobileAsideMenuToggler]="false">
+  <ul class="nav navbar-nav ml-auto pr-2">
+    <li class="nav-item dropdown" kiwiDropdown *ngIf="accountData.user$ | async as user">
+      <button class="nav-link dropdown-btn py-2">
+        <span class="header-email">{{ user.email }}</span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-header text-center"><strong>Settings</strong></div>
+        <a class="dropdown-item" routerLink="/account" href="#"><i class="fa fa-user"></i> Account</a>
+        <button class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Logout</button>
+      </div>
+    </li>
+  </ul>
+</app-header>
+
+<div class="app-body">
+  <app-sidebar [fixed]="true" [display]="'lg'">
+    <ng-container *ngIf="navItems">
+      <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    </ng-container>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+
+  <main class="main">
+    <div class="page-title" #header>
+      <div class="row align-items-center">
+        <div class="col-md-auto">
+          <ol class="breadcrumb">
+            <kiwi-breadcrumb></kiwi-breadcrumb>
+          </ol>
+        </div>
+        <div class="col-md">
+          <div class="page-title-buttons" *ngIf="headerButtons">
+            <ng-container *ngTemplateOutlet="headerButtons"></ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+  </main>
+
+  <kiwi-aside [visible]="!!aside">
+    <ng-container *ngTemplateOutlet="aside"></ng-container>
+  </kiwi-aside>
+</div>
+
+<app-footer>
+  <div><b>{{ config.config.project.name }}</b> /
+    &copy; {{ config.config.project.copyright }} {{ config.config.project.author }}.
+  </div>
+  <div *ngIf="config.config.project.poweredBy" class="ml-auto text-muted">
+    powered by <a href="https://github.com/kiwi-suite/kiwi" target="_blank">kiwi</a>
+  </div>
+</app-footer>

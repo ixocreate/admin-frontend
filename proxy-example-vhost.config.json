@@ -1,18 +1,18 @@
 {
   "/admin/*": {
-    "target": "http://skn-web.test",
+    "target": "http://...",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/media/img/*": {
-    "target": "http://skn-web.test",
+    "target": "http://...",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/assets/*": {
-    "target": "http://skn-web.test",
+    "target": "http://...",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

@@ -1,0 +1,112 @@
+.sitemap-item-container {
+  &.is-copy-page {
+    background: #eee;
+    border: 1px dashed #ddd;
+    opacity: .3;
+    padding: 10px 10px 0;
+    margin-bottom: 10px;
+  }
+}
+
+.sitemap-item {
+  background: #f9f9f9;
+  margin-bottom: 10px;
+  display: flex;
+  position: relative;
+  min-height: 35px;
+
+  > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.not-created {
+    .sitemap-item-content {
+      color: #aaa;
+    }
+  }
+
+  .sitemap-item-content-container {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    flex: 1;
+    display: flex;
+  }
+
+  .btn-sitemap {
+    font-size: .7rem;
+    padding: 3px 5px;
+    margin: 0 3px;
+  }
+
+  .btn-collapse {
+    padding: 0;
+    width: 30px;
+    border: 1px solid $border-color;
+
+    &.toggle {
+      border: 0;
+      background: $primary;
+      color: #fff;
+
+      &:hover {
+        background: darken($primary, 10%);
+        text-decoration: none;
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .sitemap-item-content {
+    flex: 1;
+    padding: 5px 10px;
+    justify-content: start;
+    font-size: .9em;
+  }
+
+  .sitemap-item-handle {
+    font-size: .8rem;
+    color: #aaa;
+    margin: 0 5px;
+  }
+
+  .sitemap-item-icons {
+    padding: 0 10px;
+  }
+
+  .page-type-info {
+    opacity: .4;
+    font-size: .8em;
+  }
+}
+
+.sitemap-insert-btn {
+  border: 2px dashed $warning;
+  background: #f9f9f9;
+  text-align: center;
+  display: block;
+  //width: 100%;
+  margin-bottom: 10px;
+  color: $warning;
+  font-size: .7rem;
+  padding: 3px 15px;
+
+  &.as-child {
+    //width: calc(100% - 25px);
+    margin-left: 25px;
+  }
+
+  &:hover {
+    border-color: $primary;
+    color: $primary;
+  }
+}
+
+.sitemap-sub-item {
+  padding-left: 25px;
+}

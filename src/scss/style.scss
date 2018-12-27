@@ -1,7 +1,8 @@
-// Override variables
+// If you want to override variables do it here
 @import "variables";
-// Import admin styles
-//@import "~kiwi-suite/ngx-admin/src/lib/scss/ngx-admin";
-@import "../../projects/kiwi-suite/ngx-admin/src/lib/scss/ngx-admin";
-// Custom styles
+
+// Import styles
+@import "../../projects/kiwi-suite/ngx-admin/src/scss/ngx-admin";
+
+// If you want to add something do it here
 @import "custom";

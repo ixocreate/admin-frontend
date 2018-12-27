@@ -1,0 +1,48 @@
+$kiwi-loading-default: theme-color('primary') !default;
+$kiwi-loading-dark: #222 !default;
+$kiwi-loading-light: #fff !default;
+
+@keyframes ixo-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+kiwi-loading.big-center {
+  font-size: 25px;
+  display: block;
+
+  .kiwi-loading {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.kiwi-loading {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  animation: ixo-loading-spin 1s infinite linear;
+  vertical-align: middle;
+  border: .2em solid transparentize($kiwi-loading-default, .8);
+  border-top-color: $kiwi-loading-default;
+  border-radius: 50%;
+
+  &.dark {
+    border-color: transparentize($kiwi-loading-dark, .8);
+    border-top-color: $kiwi-loading-dark;
+  }
+
+  &.light {
+    border-color: transparentize($kiwi-loading-light, .8);
+    border-top-color: $kiwi-loading-light;
+  }
+
+  .block & {
+    display: block;
+    margin: 0 auto;
+  }
+}

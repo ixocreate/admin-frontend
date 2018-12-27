@@ -1,11 +1,11 @@
-import {browser, by, element} from 'protractor';
+import { browser, element, by } from 'protractor/globals';
 
-export class DashboardPage {
-    navigateTo() {
-        return browser.get('/');
-    }
+export class CoreUIPage {
+  navigateTo() {
+    return browser.get('/');
+  }
 
-    getActiveNavLinkText() {
-        return element(by.css('app-dashboard .nav-link.active')).getText();
-    }
+  getParagraphText() {
+    return element(by.css('app-root h1')).getText();
+  }
 }

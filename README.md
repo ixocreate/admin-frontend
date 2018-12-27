@@ -2,10 +2,8 @@
 
 [![Build Status](https://travis-ci.org/kiwi-suite/admin-frontend.svg?branch=master)](https://travis-ci.org/kiwi-suite/admin-frontend)
 
-Angular 5 application that interacts with [Kiwi's Admin API](https://github.com/kiwi-suite/admin).
+Angular 6 application that interacts with [Kiwi's Admin API](https://github.com/kiwi-suite/admin).
 It is added as Composer dependency in the [Admin package](https://github.com/kiwi-suite/admin) by default to ensure API client compatibility.
-
-Services to consume the Admin API as well as base components, directives, etc. are provided by the Kiwi Angular module included in the [ngx-admin package](https://github.com/kiwi-suite/ngx-admin).
 
 ## Features
 
@@ -36,13 +34,13 @@ The application layout is based on a default `angular-cli` project setup to not 
 
 ### Development server
 
-    $ npm start
+    $ npm run serve
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 To specify the port the app should be served at (e.g. `4201` instead of the angular default `4200`) change the port in package.json or use:
 
-    $ npm start -- --port=4201
+    $ npm run serve --port=4201
 
 ### Update ngx-admin
 

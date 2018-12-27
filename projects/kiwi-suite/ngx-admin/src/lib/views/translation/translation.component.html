@@ -1,0 +1,28 @@
+<kiwi-content>
+  <div class="row" *ngIf="translationCatalogue$ | async as catalogues">
+    <div class="col-sm-6" *ngFor="let catalogue of catalogues">
+      <div class="card card-accent-primary">
+        <div class="card-header"><b>{{ catalogue.catalogue }}</b> Catalogue</div>
+        <div class="card-body">
+          <div class="translate-holder" *ngFor="let locale of catalogue.locales">
+            <div class="flag">
+              <i class="flag-icon flag-icon-{{ locale.country }}"></i>
+            </div>
+            <div class="progress">
+              <progressbar [max]="catalogue.count" [value]="locale.count"
+                           [type]="translationColor(locale.count, catalogue.count)"></progressbar>
+            </div>
+            <div class="progress-number">
+              {{locale.count}} / {{ catalogue.count }}
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-primary btn-block" [routerLink]="'catalogue/' + catalogue.catalogue">
+            <i class="fa fa-edit"></i> Update Catalogue
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</kiwi-content>

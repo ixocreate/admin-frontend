@@ -1,19 +1,18 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {FullLayoutComponent, PermissionGuard} from '@kiwi-suite/ngx-admin';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { DefaultLayoutComponent } from '../../projects/kiwi-suite/ngx-admin/src/lib/containers/default-layout/default-layout.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: FullLayoutComponent,
-        children: []
-    }
+  {
+    path: '',
+    component: DefaultLayoutComponent,
+    children: [],
+  },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
-    providers: [PermissionGuard]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

@@ -1,0 +1,72 @@
+@import "../../../../scss/variables-include";
+
+.cropper-container {
+  display: flex;
+
+  .cropper {
+    flex: 1;
+  }
+
+  .entity-list {
+    width: 200px;
+    margin: 0;
+    padding: 5px 5px 0 0;
+    list-style: none;
+
+    > li {
+      cursor: pointer;
+      background: #fff;
+      padding: ($spacer / 2) $spacer;
+      border: 1px solid $border-color;
+      margin-bottom: 5px;
+      border-radius: $border-color;
+
+      .entity-buttons {
+        display: none;
+      }
+
+      &.active {
+        border-color: $primary;
+        background: lighten($primary, 45%);
+      }
+
+      &.unsaved {
+        background: $danger;
+        color: #fff;
+        border-color: $danger;
+
+        &.active {
+          .entity-buttons {
+            display: flex;
+          }
+
+          border-left-color: $danger;
+        }
+      }
+
+      &.not-cropable {
+        opacity: .3;
+        cursor: default;
+      }
+
+      .entity-name {
+        font-weight: bold;
+      }
+
+      .entity-size {
+        margin-top: -4px;
+        font-size: .8rem;
+        opacity: .4;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+
+    .entity-list {
+      width: auto;
+      padding: 0 5px;
+    }
+  }
+}

@@ -1,5 +1,0 @@
-<ng-container *ngIf="data$ | async as data">
-    <form [formGroup]="form" *ngIf="form && fields">
-        <formly-form [form]="form" [fields]="fields" [model]="data.item"></formly-form>
-    </form>
-</ng-container>

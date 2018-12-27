@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -18,7 +17,10 @@
     ],
     "paths": {
       "@kiwi-suite/ngx-admin": [
-        "projects/kiwi-suite/ngx-admin"
+        "dist/kiwi-suite/ngx-admin"
+      ],
+      "@kiwi-suite/ngx-admin/*": [
+        "dist/kiwi-suite/ngx-admin/*"
       ]
     }
   }

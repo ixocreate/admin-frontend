@@ -1,0 +1,64 @@
+body .ng-select .ng-select-container {
+  min-height: 35px;
+  border-color: $input-border-color;
+  color: $input-color;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.ng-select.is-invalid .ng-select-container {
+  border-color: $danger;
+}
+
+.ng-select.ng-select-opened>.ng-select-container {
+  border-color: $input-border-color;
+}
+
+.ng-dropdown-panel.ng-select-top,
+.ng-dropdown-panel.ng-select-bottom {
+  border-color: $input-border-color;
+}
+
+.input-group > .ng-select {
+  flex: 1;
+  position: relative;
+
+  &:not(:last-child) {
+    .ng-select-container {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: $input-border-color transparent transparent;
+}
+
+.ng-select.ng-select-opened > .ng-select-container .ng-arrow {
+  border-color: transparent transparent $input-border-color;
+}
+
+.select-remove {
+  color: $danger;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  opacity: .4;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.ng-select.ng-select-disabled {
+  & > .ng-select-container {
+    background: $input-disabled-bg;
+  }
+
+  .ng-arrow-wrapper .ng-arrow {
+    border-color: darken($input-disabled-bg, 10%) transparent transparent;
+  }
+}

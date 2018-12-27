@@ -1,0 +1,71 @@
+#toast-container {
+  & > div {
+    opacity: .92;
+
+    padding: 15px 30px 19px 50px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .3);
+
+    &:hover {
+      opacity: 1;
+
+      box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+    }
+  }
+
+  & > .toast {
+    background-image: none !important;
+  }
+
+  button.toast-close-button {
+    position: absolute;
+    top: 12px;
+    right: 5px;
+    padding: 0 5px;
+    text-shadow: none;
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+  }
+
+  & > .toast:before {
+    font-family: FontAwesome;
+    font-size: 24px;
+    line-height: 24px;
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    color: #fff;
+    margin-top: -12px;
+  }
+
+  & > .toast-warning:before {
+    content: '\f075';
+  }
+  & > .toast-error:before {
+    content: '\f071';
+  }
+  & > .toast-info:before {
+    content: '\f1cd';
+  }
+  & > .toast-success:before {
+    content: '\f00C';
+  }
+
+  & > .toast-error {
+    background-color: darken(theme-color('danger'), 5%);
+  }
+
+  & > .toast-warning {
+    background-color: darken(theme-color('warning'), 5%);
+  }
+
+  & > .toast-success {
+    background-color: darken(theme-color('success'), 5%);
+  }
+
+  & > .toast-info {
+    background-color: darken(theme-color('info'), 5%);
+  }
+}
