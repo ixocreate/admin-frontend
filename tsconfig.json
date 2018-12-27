@@ -16,11 +16,11 @@
       "dom"
     ],
     "paths": {
-      "@kiwi-suite/ngx-admin": [
-        "dist/kiwi-suite/ngx-admin"
+      "@ixocreate/ngx-admin": [
+        "dist/ixocreate/ngx-admin"
       ],
-      "@kiwi-suite/ngx-admin/*": [
-        "dist/kiwi-suite/ngx-admin/*"
+      "@ixocreate/ngx-admin/*": [
+        "dist/ixocreate/ngx-admin/*"
       ]
     }
   }

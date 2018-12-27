@@ -1,8 +1,8 @@
-<kiwi-content>
+<ixocreate-content>
   <ng-container *ngIf="accountData.user$ | async as user">
     <div class="row">
       <div class="col-md">
-        <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()" class="kiwi-form">
+        <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()" class="ixocreate-form">
           <div class="card card-accent-primary">
             <div class="card-header">Change <b>Email</b></div>
             <div class="card-body">
@@ -21,7 +21,7 @@
         </form>
       </div>
       <div class="col-md">
-        <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()" class="kiwi-form">
+        <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()" class="ixocreate-form">
           <div class="card card-accent-primary">
             <div class="card-header">Change <b>Password</b></div>
             <div class="card-body">
@@ -37,4 +37,4 @@
       </div>
     </div>
   </ng-container>
-</kiwi-content>
+</ixocreate-content>

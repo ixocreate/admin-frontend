@@ -1,7 +1,6 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../dist/kiwi-suite/ngx-admin",
-  "deleteDestPath": false,
+  "dest": "../../../dist/ixocreate/ngx-admin",
   "lib": {
     "entryFile": "src/public_api.ts"
   }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { AdminComponent } from '../../projects/kiwi-suite/ngx-admin/src/lib/admin.component';
+import { AdminComponent } from '../../projects/ixocreate/ngx-admin/src/lib/admin.component';
 import { environment } from '../environments/environment';
-import { KiwiAdminModule } from '../../projects/kiwi-suite/ngx-admin/src/lib/kiwi-admin.module';
+import { KiwiAdminModule } from '../../projects/ixocreate/ngx-admin/src/lib/kiwi-admin.module';
 
 @NgModule({
   imports: [

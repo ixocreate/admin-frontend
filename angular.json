@@ -136,38 +136,38 @@
         }
       }
     },
-    "@kiwi-suite/ngx-admin": {
-      "root": "projects/kiwi-suite/ngx-admin",
-      "sourceRoot": "projects/kiwi-suite/ngx-admin/src",
+    "@ixocreate/ngx-admin": {
+      "root": "projects/ixocreate/ngx-admin",
+      "sourceRoot": "projects/ixocreate/ngx-admin/src",
       "projectType": "library",
       "prefix": "kiwi",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/kiwi-suite/ngx-admin/tsconfig.lib.json",
-            "project": "projects/kiwi-suite/ngx-admin/ng-package.json"
+            "tsConfig": "projects/ixocreate/ngx-admin/tsconfig.lib.json",
+            "project": "projects/ixocreate/ngx-admin/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "projects/kiwi-suite/ngx-admin/ng-package.prod.json"
+              "project": "projects/ixocreate/ngx-admin/ng-package.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/kiwi-suite/ngx-admin/src/test.ts",
-            "tsConfig": "projects/kiwi-suite/ngx-admin/tsconfig.spec.json",
-            "karmaConfig": "projects/kiwi-suite/ngx-admin/karma.conf.js"
+            "main": "projects/ixocreate/ngx-admin/src/test.ts",
+            "tsConfig": "projects/ixocreate/ngx-admin/tsconfig.spec.json",
+            "karmaConfig": "projects/ixocreate/ngx-admin/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/kiwi-suite/ngx-admin/tsconfig.lib.json",
-              "projects/kiwi-suite/ngx-admin/tsconfig.spec.json"
+              "projects/ixocreate/ngx-admin/tsconfig.lib.json",
+              "projects/ixocreate/ngx-admin/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
