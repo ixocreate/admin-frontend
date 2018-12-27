@@ -1,9 +1,9 @@
-# Kiwi Admin Frontend
+# IXOCREATE Admin Frontend
 
-[![Build Status](https://travis-ci.org/kiwi-suite/admin-frontend.svg?branch=master)](https://travis-ci.org/kiwi-suite/admin-frontend)
+[![Build Status](https://travis-ci.org/ixocreate/admin-frontend.svg?branch=master)](https://travis-ci.org/ixocreate/admin-frontend)
 
-Angular 6 application that interacts with [Kiwi's Admin API](https://github.com/kiwi-suite/admin).
-It is added as Composer dependency in the [Admin package](https://github.com/kiwi-suite/admin) by default to ensure API client compatibility.
+Angular 6 application that interacts with [Kiwi's Admin API](https://github.com/ixocreate/admin).
+It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin) by default to ensure API client compatibility.
 
 ## Features
 
@@ -13,6 +13,14 @@ It is added as Composer dependency in the [Admin package](https://github.com/kiw
 - **Mobile friendly UI** based on [Bootstrap 4](https://getbootstrap.com/docs/4.0/) and a modified variant of [CoreUI](http://coreui.io/).
 - **Deploy pre-built** as is to use out of the box features
 - **White labeling** by configuration
+
+## Installation
+
+Install the package via composer:
+
+```sh
+composer require ixocreate/admin-frontend
+```
 
 ## Usage
 
@@ -46,11 +54,11 @@ To specify the port the app should be served at (e.g. `4201` instead of the angu
 
 To update the core library run
 
-    $ npm i @kiwi-suite/ngx-admin
+    $ npm i @ixocreate/ngx-admin
 
 **Note:** make sure the updated library version is compatible with the current Admin API version that is used in your project.
 
-For change requests and/or bug fixes for ngx-admin please refer to the [ngx-admin package](https://github.com/kiwi-suite/ngx-admin/issues).
+For change requests and/or bug fixes for ngx-admin please refer to the [ngx-admin package](https://github.com/ixocreate/ngx-admin/issues).
 
 ### Code scaffolding
 
@@ -74,3 +82,7 @@ Execute the unit tests via [Karma](https://karma-runner.github.io):
 Execute the end-to-end tests via [Protractor](http://www.protractortest.org/):
 
     $ npm run e2e
+
+## License
+
+The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
