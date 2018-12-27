@@ -1,17 +1,11 @@
 {
-  "name": "kiwi-suite/admin-frontend",
-  "description": "Kiwi Admin Application",
-  "type": "project",
+  "name": "ixocreate/admin-frontend",
+  "description": "IXOCREATE Admin Application",
   "license": "MIT",
+  "type": "project",
   "authors": [
     {
-      "name": "Lucas Seinfeld (luchaos)"
-    },
-    {
-      "name": "Thomas Payer (thomaspayer)"
-    },
-    {
-      "name": "wuifdesign"
+      "name": "IXOCREATE"
     }
   ],
   "require": {}
