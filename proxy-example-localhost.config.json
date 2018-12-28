@@ -1,5 +1,5 @@
 {
-  "/kiwi-v4/admin/*": {
+  "/ixocreate/admin/*": {
     "target": "http://localhost/...",
     "secure": false,
     "logLevel": "debug",
