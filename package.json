@@ -1,7 +1,7 @@
 {
   "name": "@ixocreate/admin-frontend",
   "version": "2.0.0",
-  "description": "CoreUI Free Angular 2+ Admin Template",
+  "description": "IXOCREATE admin frontend",
   "scripts": {
     "ng": "ng",
     "serve": "ng serve --proxy-config proxy.config.json",
