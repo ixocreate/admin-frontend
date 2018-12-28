@@ -1,7 +1,5 @@
 # IXOCREATE Admin Frontend
 
-[![Build Status](https://travis-ci.org/ixocreate/admin-frontend.svg?branch=master)](https://travis-ci.org/ixocreate/admin-frontend)
-
 Angular 6 application that interacts with [Kiwi's Admin API](https://github.com/ixocreate/admin).
 It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin) by default to ensure API client compatibility.
 
