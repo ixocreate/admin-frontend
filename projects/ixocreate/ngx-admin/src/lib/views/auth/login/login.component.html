@@ -15,7 +15,11 @@
                   <div class="text-center">
                     <p class="text-muted">Sign In to your account</p>
                   </div>
-                  <alert type="danger" *ngIf="error !== null">{{ error }}</alert>
+                  <alert type="danger" *ngIf="error !== null">
+                    <div *ngFor="let message of error.data.messages">
+                      {{ message }}
+                    </div>
+                  </alert>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-user"></i></span>

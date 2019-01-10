@@ -12,8 +12,8 @@ import { ConfigService } from '../../../services/config.service';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
-  error: string = null;
-  loginMessage: string = "";
+  error: any = null;
+  loginMessage = '';
 
   constructor(private router: Router,
               public appData: AppDataService,
@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
         });
       });
     }).catch((error) => {
-      this.error = error.errorCode;
+      this.error = error;
     });
   }
-
 }
