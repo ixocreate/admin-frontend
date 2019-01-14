@@ -38,6 +38,14 @@ export class AccountDataService extends DataServiceAbstract {
     });
   }
 
+  getAccountConfig(): Promise<any> {
+    return this.api.get(this.config.config.routes.accountConfig);
+  }
+
+  updateAccountAttributes(data: any) {
+    return this.api.patch(this.config.config.routes.accountAttributes, {data});
+  }
+
   updateEmail(email: string, emailRepeat: string) {
     return this.api.patch(this.config.config.routes.accountEmail, {email, emailRepeat});
   }
