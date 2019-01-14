@@ -7,4 +7,6 @@ export interface User {
   permissions: string[];
   role: string;
   status: string;
+  userAttributes: Array<any>;
+  accountAttributes: Array<any>;
 }
