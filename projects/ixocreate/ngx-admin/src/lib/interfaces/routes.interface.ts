@@ -7,6 +7,8 @@ export interface Routes {
   /**
    * account
    */
+  accountConfig?: string;
+  accountAttributes?: string;
   accountEmail?: string;
   accountPassword?: string;
   /**
