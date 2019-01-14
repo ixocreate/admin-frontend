@@ -5,6 +5,8 @@ import { AccountDataService } from '../../services/data/account-data.service';
 import { NotificationService } from '../../services/notification.service';
 import { User } from '../../interfaces/user.interface';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
+import {AppDataService} from "../../services/data/app-data.service";
+import {SchemaTransformService} from "../../services/schema-transform.service";
 
 @Component({
   templateUrl: './account.component.html',
@@ -72,9 +74,32 @@ export class AccountComponent extends ViewAbstractComponent {
     },
   ];
 
+  additionalForm: FormGroup = new FormGroup({});
+  additionalFields: FormlyFieldConfig[];
+
   constructor(protected notification: NotificationService,
+              protected appData: AppDataService,
+              protected schemaTransform: SchemaTransformService,
               public accountData: AccountDataService) {
     super();
+  }
+
+  ngOnInit() {
+    this.accountData.getAccountConfig().then((data: any) => {
+      console.log(data.accountAttributesSchema);
+      this.additionalFields = data.accountAttributesSchema ?  this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
+    });
+  }
+
+  onSubmitAttributes() {
+    const data = this.additionalForm.getRawValue();
+    if (this.additionalForm.valid === false) {
+      this.notification.formErrors(this.additionalForm);
+    } else {
+      this.accountData.updateAccountAttributes(data).then(() => {
+        this.notification.success('successfully updated', 'Success');
+      }).catch((error) => this.notification.apiError(error));
+    }
   }
 
   onSubmitEmail() {
