@@ -209,6 +209,11 @@ export const routes: Routes = [
             component: ResourceEditComponent,
             data: {title: 'Edit'},
           },
+          {
+            path: ':id/view',
+            component: ResourceEditComponent,
+            data: {title: 'View', viewOnly: true},
+          },
         ],
       },
       {

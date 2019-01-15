@@ -58,4 +58,5 @@ export interface ResourceConfig {
   canCreate: boolean;
   canEdit: boolean;
   canDelete: boolean;
+  canView: boolean;
 }
