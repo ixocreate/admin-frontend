@@ -53,7 +53,9 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
       this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
-      this.fields = FormHelper.setTemplateOption(this.fields, 'disabled', true);
+      if (this.viewOnly) {
+        this.fields = FormHelper.setTemplateOption(this.fields, 'disabled', true);
+      }
       this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
       this.aboveWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'above', 'edit', this.resourceId);
       this.belowWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'below', 'edit', this.resourceId);
