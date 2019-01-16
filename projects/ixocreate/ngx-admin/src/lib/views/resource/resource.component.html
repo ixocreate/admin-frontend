@@ -7,7 +7,7 @@
     <ng-container *ngIf="aboveWidgetData$ | async as data">
       <kiwi-dashboard [data]="data"></kiwi-dashboard>
     </ng-container>
-    <kiwi-datatable [resource]="resourceKey"></kiwi-datatable>
+    <kiwi-datatable [resource]="resourceKey" [advancedSearch]="true"></kiwi-datatable>
     <ng-container *ngIf="belowWidgetData$ | async as data">
       <kiwi-dashboard [data]="data"></kiwi-dashboard>
     </ng-container>
