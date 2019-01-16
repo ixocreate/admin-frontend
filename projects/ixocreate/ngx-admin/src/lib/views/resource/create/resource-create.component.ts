@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ViewAbstractComponent } from '../../../components/view.abstract.component';
 import { AppDataService } from '../../../services/data/app-data.service';
 import { FormGroup } from '@angular/forms';
@@ -20,6 +20,9 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
+  data: any = {};
+
+  queryParams: any;
 
   aboveWidgetData$: Promise<any>;
   belowWidgetData$: Promise<any>;
@@ -39,11 +42,50 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
       this.resourceKey = params.type || this.resourceKey;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
-      this.fields = this.resourceInfo.createSchema ?  this.schemaTransform.transformForm(this.resourceInfo.createSchema) : [];
+      this.fields = this.resourceInfo.createSchema ? this.schemaTransform.transformForm(this.resourceInfo.createSchema) : [];
       this.aboveWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'above', 'create');
       this.belowWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'below', 'create');
-
+      this.appData.getResourceDefaultValue(this.resourceKey).then((response) => {
+        for (const key of Object.keys(response.item)) {
+          if (this.form && this.form.controls && this.form.controls[key]) {
+            this.form.controls[key].setValue(response.item[key]);
+          } else {
+            this.data[key] = response.item[key];
+          }
+        }
+        this.updateQueryParamsPreFill();
+      });
     });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      this.queryParams = params;
+      this.updateQueryParamsPreFill();
+    });
+  }
+
+  updateQueryParamsPreFill() {
+    if (!this.queryParams) {
+      return;
+    }
+    for (let key of Object.keys(this.queryParams)) {
+      let value = this.queryParams[key];
+      if (key.indexOf('[]') > -1) {
+        key = key.replace('[]', '');
+        if (!Array.isArray(value)) {
+          value = [value];
+        }
+      }
+      if (value === 'true') {
+        value = true;
+      } else if (value === 'false') {
+        value = false;
+      }
+      if (this.form && this.form.controls && this.form.controls[key]) {
+        this.form.controls[key].setValue(value);
+      } else {
+        this.data[key] = value;
+      }
+    }
   }
 
   onSubmit(): void {

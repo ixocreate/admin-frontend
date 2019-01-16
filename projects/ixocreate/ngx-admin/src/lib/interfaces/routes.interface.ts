@@ -63,6 +63,7 @@ export interface Routes {
   resourceCreate?: string;
   resourceCreateDetail?: string;
   resourceDelete?: string;
+  resourceDefaultValue?: string;
   resourceDetail?: string;
   resourceIndex?: string;
   resourceUpdate?: string;

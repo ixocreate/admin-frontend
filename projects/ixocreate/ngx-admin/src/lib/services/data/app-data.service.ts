@@ -174,6 +174,10 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.resourceDetail.replace('{resource}', resource).replace('{id}', id));
   }
 
+  getResourceDefaultValue(resource: string): Promise<Resource> {
+    return this.api.get(this.config.config.routes.resourceDefaultValue.replace('{resource}', resource));
+  }
+
   createResourceDetail(resource: string): Promise<Resource> {
     return this.api.get(this.config.config.routes.resourceCreateDetail.replace('{resource}', resource));
   }
