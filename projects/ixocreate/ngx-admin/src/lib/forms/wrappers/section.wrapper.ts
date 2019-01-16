@@ -4,9 +4,9 @@ import { FieldWrapper } from '@ngx-formly/core';
 @Component({
   selector: 'formly-wrapper-section',
   template: `
-    <h6><i class="{{ to['icon'] }}"></i> {{ to.label }}</h6>
+    <h6 *ngIf="to.label"><i class="{{ to['icon'] }}" *ngIf="to['icon']"></i> {{ to.label }}</h6>
     <ng-template #fieldComponent></ng-template>
-    <hr>
+    <hr *ngIf="!to['divider'] || to['divider'] !== false">
   `,
 })
 export class FormlyWrapperSectionComponent extends FieldWrapper {
