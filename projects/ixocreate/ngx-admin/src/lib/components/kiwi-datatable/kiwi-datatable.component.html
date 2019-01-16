@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 py-2 text-center text-sm-left" [innerHTML]="tableTitle"></h6></div>
       <div class="col-sm mt-2 mt-sm-0" *ngIf="!advancedSearch">
-        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue"
+        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="search"
                (keyup)="applyFilter()"/>
       </div>
     </div>
@@ -77,7 +77,7 @@
 
             <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
               <div (click)="sort()" class="table-header-name" [class.sortable]="column.sortable" [innerHTML]="column.name"></div>
-              <input class="form-control form-control-sm mb-0" [placeholder]="'Search ' + column?.name + '...'"
+              <input class="form-control form-control-sm mb-0" [placeholder]="'Search ' + column?.name + '...'" [(ngModel)]="filters[column.prop]"
                      (keyup)="doAdvancedSearch($event, column)" *ngIf="advancedSearch && searchableData && searchableData[column.prop]"/>
             </ng-template>
 

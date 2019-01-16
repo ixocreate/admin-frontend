@@ -17,6 +17,8 @@ export class KiwiDatatableComponent implements OnInit {
 
   @Input() resource = null;
   @Input() advancedSearch = false;
+  @Input() filters: {[key: string]: string} = {};
+  @Input() search = '';
   resourceInfo: ResourceConfig;
 
   @Output() updatedData = new EventEmitter<any>();
@@ -36,10 +38,8 @@ export class KiwiDatatableComponent implements OnInit {
   hostColumns: Array<TableColumnData<any>> = [];
   tableColumns: Array<TableColumnData<any>> = [];
   detailColumns: Array<TableColumnData<any>> = [];
-  filterValue = '';
   loading = false;
   pageNumber = 0;
-  advancedSearchData: {[key: string]: string} = {};
   searchableData: {[key: string]: boolean} = {};
 
   private orderBy: string = null;
@@ -78,7 +78,7 @@ export class KiwiDatatableComponent implements OnInit {
       column.headerClass = column.headerClass || '';
       column.cellClass = column.cellClass || '';
       if (column.type) {
-        //delete column.type;
+        // delete column.type;
       }
       if (column.align) {
         column.headerClass += ' text-' + column.align;
@@ -130,17 +130,17 @@ export class KiwiDatatableComponent implements OnInit {
     }
 
     if (this.advancedSearch) {
-      for (const key of Object.keys(this.advancedSearchData)) {
-        if (this.advancedSearchData.hasOwnProperty(key)) {
-          const value = this.advancedSearchData[key];
+      for (const key of Object.keys(this.filters)) {
+        if (this.filters.hasOwnProperty(key)) {
+          const value = this.filters[key];
           if (value && value !== '') {
-            params['filter[' + key + ']'] = this.advancedSearchData[key];
+            params['filter[' + key + ']'] = this.filters[key];
           }
         }
       }
     } else {
-      if (this.filterValue && this.filterValue !== '') {
-        params.search = this.filterValue;
+      if (this.search && this.search !== '') {
+        params.search = this.search;
       }
     }
 
@@ -237,7 +237,7 @@ export class KiwiDatatableComponent implements OnInit {
 
   doAdvancedSearch(event, column) {
     console.log(column);
-    this.advancedSearchData[column.prop] = event.target.value;
+    this.filters[column.prop] = event.target.value;
     this.applyFilter();
   }
 }

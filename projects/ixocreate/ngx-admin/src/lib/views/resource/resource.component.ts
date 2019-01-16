@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
 import { PageTitleService } from '../../services/page-title.service';
-import {AppDataService} from "../../services/data/app-data.service";
+import { AppDataService } from '../../services/data/app-data.service';
 
 @Component({
   templateUrl: './resource.component.html',
@@ -15,6 +15,9 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
 
   aboveWidgetData$: Promise<any>;
   belowWidgetData$: Promise<any>;
+
+  filters: any = {};
+  search = '';
 
   constructor(protected route: ActivatedRoute, protected config: ConfigService, protected pageTitle: PageTitleService, protected appData: AppDataService) {
     super();
@@ -29,6 +32,20 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
       });
       this.aboveWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'above', 'list');
       this.belowWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'below', 'list');
+    });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      console.log(params);
+      for (let key of Object.keys(params)) {
+        const value = params[key];
+        if (key.indexOf('filter[') > -1) {
+          key = key.replace('filter[', '').replace(']', '');
+          this.filters[key] = value;
+        }
+        if (key === 'search') {
+          this.search = value;
+        }
+      }
     });
   }
 
