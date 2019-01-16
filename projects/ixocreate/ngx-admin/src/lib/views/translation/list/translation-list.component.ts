@@ -15,6 +15,7 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
   catalogueId: string;
   dataUrl: string;
   columns: Array<TableColumnData<any>> = [];
+  oldColumns: Array<TableColumnData<any>> = [];
 
   constructor(private route: ActivatedRoute, private config: ConfigService) {
     super();
@@ -33,6 +34,8 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
         name: 'Name',
         prop: 'name',
         type: 'string',
+        sortable: true,
+        searchable: true,
       },
     ];
 
@@ -59,11 +62,20 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
       }
     }
 
+    let update = false;
+
+    if (JSON.stringify(this.oldColumns) !== JSON.stringify(columns)) {
+      this.oldColumns = JSON.parse(JSON.stringify(columns));
+      update = true;
+    }
+
     columns.push({
       cellTemplate: this.buttonColumnTemplate,
     });
 
-    this.columns = columns;
+    if (update) {
+      this.columns = columns;
+    }
   }
 
 }

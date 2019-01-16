@@ -16,6 +16,7 @@ export class KiwiDatatableComponent implements OnInit {
   @Input() apiUrl = null;
 
   @Input() resource = null;
+  @Input() advancedSearch = true;
   resourceInfo: ResourceConfig;
 
   @Output() updatedData = new EventEmitter<any>();
@@ -38,6 +39,8 @@ export class KiwiDatatableComponent implements OnInit {
   filterValue = '';
   loading = false;
   pageNumber = 0;
+  advancedSearchData: {[key: string]: string} = {};
+  searchableData: {[key: string]: boolean} = {};
 
   private orderBy: string = null;
   private orderDirection: 'DESC' | 'ASC' = null;
@@ -71,6 +74,7 @@ export class KiwiDatatableComponent implements OnInit {
 
   private setColumns(columns: Array<any>) {
     for (const column of columns) {
+      this.searchableData[column.prop] = !!column.searchable;
       column.headerClass = column.headerClass || '';
       column.cellClass = column.cellClass || '';
       if (column.type) {
@@ -125,8 +129,19 @@ export class KiwiDatatableComponent implements OnInit {
       params.orderDirection = this.orderDirection;
     }
 
-    if (this.filterValue && this.filterValue !== '') {
-      params.search = this.filterValue;
+    if (this.advancedSearch) {
+      for (const key of Object.keys(this.advancedSearchData)) {
+        if (this.advancedSearchData.hasOwnProperty(key)) {
+          const value = this.advancedSearchData[key];
+          if (value && value !== '') {
+            params['filter[' + key + ']'] = this.advancedSearchData[key];
+          }
+        }
+      }
+    } else {
+      if (this.filterValue && this.filterValue !== '') {
+        params.search = this.filterValue;
+      }
     }
 
     this.loading = true;
@@ -218,5 +233,11 @@ export class KiwiDatatableComponent implements OnInit {
 
   toggleExpandRow(row) {
     this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  doAdvancedSearch(event, column) {
+    console.log(column);
+    this.advancedSearchData[column.prop] = event.target.value;
+    this.applyFilter();
   }
 }

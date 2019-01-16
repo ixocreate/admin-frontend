@@ -1,8 +1,8 @@
 <div class="card card-accent-primary">
-  <div class="card-header">
+  <div class="card-header" *ngIf="!advancedSearch || tableTitle">
     <div class="row align-items-center">
-      <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left" [innerHTML]="tableTitle"></h6></div>
-      <div class="col-sm mt-2 mt-sm-0">
+      <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 py-2 text-center text-sm-left" [innerHTML]="tableTitle"></h6></div>
+      <div class="col-sm mt-2 mt-sm-0" *ngIf="!advancedSearch">
         <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue"
                (keyup)="applyFilter()"/>
       </div>
@@ -11,6 +11,7 @@
   <div class="card-body p-0">
     <ng-container *ngIf="data; else isLoading">
       <ngx-datatable #table class="bootstrap"
+                     [class.advanced-search]="advancedSearch"
                      [rows]="data.result"
                      [loadingIndicator]="loading"
                      [columnMode]="'force'"
@@ -73,6 +74,13 @@
             [cellClass]="data.cellClass"
             [canAutoResize]="data.canAutoResize"
             [width]="data.width || 150" *ngIf="!data.cellTemplate">
+
+            <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+              <div (click)="sort()" class="table-header-name" [class.sortable]="column.sortable" [innerHTML]="column.name"></div>
+              <input class="form-control form-control-sm mb-0" [placeholder]="'Search ' + column?.name + '...'"
+                     (keyup)="doAdvancedSearch($event, column)" *ngIf="advancedSearch && searchableData && searchableData[column.prop]"/>
+            </ng-template>
+
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
               <span *ngIf="data.render" [innerHtml]="data.render(value, row)"></span>
               <ng-container *ngIf="!data.render">

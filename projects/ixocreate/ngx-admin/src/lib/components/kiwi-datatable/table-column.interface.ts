@@ -14,4 +14,5 @@ export interface TableColumnData<T> {
   cellClass?: string;
   canAutoResize?: boolean;
   sortable?: boolean;
+  searchable?: boolean;
 }

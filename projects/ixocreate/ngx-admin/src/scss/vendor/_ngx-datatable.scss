@@ -127,6 +127,23 @@
       display: none;
     }
   }
+
+  .datatable-header-cell-template-wrap {
+    .table-header-name {
+      &.sortable {
+        padding-right: 15px;
+        cursor: pointer;
+      }
+    }
+
+    .sort-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+  }
+
+
 }
 
 @keyframes query {
