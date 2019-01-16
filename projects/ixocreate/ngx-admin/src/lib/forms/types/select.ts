@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
 import { AppDataService } from '../../services/data/app-data.service';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 export class SelectOption {
   label: string;
@@ -21,9 +22,13 @@ export class SelectOption {
     <ng-container *ngIf="selectOptions">
       <div class="input-group">
         <ng-select
+          #select
+          (open)="onOpen()"
+          (search)="onOpen()"
           [class.is-invalid]="showError"
           [items]="selectOptions"
           [placeholder]="to.placeholder"
+          [searchable]="!to.extendedSelect"
           [bindValue]="valueProp"
           [bindLabel]="labelProp"
           [clearable]="false"
@@ -41,7 +46,10 @@ export class SelectOption {
 })
 export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
 
+  @ViewChild('select') select;
+
   selectOptions: any;
+
 
   public constructor(private appData: AppDataService) {
     super();
@@ -49,6 +57,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
 
   ngOnInit() {
     if (this.to.resource) {
+      console.log(this.to);
       this.appData.getResourceSelect(this.to.resource.resource).then((options) => {
         this.selectOptions = options;
       });
@@ -73,6 +82,13 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
         });
       }
       this.selectOptions = options;
+    }
+  }
+
+  onOpen() {
+    if (this.to.extendedSelect) {
+      this.select.close();
+      console.log('show extended select');
     }
   }
 

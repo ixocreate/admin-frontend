@@ -176,6 +176,7 @@ export class SchemaTransformService {
       options: options,
       resource: value.resource,
       clearable: value.clearable || false,
+      extendedSelect: value.extendedSelect || false,
     })(value);
   }
 
