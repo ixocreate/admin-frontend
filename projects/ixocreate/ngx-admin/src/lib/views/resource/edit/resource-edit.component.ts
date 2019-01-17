@@ -12,6 +12,7 @@ import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-mod
 import { PageTitleService } from '../../../services/page-title.service';
 import { ResourceConfig } from '../../../interfaces/config.interface';
 import { ConfigService } from '../../../services/config.service';
+import { FormHelper } from '../../../helpers/form.helper';
 
 @Component({
   templateUrl: './resource-edit.component.html',
@@ -31,6 +32,8 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
   aboveWidgetData$: Promise<any>;
   belowWidgetData$: Promise<any>;
 
+  viewOnly = false;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -44,11 +47,15 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      this.viewOnly = !!this.route.routeConfig.data.viewOnly;
       this.resourceKey = params.type || this.resourceKey;
       this.resourceId = params.id;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
-      this.fields = this.resourceInfo.updateSchema ?  this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
+      this.fields = this.resourceInfo.updateSchema ? this.schemaTransform.transformForm(this.resourceInfo.updateSchema) : [];
+      if (this.viewOnly) {
+        this.fields = FormHelper.setTemplateOption(this.fields, 'disabled', true);
+      }
       this.data$ = this.appData.getResourceDetail(this.resourceKey, this.resourceId);
       this.aboveWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'above', 'edit', this.resourceId);
       this.belowWidgetData$ = this.appData.getResourceWidgets(this.resourceKey, 'below', 'edit', this.resourceId);

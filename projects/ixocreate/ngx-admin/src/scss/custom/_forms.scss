@@ -336,7 +336,7 @@ formly-form > formly-field:last-child > formly-wrapper-form-field-only > * > * >
   @include border-radius(0 0 $border-radius $border-radius);
 }
 
-.nav-link.is-invalid {
+.nav-link.is-invalid, .nav-item.is-invalid .nav-link {
   color: $danger !important;
   font-weight: bold;
 }

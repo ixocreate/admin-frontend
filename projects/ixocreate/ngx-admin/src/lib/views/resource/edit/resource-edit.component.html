@@ -1,6 +1,6 @@
 <kiwi-content>
   <ng-template #headerButtons>
-    <ng-container *ngIf="loaded">
+    <ng-container *ngIf="loaded && !viewOnly">
       <a [routerLink]="'../../'" class="btn btn-outline-dark">
         <i class="fa fa-ban"></i> Cancel
       </a>
@@ -17,21 +17,16 @@
     <kiwi-dashboard [data]="data"></kiwi-dashboard>
   </ng-container>
 
-  <ng-container *ngIf="data$ | async as data">
+  <ng-container *ngIf="data$ | async as data; else isLoading">
     <div class="card card-accent-primary">
       <div class="card-header custom-card-header">
-        <h6 class="m-0 text-center text-sm-left">Edit <b>{{ data.label }}</b></h6>
+        <h6 class="m-0 text-center text-sm-left">{{ viewOnly ? 'View' : 'Edit' }} <b>{{ data.label }}</b></h6>
       </div>
       <div class="card-body">
         <ng-container *ngIf="form && fields; else isLoading">
           <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmit()">
           </formly-form>
         </ng-container>
-        <ng-template #isLoading>
-          <div class="text-center my-3 loading">
-            <kiwi-loading class="big-center"></kiwi-loading>
-          </div>
-        </ng-template>
       </div>
       <div class="card-footer text-muted">
         <b class="text-danger">*</b> Required Field
@@ -41,4 +36,10 @@
   <ng-container *ngIf="belowWidgetData$ | async as data">
     <kiwi-dashboard [data]="data"></kiwi-dashboard>
   </ng-container>
+
+  <ng-template #isLoading>
+    <div class="text-center my-3 loading">
+      <kiwi-loading class="big-center"></kiwi-loading>
+    </div>
+  </ng-template>
 </kiwi-content>

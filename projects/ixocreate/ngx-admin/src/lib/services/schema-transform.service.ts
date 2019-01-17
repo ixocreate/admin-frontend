@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export interface Schema {
   key: string;
@@ -63,6 +63,7 @@ export class SchemaTransformService {
         type: type,
         templateOptions: {
           label: value.label,
+          description: value.description,
           placeholder: value.placeholder || value.label + '...',
           required: value.required,
           disabled: value.disabled,
@@ -84,6 +85,7 @@ export class SchemaTransformService {
         _type: element.name,
         templateOptions: {
           label: element.label,
+          description: element.description,
           collapsed: false,
           allowCopy: false,
         },
@@ -96,6 +98,7 @@ export class SchemaTransformService {
       type: 'dynamic',
       templateOptions: {
         label: value.label,
+        description: value.description,
       },
       fieldArray: [],
       fieldGroups: groups,
@@ -110,6 +113,7 @@ export class SchemaTransformService {
         _type: element.name,
         templateOptions: {
           label: element.label,
+          description: element.description,
           collapsed: false,
           allowCopy: true,
         },
@@ -131,12 +135,14 @@ export class SchemaTransformService {
   private handleTabbedGroup(value: any, transformer: SchemaTransformService): any {
     const groups = [];
 
-    value.elements.forEach((element) => {
+    value.elements.forEach(element => {
       groups.push({
         wrappers: ['tab'],
         templateOptions: {
           label: element.label,
+          description: element.description,
           icon: element.icon,
+          name: element.name
         },
         fieldGroup: transformer.transformForm(element.elements),
         elements: element.elements,
@@ -147,6 +153,8 @@ export class SchemaTransformService {
       wrappers: ['tabset'],
       templateOptions: {
         label: value.label,
+        description: value.description,
+        name: value.name
       },
       fieldGroup: groups,
     };
@@ -157,7 +165,9 @@ export class SchemaTransformService {
       wrappers: ['section'],
       templateOptions: {
         label: value.label,
-        icon: 'fa fa-fw ' + value.icon,
+        description: value.description,
+        icon: value.icon ? 'fa fa-fw ' + value.icon : false,
+        name: value.name,
       },
       fieldGroup: transformer.transformForm(value.elements),
     };
@@ -168,7 +178,10 @@ export class SchemaTransformService {
 
     for (const key in value.options) {
       if (value.options.hasOwnProperty(key)) {
-        options.push({value: key, label: value.options[key]});
+        options.push({
+          value: key,
+          label: value.options[key]
+        });
       }
     }
 
@@ -190,6 +203,7 @@ export class SchemaTransformService {
 
     return transformer.handleDefault('radio', {
       options: options,
+      description: value.description,
       resource: value.resource,
       clearable: value.clearable || false,
       labelProp: 'label',

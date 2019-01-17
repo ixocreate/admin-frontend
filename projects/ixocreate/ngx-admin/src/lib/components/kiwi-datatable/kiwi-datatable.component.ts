@@ -16,7 +16,7 @@ export class KiwiDatatableComponent implements OnInit {
   @Input() apiUrl = null;
 
   @Input() resource = null;
-  private resourceInfo: ResourceConfig;
+  resourceInfo: ResourceConfig;
 
   @Output() updatedData = new EventEmitter<any>();
 

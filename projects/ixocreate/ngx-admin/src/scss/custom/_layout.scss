@@ -1,3 +1,10 @@
+.btn-warning {
+  &,
+  &:hover {
+    color: #fff;
+  }
+}
+
 .btn-outline-input {
   @include button-outline-variant($input-border-color);
   background: #fff;
