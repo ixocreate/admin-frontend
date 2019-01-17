@@ -12,6 +12,9 @@ import { ResourceConfig } from '../../interfaces/config.interface';
 })
 export class KiwiDatatableComponent implements OnInit {
 
+  static TYPE_EDIT = 'edit';
+  static TYPE_SELECT = 'select';
+
   @Input() tableTitle = null;
   @Input() apiUrl = null;
 
@@ -19,9 +22,14 @@ export class KiwiDatatableComponent implements OnInit {
   @Input() advancedSearch = false;
   @Input() filters: {[key: string]: string} = {};
   @Input() search = '';
+  @Input() type = KiwiDatatableComponent.TYPE_EDIT;
   resourceInfo: ResourceConfig;
 
   @Output() updatedData = new EventEmitter<any>();
+
+  @Input() selectedElements: string[] = [];
+  @Output() select = new EventEmitter<any>();
+  @Output() deSelect = new EventEmitter<any>();
 
   @Input('columns') set columnsTemp(columns: Array<any>) {
     this.setColumns(columns);
@@ -63,6 +71,7 @@ export class KiwiDatatableComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.selectedElements);
     if (this.resource) {
       this.apiUrl = this.config.config.routes.resourceIndex.replace('{resource}', this.resource);
       this.resourceInfo = this.config.getResourceConfig(this.resource);
@@ -239,5 +248,17 @@ export class KiwiDatatableComponent implements OnInit {
     console.log(column);
     this.filters[column.prop] = event.target.value;
     this.applyFilter();
+  }
+
+  isSelected(element): boolean {
+    return this.selectedElements.indexOf(element) > -1;
+  }
+
+  onSelect(row) {
+    this.select.emit(row);
+  }
+
+  onDeSelect(row) {
+    this.deSelect.emit(row);
   }
 }

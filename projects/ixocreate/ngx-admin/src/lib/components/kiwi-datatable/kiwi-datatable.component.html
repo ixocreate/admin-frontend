@@ -1,4 +1,4 @@
-<div class="card card-accent-primary">
+<div class="card card-accent-primary datatable-card">
   <div class="card-header" *ngIf="!advancedSearch || tableTitle">
     <div class="row align-items-center">
       <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 py-2 text-center text-sm-left" [innerHTML]="tableTitle"></h6></div>
@@ -149,8 +149,20 @@
 </div>
 
 <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
-  <div class="text-right">
-    <a class="btn btn-sm btn-warning mr-1" [routerLink]="row.id + '/view'" *ngIf="resourceInfo && resourceInfo.canView "><i class="fa fa-eye"></i> View</a>
-    <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'"><i class="fa fa-pencil"></i> Edit</a>
+  <div class="text-right" *ngIf="type === 'edit'">
+    <a class="btn btn-sm btn-warning mr-1" [routerLink]="row.id + '/view'" *ngIf="resourceInfo && resourceInfo.canView ">
+      <i class="fa fa-eye"></i> View
+    </a>
+    <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'">
+      <i class="fa fa-pencil"></i> Edit
+    </a>
+  </div>
+  <div class="text-right" *ngIf="type === 'select'">
+    <button class="btn btn-sm btn-danger" (click)="onDeSelect(row)" *ngIf="isSelected(row.id)">
+      <i class="fa fa-minus"></i> Remove
+    </button>
+    <button class="btn btn-sm btn-primary" (click)="onSelect(row)" *ngIf="!isSelected(row.id)">
+      <i class="fa fa-plus"></i> Add
+    </button>
   </div>
 </ng-template>

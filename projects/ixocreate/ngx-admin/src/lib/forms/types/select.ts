@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FieldType } from '@ngx-formly/core';
 import { AppDataService } from '../../services/data/app-data.service';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { NgSelectComponent } from '@ng-select/ng-select';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 export class SelectOption {
   label: string;
@@ -25,6 +24,7 @@ export class SelectOption {
           #select
           (open)="onOpen()"
           (search)="onOpen()"
+          (change)="onSelect(getIdsFromElement($event))"
           [class.is-invalid]="showError"
           [items]="selectOptions"
           [placeholder]="to.placeholder"
@@ -41,24 +41,58 @@ export class SelectOption {
           </button>
         </div>
       </div>
+      <ng-template #modalTemplate>
+        <kiwi-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="value"
+                        (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></kiwi-datatable>
+        <div class="bg-white text-center p-2">
+          <button class="btn btn-primary" (click)="closeModal()">Close</button>
+        </div>
+      </ng-template>
     </ng-container>
   `,
 })
 export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
 
   @ViewChild('select') select;
+  @ViewChild('modalTemplate') modal;
 
   selectOptions: any;
+  modalRef: BsModalRef;
 
-
-  public constructor(private appData: AppDataService) {
+  public constructor(private appData: AppDataService, protected modalService: BsModalService) {
     super();
   }
 
-  ngOnInit() {
+  getIdsFromElement(elements) {
+    return elements.map((element) => element.id);
+  }
+
+  get resourceKey() {
     if (this.to.resource) {
-      console.log(this.to);
-      this.appData.getResourceSelect(this.to.resource.resource).then((options) => {
+      return this.to.resource.resource;
+    }
+    return null;
+  }
+
+  openModal() {
+    if (this.to.disabled) {
+      return;
+    }
+    this.modalRef = this.modalService.show(this.modal, {class: 'modal-lg modal-empty'});
+  }
+
+  closeModal() {
+    this.modalRef.hide();
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+
+    console.log(this.formControl);
+    console.log(this.value);
+
+    if (this.resourceKey) {
+      this.appData.getResourceSelect(this.resourceKey).then((options) => {
         this.selectOptions = options;
       });
     } else {
@@ -88,6 +122,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   onOpen() {
     if (this.to.extendedSelect) {
       this.select.close();
+      this.openModal();
       console.log('show extended select');
     }
   }
@@ -112,5 +147,13 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
 
   get multiple() {
     return this.to.multiple || false;
+  }
+
+  onSelect(row) {
+    this.setValue([...this.value, row.id]);
+  }
+
+  onDeSelect(row) {
+    this.setValue(this.value.filter(el => el !== row.id));
   }
 }
