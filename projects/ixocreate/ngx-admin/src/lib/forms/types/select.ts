@@ -42,9 +42,9 @@ export class SelectOption {
         </div>
       </div>
       <ng-template #modalTemplate>
-        <kiwi-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="value"
+        <kiwi-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="multiple ? value : []"
                         (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></kiwi-datatable>
-        <div class="bg-white text-center p-2">
+        <div class="bg-white text-center p-2" *ngIf="multiple">
           <button class="btn btn-primary" (click)="closeModal()">Close</button>
         </div>
       </ng-template>
@@ -145,7 +145,12 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   }
 
   onSelect(row) {
-    this.setValue([...this.value, row.id]);
+    if (this.multiple) {
+      this.setValue([...this.value, row.id]);
+    } else {
+      this.closeModal();
+      this.setValue(row.id);
+    }
   }
 
   onDeSelect(row) {
