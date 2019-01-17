@@ -86,7 +86,6 @@ export class AccountComponent extends ViewAbstractComponent {
 
   ngOnInit() {
     this.accountData.getAccountConfig().then((data: any) => {
-      console.log(data.accountAttributesSchema);
       this.additionalFields = data.accountAttributesSchema ?  this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
     });
   }

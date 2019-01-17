@@ -40,7 +40,7 @@
       <div class="card-header">Change <b>Additional Attributes</b></div>
       <div class="card-body">
         <ng-container *ngIf="additionalForm && additionalFields; else isLoading">
-          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmitAttributes()">
+          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user" class="kiwi-form kiwi-form-inline">
           </formly-form>
         </ng-container>
         <ng-template #isLoading>
@@ -51,7 +51,7 @@
       </div>
       <div class="card-footer">
         <div class="text-right">
-          <button type="submit" class="btn btn-primary" (click)="onSubmitAttributes()">
+          <button type="submit" class="btn btn-primary" [disabled]="!additionalForm.valid" (click)="onSubmitAttributes()">
             <i class="fa fa-save"></i> Change Attributes
           </button>
         </div>
