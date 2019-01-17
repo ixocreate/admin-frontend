@@ -71,7 +71,6 @@ export class KiwiDatatableComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.selectedElements);
     if (this.resource) {
       this.apiUrl = this.config.config.routes.resourceIndex.replace('{resource}', this.resource);
       this.resourceInfo = this.config.getResourceConfig(this.resource);
@@ -245,7 +244,6 @@ export class KiwiDatatableComponent implements OnInit {
   }
 
   doAdvancedSearch(event, column) {
-    console.log(column);
     this.filters[column.prop] = event.target.value;
     this.applyFilter();
   }

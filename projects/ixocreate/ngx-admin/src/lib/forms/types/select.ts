@@ -87,10 +87,6 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
 
   ngOnInit() {
     super.ngOnInit();
-
-    console.log(this.formControl);
-    console.log(this.value);
-
     if (this.resourceKey) {
       this.appData.getResourceSelect(this.resourceKey).then((options) => {
         this.selectOptions = options;
@@ -123,7 +119,6 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
     if (this.to.extendedSelect) {
       this.select.close();
       this.openModal();
-      console.log('show extended select');
     }
   }
 
