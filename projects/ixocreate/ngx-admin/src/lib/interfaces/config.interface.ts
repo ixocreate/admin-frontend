@@ -59,4 +59,5 @@ export interface ResourceConfig {
   canEdit: boolean;
   canDelete: boolean;
   canView: boolean;
+  additionalSchemas?: any;
 }
