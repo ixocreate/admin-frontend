@@ -327,7 +327,7 @@ $dynamic-form-color: $border-color;
 
 formly-form > formly-field:first-child > formly-wrapper-form-field-only > * > * > * > * > * > .form-dynamic-container {
   border-top: 0;
-  margin-top: -$spacer;
+  //margin-top: -$spacer; // causes overlap when nested in section wrapper
 }
 
 formly-form > formly-field:last-child > formly-wrapper-form-field-only > * > * > * > * > * > * > .form-dynamic-footer {
