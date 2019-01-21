@@ -24,7 +24,7 @@ export class SelectOption {
           #select
           (open)="onOpen()"
           (search)="onOpen()"
-          (change)="onSelect(getIdsFromElement($event))"
+          (change)="onSelect($event)"
           [class.is-invalid]="showError"
           [items]="selectOptions"
           [placeholder]="to.placeholder"
@@ -63,10 +63,6 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
     super();
   }
 
-  getIdsFromElement(elements) {
-    return elements.map((element) => element.id);
-  }
-
   get resourceKey() {
     if (this.to.resource) {
       return this.to.resource.resource;
@@ -82,7 +78,10 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   }
 
   closeModal() {
-    this.modalRef.hide();
+    if (this.modalRef) {
+      this.modalRef.hide();
+      this.modalRef = null;
+    }
   }
 
   ngOnInit() {
