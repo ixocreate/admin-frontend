@@ -99,6 +99,7 @@ export class SchemaTransformService {
       templateOptions: {
         label: value.label,
         description: value.description,
+        limit: value.limit,
       },
       fieldArray: [],
       fieldGroups: groups,
@@ -126,6 +127,7 @@ export class SchemaTransformService {
       type: 'dynamic',
       templateOptions: {
         label: value.label,
+        limit: value.limit,
       },
       fieldArray: [],
       fieldGroups: groups,

@@ -65,7 +65,7 @@ export interface BlockSelect {
           </div>
         </ng-container>
       </div>
-      <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
+      <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0 && (!field.templateOptions['limit'] || field.templateOptions['limit'] === null || (field.templateOptions['limit'] > model.length))">
         <ng-container *ngIf="fieldGroupTypes.length > 1; else singleField">
           <div class="input-group">
             <ng-select [items]="fieldGroupTypes" [(ngModel)]="selectedFieldGroupType" bindLabel="label" [clearable]="false">
