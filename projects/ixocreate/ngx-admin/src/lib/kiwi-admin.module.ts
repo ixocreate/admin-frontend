@@ -94,6 +94,8 @@ import {KiwiDashboardComponent} from './components/kiwi-dashboard/kiwi-dashboard
 import {KiwiDashboardGalleryComponent} from './dashboard/kiwi-gallery/kiwi-gallery.component';
 import {KiwiDashboardGraphComponent} from './dashboard/kiwi-graph/kiwi-graph.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {RegistryComponent} from "./views/registry/registry.component";
+import {RegistryEditComponent} from "./views/registry/edit/registry-edit.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -166,6 +168,9 @@ const APP_COMPONENTS = [
   KiwiDashboardStatisticsOverviewComponent,
   KiwiDashboardGalleryComponent,
   KiwiDashboardGraphComponent,
+
+  RegistryComponent,
+  RegistryEditComponent,
 ];
 
 export function initConfig(appData: AppDataService): () => Promise<any> {

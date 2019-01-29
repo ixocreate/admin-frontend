@@ -1,8 +1,6 @@
-import { FormlyFieldConfig } from '@ngx-formly/core';
-
 export class FormHelper {
 
-  static setTemplateOption(fields: FormlyFieldConfig[], key: string, value: any): FormlyFieldConfig[] {
+  static setTemplateOption(fields: any[], key: string, value: any): any[] {
     fields = [...fields];
     for (const field of fields) {
       if (field.fieldGroup) {

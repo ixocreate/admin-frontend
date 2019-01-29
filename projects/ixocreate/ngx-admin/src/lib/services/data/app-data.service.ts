@@ -252,6 +252,16 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
+  getRegistryDetail(id: string): Promise<any> {
+    return this.api.get(this.config.config.routes.registryDetail.replace('{id}', id));
+  }
+
+  updateRegistry(id: string, data: any): Promise<void> {
+    return this.api.patch(this.config.config.routes.registryUpdate.replace('{id}', id), data).then((response) => {
+      return response;
+    })
+  }
+
   getDashboard(): Promise<any> {
     return this.api.get(this.config.config.routes.dashboardIndex);
   }

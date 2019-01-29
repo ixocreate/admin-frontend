@@ -29,6 +29,8 @@ import { SubCreateComponent } from './views/page/sub/sub-create.component';
 import { SubAddComponent } from './views/page/sub/sub-add.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { RedirectComponent } from './views/auth/redirect/redirect.component';
+import {RegistryComponent} from "./views/registry/registry.component";
+import {RegistryEditComponent} from "./views/registry/edit/registry-edit.component";
 
 export const routes: Routes = [
   {
@@ -233,6 +235,22 @@ export const routes: Routes = [
           {
             path: ':id/edit',
             component: UserEditComponent,
+            data: {title: 'Edit'},
+          },
+        ],
+      },
+      {
+        path: 'registry',
+        data: {title: 'Registry'},
+        children: [
+          {
+            path: '',
+            component: RegistryComponent,
+            data: {title: null},
+          },
+          {
+            path: ':id/edit',
+            component: RegistryEditComponent,
             data: {title: 'Edit'},
           },
         ],
