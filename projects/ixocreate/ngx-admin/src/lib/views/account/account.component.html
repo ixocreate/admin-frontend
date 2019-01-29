@@ -40,7 +40,7 @@
       <div class="card card-accent-primary" *ngIf="additionalFields.length > 0">
         <div class="card-header">Change <b>Additional Attributes</b></div>
         <div class="card-body">
-          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user" class="kiwi-form kiwi-form-inline"></formly-form>
+          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user.accountAttributes" class="kiwi-form kiwi-form-inline"></formly-form>
         </div>
         <div class="card-footer">
           <div class="text-right">
