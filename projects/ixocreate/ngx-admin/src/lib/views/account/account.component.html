@@ -36,30 +36,29 @@
         </form>
       </div>
     </div>
-    <div class="card card-accent-primary">
-      <div class="card-header">Change <b>Additional Attributes</b></div>
-      <div class="card-body">
-        <ng-container *ngIf="additionalForm && additionalFields; else isLoading">
-          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user" class="kiwi-form kiwi-form-inline">
-          </formly-form>
-        </ng-container>
-        <ng-template #isLoading>
-          <div class="text-center my-3 loading">
-            <kiwi-loading class="big-center"></kiwi-loading>
+    <ng-container *ngIf="additionalForm && additionalFields; else isLoading">
+      <div class="card card-accent-primary" *ngIf="additionalFields.length > 0">
+        <div class="card-header">Change <b>Additional Attributes</b></div>
+        <div class="card-body">
+          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user" class="kiwi-form kiwi-form-inline"></formly-form>
+        </div>
+        <div class="card-footer">
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary" [disabled]="!additionalForm.valid" (click)="onSubmitAttributes()">
+              <i class="fa fa-save"></i> Change Attributes
+            </button>
           </div>
-        </ng-template>
-      </div>
-      <div class="card-footer">
-        <div class="text-right">
-          <button type="submit" class="btn btn-primary" [disabled]="!additionalForm.valid" (click)="onSubmitAttributes()">
-            <i class="fa fa-save"></i> Change Attributes
-          </button>
-        </div>
-        <div class="text-muted">
-          <b class="text-danger">*</b> Required Field
+          <div class="text-muted">
+            <b class="text-danger">*</b> Required Field
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #isLoading>
+      <div class="text-center my-3 loading">
+        <kiwi-loading class="big-center"></kiwi-loading>
+      </div>
+    </ng-template>
   </ng-container>
 
 </kiwi-content>
