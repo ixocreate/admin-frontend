@@ -10,7 +10,7 @@ export class KiwiDatePipe extends DatePipe implements PipeTransform {
     if (!value) {
       return 'no date';
     }
-    return super.transform(value, 'YYYY-MM-DD');
+    return super.transform(value, 'yyyy-MM-dd');
   }
 
 }
