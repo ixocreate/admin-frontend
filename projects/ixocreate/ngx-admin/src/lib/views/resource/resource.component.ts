@@ -35,7 +35,6 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe((params: Params) => {
-      console.log(params);
       for (let key of Object.keys(params)) {
         const value = params[key];
         if (key.indexOf('filter[') > -1) {
