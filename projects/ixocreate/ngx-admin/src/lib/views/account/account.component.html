@@ -4,15 +4,20 @@
       <div class="col-md">
         <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()" class="ixocreate-form">
           <div class="card card-accent-primary">
-            <div class="card-header">Change <b>Email</b></div>
+            <div class="card-header custom-card-header">
+              <h6 class="mb-0">Change <b>Email</b></h6>
+            </div>
             <div class="card-body">
               <div class="form-group">
-                <label>Your current email *</label>
+                <label>Your current email</label>
                 <input type="text" class="form-control" placeholder="{{ user.email }}" readonly>
               </div>
               <formly-form [form]="emailForm" [fields]="emailFormFields" [options]="emailFormOptions"></formly-form>
             </div>
-            <div class="card-footer text-right">
+            <div class="card-footer d-lg-flex justify-content-between align-items-center">
+              <div class="text-muted">
+                <b class="text-danger">*</b> Required Field
+              </div>
               <button type="submit" class="btn btn-primary" [disabled]="!emailForm.valid">
                 <i class="fa fa-save"></i> Change Email
               </button>
@@ -23,11 +28,16 @@
       <div class="col-md">
         <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()" class="ixocreate-form">
           <div class="card card-accent-primary">
-            <div class="card-header">Change <b>Password</b></div>
+            <div class="card-header custom-card-header">
+              <h6 class="mb-0">Change <b>Password</b></h6>
+            </div>
             <div class="card-body">
               <formly-form [form]="passwordForm" [fields]="passwordFormFields" [options]="passwordFormOptions"></formly-form>
             </div>
-            <div class="card-footer text-right">
+            <div class="card-footer d-lg-flex justify-content-between align-items-center">
+              <div class="text-muted">
+                <b class="text-danger">*</b> Required Field
+              </div>
               <button type="submit" class="btn btn-primary" [disabled]="!passwordForm.valid">
                 <i class="fa fa-save"></i> Change Password
               </button>
@@ -38,19 +48,19 @@
     </div>
     <ng-container *ngIf="additionalForm && additionalFields; else isLoading">
       <div class="card card-accent-primary" *ngIf="additionalFields.length > 0">
-        <div class="card-header">Change <b>Additional Attributes</b></div>
+        <div class="card-header custom-card-header">
+          <h6 class="mb-0">Edit <b>Attributes</b></h6>
+        </div>
         <div class="card-body">
           <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user.accountAttributes" class="kiwi-form kiwi-form-inline"></formly-form>
         </div>
-        <div class="card-footer">
-          <div class="text-right">
-            <button type="submit" class="btn btn-primary" [disabled]="!additionalForm.valid" (click)="onSubmitAttributes()">
-              <i class="fa fa-save"></i> Change Attributes
-            </button>
-          </div>
+        <div class="card-footer d-lg-flex justify-content-between align-items-center">
           <div class="text-muted">
             <b class="text-danger">*</b> Required Field
           </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!additionalForm.valid" (click)="onSubmitAttributes()">
+            <i class="fa fa-save"></i> Update Attributes
+          </button>
         </div>
       </div>
     </ng-container>
