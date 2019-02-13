@@ -1,6 +1,7 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ApiService } from '../../services/api.service';
+import { NotificationService } from "../../services/notification.service";
 import { TableColumnData } from './table-column.interface';
 import { TableResponse } from './table-response.interface';
 import { ConfigService } from '../../services/config.service';
@@ -67,7 +68,7 @@ export class KiwiDatatableComponent implements OnInit {
     this.calculateColumns();
   }
 
-  constructor(protected api: ApiService, private config: ConfigService) {
+  constructor(protected api: ApiService, private config: ConfigService, protected notification: NotificationService,) {
   }
 
   ngOnInit() {
@@ -154,8 +155,6 @@ export class KiwiDatatableComponent implements OnInit {
 
     this.loading = true;
     return this.api.get(this.apiUrl + '?' + this.parseParams(params)).then((data: any) => {
-      this.loading = false;
-
       if (this.tableTitle === null && data.label) {
         this.tableTitle = data.label;
       }
@@ -208,7 +207,13 @@ export class KiwiDatatableComponent implements OnInit {
         };
       }
       this.updatedData.emit(this.data);
-    });
+    })
+      .catch(error => {
+        this.notification.apiError(error);
+      })
+      .then(() => {
+        this.loading = false;
+      });
   }
 
   setPage(pageInfo) {
