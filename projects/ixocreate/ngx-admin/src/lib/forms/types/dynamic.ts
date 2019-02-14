@@ -88,8 +88,8 @@ export interface BlockSelect {
         </ng-container>
         <ng-template #singleField>
           <div class="text-right">
-            <button class="btn btn-success" type="button" (click)="add()" *ngIf="fieldGroupTypes[0]">
-              <i class="fa fa-plus"></i> Add {{ fieldGroupTypes[0].label }}
+            <button class="btn btn-sm btn-success" type="button" (click)="add()" *ngIf="fieldGroupTypes[0]">
+              <i class="fa fa-plus"></i> {{ fieldGroupTypes[0].label }}
             </button>
           </div>
         </ng-template>
