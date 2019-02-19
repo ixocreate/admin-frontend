@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, ModuleWithProviders, NgModule } from '@angular/core';
 import { environment } from '../../../../../src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ToastrModule } from 'ngx-toastr';
@@ -16,17 +16,17 @@ import { LoginComponent } from './views/auth/login/login.component';
 import {
   AlertModule,
   BsDatepickerModule,
+  CarouselModule,
   ModalModule,
   PaginationModule,
   ProgressbarModule,
   TabsModule,
   TypeaheadModule,
-  CarouselModule
 } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, RouterModule } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, Router, RouteReuseStrategy, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { KIWI_CONFIG, KiwiConfig } from './services/config.service';
 import { AppDataService } from './services/data/app-data.service';
@@ -81,21 +81,22 @@ import { UserEditComponent } from './views/user/edit/user-edit.component';
 import { UserCreateComponent } from './views/user/create/user-create.component';
 import { SubComponent } from './views/page/sub/sub.component';
 import { FlatComponent } from './views/page/flat/flat.component';
-import {SubCreateComponent} from './views/page/sub/sub-create.component';
-import {SubAddComponent} from './views/page/sub/sub-add.component';
-import {FlatCreateComponent} from './views/page/flat/flat-create.component';
-import {FlatAddComponent} from './views/page/flat/flat-add.component';
-import {DashboardComponent} from './views/dashboard/dashboard.component';
-import {KiwiDashboardSlideshowComponent} from './dashboard/kiwi-slideshow/kiwi-slideshow.component';
-import {KiwiDashboardCounterComponent} from './dashboard/kiwi-counter/kiwi-counter.component';
-import {KiwiDashboardStatisticsOverviewComponent} from './dashboard/kiwi-statistics-overview/kiwi-statistics-overview.component';
-import {RedirectComponent} from './views/auth/redirect/redirect.component';
-import {KiwiDashboardComponent} from './components/kiwi-dashboard/kiwi-dashboard.component';
-import {KiwiDashboardGalleryComponent} from './dashboard/kiwi-gallery/kiwi-gallery.component';
-import {KiwiDashboardGraphComponent} from './dashboard/kiwi-graph/kiwi-graph.component';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-import {RegistryComponent} from "./views/registry/registry.component";
-import {RegistryEditComponent} from "./views/registry/edit/registry-edit.component";
+import { SubCreateComponent } from './views/page/sub/sub-create.component';
+import { SubAddComponent } from './views/page/sub/sub-add.component';
+import { FlatCreateComponent } from './views/page/flat/flat-create.component';
+import { FlatAddComponent } from './views/page/flat/flat-add.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { KiwiDashboardSlideshowComponent } from './dashboard/kiwi-slideshow/kiwi-slideshow.component';
+import { KiwiDashboardCounterComponent } from './dashboard/kiwi-counter/kiwi-counter.component';
+import { KiwiDashboardStatisticsOverviewComponent } from './dashboard/kiwi-statistics-overview/kiwi-statistics-overview.component';
+import { RedirectComponent } from './views/auth/redirect/redirect.component';
+import { KiwiDashboardComponent } from './components/kiwi-dashboard/kiwi-dashboard.component';
+import { KiwiDashboardGalleryComponent } from './dashboard/kiwi-gallery/kiwi-gallery.component';
+import { KiwiDashboardGraphComponent } from './dashboard/kiwi-graph/kiwi-graph.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { RegistryComponent } from './views/registry/registry.component';
+import { RegistryEditComponent } from './views/registry/edit/registry-edit.component';
+import { ErrorComponent } from './views/error/error.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -130,6 +131,7 @@ const APP_COMPONENTS = [
   DropdownDirective,
 
   // Views
+  ErrorComponent,
   AdminComponent,
   LoginComponent,
   AccountComponent,
@@ -173,9 +175,21 @@ const APP_COMPONENTS = [
   RegistryEditComponent,
 ];
 
-export function initConfig(appData: AppDataService): () => Promise<any> {
-  return (): Promise<any> => {
-    return appData.loadSession().then(() => appData.loadConfig());
+export function initConfig(appData: AppDataService, injector: Injector): () => Promise<any> {
+  return async (): Promise<any> => {
+    const router = injector.get(Router);
+    try {
+      await appData.loadSession();
+      await appData.loadConfig();
+      setTimeout(() => {
+        if (router.url === '/error') {
+          router.navigateByUrl('/login');
+        }
+      });
+    } catch (e) {
+      router.navigateByUrl('/error');
+    }
+    return Promise.resolve();
   };
 }
 
@@ -304,7 +318,7 @@ export class KiwiAdminModule {
         {
           provide: APP_INITIALIZER,
           useFactory: initConfig,
-          deps: [AppDataService],
+          deps: [AppDataService, Injector],
           multi: true,
         },
         {

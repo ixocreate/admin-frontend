@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { filter } from 'rxjs/internal/operators';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class PageTitleService {
               private activatedRoute: ActivatedRoute) {
   }
 
-  setPageTitle(replaceData: Array<{ search: string, replace: string}> = [{search: '{resource}', replace: ''}]) {
+  setPageTitle(replaceData: Array<{ search: string, replace: string }> = [{search: '{resource}', replace: ''}]) {
     let name = this.pageName;
     for (const value of replaceData) {
       name = name.replace(value.search, value.replace);
@@ -37,8 +37,10 @@ export class PageTitleService {
 
   init() {
     this.appData.config$.subscribe((appConfig) => {
-      this.projectName = appConfig.project.name;
-      this.setPageTitle();
+      if (appConfig && appConfig.project) {
+        this.projectName = appConfig.project.name;
+        this.setPageTitle();
+      }
     });
 
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event) => {

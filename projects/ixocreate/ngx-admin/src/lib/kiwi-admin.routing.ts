@@ -29,10 +29,16 @@ import { SubCreateComponent } from './views/page/sub/sub-create.component';
 import { SubAddComponent } from './views/page/sub/sub-add.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { RedirectComponent } from './views/auth/redirect/redirect.component';
-import {RegistryComponent} from "./views/registry/registry.component";
-import {RegistryEditComponent} from "./views/registry/edit/registry-edit.component";
+import { RegistryComponent } from './views/registry/registry.component';
+import { RegistryEditComponent } from './views/registry/edit/registry-edit.component';
+import { ErrorComponent } from './views/error/error.component';
 
 export const routes: Routes = [
+  {
+    path: 'error',
+    component: ErrorComponent,
+    data: {title: 'Error'},
+  },
   {
     path: 'login',
     component: LoginComponent,
@@ -259,120 +265,6 @@ export const routes: Routes = [
         path: '**',
         component: RedirectComponent,
       },
-
-
-
-
-
-
-      /*
-      {
-        path: 'admin-user',
-        component: FullLayoutComponent,
-        children: [
-          {
-            path: '',
-            children: [
-              {
-                path: '',
-                component: UserIndexComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: 'create',
-                component: ResourceCreateComponent,
-                canActivate: [PermissionGuard],
-                data: {
-                  resource: 'admin-user',
-                }
-              },
-              {
-                path: ':id/edit',
-                component: ResourceEditComponent,
-                canActivate: [PermissionGuard],
-                data: {
-                  resource: 'admin-user',
-                }
-              }
-            ]
-          },
-        ]
-      },
-      {
-        path: 'page',
-        component: FullLayoutComponent,
-        children: [
-          {
-            path: '',
-            children: [
-              {
-                path: '',
-                component: PageIndexComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: 'create/:locale',
-                component: PageCreateComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: 'create/:locale/:parentSitemapId',
-                component: PageCreateComponent,
-                canActivate: [PermissionGuard]
-              },
-              {
-                path: 'add/:locale/:sitemapId',
-                component: PageAddComponent,
-                canActivate: [PermissionGuard],
-              },
-              {
-                path: ':id/edit',
-                component: PageEditComponent,
-                canActivate: [PermissionGuard]
-              }
-            ]
-          },
-        ]
-      },
-      {
-        path: 'page-flat/:handle',
-        component: FullLayoutComponent,
-        children: [
-          {
-            path: '',
-            children: [
-              {
-                path: '',
-                component: PageFlatIndexComponent,
-                canActivate: [PermissionGuard],
-              },
-              {
-                path: 'create/:locale/:parentSitemapId',
-                component: PageFlatCreateComponent,
-                canActivate: [PermissionGuard],
-                data: {
-                  title: 'Create',
-                },
-              },
-              {
-                path: 'add/:locale/:sitemapId',
-                component: PageFlatAddComponent,
-                canActivate: [PermissionGuard],
-              },
-              {
-                path: ':id/edit',
-                component: PageEditComponent,
-                canActivate: [PermissionGuard],
-              }
-            ],
-          },
-        ],
-      },
-      {
-        path: '**',
-        component: PageNotFoundComponent,
-      },
-      */
     ],
   },
 ];
