@@ -1,7 +1,8 @@
 <div class="card card-accent-primary datatable-card">
   <div class="card-header" *ngIf="!advancedSearch || tableTitle">
     <div class="row align-items-center">
-      <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 py-2 text-center text-sm-left" [innerHTML]="tableTitle"></h6></div>
+      <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 py-2 text-center text-sm-left" [innerHTML]="tableTitle"></h6>
+      </div>
       <div class="col-sm mt-2 mt-sm-0" *ngIf="!advancedSearch">
         <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="search"
                (keyup)="applyFilter()"/>
@@ -76,29 +77,32 @@
             [width]="data.width || 150" *ngIf="!data.cellTemplate">
 
             <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
-              <div (click)="sort()" class="table-header-name" [class.sortable]="column.sortable" [innerHTML]="column.name"></div>
-              <input class="form-control form-control-sm mb-0" [placeholder]="'Search ' + column?.name + '...'" [(ngModel)]="filters[column.prop]"
-                     (keyup)="doAdvancedSearch($event, column)" *ngIf="advancedSearch && searchableData && searchableData[column.prop]"/>
+              <div (click)="sort()" class="table-header-name" [class.sortable]="column.sortable"
+                   [innerHTML]="column.name"></div>
+              <ng-container *ngIf="advancedSearch && searchableData && searchableData[column.prop]">
+
+                <input *ngIf="!data.searchElement || data.searchElement.type === 'input'"
+                       class="form-control form-control-sm mb-0"
+                       [placeholder]="'Search ' + column?.name + '...'"
+                       [(ngModel)]="filters[column.prop]"
+                       (keyup)="doAdvancedSearch($event, column)"/>
+
+                <select *ngIf="data.searchElement && data.searchElement.type === 'select'"
+                        class="form-control form-control-sm mb-0"
+                        [(ngModel)]="filters[column.prop]"
+                        (change)="doAdvancedSearch($event, column)">
+                  <option value="">-</option>
+                  <option *ngFor="let option of data.searchElement.options" [value]="option.value">
+                    {{ option.name }}
+                  </option>
+                </select>
+
+              </ng-container>
             </ng-template>
 
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
               <span *ngIf="data.render" [innerHtml]="data.render(value, row)"></span>
-              <ng-container *ngIf="!data.render">
-                <ng-container *ngIf="data.type === 'string'">
-                  {{ value }}
-                </ng-container>
-                <ng-container *ngIf="data.type === 'image'">
-                  <div style="max-width: 100px;">
-                    <img class="img-fluid" [src]="value.thumb">
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="data.type === 'date'">
-                  <i>{{ value | kiwiDate }}</i>
-                </ng-container>
-                <ng-container *ngIf="data.type === 'datetime'">
-                  <i>{{ value | kiwiDateTime }}</i>
-                </ng-container>
-              </ng-container>
+              <ng-container *ngIf="!data.render">{{ value }}</ng-container>
             </ng-template>
           </ngx-datatable-column>
         </ng-container>
@@ -150,7 +154,8 @@
 
 <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
   <div class="text-right" *ngIf="type === 'edit'">
-    <a class="btn btn-sm btn-warning mr-1" [routerLink]="row.id + '/view'" *ngIf="resourceInfo && resourceInfo.canView ">
+    <a class="btn btn-sm btn-warning mr-1" [routerLink]="row.id + '/view'"
+       *ngIf="resourceInfo && resourceInfo.canView ">
       <i class="fa fa-eye"></i> View
     </a>
     <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'">

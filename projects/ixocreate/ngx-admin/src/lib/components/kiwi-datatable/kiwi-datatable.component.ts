@@ -1,11 +1,12 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ApiService } from '../../services/api.service';
-import { NotificationService } from "../../services/notification.service";
+import { NotificationService } from '../../services/notification.service';
 import { TableColumnData } from './table-column.interface';
 import { TableResponse } from './table-response.interface';
 import { ConfigService } from '../../services/config.service';
 import { ResourceConfig } from '../../interfaces/config.interface';
+import { DataTableTypesService } from '../../services/data-table-types.service';
 
 @Component({
   selector: 'kiwi-datatable',
@@ -21,7 +22,7 @@ export class KiwiDatatableComponent implements OnInit {
 
   @Input() resource = null;
   @Input() advancedSearch = false;
-  @Input() filters: {[key: string]: string} = {};
+  @Input() filters: { [key: string]: string } = {};
   @Input() search = '';
   @Input() type = KiwiDatatableComponent.TYPE_EDIT;
   resourceInfo: ResourceConfig;
@@ -49,7 +50,7 @@ export class KiwiDatatableComponent implements OnInit {
   detailColumns: Array<TableColumnData<any>> = [];
   loading = false;
   pageNumber = 0;
-  searchableData: {[key: string]: boolean} = {};
+  searchableData: { [key: string]: boolean } = {};
 
   private orderBy: string = null;
   private orderDirection: 'DESC' | 'ASC' = null;
@@ -68,7 +69,10 @@ export class KiwiDatatableComponent implements OnInit {
     this.calculateColumns();
   }
 
-  constructor(protected api: ApiService, private config: ConfigService, protected notification: NotificationService,) {
+  constructor(protected api: ApiService,
+              protected config: ConfigService,
+              protected notification: NotificationService,
+              protected dataTableTypes: DataTableTypesService) {
   }
 
   ngOnInit() {
@@ -86,14 +90,34 @@ export class KiwiDatatableComponent implements OnInit {
       this.searchableData[column.prop] = !!column.searchable;
       column.headerClass = column.headerClass || '';
       column.cellClass = column.cellClass || '';
+
       if (column.type) {
-        // delete column.type;
+        const typeRender = this.dataTableTypes.getType(column.type);
+        if (typeRender) {
+          const typeOptions = typeRender(column.options);
+          if (typeOptions.align) {
+            column.align = typeOptions.align;
+          }
+          if (typeOptions.width) {
+            column.width = typeOptions.width;
+          }
+          if (typeOptions.searchElement) {
+            column.searchElement = typeOptions.searchElement;
+          }
+          column.render = (value) => {
+            return typeOptions.render(value);
+          };
+        }
+        delete column.type;
       }
+
       if (column.align) {
-        column.headerClass += ' text-' + column.align;
+        // column.headerClass += ' text-' + column.align;
         column.cellClass += ' text-' + column.align;
+        // column.inputClass = 'text-' + column.align;
         delete column.align;
       }
+
     }
     this.hostColumns = columns;
     this.calculateColumns();
@@ -174,6 +198,7 @@ export class KiwiDatatableComponent implements OnInit {
             type: element.type,
             sortable: element.sortable,
             searchable: element.searchable,
+            options: element.options,
           };
         });
         columns.push({

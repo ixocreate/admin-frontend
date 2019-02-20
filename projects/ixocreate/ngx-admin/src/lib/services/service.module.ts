@@ -8,6 +8,7 @@ import { LocalStorageService } from './local-storage.service';
 import { SchemaTransformService } from './schema-transform.service';
 import { PageTitleService } from './page-title.service';
 import { CopyService } from './copy.service';
+import { DataTableTypesService } from './data-table-types.service';
 
 @NgModule({
   imports: [],
@@ -26,6 +27,7 @@ export class ServiceModule {
         SchemaTransformService,
         PageTitleService,
         CopyService,
+        DataTableTypesService,
 
         AppDataService,
         AccountDataService,

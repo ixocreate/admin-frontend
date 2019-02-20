@@ -30,7 +30,6 @@ export class NotificationService {
   apiError(error: APIErrorElement): ActiveToast<any> {
     if (error && error.data) {
       // re-log for debugging convenience
-      console.error(error);
       /**
        * TODO: translate error.code through i18n service (tbd)
        */

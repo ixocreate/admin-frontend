@@ -1,5 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import { TableColumnType } from './table-column-type.enum';
+import { DataTableTypesSearchElement } from '../../services/data-table-types.service';
 
 export interface TableColumnData<T> {
   name?: string;
@@ -15,4 +16,5 @@ export interface TableColumnData<T> {
   canAutoResize?: boolean;
   sortable?: boolean;
   searchable?: boolean;
+  searchElement?: DataTableTypesSearchElement;
 }

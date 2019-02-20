@@ -42,14 +42,14 @@
         </div>
 
         <div *ngFor="let media of data.items" class="col-xl-2 col-sm-4 col-6">
-          <div class="media-container" (click)="selectMedia(media)">
+          <div class="media-container" (click)="selectMedia(media)" [class.is-image]="isImage(media.mimeType)">
             <ng-container *ngIf="isImage(media.mimeType); else noImage">
               <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + media.thumb + ')'}"></div>
               <div class="media-image-title">
                 <div>{{ media.filename }}</div>
               </div>
             </ng-container>
-            <ng-template #noImage class="media-container">
+            <ng-template #noImage>
               <div class="media-icon">
                 <span [class]="'file-icon fa fa-4x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
               </div>
