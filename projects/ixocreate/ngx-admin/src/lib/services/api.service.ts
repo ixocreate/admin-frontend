@@ -34,6 +34,15 @@ export class ApiService {
    * @description Headers for requests
    */
   private errorMapping(response: APIResponse): APIErrorElement {
+    if (!response.errorCode) {
+      return {
+        code: 'unknown-error',
+        data: {
+          title: 'Error',
+          messages: ['An unknown error occurred.'],
+        },
+      };
+    }
     const errors: APIErrorElement = {
       code: response.errorCode,
       data: {
@@ -41,7 +50,10 @@ export class ApiService {
         messages: [],
       },
     };
-    for (const message of response.errorMessages) {
+    for (let message of response.errorMessages) {
+      if (message.length > 200) {
+        message = message.substring(0, 200) + '...';
+      }
       errors.data.messages.push(message);
     }
     return errors;
