@@ -61,7 +61,6 @@ export class DataTableTypesService {
 
     this.registerType('media', () => ({
       render: (media: Media) => {
-        console.log(media);
         if (MediaHelper.isImage(media.mimeType)) {
           return `
             <span class="transparent-img-bg border-radius"><a href="${media.original}" target="_blank">
