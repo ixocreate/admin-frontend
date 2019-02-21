@@ -20,15 +20,17 @@ export class AdminComponent {
   constructor(pageTitle: PageTitleService, config: ConfigService, localStorage: LocalStorageService) {
     pageTitle.init();
 
-    const selectedLocale = localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, config.config.intl.default);
-    let localeFound = false;
-    for (const locale of config.config.intl.locales) {
-      if (locale.locale === selectedLocale) {
-        localeFound = true;
+    if (config.config && config.config.intl) {
+      const selectedLocale = localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, config.config.intl.default);
+      let localeFound = false;
+      for (const locale of config.config.intl.locales) {
+        if (locale.locale === selectedLocale) {
+          localeFound = true;
+        }
       }
-    }
-    if (!localeFound) {
-      localStorage.setItem(LocalStorageService.SELECTED_LANGUAGE, config.config.intl.locales[0].locale);
+      if (!localeFound) {
+        localStorage.setItem(LocalStorageService.SELECTED_LANGUAGE, config.config.intl.locales[0].locale);
+      }
     }
   }
 

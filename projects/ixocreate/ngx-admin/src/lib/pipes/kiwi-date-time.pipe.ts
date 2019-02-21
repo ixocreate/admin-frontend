@@ -1,25 +1,24 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { ConfigService } from '../services/config.service';
+import * as moment from 'moment';
 
 @Pipe({
   name: 'kiwiDateTime',
 })
-export class KiwiDateTimePipe extends DatePipe implements PipeTransform {
+export class KiwiDateTimePipe implements PipeTransform {
 
   constructor(private config: ConfigService) {
-    super('en');
   }
 
   transform(value: any, args?: any): any {
     if (!value) {
       return '';
     }
-    let dateFormat = 'yyyy-MM-dd HH:mm';
+    let dateFormat = 'YYYY-MM-DD HH:mm';
     if (this.config.userLocaleConfig && this.config.userLocaleConfig.dateTimeFormat) {
       dateFormat = this.config.userLocaleConfig.dateTimeFormat;
     }
-    return super.transform(value, dateFormat);
+    return moment(value).format(dateFormat);
   }
 
 }
