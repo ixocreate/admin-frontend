@@ -35,10 +35,9 @@ export interface BlockSelect {
                 <i class="fa fa-fw fa-chevron-up"></i>
               </button>
               <div class="form-dynamic-title">
-                <!--
-                <input [(ngModel)]="fieldGroup.model._meta.name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
+                <!-- <input [(ngModel)]="fieldGroup.model._meta.name" placeholder="Click to enter custom name..." class="form-dynamic-input"/> -->
+                <div>{{ blockTitle(model[i], fieldGroup) }}</div>
                 <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
-                -->
               </div>
               <div class="btn-group" kiwiDropdown>
                 <button class="btn-more dropdown-btn" type="button">
@@ -141,6 +140,15 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
 
   get fieldGroups() {
     return this.field['fieldGroups'];
+  }
+
+  blockTitle(model, fieldGroup) {
+    //let titleConfig = 'Name: %id%';
+    let titleConfig = '';
+    for (const key of Object.keys(model)) {
+      titleConfig = titleConfig.replace(`%${key}%`, model[key]);
+    }
+    return titleConfig;
   }
 
   private footerVisible(fieldGroups, field, model) {
