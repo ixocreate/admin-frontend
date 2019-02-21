@@ -389,6 +389,10 @@ formly-wrapper-validation-messages > div > .invalid-feedback {
   }
 }
 
+.input-group > .form-control {
+  height: auto;
+}
+
 .input-disabled {
   pointer-events: none;
   opacity: .3;
