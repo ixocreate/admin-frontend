@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { distinctUntilChanged, filter, first, map } from 'rxjs/internal/operators';
 
 export class RxService {

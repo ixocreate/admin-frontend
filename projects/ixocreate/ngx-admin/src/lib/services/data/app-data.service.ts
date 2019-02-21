@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DataServiceAbstract } from './data.service.abstract';
 import { Config } from '../../interfaces/config.interface';
 import { ApiService } from '../api.service';

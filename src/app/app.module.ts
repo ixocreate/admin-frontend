@@ -6,7 +6,7 @@ import { KiwiAdminModule } from '../../projects/ixocreate/ngx-admin/src/lib/kiwi
 @NgModule({
   imports: [
     KiwiAdminModule.forRoot({
-      environment: environment,
+      environment,
     }),
   ],
   declarations: [],

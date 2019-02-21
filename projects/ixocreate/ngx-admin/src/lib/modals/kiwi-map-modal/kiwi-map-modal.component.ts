@@ -1,7 +1,7 @@
+/// <reference types="@types/googlemaps" />
 import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 import { GeoPoint } from './map-modal-data.interface';
-import {} from '@types/googlemaps';
 
 declare var google: any;
 
@@ -34,7 +34,7 @@ export class KiwiMapModalComponent implements OnInit {
   longitude: string | number;
 
   onConfirm = (geoPoint: GeoPoint) => {
-  };
+  }
 
   constructor(public bsModalRef: BsModalRef) {
   }
@@ -59,7 +59,7 @@ export class KiwiMapModalComponent implements OnInit {
     }
 
     const mapProp = {
-      center: center,
+      center,
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       fullscreenControl: false,
@@ -87,8 +87,8 @@ export class KiwiMapModalComponent implements OnInit {
 
   private hasValidInput() {
     this.isValid = true;
-    const latitude: number = parseFloat(<any>this.latitude);
-    const longitude: number = parseFloat(<any>this.longitude);
+    const latitude: number = parseFloat(this.latitude as any);
+    const longitude: number = parseFloat(this.longitude as any);
     if (isNaN(latitude) || isNaN(longitude)) {
       this.isValid = false;
       return false;

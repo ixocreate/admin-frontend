@@ -4,7 +4,7 @@ import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { DefaultStore } from '../../store/default.store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
 import { ConfigService } from '../config.service';
 
