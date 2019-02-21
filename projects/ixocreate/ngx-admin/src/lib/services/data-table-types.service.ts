@@ -16,7 +16,6 @@ export interface DataTableTypesOptions {
   render: ((value: any) => string);
 }
 
-
 @Injectable()
 export class DataTableTypesService {
   private types: { [type: string]: (options: any) => DataTableTypesOptions } = {};

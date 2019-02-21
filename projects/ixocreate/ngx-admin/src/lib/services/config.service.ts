@@ -18,7 +18,7 @@ export interface EnvironmentConfig {
 export class ConfigService {
 
   private _config: Config;
-  private _userPermissions: Array<string> = null;
+  private _userPermissions: string[] = null;
   private _navigation: any = [];
 
   private readonly _kiwiConfig: KiwiConfig = {
@@ -51,11 +51,11 @@ export class ConfigService {
     return null;
   }
 
-  setUserPermissions(permissions: Array<string>) {
+  setUserPermissions(permissions: string[]) {
     this._userPermissions = permissions;
   }
 
-  get userPermissions(): Array<string> {
+  get userPermissions(): string[] {
     return this._userPermissions;
   }
 

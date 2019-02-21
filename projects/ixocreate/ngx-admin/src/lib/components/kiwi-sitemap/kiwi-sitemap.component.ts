@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 import { AppDataService } from '../../services/data/app-data.service';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -17,8 +17,9 @@ export class KiwiSitemapComponent implements OnInit {
   @Output() changeLocale = new EventEmitter<any>();
 
   @Input() items = () => {
-      return this.appData.getPageIndex();
-  }
+    return this.appData.getPageIndex();
+  };
+
   constructor(private config: ConfigService,
               private localStorage: LocalStorageService,
               private appData: AppDataService) {

@@ -5,7 +5,7 @@ export abstract class ViewAbstractComponent {
 
   @ViewChild(KiwiContentComponent) kiwiContent: KiwiContentComponent;
 
-  constructor() {
+  protected constructor() {
   }
 
 }

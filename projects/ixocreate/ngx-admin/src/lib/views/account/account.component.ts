@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { AccountDataService } from '../../services/data/account-data.service';
 import { NotificationService } from '../../services/notification.service';
 import { User } from '../../interfaces/user.interface';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
-import {AppDataService} from "../../services/data/app-data.service";
-import {SchemaTransformService} from "../../services/schema-transform.service";
+import { AppDataService } from '../../services/data/app-data.service';
+import { SchemaTransformService } from '../../services/schema-transform.service';
 
 @Component({
   templateUrl: './account.component.html',
 })
-export class AccountComponent extends ViewAbstractComponent {
+export class AccountComponent extends ViewAbstractComponent implements OnInit {
   account: User;
 
   passwordForm: FormGroup = new FormGroup({});
@@ -80,13 +80,13 @@ export class AccountComponent extends ViewAbstractComponent {
   constructor(protected notification: NotificationService,
               protected appData: AppDataService,
               protected schemaTransform: SchemaTransformService,
-              public accountData: AccountDataService) {
+              protected accountData: AccountDataService) {
     super();
   }
 
   ngOnInit() {
     this.accountData.getAccountConfig().then((data: any) => {
-      this.additionalFields = data.accountAttributesSchema ?  this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
+      this.additionalFields = data.accountAttributesSchema ? this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
     });
   }
 

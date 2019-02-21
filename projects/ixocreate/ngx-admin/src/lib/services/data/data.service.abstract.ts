@@ -6,7 +6,7 @@ import { tap } from 'rxjs/internal/operators';
 export abstract class DataServiceAbstract {
   protected loadingKeys = [];
 
-  constructor(protected store: Store<AppState>) {
+  protected constructor(protected store: Store<AppState>) {
   }
 
   protected saveToDefaultStore(actionName: string, data: any) {

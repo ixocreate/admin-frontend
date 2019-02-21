@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
-import {AppDataService} from "../../services/data/app-data.service";
+import { AppDataService } from '../../services/data/app-data.service';
 
 @Component({
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent extends ViewAbstractComponent {
+export class DashboardComponent extends ViewAbstractComponent implements OnInit {
   data$: Promise<any>;
 
   constructor(private appData: AppDataService) {

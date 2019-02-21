@@ -46,7 +46,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.viewOnly = !!this.route.routeConfig.data.viewOnly;
       this.resourceKey = params.type || this.resourceKey;
       this.resourceId = params.id;

@@ -57,7 +57,7 @@ export class CopyService {
     });
   }
 
-  get copiedBlocks(): Array<BlockCopy> {
+  get copiedBlocks(): BlockCopy[] {
     return this.localStorage.getItem(this.COPIED_BLOCKS_STORAGE_KEY, []);
   }
 

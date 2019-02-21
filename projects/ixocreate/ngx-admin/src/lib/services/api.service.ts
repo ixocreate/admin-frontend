@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Observable ,  throwError as _throw ,  BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, throwError as _throw } from 'rxjs';
 import { catchError, map, publishLast, refCount, timeout } from 'rxjs/operators';
 import { APIErrorElement, APIResponse } from '../interfaces/api-response.interface';
 
@@ -61,7 +61,7 @@ export class ApiService {
    * @description Sends a request to the server
    */
   protected request(method: ApiRequestMethod, url: string, body: any = null): Observable<any> {
-    return this.http.request(<string>method, url, {
+    return this.http.request(method as string, url, {
       body,
       headers: this.headers,
       observe: 'events',

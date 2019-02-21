@@ -4,10 +4,9 @@ import Quill from 'quill';
 
 const Parchment = Quill.import('parchment');
 const LineBreakClass = new Parchment.Attributor.Class('linebreak', 'linebreak', {
-  scope: Parchment.Scope.BLOCK
+  scope: Parchment.Scope.BLOCK,
 });
 Quill.register('formats/linebreak', LineBreakClass);
-
 
 @Component({
   // tslint:disable-next-line

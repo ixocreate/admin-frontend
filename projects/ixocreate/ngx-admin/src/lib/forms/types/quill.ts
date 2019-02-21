@@ -45,7 +45,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         smartbreak: {
           key: 13,
           shiftKey: true,
-          handler: function (range, context) {
+          handler(range, context) {
             this.quill.setSelection(range.index, 'silent');
             this.quill.insertText(range.index, '\n', 'user');
             this.quill.setSelection(range.index + 1, 'silent');
@@ -54,13 +54,13 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         },
         paragraph: {
           key: 13,
-          handler: function (range, context) {
+          handler(range, context) {
             this.quill.setSelection(range.index, 'silent');
             this.quill.insertText(range.index, '\n', 'user');
             this.quill.setSelection(range.index + 1, 'silent');
             const f = this.quill.getFormat(range.index + 1);
             if (f.hasOwnProperty('linebreak')) {
-              delete(f.linebreak);
+              delete (f.linebreak);
               this.quill.removeFormat(range.index + 1);
               for (const key in f) {
                 if (f.hasOwnProperty(key)) {

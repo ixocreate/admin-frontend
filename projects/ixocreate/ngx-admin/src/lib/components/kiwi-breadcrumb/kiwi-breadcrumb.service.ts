@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs/index';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class KiwiBreadcrumbService {
-  currentBreadcrumbs: Array<any>;
-  breadcrumbs: Observable<Array<any>>;
-  private _breadcrumbs: BehaviorSubject<Array<any>>;
+  currentBreadcrumbs: any[];
+  breadcrumbs: Observable<any[]>;
+  private _breadcrumbs: BehaviorSubject<any[]>;
 
   constructor(private router: Router, private route: ActivatedRoute) {
     this._breadcrumbs = new BehaviorSubject<any[]>([]);
     this.breadcrumbs = this._breadcrumbs.asObservable();
 
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event) => {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const breadcrumbs = [];
       let currentRoute = this.route.root;
       let url = '';
@@ -23,9 +23,9 @@ export class KiwiBreadcrumbService {
         childrenRoutes.forEach((childRoute) => {
           if (childRoute.outlet === 'primary') {
             const routeSnapshot = childRoute.snapshot;
-            const newUrl = routeSnapshot.url.map(segment => segment.path).join('/');
+            const newUrl = routeSnapshot.url.map((segment) => segment.path).join('/');
             if (newUrl !== '') {
-              url += '/' + routeSnapshot.url.map(segment => segment.path).join('/');
+              url += '/' + routeSnapshot.url.map((segment) => segment.path).join('/');
             }
             if (childRoute.snapshot.data && childRoute.snapshot.data.title) {
               breadcrumbs.push({

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import * as shape from 'd3-shape';
+
 @Component({
   selector: 'kiwi-dashboard-graph',
   templateUrl: './kiwi-graph.component.html',
@@ -44,9 +45,8 @@ export class KiwiDashboardGraphComponent {
   lineChartGradient = false;
   lineChartShowLegend = false;
 
-
   lineChartColorScheme = {
-    domain: ['#1CBCD8', '#FF8D60', '#FF586B', '#AAAAAA']
+    domain: ['#1CBCD8', '#FF8D60', '#FF586B', '#AAAAAA'],
   };
 
   lineChartLineInterpolation = shape.curveBasis;

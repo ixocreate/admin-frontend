@@ -1,5 +1,3 @@
-import {FormlyFieldConfig} from '@ngx-formly/core';
-
 export class FormHelper {
 
   static setTemplateOption(fields: any[], key: string, value: any): any[] {
@@ -15,7 +13,7 @@ export class FormHelper {
   }
 
   static buildSchemaTree(fieldGroup, branch) {
-    fieldGroup.forEach(field => {
+    fieldGroup.forEach((field) => {
       const fieldKey = field.key || (field.templateOptions ? field.templateOptions.name : null);
       if (fieldKey) {
         branch[fieldKey] = {};

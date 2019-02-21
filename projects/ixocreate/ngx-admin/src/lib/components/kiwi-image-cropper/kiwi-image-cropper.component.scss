@@ -27,9 +27,7 @@
     display: flex;
     color: #53535C !important;
     background: transparent !important;
-    outline-color: rgba(255, 255, 255, 0.3);
-    outline-width: 10000px;
-    outline-style: solid;
+    outline: 10000px solid rgba(255, 255, 255, 0.3);
     touch-action: none;
 
     &:after {
@@ -73,36 +71,43 @@
         left: -12px;
         cursor: nw-resize;
       }
+
       &.top {
         top: -12px;
         left: calc(50% - 12px);
         cursor: n-resize;
       }
+
       &.topright {
         top: -12px;
         right: -12px;
         cursor: ne-resize;
       }
+
       &.right {
         top: calc(50% - 12px);
         right: -12px;
         cursor: e-resize;
       }
+
       &.bottomright {
         bottom: -12px;
         right: -12px;
         cursor: se-resize;
       }
+
       &.bottom {
         bottom: -12px;
         left: calc(50% - 12px);
         cursor: s-resize;
       }
+
       &.bottomleft {
         bottom: -12px;
         left: -12px;
         cursor: sw-resize;
       }
+
       &.left {
         top: calc(50% - 12px);
         left: -12px;
@@ -110,6 +115,7 @@
       }
 
     }
+
     .resize-bar {
       position: absolute;
       z-index: 1;
@@ -121,6 +127,7 @@
         height: 22px;
         cursor: n-resize;
       }
+
       &.right {
         top: 11px;
         right: -11px;
@@ -128,6 +135,7 @@
         width: 22px;
         cursor: e-resize;
       }
+
       &.bottom {
         bottom: -11px;
         left: 11px;
@@ -135,6 +143,7 @@
         height: 22px;
         cursor: s-resize;
       }
+
       &.left {
         top: 11px;
         left: -11px;
@@ -151,6 +160,7 @@
         box-shadow: 0 0 0 100vw rgba(255, 255, 255, 0.3);
         border-radius: 100%;
       }
+
       .move {
         border-radius: 100%;
       }

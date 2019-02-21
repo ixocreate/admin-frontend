@@ -9,7 +9,7 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
 import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
 import { BsModalService } from 'ngx-bootstrap';
-import {ConfigService} from "../../../services/config.service";
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   templateUrl: './page-edit.component.html',
@@ -26,14 +26,11 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   versionFields: FormlyFieldConfig[];
 
   navigationForm: FormGroup = new FormGroup({});
-  navigationModel: { navigation: Array<string> };
-  navigationFields: FormlyFieldConfig[];
 
-  navigationOptions: Array<any>;
-  selectedNavigationOptions: Array<any>;
+  navigationOptions: any[];
+  selectedNavigationOptions: any[];
 
   hasChildren = true;
-
 
   pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
 
@@ -48,7 +45,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.id = params.id;
       this.loadDetailData();
       this.updateVersionIndex();
@@ -136,6 +133,3 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     }).catch((error) => this.notification.apiError(error));
   }
 }
-
-
-

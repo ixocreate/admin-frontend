@@ -8,7 +8,6 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class RedirectComponent implements OnInit {
 
-
   constructor(private router: Router,
               private config: ConfigService) {
   }

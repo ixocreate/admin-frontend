@@ -117,11 +117,11 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
           modules: {
             toolbar: [
               ['bold', 'italic', 'underline', 'strike'],
-              [{'list': 'ordered'}, {'list': 'bullet'}],
-              [{'script': 'sub'}, {'script': 'super'}],
-              [{'indent': '-1'}, {'indent': '+1'}],
-              [{'header': [1, 2, 3, 4, 5, 6, false]}],
-              [{'align': []}],
+              [{list: 'ordered'}, {list: 'bullet'}],
+              [{script: 'sub'}, {script: 'super'}],
+              [{indent: '-1'}, {indent: '+1'}],
+              [{header: [1, 2, 3, 4, 5, 6, false]}],
+              [{align: []}],
               ['clean'],
               ['link'],
             ],

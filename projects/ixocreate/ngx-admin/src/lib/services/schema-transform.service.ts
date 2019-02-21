@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 export interface Schema {
   key: string;
@@ -56,11 +56,11 @@ export class SchemaTransformService {
     return formSchema;
   }
 
-  private handleDefault(type: string, templateOptions: any = {}, keysToTemplateOptions: Array<string> = []) {
+  private handleDefault(type: string, templateOptions: any = {}, keysToTemplateOptions: string[] = []) {
     return (value: any): Schema => {
       const data = {
         key: value.name,
-        type: type,
+        type,
         templateOptions: {
           label: value.label,
           description: value.description,
@@ -137,14 +137,14 @@ export class SchemaTransformService {
   private handleTabbedGroup(value: any, transformer: SchemaTransformService): any {
     const groups = [];
 
-    value.elements.forEach(element => {
+    value.elements.forEach((element) => {
       groups.push({
         wrappers: ['tab'],
         templateOptions: {
           label: element.label,
           description: element.description,
           icon: element.icon,
-          name: element.name
+          name: element.name,
         },
         fieldGroup: transformer.transformForm(element.elements),
         elements: element.elements,
@@ -156,7 +156,7 @@ export class SchemaTransformService {
       templateOptions: {
         label: value.label,
         description: value.description,
-        name: value.name
+        name: value.name,
       },
       fieldGroup: groups,
     };
@@ -182,13 +182,13 @@ export class SchemaTransformService {
       if (value.options.hasOwnProperty(key)) {
         options.push({
           value: key,
-          label: value.options[key]
+          label: value.options[key],
         });
       }
     }
 
     return transformer.handleDefault('select', {
-      options: options,
+      options,
       resource: value.resource,
       clearable: value.clearable || false,
       extendedSelect: value.extendedSelect || false,
@@ -205,7 +205,7 @@ export class SchemaTransformService {
     }
 
     return transformer.handleDefault('radio', {
-      options: options,
+      options,
       description: value.description,
       resource: value.resource,
       clearable: value.clearable || false,

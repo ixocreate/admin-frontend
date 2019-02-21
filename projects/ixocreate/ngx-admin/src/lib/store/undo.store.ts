@@ -14,21 +14,21 @@ export namespace UndoStore {
 
   export const Actions = {
     Single: (action: Action): StoreAction => ({type: Types.UNDO, payload: action}),
-    Multiple: (actions: Array<Action>): StoreAction => ({type: Types.UNDO_MULTIPLE, payload: actions}),
+    Multiple: (actions: Action[]): StoreAction => ({type: Types.UNDO_MULTIPLE, payload: actions}),
   };
 
   export function Handle(rootReducer: ActionReducer<any>): ActionReducer<any> {
-    let executedActions: Array<Action> = [];
+    let executedActions: Action[] = [];
     let initialState;
     return (state: any, action: StoreAction) => {
       if (action.type === Types.UNDO || action.type === Types.UNDO_MULTIPLE) {
         let newState: any = initialState;
         if (action.type === Types.UNDO_MULTIPLE) {
-          executedActions = executedActions.filter(eAct => action.payload.indexOf(eAct) === -1);
+          executedActions = executedActions.filter((eAct) => action.payload.indexOf(eAct) === -1);
         } else {
-          executedActions = executedActions.filter(eAct => eAct !== action.payload);
+          executedActions = executedActions.filter((eAct) => eAct !== action.payload);
         }
-        executedActions.forEach(executedAction => newState = rootReducer(newState, executedAction));
+        executedActions.forEach((executedAction) => newState = rootReducer(newState, executedAction));
         return newState;
       }
       executedActions.push(action);

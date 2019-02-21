@@ -22,7 +22,7 @@ export class TranslationListComponent extends ViewAbstractComponent implements O
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.catalogueId = params.catalogue;
       this.dataUrl = this.config.config.routes.translationIndex.replace('{catalogue}', this.catalogueId);
     });

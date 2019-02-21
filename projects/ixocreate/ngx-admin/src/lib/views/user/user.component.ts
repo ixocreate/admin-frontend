@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
-import {ConfigService} from '../../services/config.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   templateUrl: './user.component.html',

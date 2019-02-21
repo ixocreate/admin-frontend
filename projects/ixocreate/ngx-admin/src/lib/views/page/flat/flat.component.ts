@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ViewAbstractComponent } from '../../../components/view.abstract.component';
 import { ActivatedRoute } from '@angular/router';
 import { AppDataService } from '../../../services/data/app-data.service';
-import {ConfigService} from "../../../services/config.service";
-import {LocalStorageService} from "../../../services/local-storage.service";
-import {TableResponse} from "../../../components/kiwi-datatable/table-response.interface";
+import { ConfigService } from '../../../services/config.service';
+import { LocalStorageService } from '../../../services/local-storage.service';
+import { TableResponse } from '../../../components/kiwi-datatable/table-response.interface';
 import { KiwiDateTimePipe } from '../../../pipes/kiwi-date-time.pipe';
+import { PageAddComponent } from '../add/page-add.component';
 
 @Component({
   templateUrl: './flat.component.html',
 })
-export class FlatComponent extends ViewAbstractComponent {
+export class FlatComponent extends ViewAbstractComponent implements OnInit {
   handle: string;
   filterValue = '';
   pageNumber = 0;
@@ -23,18 +24,19 @@ export class FlatComponent extends ViewAbstractComponent {
 
   private orderBy: string = null;
   private orderDirection: 'DESC' | 'ASC' = null;
+
   constructor(
     protected route: ActivatedRoute,
     private config: ConfigService,
     private localStorage: LocalStorageService,
     protected appData: AppDataService,
-    private dateTimePipe: KiwiDateTimePipe
+    private dateTimePipe: KiwiDateTimePipe,
   ) {
     super();
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.handle = params.handle;
       this.updateElements();
     });
@@ -134,7 +136,6 @@ export class FlatComponent extends ViewAbstractComponent {
         };
       }
     });
-
 
     /*
     return this.api.get(this.apiUrl + '?' + this.parseParams(params)).then((data: any) => {

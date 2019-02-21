@@ -6,7 +6,8 @@ import { FieldWrapper } from '@ngx-formly/core';
   template: `
     <div class="form-group" [class.d-none]="to.type === 'hidden'" [class.center-label]="to['centerLabel']" [class.has-error]="showError">
       <label *ngIf="to.label && to['hideLabel'] !== true" [attr.for]="id" class="kiwi-form-label">
-        {{ to.label }}<ng-container *ngIf="to.required && to['hideRequiredMarker'] !== true"><b class="text-danger">*</b></ng-container>
+        {{ to.label }}
+        <ng-container *ngIf="to.required && to['hideRequiredMarker'] !== true"><b class="text-danger">*</b></ng-container>
       </label>
 
       <div class="kiwi-form-control-container">
@@ -22,5 +23,5 @@ import { FieldWrapper } from '@ngx-formly/core';
   `,
 })
 export class FormlyWrapperFormFieldComponent extends FieldWrapper {
-  @ViewChild('fieldComponent', { read: ViewContainerRef }) fieldComponent: ViewContainerRef;
+  @ViewChild('fieldComponent', {read: ViewContainerRef}) fieldComponent: ViewContainerRef;
 }

@@ -46,7 +46,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   minHeight: number;
 
   activeEntity: Entity;
-  entities: Array<Entity> = [];
+  entities: Entity[] = [];
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -68,9 +68,9 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.id = params.id;
-          this.data$ = this.appData.getMediaDetail(this.id).then((response: any) => {
+      this.data$ = this.appData.getMediaDetail(this.id).then((response: any) => {
         if (response.isCropable) {
           this.image = response.media.original;
           this.entities = [];

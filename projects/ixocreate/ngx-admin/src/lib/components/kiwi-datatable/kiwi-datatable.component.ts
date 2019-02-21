@@ -33,7 +33,7 @@ export class KiwiDatatableComponent implements OnInit {
   @Output() select = new EventEmitter<any>();
   @Output() deSelect = new EventEmitter<any>();
 
-  @Input('columns') set columnsTemp(columns: Array<any>) {
+  @Input('columns') set columnsTemp(columns: any[]) {
     this.setColumns(columns);
   }
 
@@ -85,7 +85,7 @@ export class KiwiDatatableComponent implements OnInit {
     }
   }
 
-  private setColumns(columns: Array<any>) {
+  private setColumns(columns: any[]) {
     for (const column of columns) {
       this.searchableData[column.prop] = !!column.searchable;
       column.headerClass = column.headerClass || '';
@@ -148,7 +148,7 @@ export class KiwiDatatableComponent implements OnInit {
   }
 
   private parseParams(data) {
-    return Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join('&');
+    return Object.keys(data).map((key) => `${key}=${encodeURIComponent(data[key])}`).join('&');
   }
 
   updateElements() {
@@ -233,7 +233,7 @@ export class KiwiDatatableComponent implements OnInit {
       }
       this.updatedData.emit(this.data);
     })
-      .catch(error => {
+      .catch((error) => {
         this.notification.apiError(error);
       })
       .then(() => {

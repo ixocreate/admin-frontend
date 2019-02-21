@@ -44,10 +44,12 @@ import { MediaHelper } from '../../helpers/media.helper';
         </div>
       </div>
       <ng-container *ngIf="selectedType === 'media'">
-        <div class="current-media" *ngIf="value">
+        <div class="current-media" *ngIf="value && value.value">
           <div class="row align-items-center">
             <div class="col-auto text-center">
-              <ng-container *ngIf="isImage(value.value.mimeType); else noImage"><img [src]="value.value.thumb" class="img-fluid" /></ng-container>
+              <ng-container *ngIf="isImage(value.value.mimeType); else noImage">
+                <span class="transparent-img-bg border-radius"><img [src]="value.value.thumb" class="img-fluid"/></span>
+              </ng-container>
               <ng-template #noImage class="media-container"><i [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.value.mimeType)"></i></ng-template>
             </div>
             <div class="col">
@@ -111,7 +113,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   selectedLocale: string;
   sitemap$: Promise<any>;
 
-  constructor(protected modalService: BsModalService,
+  constructor(private modalService: BsModalService,
               private config: ConfigService,
               private appData: AppDataService,
               private localStorage: LocalStorageService) {
@@ -166,7 +168,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     if (this.to.disabled) {
       return;
     }
-    if (this.value) {
+    if (this.value && this.value.type) {
       this.selectedType = this.value.type;
     }
     this.externalLinkInputValue = '';

@@ -49,7 +49,7 @@ export class FormlyFieldPriceComponent extends CustomFieldTypeAbstract implement
       price = parseFloat(price.toFixed(this.decimal));
       this.setValue({
         currency: this.selectedOption.value,
-        price: price,
+        price,
       });
     }
   }

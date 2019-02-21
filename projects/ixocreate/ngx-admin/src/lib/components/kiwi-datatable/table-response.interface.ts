@@ -6,5 +6,5 @@ export interface TableResponse<T> {
   orderBy: string;
   orderDirection: 'DESC' | 'ASC';
   search: string;
-  result: Array<T>;
+  result: T[];
 }

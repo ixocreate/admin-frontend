@@ -20,7 +20,7 @@ export class TranslationEditComponent extends ViewAbstractComponent implements O
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.catalogueId = params.catalogue;
       this.definitionId = params.id;
       this.data$ = this.appData.getTranslationDetail(this.catalogueId, this.definitionId);

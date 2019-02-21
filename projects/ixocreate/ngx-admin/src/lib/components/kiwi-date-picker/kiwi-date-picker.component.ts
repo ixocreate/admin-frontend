@@ -1,4 +1,4 @@
-import { Component, forwardRef, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { Calendar } from 'primeng/primeng';
 import { LocaleSettings } from 'primeng/components/calendar/calendar';
@@ -10,7 +10,7 @@ const noop = () => {
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => KiwiDatePickerComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({

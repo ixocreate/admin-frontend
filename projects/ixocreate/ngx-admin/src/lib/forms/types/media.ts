@@ -40,7 +40,7 @@ import { Media } from '../../interfaces/media.interface';
       <div class="current-media is-top" *ngIf="value">
         <div class="row align-items-center">
           <div class="col-auto text-center">
-            <ng-container *ngIf="isImage(value.mimeType); else noImage"><img [src]="value.thumb" class="img-fluid" /></ng-container>
+            <ng-container *ngIf="isImage(value.mimeType); else noImage"><img [src]="value.thumb" class="img-fluid"/></ng-container>
             <ng-template #noImage class="media-container"><i [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.mimeType)"></i></ng-template>
           </div>
           <div class="col">

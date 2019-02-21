@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     this.accountData.login(this.form.value.email, this.form.value.password).then(() => {
       this.appData.loadConfig().then(() => {
         this.accountData.loadUser().then(() => {
-          this.route.queryParams.subscribe(query => {
+          this.route.queryParams.subscribe((query) => {
             this.router.navigateByUrl(query.intended || '/');
           });
         });

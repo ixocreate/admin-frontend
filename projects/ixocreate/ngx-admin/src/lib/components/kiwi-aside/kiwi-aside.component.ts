@@ -18,7 +18,7 @@ export class KiwiAsideComponent implements OnInit, OnDestroy {
     }
   }
 
-  private asideMenuCssClasses: Array<string> = [
+  private asideMenuCssClasses: string[] = [
     'aside-menu-show',
     'aside-menu-sm-show',
     'aside-menu-md-show',

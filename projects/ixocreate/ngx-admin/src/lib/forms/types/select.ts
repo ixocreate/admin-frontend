@@ -3,7 +3,7 @@ import { AppDataService } from '../../services/data/app-data.service';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
-export class SelectOption {
+export interface SelectOption {
   label: string;
   value?: any;
   group?: SelectOption[];
@@ -154,6 +154,6 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   }
 
   onDeSelect(row) {
-    this.setValue(this.value.filter(el => el !== row.id));
+    this.setValue(this.value.filter((el) => el !== row.id));
   }
 }

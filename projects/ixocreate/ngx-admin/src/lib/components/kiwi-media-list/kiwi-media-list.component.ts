@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ɵgetDOM as getDOM } from '@angular/platform-browser';
 import { FileUploader } from 'ng2-file-upload';
 import { ConfigService } from '../../services/config.service';
@@ -22,24 +22,24 @@ export class KiwiMediaListComponent implements OnInit {
   types = [
     {
       name: '',
-      label: 'All'
+      label: 'All',
     },
     {
       name: 'image',
-      label: 'Images'
+      label: 'Images',
     },
     {
       name: 'document',
-      label: 'Documents'
+      label: 'Documents',
     },
     {
       name: 'video',
-      label: 'Video files'
+      label: 'Video files',
     },
     {
       name: 'audio',
-      label: 'Audio files'
-    }
+      label: 'Audio files',
+    },
   ];
 
   @Input() selectedType = '';

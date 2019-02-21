@@ -1,19 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'keyValue'
+  name: 'keyValue',
 })
 export class KeyValuePipe implements PipeTransform {
 
-  transform(value: any, args?: any): Object[] {
-    let keyArr: any[] = Object.keys(value);
-    let dataArr = [];
+  transform(value: any, args?: any): object[] {
+    const keyArr: any[] = Object.keys(value);
+    const dataArr = [];
 
     keyArr.forEach((key: any) => {
       dataArr.push({
-          key: key,
-          value: value[key],
-      })
+        key,
+        value: value[key],
+      });
     });
 
     return dataArr;

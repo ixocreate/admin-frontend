@@ -27,7 +27,7 @@ export class UserCreateComponent extends ViewAbstractComponent implements OnInit
 
   ngOnInit() {
     this.appData.getUserConfig().then((data: any) => {
-      this.fields = data.create ?  this.schemaTransform.transformForm(data.create) : [];
+      this.fields = data.create ? this.schemaTransform.transformForm(data.create) : [];
     });
   }
 

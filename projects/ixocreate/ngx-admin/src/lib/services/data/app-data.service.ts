@@ -55,18 +55,18 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   getSitemap(locale: string): Promise<any> {
-    return this.api.get(this.config.config.routes.pageList, {locale: locale});
+    return this.api.get(this.config.config.routes.pageList, {locale});
   }
 
-  getPageIndex(): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
+  getPageIndex(): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
     return this.api.get(this.config.config.routes.pageIndex);
   }
 
-  getSubPageIndex(handle: string): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
+  getSubPageIndex(handle: string): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
     return this.api.get(this.config.config.routes.pageIndexSub.replace('{handle}', handle));
   }
 
-  getFlatPageIndex(handle: string, params: any = {}): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
+  getFlatPageIndex(handle: string, params: any = {}): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
     return this.api.get(this.config.config.routes.pageIndexFlat.replace('{handle}', handle) + '?' + parseParams(params));
   }
 
@@ -150,7 +150,7 @@ export class AppDataService extends DataServiceAbstract {
     }
   }
 
-  getResourceSelect(resource: string): Promise<Array<any>> {
+  getResourceSelect(resource: string): Promise<any[]> {
     if (!this.savedResourceSelects[resource]) {
       this.savedResourceSelects[resource] = this.getResourceIndex(resource, 500);
     }
@@ -162,7 +162,7 @@ export class AppDataService extends DataServiceAbstract {
   getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null): Promise<ResourceList> {
     const params: any = {
       offset: (pageNumber - 1) * limit,
-      limit: limit,
+      limit,
     };
     if (search && search !== '') {
       params.search = search;
@@ -203,7 +203,7 @@ export class AppDataService extends DataServiceAbstract {
   getMediaIndex(limit: number = 10, pageNumber: number = 1, search: string = null, type: string = null): Promise<ResourceList> {
     const params: any = {
       offset: (pageNumber - 1) * limit,
-      limit: limit,
+      limit,
     };
     if (search && search !== '') {
       params.filter = {};
@@ -259,7 +259,7 @@ export class AppDataService extends DataServiceAbstract {
   updateRegistry(id: string, data: any): Promise<void> {
     return this.api.patch(this.config.config.routes.registryUpdate.replace('{id}', id), data).then((response) => {
       return response;
-    })
+    });
   }
 
   getDashboard(): Promise<any> {
@@ -271,7 +271,11 @@ export class AppDataService extends DataServiceAbstract {
       return Promise.resolve([]);
     }
     if (id === null) {
-      return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource).replace('{position}', position).replace('{type}', type).replace('[/{id}]', ''));
+      return this.api.get(
+        this.config.config.routes.resourceWidgets
+          .replace('{resource}', resource).replace('{position}', position)
+          .replace('{type}', type).replace('[/{id}]', ''),
+      );
     }
     return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource)
       .replace('{position}', position).replace('{type}', type).replace('[/{id}]', '/' + id));

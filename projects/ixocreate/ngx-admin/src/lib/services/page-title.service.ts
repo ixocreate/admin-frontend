@@ -43,13 +43,13 @@ export class PageTitleService {
       }
     });
 
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event) => {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
       const urlElements = [];
       let currentRoute = this.activatedRoute.root;
       do {
         const childrenRoutes = currentRoute.children;
         currentRoute = null;
-        childrenRoutes.forEach(route => {
+        childrenRoutes.forEach((route) => {
           if (route.outlet === 'primary') {
             const data = route.snapshot.data;
             if (data && data.title) {

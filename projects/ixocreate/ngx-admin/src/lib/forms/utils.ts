@@ -18,11 +18,11 @@ export function clone(value: any): any {
   }
 
   if (Array.isArray(value)) {
-    return value.slice(0).map(v => clone(v));
+    return value.slice(0).map((v) => clone(v));
   }
 
   value = Object.assign({}, value);
-  Object.keys(value).forEach(k => value[k] = clone(value[k]));
+  Object.keys(value).forEach((k) => value[k] = clone(value[k]));
 
   return value;
 }

@@ -5,12 +5,12 @@ export interface Config {
     production: boolean;
   };
   project?: Project;
-  media?: Array<Media>;
-  navigation?: Array<Navigation>;
+  media?: Media[];
+  navigation?: Navigation[];
   routes?: Routes;
-  resources?: Array<ResourceConfig>;
+  resources?: ResourceConfig[];
   googleApiKey?: string;
-  intl?: { default: string, locales: Array<Locale> };
+  intl?: { default: string, locales: Locale[] };
 }
 
 export interface Media {

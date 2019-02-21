@@ -32,7 +32,8 @@
               <h6 class="mb-0">Change <b>Password</b></h6>
             </div>
             <div class="card-body">
-              <formly-form [form]="passwordForm" [fields]="passwordFormFields" [options]="passwordFormOptions"></formly-form>
+              <formly-form [form]="passwordForm" [fields]="passwordFormFields"
+                           [options]="passwordFormOptions"></formly-form>
             </div>
             <div class="card-footer d-lg-flex justify-content-between align-items-center">
               <div class="text-muted">
@@ -52,13 +53,15 @@
           <h6 class="mb-0">Edit <b>Attributes</b></h6>
         </div>
         <div class="card-body">
-          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user.accountAttributes" class="kiwi-form kiwi-form-inline"></formly-form>
+          <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user.accountAttributes"
+                       class="kiwi-form kiwi-form-inline"></formly-form>
         </div>
         <div class="card-footer d-lg-flex justify-content-between align-items-center">
           <div class="text-muted">
             <b class="text-danger">*</b> Required Field
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!additionalForm.valid" (click)="onSubmitAttributes()">
+          <button type="submit" class="btn btn-primary" [disabled]="!additionalForm.valid"
+                  (click)="onSubmitAttributes()">
             <i class="fa fa-save"></i> Update Attributes
           </button>
         </div>

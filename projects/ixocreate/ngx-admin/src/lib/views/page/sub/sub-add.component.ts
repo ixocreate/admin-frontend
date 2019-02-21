@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageAddComponent } from '../add/page-add.component';
 
 @Component({
   templateUrl: '../add/page-add.component.html',
 })
-export class SubAddComponent extends PageAddComponent {
+export class SubAddComponent extends PageAddComponent implements OnInit {
 
   private handle;
 
   ngOnInit() {
     super.ngOnInit();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.handle = params.handle;
     });
   }

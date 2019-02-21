@@ -34,23 +34,25 @@
           <ng-container *ngIf="pageData">
             <div class="row mb-3">
               <div class="col">
-                <form ngNoForm method="post" [action]="previewUrl + '?pageId=' + pageData.id" target="preview" *ngIf="versionForm">
-                    <input type="hidden" name="preview" value="{{ versionForm.getRawValue() | json }}">
-                    <button type="submit" class="btn btn-primary btn-block">
-                      <i class="fa fa-eye"></i> Preview
-                    </button>
+                <form ngNoForm method="post" [action]="previewUrl + '?pageId=' + pageData.id" target="preview"
+                      *ngIf="versionForm">
+                  <input type="hidden" name="preview" value="{{ versionForm.getRawValue() | json }}">
+                  <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-eye"></i> Preview
+                  </button>
                 </form>
               </div>
               <div class="col-auto">
-                <button class="btn btn-danger" (click)="doDelete()" >
+                <button class="btn btn-danger" (click)="doDelete()">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
             </div>
           </ng-container>
 
-          <ng-container *ngIf="data$ | async as data" >
-            <a class="btn btn-outline-primary btn-block mb-3" [href]="data.page.url" target="_blank" *ngIf="data.page.isOnline">
+          <ng-container *ngIf="data$ | async as data">
+            <a class="btn btn-outline-primary btn-block mb-3" [href]="data.page.url" target="_blank"
+               *ngIf="data.page.isOnline">
               <i class="fa fa-expand"></i> Open Page
             </a>
           </ng-container>
@@ -116,7 +118,8 @@
               </label>
               <div class="kiwi-form-control-container">
                 <div class="input-group">
-                  <kiwi-date-picker placeholder="Published From" [(ngModel)]="pageData.publishedFrom"></kiwi-date-picker>
+                  <kiwi-date-picker placeholder="Published From"
+                                    [(ngModel)]="pageData.publishedFrom"></kiwi-date-picker>
                   <div class="input-group-append">
                     <button type="button" class="btn btn-outline-primary"
                             (click)="savePageData('publishedFrom', pageData.publishedFrom)">
@@ -225,7 +228,9 @@
                         <small class="text-muted">{{ element.createdAt | date:'yyyy-MM-dd HH:mm' }}</small>
                       </div>
                       <div class="mt-1">
-                        <a *ngIf="pageData" [href]="previewUrl + '?pageId=' + pageData.id + '&versionId=' + element.id" class="btn btn-sm btn-outline-success mr-1" title="Preview" target="preview"><i class="fa fa-eye"></i></a>
+                        <a *ngIf="pageData" [href]="previewUrl + '?pageId=' + pageData.id + '&versionId=' + element.id"
+                           class="btn btn-sm btn-outline-success mr-1" title="Preview" target="preview"><i
+                          class="fa fa-eye"></i></a>
                         <!--<button class="btn btn-sm btn-outline-success mr-1" title="Approve"><i class="fa fa-thumbs-up"></i></button>-->
                         <!--<button class="btn btn-sm btn-outline-primary mr-1" title="Replace"><i class="fa fa-history"></i></button>-->
                         <!--<button class="btn btn-sm btn-outline-danger" title="Delete"><i class="fa fa-trash"></i></button>-->
@@ -233,7 +238,8 @@
                     </div>
                     <div class="col-auto">
                       <div class="avatar">
-                        <img class="img-avatar" [src]="element.userAvatar" [alt]="element.userEmail" [title]="element.userEmail">
+                        <img class="img-avatar" [src]="element.userAvatar" [alt]="element.userEmail"
+                             [title]="element.userEmail">
                       </div>
                     </div>
                   </div>

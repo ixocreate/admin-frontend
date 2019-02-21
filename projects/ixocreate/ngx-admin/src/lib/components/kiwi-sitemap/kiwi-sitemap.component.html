@@ -18,7 +18,8 @@
       <ng-template #noPages>
         There are no pages - Please create a page first
       </ng-template>
-      <a [routerLink]="'create/' + selectedLocale" class="btn btn-success btn-block mt-2" *ngIf="pageIndex.allowedAddingRoot" (click)="addRootPage()">Add Root Page</a>
+      <a [routerLink]="'create/' + selectedLocale" class="btn btn-success btn-block mt-2"
+         *ngIf="pageIndex.allowedAddingRoot" (click)="addRootPage()">Add Root Page</a>
     </ng-container>
     <ng-template #isLoading>
       <div class="p-3">

@@ -13,16 +13,7 @@ import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LoginComponent } from './views/auth/login/login.component';
-import {
-  AlertModule,
-  BsDatepickerModule,
-  CarouselModule,
-  ModalModule,
-  PaginationModule,
-  ProgressbarModule,
-  TabsModule,
-  TypeaheadModule,
-} from 'ngx-bootstrap';
+import { AlertModule, BsDatepickerModule, CarouselModule, ModalModule, PaginationModule, ProgressbarModule, TabsModule, TypeaheadModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
@@ -97,6 +88,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RegistryComponent } from './views/registry/registry.component';
 import { RegistryEditComponent } from './views/registry/edit/registry-edit.component';
 import { ErrorComponent } from './views/error/error.component';
+import { KiwiReuseStrategy } from './lib/kiwi-reuse-strategy';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -191,30 +183,6 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
     }
     return Promise.resolve();
   };
-}
-
-export class KiwiReuseStrategy implements RouteReuseStrategy {
-  shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    return false;
-  }
-
-  store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {
-  }
-
-  shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    return false;
-  }
-
-  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
-    return null;
-  }
-
-  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    if (future.params && curr.params && future.params.type !== curr.params.type) {
-      return false;
-    }
-    return future.routeConfig === curr.routeConfig;
-  }
 }
 
 @NgModule({

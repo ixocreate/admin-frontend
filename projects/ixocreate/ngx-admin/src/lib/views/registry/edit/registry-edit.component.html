@@ -1,32 +1,33 @@
 <kiwi-content>
-    <ng-template #headerButtons>
-        <a [routerLink]="'../../'" class="btn btn-outline-dark">
-            <i class="fa fa-ban"></i> Cancel
-        </a>
-        <button class="btn btn-primary" (click)="onSubmit()">
-            <i class="fa fa-save"></i> Update
-        </button>
-    </ng-template>
+  <ng-template #headerButtons>
+    <a [routerLink]="'../../'" class="btn btn-outline-dark">
+      <i class="fa fa-ban"></i> Cancel
+    </a>
+    <button class="btn btn-primary" (click)="onSubmit()">
+      <i class="fa fa-save"></i> Update
+    </button>
+  </ng-template>
 
-    <ng-container *ngIf="data$ | async as data">
-        <div class="card card-accent-primary">
-            <div class="card-header custom-card-header">
-                <h6 class="m-0 text-center text-sm-left">Edit <b>Entry</b></h6>
-            </div>
-            <div class="card-body">
-                <ng-container *ngIf="form && fields; else isLoading">
-                    <formly-form [form]="form" [fields]="fields" [model]="data.item.value" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmit()">
-                    </formly-form>
-                </ng-container>
-                <ng-template #isLoading>
-                    <div class="text-center my-3 loading">
-                        <kiwi-loading class="big-center"></kiwi-loading>
-                    </div>
-                </ng-template>
-            </div>
-            <div class="card-footer text-muted">
-                <b class="text-danger">*</b> Required Field
-            </div>
-        </div>
-    </ng-container>
+  <ng-container *ngIf="data$ | async as data">
+    <div class="card card-accent-primary">
+      <div class="card-header custom-card-header">
+        <h6 class="m-0 text-center text-sm-left">Edit <b>Entry</b></h6>
+      </div>
+      <div class="card-body">
+        <ng-container *ngIf="form && fields; else isLoading">
+          <formly-form [form]="form" [fields]="fields" [model]="data.item.value" class="kiwi-form kiwi-form-inline"
+                       (ngSubmit)="onSubmit()">
+          </formly-form>
+        </ng-container>
+        <ng-template #isLoading>
+          <div class="text-center my-3 loading">
+            <kiwi-loading class="big-center"></kiwi-loading>
+          </div>
+        </ng-template>
+      </div>
+      <div class="card-footer text-muted">
+        <b class="text-danger">*</b> Required Field
+      </div>
+    </div>
+  </ng-container>
 </kiwi-content>

@@ -7,7 +7,7 @@ export class RxService {
     return observable.pipe(
       filter((data) => data !== null),
       first(),
-      map(data => JSON.parse(JSON.stringify(data))),
+      map((data) => JSON.parse(JSON.stringify(data))),
     ).toPromise();
   }
 

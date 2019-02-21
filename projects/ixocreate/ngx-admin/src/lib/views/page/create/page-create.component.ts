@@ -27,7 +27,7 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.locale = params.locale;
       this.parentSitemapId = params.parentSitemapId;
 

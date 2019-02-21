@@ -34,13 +34,13 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.userId = params.id;
       this.data$ = this.appData.getUserDetail(this.userId);
     });
 
     this.appData.getUserConfig().then((data: any) => {
-      this.fields = data.update ?  this.schemaTransform.transformForm(data.update) : [];
+      this.fields = data.update ? this.schemaTransform.transformForm(data.update) : [];
     });
   }
 
