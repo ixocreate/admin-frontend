@@ -14,6 +14,12 @@ export interface EnvironmentConfig {
   production: boolean;
 }
 
+export interface UserLocaleConfig {
+  dateFormat: string;
+  dateTimeFormat: string;
+  numberFormat: 'en' | 'de';
+}
+
 @Injectable()
 export class ConfigService {
 
@@ -57,6 +63,14 @@ export class ConfigService {
 
   get userPermissions(): string[] {
     return this._userPermissions;
+  }
+
+  get userLocaleConfig(): UserLocaleConfig {
+    return {
+      dateFormat: 'yyyy-MM-dd',
+      dateTimeFormat: 'yyyy-MM-dd HH:mm',
+      numberFormat: 'en',
+    };
   }
 
   get namespace(): string {

@@ -27,12 +27,12 @@ export class DataTableTypesService {
 
     this.registerType('date', () => ({
       align: 'right',
-      render: (value: any) => '<i>' + kiwiDate.transform(value) + '</i>',
+      render: (value: any) => '<span class="date">' + kiwiDate.transform(value) + '</span>',
     }));
 
     this.registerType('datetime', () => ({
       align: 'right',
-      render: (value: any) => '<i>' + kiwiDateTime.transform(value) + '</i>',
+      render: (value: any) => '<span class="date">' + kiwiDateTime.transform(value) + '</span>',
     }));
 
     this.registerType('bool', (options) => ({
