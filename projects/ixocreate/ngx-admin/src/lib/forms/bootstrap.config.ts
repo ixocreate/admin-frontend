@@ -115,16 +115,32 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         templateOptions: {
           height: 200,
           modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              [{list: 'ordered'}, {list: 'bullet'}],
-              [{script: 'sub'}, {script: 'super'}],
-              [{indent: '-1'}, {indent: '+1'}],
-              [{header: [1, 2, 3, 4, 5, 6, false]}],
-              [{align: []}],
-              ['clean'],
-              ['link'],
-            ],
+            toolbar: {
+              container: [
+                ['bold', 'italic', 'underline', 'strike'],
+                [{list: 'ordered'}, {list: 'bullet'}],
+                [{script: 'sub'}, {script: 'super'}],
+                [{indent: '-1'}, {indent: '+1'}],
+                [{header: [1, 2, 3, 4, 5, 6, false]}],
+                [{align: []}],
+                ['clean'],
+                ['link'],
+              ],
+              handlers: {
+                link(value) {
+                  console.log(value);
+                  if (value) {
+                    const href = prompt('Enter the URL');
+                    this.quill.format('link', {
+                      href,
+                      target: '_self',
+                    });
+                  } else {
+                    this.quill.format('link', false);
+                  }
+                },
+              },
+            },
           },
         },
       },
