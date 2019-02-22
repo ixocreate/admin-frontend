@@ -56,6 +56,10 @@ $form-element-spacer: .5rem;
   }
 }
 
+.input-group-text {
+  overflow: hidden;
+}
+
 a.input-group-text {
   &:hover {
     text-decoration: none;
