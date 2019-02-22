@@ -64,7 +64,7 @@ import { MediaHelper } from '../../helpers/media.helper';
         <div class="modal-body">
           <div class="row align-items-center mb-3">
             <div class="col-sm">
-              <ng-select [items]="sitemap$ | async" [(ngModel)]="sitemapLinkInputValue" bindLabel="name" (change)="onSitemapLinkSelect()">
+              <ng-select [items]="sitemap" [(ngModel)]="sitemapLinkInputValue" bindLabel="name" (change)="onSitemapLinkSelect()">
               </ng-select>
             </div>
             <div class="col-sm-4 mt-2 mt-sm-0" *ngIf="locales.length > 1">
@@ -90,7 +90,7 @@ import { MediaHelper } from '../../helpers/media.helper';
 })
 export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements OnInit {
 
-  sitemapLinkInputValue = '';
+  sitemapLinkInputValue = null;
   externalLinkInputValue = '';
 
   isImage = MediaHelper.isImage;
@@ -111,7 +111,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   ];
 
   selectedLocale: string;
-  sitemap$: Promise<any>;
+  sitemap: Array<{ id: string, name: string }>;
 
   constructor(private modalService: BsModalService,
               private config: ConfigService,
@@ -123,7 +123,6 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   ngOnInit() {
     super.ngOnInit();
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
-    this.loadSitemap();
   }
 
   get target() {
@@ -142,14 +141,14 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
   }
 
   get valueString() {
-    if (this.value == null || !this.value.value) {
+    if (this.value === null || !this.value.value) {
       return '';
     }
     return this.value.value.filename || this.value.value.name || this.value.value;
   }
 
   get valueLink() {
-    if (this.value == null) {
+    if (this.value === null) {
       return '';
     }
     switch (this.value.type) {
@@ -173,6 +172,11 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     }
     this.externalLinkInputValue = '';
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    if (this.sitemap) {
+      this.setSiteMapValue();
+    } else {
+      this.loadSitemap();
+    }
   }
 
   onSelectType(value: any) {
@@ -184,9 +188,21 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     this.onSelectType(this.sitemapLinkInputValue);
   }
 
+  setSiteMapValue() {
+    if (this.sitemap && this.value && this.value.type === 'sitemap') {
+      for (const element of this.sitemap) {
+        if (element.id === this.value.value.id) {
+          this.sitemapLinkInputValue = element;
+        }
+      }
+    }
+  }
+
   loadSitemap() {
-    this.sitemapLinkInputValue = '';
-    this.sitemap$ = this.appData.getSitemap(this.selectedLocale);
+    this.appData.getSitemap(this.selectedLocale).then((data) => {
+      this.sitemap = data;
+      this.setSiteMapValue();
+    });
   }
 
   onChangeLocale() {
