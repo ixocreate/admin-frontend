@@ -33,7 +33,7 @@ import { ConfigService } from '../../services/config.service';
           </button>
         </div>
       </div>
-      <div class="calender-overlay" [hidden]="!showOverlay" tabindex="-1">
+      <div class="calender-overlay" [hidden]="!showOverlay">
         <p-calendar class="date-picker"
                     [inline]="true"
                     [placeholder]="to.placeholder"
