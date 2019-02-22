@@ -10,15 +10,19 @@ export class KiwiDateTimePipe implements PipeTransform {
   constructor(private config: ConfigService) {
   }
 
+  get formatString(): string {
+    let format = 'YYYY-MM-DD HH:mm';
+    if (this.config.userLocaleConfig && this.config.userLocaleConfig.dateTimeFormat) {
+      format = this.config.userLocaleConfig.dateTimeFormat;
+    }
+    return format;
+  }
+
   transform(value: any, args?: any): any {
     if (!value) {
       return '';
     }
-    let dateFormat = 'YYYY-MM-DD HH:mm';
-    if (this.config.userLocaleConfig && this.config.userLocaleConfig.dateTimeFormat) {
-      dateFormat = this.config.userLocaleConfig.dateTimeFormat;
-    }
-    return moment(value).format(dateFormat);
+    return moment(value).format(this.formatString);
   }
 
 }

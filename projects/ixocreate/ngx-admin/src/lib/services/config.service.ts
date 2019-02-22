@@ -67,10 +67,10 @@ export class ConfigService {
 
   get userLocaleConfig(): UserLocaleConfig {
     return {
-      dateFormat: 'DD.MM.YYYY',
-      dateTimeFormat: 'DD.MM.YYYY HH:mm',
-      // dateFormat: 'YYYY-MM-DD',
-      // dateTimeFormat: 'YYYY-MM-DD HH:mm',
+      // dateFormat: 'DD.MM.YYYY',
+      // dateTimeFormat: 'DD.MM.YYYY HH:mm',
+      dateFormat: 'YYYY-MM-DD',
+      dateTimeFormat: 'YYYY-MM-DD HH:mm',
       numberFormat: 'en',
     };
   }
