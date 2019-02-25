@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { QuillEditorComponent } from 'ngx-quill';
 import { CustomValidators } from '../../validators/CustomValidators';
@@ -10,7 +10,8 @@ import { BsModalService } from 'ngx-bootstrap';
   selector: 'formly-field-quill',
   template: `
     <quill-editor #editor
-                  [ngModel]="value?.html"
+                  [ngModel]="quillDelta"
+                  format="object"
                   [style]="{height: height}"
                   [readOnly]="to.disabled"
                   [modules]="modules"
@@ -22,9 +23,9 @@ import { BsModalService } from 'ngx-bootstrap';
     </quill-editor>
   `,
 })
-export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implements OnInit {
+export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
 
-  value = {html: '', quill: []};
+  quillDelta = {};
 
   @ViewChild('editor') editor: QuillEditorComponent;
 
@@ -43,6 +44,9 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
   ngOnInit() {
     if (this.to.required) {
       this.formControl.setValidators([CustomValidators.quillRequired]);
+    }
+    if (this.formControl.value && this.formControl.value.quill) {
+      this.quillDelta = this.formControl.value.quill;
     }
     setTimeout(() => {
       this.setValue(this.formControl.value || {html: '', quill: []});
@@ -84,26 +88,17 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
       this.to.modules.toolbar.handlers = {};
     }
 
-    this.to.modules.toolbar.handlers.mylink = (value) => {
+    this.to.modules.toolbar.handlers.ixolink = (value) => {
       if (value) {
         const initialState: LinkSelectModalData = {
           value: null,
           onConfirm: (data) => {
-            console.log(data);
-            const myLinkData: any = {target: data.target};
-            if (data.type === 'external') {
-              myLinkData.href = data.value;
-            } else if (data.type === 'media') {
-              myLinkData.href = 'media:' + data.value.id;
-            } else if (data.type === 'sitemap') {
-              myLinkData.href = 'sitemap:' + data.value.id;
-            }
-            this.editor.quillEditor.format('mylink', myLinkData, 'user');
+            this.editor.quillEditor.format('ixolink', data, 'user');
           },
         };
         this.modalService.show(KiwiLinkSelectModalComponent, {class: 'modal-lg', initialState});
       } else {
-        this.editor.quillEditor.format('mylink', false, 'user');
+        this.editor.quillEditor.format('ixolink', false, 'user');
       }
     };
   }

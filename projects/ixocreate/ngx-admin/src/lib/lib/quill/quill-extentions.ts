@@ -14,20 +14,32 @@ function quillRegisterLineBreak() {
 function quillRegisterLink() {
   const Link = Quill.import('formats/link');
 
-  class MyLinkType extends Link {
-    static blotName = 'mylink';
-    static tagName = 'A';
+  class IxoLinkType extends Link {
+    static blotName = 'ixolink';
+    static tagName = 'link';
+    static PROTOCOL_WHITELIST = ['http', 'https', 'mailto', 'tel', 'sitemap', 'media'];
 
-    static create(options: { href: string, target: string }) {
-      console.log(options);
+    static create(options: any) {
+      let href = '';
+      if (options.type === 'external') {
+        href = options.value;
+      } else if (options.type === 'media') {
+        href = 'media:' + options.value.id;
+      } else if (options.type === 'sitemap') {
+        href = 'sitemap:' + options.value.id;
+      }
       const node = super.create(options);
-      const href = this.sanitize(options.href);
+      href = this.sanitize(href);
       node.setAttribute('href', href);
-      node.setAttribute('data-test', href);
       if (options.target) {
         node.setAttribute('target', options.target);
       }
+      node.linkData = options;
       return node;
+    }
+
+    static formats(domNode) {
+      return domNode.linkData;
     }
 
     static sanitize(url) {
@@ -35,5 +47,5 @@ function quillRegisterLink() {
     }
   }
 
-  Quill.register('formats/mylink', MyLinkType);
+  Quill.register('formats/ixolink', IxoLinkType);
 }
