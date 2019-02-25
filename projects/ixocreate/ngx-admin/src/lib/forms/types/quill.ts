@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { QuillEditorComponent } from 'ngx-quill';
 import { CustomValidators } from '../../validators/CustomValidators';
+import { LinkSelectModalData } from '../../modals/kiwi-link-select-modal/link-select-modal-data.interface';
+import { KiwiLinkSelectModalComponent } from '../../modals/kiwi-link-select-modal/kiwi-link-select-modal.component';
+import { BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'formly-field-quill',
@@ -24,6 +27,10 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
   value = {html: '', quill: []};
 
   @ViewChild('editor') editor: QuillEditorComponent;
+
+  constructor(private modalService: BsModalService) {
+    super();
+  }
 
   get modules() {
     return this.to.modules;
@@ -79,10 +86,22 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
 
     this.to.modules.toolbar.handlers.mylink = (value) => {
       if (value) {
-        const href = prompt('Enter the URL');
-        setTimeout(() => {
-          this.editor.quillEditor.format('mylink', {href, target: '_self'}, 'user');
-        }, 2000);
+        const initialState: LinkSelectModalData = {
+          value: null,
+          onConfirm: (data) => {
+            console.log(data);
+            const myLinkData: any = {target: data.target};
+            if (data.type === 'external') {
+              myLinkData.href = data.value;
+            } else if (data.type === 'media') {
+              myLinkData.href = 'media:' + data.value.id;
+            } else if (data.type === 'sitemap') {
+              myLinkData.href = 'sitemap:' + data.value.id;
+            }
+            this.editor.quillEditor.format('mylink', myLinkData, 'user');
+          },
+        };
+        this.modalService.show(KiwiLinkSelectModalComponent, {class: 'modal-lg', initialState});
       } else {
         this.editor.quillEditor.format('mylink', false, 'user');
       }
