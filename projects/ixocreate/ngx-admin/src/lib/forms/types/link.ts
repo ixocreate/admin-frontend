@@ -1,15 +1,13 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { ConfigService } from '../../services/config.service';
-import { AppDataService } from '../../services/data/app-data.service';
-import { MediaHelper } from '../../helpers/media.helper';
+import { KiwiLinkSelectModalComponent } from '../../modals/kiwi-link-select-modal/kiwi-link-select-modal.component';
+import { LinkSelectModalData } from '../../modals/kiwi-link-select-modal/link-select-modal-data.interface';
 
 @Component({
   selector: 'formly-field-link',
   template: `
-    <div class="input-group" (click)="openModal(modalTemplate)" [class.cursor-pointer]="!to.disabled">
+    <div class="input-group" (click)="openModal()" [class.cursor-pointer]="!to.disabled">
       <div class="input-group-prepend">
         <span class="input-group-text" *ngIf="!value" [class.is-invalid]="showError"><i class="fa fa-fw fa-link"></i></span>
         <a [href]="valueLink" target="_blank" class="input-group-text" *ngIf="value" kiwiClickStopPropagation
@@ -28,116 +26,23 @@ import { MediaHelper } from '../../helpers/media.helper';
         </button>
       </div>
     </div>
-
-    <ng-template #modalTemplate>
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Select a Link</h5>
-      </div>
-      <div class="modal-header d-block">
-        <div class="row">
-          <div class="col-sm-8">
-            <ng-select [items]="linkTypes" bindValue="name" [(ngModel)]="selectedType" [clearable]="false"></ng-select>
-          </div>
-          <div class="col-sm">
-            <ng-select [items]="targetTypes" bindValue="name" [(ngModel)]="selectedTarget" [clearable]="false"></ng-select>
-          </div>
-        </div>
-      </div>
-      <ng-container *ngIf="selectedType === 'media'">
-        <div class="current-media" *ngIf="value && value.value">
-          <div class="row align-items-center">
-            <div class="col-auto text-center">
-              <ng-container *ngIf="isImage(value.value.mimeType); else noImage">
-                <span class="transparent-img-bg border-radius"><img [src]="value.value.thumb" class="img-fluid"/></span>
-              </ng-container>
-              <ng-template #noImage class="media-container"><i [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.value.mimeType)"></i></ng-template>
-            </div>
-            <div class="col">
-              <b>Current File:</b><br/>
-              {{ value.value.filename }}
-            </div>
-          </div>
-        </div>
-        <kiwi-media-list class="media-inline" (select)="onSelectType($event)"></kiwi-media-list>
-      </ng-container>
-      <ng-container *ngIf="selectedType === 'sitemap'">
-        <div class="modal-body">
-          <div class="row align-items-center mb-3">
-            <div class="col-sm">
-              <ng-select [items]="sitemap" [(ngModel)]="sitemapLinkInputValue" bindLabel="name" (change)="onSitemapLinkSelect()">
-              </ng-select>
-            </div>
-            <div class="col-sm-4 mt-2 mt-sm-0" *ngIf="locales.length > 1">
-              <ng-select [items]="locales" bindLabel="name" bindValue="locale" [(ngModel)]="selectedLocale"
-                         [clearable]="false" (change)="onChangeLocale()"></ng-select>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="selectedType === 'external'">
-        <div class="modal-body">
-          <input type="text" placeholder="Enter URL of external Link (http://...)" class="form-control"
-                 [(ngModel)]="externalLinkInputValue">
-        </div>
-        <div class="modal-footer text-right">
-          <button type="button" class="btn btn-primary" (click)="onSelectType(externalLinkInputValue);"><i
-            class="fa fa-check"></i> Select
-          </button>
-        </div>
-      </ng-container>
-    </ng-template>
   `,
 })
 export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements OnInit {
 
-  sitemapLinkInputValue = null;
-  externalLinkInputValue = '';
-
-  isImage = MediaHelper.isImage;
-  mimeTypeIcon = MediaHelper.mimeTypeIcon;
-
-  modalRef: BsModalRef;
-  selectedType = 'external';
-  linkTypes = [
-    {name: 'external', label: 'External'},
-    {name: 'sitemap', label: 'Sitemap'},
-    {name: 'media', label: 'Media'},
-  ];
-
-  selectedTarget = '_self';
-  targetTypes = [
-    {name: '_self', label: 'Same window'},
-    {name: '_blank', label: 'New window'},
-  ];
-
-  selectedLocale: string;
-  sitemap: Array<{ id: string, name: string }>;
-
-  constructor(private modalService: BsModalService,
-              private config: ConfigService,
-              private appData: AppDataService,
-              private localStorage: LocalStorageService) {
+  constructor(private modalService: BsModalService) {
     super();
-  }
-
-  ngOnInit() {
-    super.ngOnInit();
-    this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
   }
 
   get target() {
     if (this.value) {
-      for (const targetType of this.targetTypes) {
+      for (const targetType of KiwiLinkSelectModalComponent.TARGET_TYPES) {
         if (targetType.name === this.value.target) {
           return targetType.label;
         }
       }
     }
     return ' - ';
-  }
-
-  get locales() {
-    return this.config.config.intl.locales;
   }
 
   get valueString() {
@@ -163,49 +68,21 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     }
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal() {
     if (this.to.disabled) {
       return;
     }
+    const initialState: LinkSelectModalData = {
+      value: this.value,
+      onConfirm: (data) => {
+        console.log(data);
+        this.onSelect(data);
+      },
+    };
     if (this.value && this.value.type) {
-      this.selectedType = this.value.type;
+      initialState.selectedType = this.value.type;
     }
-    this.externalLinkInputValue = '';
-    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
-    if (this.sitemap) {
-      this.setSiteMapValue();
-    } else {
-      this.loadSitemap();
-    }
+    this.modalService.show(KiwiLinkSelectModalComponent, {class: 'modal-lg', initialState});
   }
 
-  onSelectType(value: any) {
-    this.modalRef.hide();
-    this.onSelect({type: this.selectedType, target: this.selectedTarget, value});
-  }
-
-  onSitemapLinkSelect() {
-    this.onSelectType(this.sitemapLinkInputValue);
-  }
-
-  setSiteMapValue() {
-    if (this.sitemap && this.value && this.value.type === 'sitemap') {
-      for (const element of this.sitemap) {
-        if (element.id === this.value.value.id) {
-          this.sitemapLinkInputValue = element;
-        }
-      }
-    }
-  }
-
-  loadSitemap() {
-    this.appData.getSitemap(this.selectedLocale).then((data) => {
-      this.sitemap = data;
-      this.setSiteMapValue();
-    });
-  }
-
-  onChangeLocale() {
-    this.loadSitemap();
-  }
 }

@@ -89,6 +89,7 @@ import { RegistryComponent } from './views/registry/registry.component';
 import { RegistryEditComponent } from './views/registry/edit/registry-edit.component';
 import { ErrorComponent } from './views/error/error.component';
 import { KiwiReuseStrategy } from './lib/kiwi-reuse-strategy';
+import { KiwiLinkSelectModalComponent } from './modals/kiwi-link-select-modal/kiwi-link-select-modal.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -102,6 +103,7 @@ const APP_ENTRY_COMPONENTS = [
   KiwiConfirmModalComponent,
   KiwiInputModalComponent,
   KiwiMapModalComponent,
+  KiwiLinkSelectModalComponent,
 ];
 
 const APP_COMPONENTS = [
