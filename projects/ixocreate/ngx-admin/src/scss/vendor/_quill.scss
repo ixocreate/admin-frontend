@@ -136,3 +136,16 @@
   }
 }
 
+.ql-mylink {
+  position: relative;
+
+  &:after {
+    display: inline-block;
+    font-family: FontAwesome;
+    content: '\f0c1';
+    position: absolute;
+    left: 7px;
+    top: 2px;
+    font-size: 15px;
+  }
+}

@@ -72,6 +72,21 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         },
       },
     };
+
+    if (!this.to.modules.handlers) {
+      this.to.modules.toolbar.handlers = {};
+    }
+
+    this.to.modules.toolbar.handlers.mylink = (value) => {
+      if (value) {
+        const href = prompt('Enter the URL');
+        setTimeout(() => {
+          this.editor.quillEditor.format('mylink', {href, target: '_self'}, 'user');
+        }, 2000);
+      } else {
+        this.editor.quillEditor.format('mylink', false, 'user');
+      }
+    };
   }
 
   onContentChanged(data: any) {

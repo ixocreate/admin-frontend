@@ -14,7 +14,10 @@ function quillRegisterLineBreak() {
 function quillRegisterLink() {
   const Link = Quill.import('formats/link');
 
-  class LinkType extends Link {
+  class MyLinkType extends Link {
+    static blotName = 'mylink';
+    static tagName = 'A';
+
     static create(options: { href: string, target: string }) {
       console.log(options);
       const node = super.create(options);
@@ -32,5 +35,5 @@ function quillRegisterLink() {
     }
   }
 
-  Quill.register('formats/link', LinkType);
+  Quill.register('formats/mylink', MyLinkType);
 }
