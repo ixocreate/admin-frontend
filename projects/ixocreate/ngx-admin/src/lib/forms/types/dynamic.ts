@@ -143,7 +143,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
   }
 
   blockTitle(model, fieldGroup) {
-    //let titleConfig = 'Name: %id%';
+    // let titleConfig = 'Name: %id%';
     let titleConfig = '';
     for (const key of Object.keys(model)) {
       titleConfig = titleConfig.replace(`%${key}%`, model[key]);
@@ -151,7 +151,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     return titleConfig;
   }
 
-  private footerVisible(fieldGroups, field, model) {
+  footerVisible(fieldGroups, field, model) {
     return fieldGroups && fieldGroups.length > 0 &&
       (!field.templateOptions['limit'] || field.templateOptions['limit'] === null || (field.templateOptions['limit'] > model.length));
   }

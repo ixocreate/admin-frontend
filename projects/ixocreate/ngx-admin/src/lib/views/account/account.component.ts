@@ -80,7 +80,7 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
   constructor(protected notification: NotificationService,
               protected appData: AppDataService,
               protected schemaTransform: SchemaTransformService,
-              protected accountData: AccountDataService) {
+              public accountData: AccountDataService) {
     super();
   }
 
