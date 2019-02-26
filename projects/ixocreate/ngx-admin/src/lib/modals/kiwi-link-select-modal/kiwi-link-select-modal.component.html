@@ -14,7 +14,7 @@
 </div>
 
 <ng-container *ngIf="selectedType === 'media'">
-  <div class="current-media" *ngIf="value && value.value">
+  <div class="current-media" *ngIf="value && value.value && value.type === 'media'">
     <div class="row align-items-center">
       <div class="col-auto text-center">
         <ng-container *ngIf="isImage(value.value.mimeType); else noImage">
