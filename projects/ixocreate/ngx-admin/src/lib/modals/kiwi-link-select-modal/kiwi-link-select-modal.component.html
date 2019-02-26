@@ -5,7 +5,7 @@
 <div class="modal-header d-block">
   <div class="row">
     <div class="col-sm-8">
-      <ng-select [items]="linkTypes" bindValue="name" [(ngModel)]="selectedType" [clearable]="false"></ng-select>
+      <ng-select [items]="linkTypes" bindValue="name" [(ngModel)]="selectedType" [clearable]="false" (change)="onTypeSelect()"></ng-select>
     </div>
     <div class="col-sm">
       <ng-select [items]="targetTypes" bindValue="name" [(ngModel)]="selectedTarget" [clearable]="false"></ng-select>
@@ -32,21 +32,24 @@
   <kiwi-media-list class="media-inline" (select)="onSelectType($event)"></kiwi-media-list>
 </ng-container>
 
-<ng-container *ngIf="selectedType === 'sitemap' && sitemap">
-  <div class="modal-body">
-    <div class="row align-items-center mb-3">
-      <div class="col-sm">
-        <ng-select [items]="sitemap" [(ngModel)]="sitemapLinkInputValue" bindLabel="name"
-                   (change)="onSitemapLinkSelect()">
-        </ng-select>
-      </div>
-      <div class="col-sm-4 mt-2 mt-sm-0" *ngIf="locales.length > 1">
-        <ng-select [items]="locales" bindLabel="name" bindValue="locale" [(ngModel)]="selectedLocale"
-                   [clearable]="false" (change)="onChangeLocale()"></ng-select>
+<ng-container *ngFor="let configLinkType of configLinkTypes">
+  <ng-container *ngIf="selectedType === configLinkType.type && selectItems[selectedType]">
+    <div class="modal-body">
+      <div class="row align-items-center">
+        <div class="col-sm">
+          <ng-select [items]="selectItems[selectedType]" [(ngModel)]="selectedItem[selectedType]" bindLabel="name"
+                     (change)="onConfigTypeSelect(configLinkType)">
+          </ng-select>
+        </div>
+        <div class="col-sm-4 mt-2 mt-sm-0" *ngIf="configLinkType.hasLocales && locales.length > 1">
+          <ng-select [items]="locales" bindLabel="name" bindValue="locale" [(ngModel)]="selectedLocale"
+                     [clearable]="false" (change)="onChangeLocale(configLinkType)"></ng-select>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </ng-container>
+
 
 <ng-container *ngIf="selectedType === 'external'">
   <div class="modal-body">
