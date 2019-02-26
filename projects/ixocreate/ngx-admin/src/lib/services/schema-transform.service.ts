@@ -21,7 +21,8 @@ export class SchemaTransformService {
     this.registerTransform('number', this.handleDefault('input', {type: 'number'}));
     this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}));
     this.registerTransform('checkbox', this.handleDefault('checkbox'));
-    this.registerTransform('radio', this.handleRadio);
+    this.registerTransform('multiCheckbox', this.handleDefaultMulti('multiCheckbox'));
+    this.registerTransform('radio', this.handleDefaultMulti('radio'));
 
     this.registerTransform('date', this.handleDefault('date'));
     this.registerTransform('datetime', this.handleDefault('datetime'));
@@ -74,6 +75,28 @@ export class SchemaTransformService {
         data.templateOptions[key] = value[key];
       });
       return data;
+    };
+  }
+
+  private handleDefaultMulti(type: string, templateOptions: any = {}, keysToTemplateOptions: string[] = []) {
+    return (value: any): Schema => {
+      const options = [];
+
+      for (const key in value.options) {
+        if (value.options.hasOwnProperty(key)) {
+          options.push({value: key, label: value.options[key]});
+        }
+      }
+
+      return this.handleDefault(type, {
+        options,
+        description: value.description,
+        resource: value.resource,
+        clearable: value.clearable || false,
+        labelProp: 'label',
+        valueProp: 'value',
+        ...templateOptions,
+      }, keysToTemplateOptions)(value);
     };
   }
 
@@ -192,25 +215,6 @@ export class SchemaTransformService {
       resource: value.resource,
       clearable: value.clearable || false,
       extendedSelect: value.extendedSelect || false,
-    })(value);
-  }
-
-  private handleRadio(value: any, transformer: SchemaTransformService): Schema {
-    const options = [];
-
-    for (const key in value.options) {
-      if (value.options.hasOwnProperty(key)) {
-        options.push({value: key, label: value.options[key]});
-      }
-    }
-
-    return transformer.handleDefault('radio', {
-      options,
-      description: value.description,
-      resource: value.resource,
-      clearable: value.clearable || false,
-      labelProp: 'label',
-      valueProp: 'value',
     })(value);
   }
 

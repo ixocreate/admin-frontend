@@ -16,6 +16,7 @@ import { FormlyFieldRepeatableComponent } from './types/repeatable';
 import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
 import { FormlyFieldPriceComponent } from './types/price';
 import { FormlyFieldGeoPointComponent } from './types/geo-point';
+import { FormlyFieldMultiCheckboxComponent } from './types/multi-checkbox';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -27,6 +28,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldYouTubeComponent,
   FormlyFieldQuillComponent,
   FormlyFieldCheckboxComponent,
+  FormlyFieldMultiCheckboxComponent,
   FormlyFieldRepeatableComponent,
   FormlyFieldDynamicComponent,
   FormlyFieldPriceComponent,
@@ -58,6 +60,11 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'checkbox',
       component: FormlyFieldCheckboxComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'multiCheckbox',
+      component: FormlyFieldMultiCheckboxComponent,
       wrappers: ['form-field'],
     },
     {
