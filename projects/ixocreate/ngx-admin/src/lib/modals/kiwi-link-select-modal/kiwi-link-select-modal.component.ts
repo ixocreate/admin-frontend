@@ -67,7 +67,6 @@ export class KiwiLinkSelectModalComponent implements OnInit {
     this.innerValue = JSON.parse(JSON.stringify(this.value));
     if (this.innerValue && this.innerValue.type) {
       this.selectedType = this.innerValue.type;
-      console.log(this.selectedType);
     }
     if (this.selectedType === 'external' && this.innerValue) {
       this.externalLinkInputValue = this.innerValue.value;
@@ -89,7 +88,6 @@ export class KiwiLinkSelectModalComponent implements OnInit {
   }
 
   onTypeSelect() {
-    console.log('change', this.selectedType);
     for (const configLinkType of this.configLinkTypes) {
       if (this.selectedType === configLinkType.type) {
         this.loadConfigLinkData(configLinkType);

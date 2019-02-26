@@ -1,5 +1,14 @@
 <div class="modal-header bg-primary">
-  <h5 class="modal-title">Select a Link</h5>
+  <div class="row align-items-center flex-grow-1">
+    <div class="col">
+      <h5 class="modal-title">Select a Link</h5>
+    </div>
+    <div class="col text-right">
+      <button type="button" class="btn btn-primary" (click)="confirm(null);">
+        <i class="fa fa-trash"></i> Remove Link
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="modal-header d-block">

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { QuillEditorComponent } from 'ngx-quill';
 import { CustomValidators } from '../../validators/CustomValidators';
@@ -30,7 +30,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
 
   @ViewChild('editor') editor: QuillEditorComponent;
 
-  constructor(private modalService: BsModalService) {
+  constructor(private element: ElementRef, private modalService: BsModalService) {
     super();
   }
 
@@ -97,10 +97,8 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
       }
     };
 
-
     setTimeout(() => {
       const quill = this.editor.quillEditor;
-      console.log(quill);
       quill.on('selection-change', (range, oldRange, source) => {
         if (range === null) {
           return;
@@ -112,11 +110,16 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
               index: range.index - offset,
               length: link.length(),
             });
-            this.openLinkModal(link.getData());
+            // workaround for modal not workin when called here
+            const event = new CustomEvent('open-modal', {detail: {value: link.getData()}});
+            this.element.nativeElement.dispatchEvent(event);
             return;
           }
         }
       });
+      this.element.nativeElement.addEventListener('open-modal', (event: CustomEvent) => {
+        this.openLinkModal(event.detail.value);
+      }, false);
     });
   }
 
