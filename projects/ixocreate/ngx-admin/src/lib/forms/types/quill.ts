@@ -5,6 +5,7 @@ import { CustomValidators } from '../../validators/CustomValidators';
 import { LinkSelectModalData } from '../../modals/kiwi-link-select-modal/link-select-modal-data.interface';
 import { KiwiLinkSelectModalComponent } from '../../modals/kiwi-link-select-modal/kiwi-link-select-modal.component';
 import { BsModalService } from 'ngx-bootstrap';
+import { IxoLinkType } from '../../lib/quill/quill-extentions';
 
 @Component({
   selector: 'formly-field-quill',
@@ -90,17 +91,47 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
 
     this.to.modules.toolbar.handlers.ixolink = (value) => {
       if (value) {
-        const initialState: LinkSelectModalData = {
-          value: null,
-          onConfirm: (data) => {
-            this.editor.quillEditor.format('ixolink', data, 'user');
-          },
-        };
-        this.modalService.show(KiwiLinkSelectModalComponent, {class: 'modal-lg', initialState});
+        this.openLinkModal();
       } else {
         this.editor.quillEditor.format('ixolink', false, 'user');
       }
     };
+
+
+    setTimeout(() => {
+      const quill = this.editor.quillEditor;
+      console.log(quill);
+      quill.on('selection-change', (range, oldRange, source) => {
+        if (range === null) {
+          return;
+        }
+        if (range.length === 0 && source === 'user') {
+          const [link, offset] = quill.scroll.descendant(IxoLinkType, range.index);
+          if (link !== null) {
+            quill.setSelection({
+              index: range.index - offset,
+              length: link.length(),
+            });
+            this.openLinkModal(link.getData());
+            return;
+          }
+        }
+      });
+    });
+  }
+
+  openLinkModal(value: any = null) {
+    const initialState: LinkSelectModalData = {
+      value,
+      onConfirm: (data) => {
+        if (data) {
+          this.editor.quillEditor.format('ixolink', data, 'user');
+        } else {
+          this.editor.quillEditor.format('ixolink', false, 'user');
+        }
+      },
+    };
+    this.modalService.show(KiwiLinkSelectModalComponent, {class: 'modal-lg', initialState});
   }
 
   onContentChanged(data: any) {

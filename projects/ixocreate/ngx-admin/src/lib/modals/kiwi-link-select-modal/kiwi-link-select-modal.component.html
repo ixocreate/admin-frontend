@@ -14,18 +14,18 @@
 </div>
 
 <ng-container *ngIf="selectedType === 'media'">
-  <div class="current-media" *ngIf="value && value.value && value.type === 'media'">
+  <div class="current-media" *ngIf="innerValue && innerValue.value && innerValue.type === 'media'">
     <div class="row align-items-center">
       <div class="col-auto text-center">
-        <ng-container *ngIf="isImage(value.value.mimeType); else noImage">
-          <span class="transparent-img-bg border-radius"><img [src]="value.value.thumb" class="img-fluid"/></span>
+        <ng-container *ngIf="isImage(innerValue.value.mimeType); else noImage">
+          <span class="transparent-img-bg border-radius"><img [src]="innerValue.value.thumb" class="img-fluid"/></span>
         </ng-container>
         <ng-template #noImage class="media-container"><i
-          [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.value.mimeType)"></i></ng-template>
+          [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(innerValue.value.mimeType)"></i></ng-template>
       </div>
       <div class="col">
         <b>Current File:</b><br/>
-        {{ value.value.filename }}
+        {{ innerValue.value.filename }}
       </div>
     </div>
   </div>

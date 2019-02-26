@@ -35,18 +35,16 @@ export class KiwiLinkSelectModalComponent implements OnInit {
   mimeTypeIcon = MediaHelper.mimeTypeIcon;
 
   value = null;
+  innerValue = null;
 
-  sitemapLinkInputValue = null;
   externalLinkInputValue = '';
 
   selectedType = 'external';
-
   selectedTarget = '_self';
   selectedLocale: string;
-  sitemap: Array<{ id: string, name: string }>;
 
-  selectItems: {[key: string]: any} = {};
-  selectedItem: {[key: string]: string} = {};
+  selectItems: { [key: string]: any } = {};
+  selectedItem: { [key: string]: string } = {};
 
   onConfirm = (data: { type: string, target: string, value: any }) => {
   };
@@ -60,12 +58,23 @@ export class KiwiLinkSelectModalComponent implements OnInit {
       {type: 'sitemap', label: 'Sitemap', hasLocales: true, url: '/admin/api/page/list'},
     ];
 
-    for (const configLinkType of this.configLinkTypes) {
-      this.linkTypes.push({name: configLinkType.type, label: configLinkType.label});
-    }
   }
 
   ngOnInit() {
+    for (const configLinkType of this.configLinkTypes) {
+      this.linkTypes.push({name: configLinkType.type, label: configLinkType.label});
+    }
+    this.innerValue = JSON.parse(JSON.stringify(this.value));
+    if (this.innerValue && this.innerValue.type) {
+      this.selectedType = this.innerValue.type;
+      console.log(this.selectedType);
+    }
+    if (this.selectedType === 'external' && this.innerValue) {
+      this.externalLinkInputValue = this.innerValue.value;
+    }
+    if (this.innerValue && this.innerValue.target) {
+      this.selectedTarget = this.innerValue.target;
+    }
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
     this.onTypeSelect();
   }
@@ -80,6 +89,7 @@ export class KiwiLinkSelectModalComponent implements OnInit {
   }
 
   onTypeSelect() {
+    console.log('change', this.selectedType);
     for (const configLinkType of this.configLinkTypes) {
       if (this.selectedType === configLinkType.type) {
         this.loadConfigLinkData(configLinkType);
@@ -108,9 +118,9 @@ export class KiwiLinkSelectModalComponent implements OnInit {
   }
 
   setConfigTypeValue(configType: ConfigLinkType) {
-    if (this.value && this.selectItems[configType.type] && this.value.type === configType.type) {
+    if (this.innerValue && this.selectItems[configType.type] && this.innerValue.type === configType.type) {
       for (const element of this.selectItems[configType.type]) {
-        if (element.id === this.value.value.id) {
+        if (element.id === this.innerValue.value.id) {
           this.selectedItem[configType.type] = element;
         }
       }

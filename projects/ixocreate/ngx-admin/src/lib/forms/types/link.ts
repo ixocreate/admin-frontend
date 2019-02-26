@@ -59,12 +59,10 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     switch (this.value.type) {
       case 'external':
         return this.value.value;
-      case 'sitemap':
-        return this.value.link;
       case 'media':
         return this.value.link || this.value.value.original;
       default:
-        return null;
+        return this.value.link || null;
     }
   }
 
@@ -78,9 +76,6 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
         this.onSelect(data);
       },
     };
-    if (this.value && this.value.type) {
-      initialState.selectedType = this.value.type;
-    }
     this.modalService.show(KiwiLinkSelectModalComponent, {class: 'modal-lg', initialState});
   }
 

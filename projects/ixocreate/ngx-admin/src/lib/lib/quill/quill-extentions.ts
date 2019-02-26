@@ -1,4 +1,5 @@
 import Quill from 'quill';
+const Inline = Quill.import('blots/inline');
 
 export function registerQillExtentions() {
   quillRegisterLineBreak();
@@ -11,35 +12,39 @@ function quillRegisterLineBreak() {
   Quill.register('formats/linebreak', LineBreakClass);
 }
 
-function quillRegisterLink() {
-  const Link = Quill.import('formats/link');
+export class IxoLinkType extends Inline {
+  static blotName = 'ixolink';
+  static tagName = 'a';
+  domNode: any;
 
-  class IxoLinkType extends Link {
-    static blotName = 'ixolink';
-    static tagName = 'a';
 
-    static create(options: any) {
-      let href = '';
-      if (options.type === 'external') {
-        href = options.value;
-      } else if (options.type === 'media') {
-        href = 'media:' + options.value.id;
-      } else if (options.type === 'sitemap') {
-        href = 'sitemap:' + options.value.id;
-      }
-      const node = super.create(options);
-      node.setAttribute('href', href);
-      if (options.target) {
-        node.setAttribute('target', options.target);
-      }
-      node.linkData = options;
-      return node;
+  static create(options: any) {
+    let href = '';
+    if (options.type === 'external') {
+      href = options.value;
+    } else if (options.type === 'media') {
+      href = 'media:' + options.value.id;
+    } else if (options.type === 'sitemap') {
+      href = 'sitemap:' + options.value.id;
     }
-
-    static formats(domNode) {
-      return domNode.linkData;
+    const node = super.create(options);
+    node.setAttribute('href', href);
+    if (options.target) {
+      node.setAttribute('target', options.target);
     }
+    node.linkData = options;
+    return node;
   }
 
+  static formats(domNode) {
+    return domNode.linkData;
+  }
+
+  getData() {
+    return this.domNode.linkData;
+  }
+}
+
+function quillRegisterLink() {
   Quill.register('formats/ixolink', IxoLinkType);
 }
