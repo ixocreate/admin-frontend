@@ -16,7 +16,7 @@ export class AdminComponent {
   constructor(pageTitle: PageTitleService, config: ConfigService, localStorage: LocalStorageService) {
     pageTitle.init();
 
-    if (config.config && config.config.intl) {
+    if (config.config && config.config.intl && config.config.intl.locales) {
       const selectedLocale = localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, config.config.intl.default);
       let localeFound = false;
       for (const locale of config.config.intl.locales) {
