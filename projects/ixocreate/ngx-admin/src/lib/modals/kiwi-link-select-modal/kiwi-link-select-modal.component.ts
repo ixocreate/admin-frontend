@@ -75,7 +75,6 @@ export class KiwiLinkSelectModalComponent implements OnInit {
   }
 
   confirm(data: any) {
-    console.log(data);
     this.onConfirm(data);
     this.bsModalRef.hide();
   }
