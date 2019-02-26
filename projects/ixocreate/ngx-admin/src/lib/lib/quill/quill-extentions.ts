@@ -16,8 +16,7 @@ function quillRegisterLink() {
 
   class IxoLinkType extends Link {
     static blotName = 'ixolink';
-    static tagName = 'link';
-    static PROTOCOL_WHITELIST = ['http', 'https', 'mailto', 'tel', 'sitemap', 'media'];
+    static tagName = 'a';
 
     static create(options: any) {
       let href = '';
@@ -29,7 +28,6 @@ function quillRegisterLink() {
         href = 'sitemap:' + options.value.id;
       }
       const node = super.create(options);
-      href = this.sanitize(href);
       node.setAttribute('href', href);
       if (options.target) {
         node.setAttribute('target', options.target);
@@ -40,10 +38,6 @@ function quillRegisterLink() {
 
     static formats(domNode) {
       return domNode.linkData;
-    }
-
-    static sanitize(url) {
-      return super.sanitize(url);
     }
   }
 
