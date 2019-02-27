@@ -3,7 +3,7 @@ import { canActivateWithPermissions } from '../shared/userCanActivate';
 import { ConfigService } from '../services/config.service';
 
 @Directive({
-  selector: '[kiwiCan]',
+  selector: '[ixoCan]',
 })
 export class PermissionDirective {
 
@@ -12,7 +12,7 @@ export class PermissionDirective {
               private config: ConfigService) {
   }
 
-  @Input() set kiwiCan(abilities: string[]) {
+  @Input() set ixoCan(abilities: string[]) {
     this.viewContainer.clear();
     if (canActivateWithPermissions(this.config.userPermissions, abilities)) {
       this.viewContainer.createEmbeddedView(this.templateRef);

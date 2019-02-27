@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { KiwiConfirmModalComponent } from '../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
-import { ConfirmModalData } from '../modals/kiwi-confirm-modal/confirm-modal-data.interface';
+import { IxoConfirmModalComponent } from '../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import { ConfirmModalData } from '../modals/ixo-confirm-modal/confirm-modal-data.interface';
 import { BsModalService } from 'ngx-bootstrap';
 import { LocalStorageService } from './local-storage.service';
-import { KiwiInputModalComponent } from '../modals/kiwi-input-modal/kiwi-input-modal.component';
-import { InputModalData } from '../modals/kiwi-input-modal/input-modal-data.interface';
+import { IxoInputModalComponent } from '../modals/ixo-input-modal/ixo-input-modal.component';
+import { InputModalData } from '../modals/ixo-input-modal/input-modal-data.interface';
 import { Page } from '../interfaces/page.interface';
 
 export interface BlockCopy {
@@ -50,7 +50,7 @@ export class CopyService {
           this.localStorage.setItem(this.COPIED_BLOCKS_STORAGE_KEY, copiedBlocks);
         },
       };
-      this.modal.show(KiwiInputModalComponent, {initialState});
+      this.modal.show(IxoInputModalComponent, {initialState});
       const sub = this.modal.onHidden.subscribe(() => {
         resolve(true);
       });
@@ -74,7 +74,7 @@ export class CopyService {
           this.localStorage.setItem(this.COPIED_BLOCKS_STORAGE_KEY, copiedBlocks);
         },
       };
-      this.modal.show(KiwiConfirmModalComponent, {initialState});
+      this.modal.show(IxoConfirmModalComponent, {initialState});
       const sub = this.modal.onHidden.subscribe(() => {
         resolve(true);
       });

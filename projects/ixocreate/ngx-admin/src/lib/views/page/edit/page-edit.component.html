@@ -1,4 +1,4 @@
-<kiwi-content>
+<ixo-content>
   <ng-template #headerButtons>
     <a [routerLink]="'../../'" class="btn btn-outline-dark">
       <i class="fa fa-ban"></i> Cancel
@@ -14,12 +14,12 @@
   <ng-container *ngIf="versionData$ | async as versionData; else isLoading">
     <ng-container *ngIf="versionForm && versionFields">
       <formly-form [form]="versionForm" [fields]="versionFields" [model]="versionData.content"
-                   class="kiwi-form kiwi-form-inline"></formly-form>
+                   class="ixo-form ixo-form-inline"></formly-form>
     </ng-container>
   </ng-container>
   <ng-template #isLoading>
     <div class="text-center my-3 loading">
-      <kiwi-loading class="big-center"></kiwi-loading>
+      <ixo-loading class="big-center"></ixo-loading>
     </div>
   </ng-template>
 
@@ -57,15 +57,15 @@
             </a>
           </ng-container>
 
-          <div class="kiwi-form" *ngIf="pageData">
+          <div class="ixo-form" *ngIf="pageData">
             <h6><i class="fa fa-fw fa-cog"></i> General</h6>
 
             <div class="form-group">
-              <label class="kiwi-form-label">
+              <label class="ixo-form-label">
                 Name<b class="text-danger">*</b>
               </label>
 
-              <div class="kiwi-form-control-container">
+              <div class="ixo-form-control-container">
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Name" [(ngModel)]="pageData.name">
                   <div class="input-group-append">
@@ -78,11 +78,11 @@
             </div>
 
             <div class="form-group">
-              <label class="kiwi-form-label">
+              <label class="ixo-form-label">
                 Slug<b class="text-danger">*</b>
               </label>
 
-              <div class="kiwi-form-control-container">
+              <div class="ixo-form-control-container">
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Slug" [(ngModel)]="pageData.slug">
                   <div class="input-group-append">
@@ -94,12 +94,12 @@
                 <small class="form-text text-muted">The slug is used to create the Website URL</small>
               </div>
             </div>
-            <div class="form-group kiwi-toggle-right">
-              <label class="kiwi-form-label">
+            <div class="form-group ixo-toggle-right">
+              <label class="ixo-form-label">
                 Online<b class="text-danger">*</b>
               </label>
 
-              <div class="kiwi-form-control-container">
+              <div class="ixo-form-control-container">
                 <label class="switch switch-primary">
                   <input type="checkbox" class="switch-input" [(ngModel)]="pageData.online"
                          (change)="savePageData('status', pageData.online ? 'online' : 'offline')">
@@ -113,13 +113,13 @@
             <h6><i class="fa fa-fw fa-calendar"></i> Scheduling</h6>
 
             <div class="form-group">
-              <label class="kiwi-form-label">
+              <label class="ixo-form-label">
                 Published From<b class="text-danger">*</b>
               </label>
-              <div class="kiwi-form-control-container">
+              <div class="ixo-form-control-container">
                 <div class="input-group">
-                  <kiwi-date-picker placeholder="Published From"
-                                    [(ngModel)]="pageData.publishedFrom"></kiwi-date-picker>
+                  <ixo-date-picker placeholder="Published From"
+                                    [(ngModel)]="pageData.publishedFrom"></ixo-date-picker>
                   <div class="input-group-append">
                     <button type="button" class="btn btn-outline-primary"
                             (click)="savePageData('publishedFrom', pageData.publishedFrom)">
@@ -131,13 +131,13 @@
             </div>
 
             <div class="form-group">
-              <label class="kiwi-form-label">
+              <label class="ixo-form-label">
                 Published Until<b class="text-danger">*</b>
               </label>
-              <div class="kiwi-form-control-container">
+              <div class="ixo-form-control-container">
                 <div class="input-group">
-                  <kiwi-date-picker placeholder="Published Until"
-                                    [(ngModel)]="pageData.publishedUntil"></kiwi-date-picker>
+                  <ixo-date-picker placeholder="Published Until"
+                                    [(ngModel)]="pageData.publishedUntil"></ixo-date-picker>
                   <div class="input-group-append">
                     <button type="button" class="btn btn-outline-primary"
                             (click)="savePageData('publishedUntil', pageData.publishedUntil)">
@@ -252,4 +252,4 @@
     </tabset>
   </ng-template>
 
-</kiwi-content>
+</ixo-content>

@@ -13,7 +13,7 @@ import { parseParams } from '../../shared/parseParams';
 import { ResourceList } from '../../interfaces/resource-list.interface';
 import { Resource } from '../../interfaces/resource.interface';
 import { Page } from '../../interfaces/page.interface';
-import { CropperPosition } from '../../components/kiwi-image-cropper/kiwi-image-cropper.component';
+import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
 
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
@@ -50,7 +50,7 @@ export class AppDataService extends DataServiceAbstract {
 
   loadConfig(): Promise<any> {
     return this.api.get(this.config.config.routes.config).then((data: Config) => {
-      this.saveToDefaultStore('CONFIG', Object.assign({}, DefaultHelper.windowVar('__kiwi'), data));
+      this.saveToDefaultStore('CONFIG', Object.assign({}, DefaultHelper.windowVar('__ixo'), data));
     });
   }
 

@@ -1,0 +1,30 @@
+<div class="card card-accent-primary">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-sm"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left">Sitemap</h6></div>
+      <div class="col-sm-5 mt-2 mt-sm-0" *ngIf="locales.length > 1">
+        <ng-select [items]="locales" bindLabel="name" bindValue="locale" [(ngModel)]="selectedLocale"
+                   [clearable]="false" (change)="onChangeLocale()"></ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <ng-container *ngIf="pageIndex$ | async as pageIndex; else isLoading">
+      <ng-container *ngIf="pageIndex.items.length > 0; else noPages">
+        <ng-container *ngFor="let page of pageIndex.items">
+          <ixo-sitemap-item [page]="page" [locale]="selectedLocale" (moved)="pageMoved()"></ixo-sitemap-item>
+        </ng-container>
+      </ng-container>
+      <ng-template #noPages>
+        There are no pages - Please create a page first
+      </ng-template>
+      <a [routerLink]="'create/' + selectedLocale" class="btn btn-success btn-block mt-2"
+         *ngIf="pageIndex.allowedAddingRoot" (click)="addRootPage()">Add Root Page</a>
+    </ng-container>
+    <ng-template #isLoading>
+      <div class="p-3">
+        <ixo-loading class="big-center"></ixo-loading>
+      </div>
+    </ng-template>
+  </div>
+</div>

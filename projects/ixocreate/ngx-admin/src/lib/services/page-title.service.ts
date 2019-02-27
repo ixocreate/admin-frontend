@@ -4,7 +4,7 @@ import { filter } from 'rxjs/internal/operators';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AppDataService } from './data/app-data.service';
-import { KiwiBreadcrumbService } from '../components/kiwi-breadcrumb/kiwi-breadcrumb.service';
+import { IxoBreadcrumbService } from '../components/ixo-breadcrumb/ixo-breadcrumb.service';
 
 @Injectable()
 export class PageTitleService {
@@ -16,7 +16,7 @@ export class PageTitleService {
               private titleService: Title,
               private appData: AppDataService,
               private config: ConfigService,
-              private breadcrumb: KiwiBreadcrumbService,
+              private breadcrumb: IxoBreadcrumbService,
               private activatedRoute: ActivatedRoute) {
   }
 

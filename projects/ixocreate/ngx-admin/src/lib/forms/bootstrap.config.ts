@@ -46,7 +46,7 @@ export function renderCustomError(error) {
   return error;
 }
 
-export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
+export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
   validationMessages: [
     {name: 'required', message: 'This field is required'},
     {name: 'custom', message: renderCustomError},

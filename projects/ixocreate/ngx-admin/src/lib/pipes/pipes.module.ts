@@ -1,14 +1,14 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { KeyValuePipe } from './keyvalue.pipe';
-import { KiwiDatePipe } from './kiwi-date.pipe';
-import { KiwiDateTimePipe } from './kiwi-date-time.pipe';
-import { KiwiFileSizePipe } from './kiwi-file-size.pipe';
+import { IxoDatePipe } from './ixo-date.pipe';
+import { IxoDateTimePipe } from './ixo-date-time.pipe';
+import { IxoFileSizePipe } from './ixo-file-size.pipe';
 
 const COMPONENTS = [
   KeyValuePipe,
-  KiwiDatePipe,
-  KiwiDateTimePipe,
-  KiwiFileSizePipe,
+  IxoDatePipe,
+  IxoDateTimePipe,
+  IxoFileSizePipe,
 ];
 
 @NgModule({

@@ -1,0 +1,73 @@
+<div class="modal-header bg-primary">
+  <div class="row align-items-center flex-grow-1">
+    <div class="col">
+      <h5 class="modal-title">Select a Link</h5>
+    </div>
+    <div class="col text-right">
+      <button type="button" class="btn btn-primary" (click)="confirm(null);">
+        <i class="fa fa-trash"></i> Remove Link
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-header d-block">
+  <div class="row">
+    <div class="col-sm-8">
+      <ng-select [items]="linkTypes" bindValue="name" [(ngModel)]="selectedType" [clearable]="false" (change)="onTypeSelect()"></ng-select>
+    </div>
+    <div class="col-sm">
+      <ng-select [items]="targetTypes" bindValue="name" [(ngModel)]="selectedTarget" [clearable]="false"></ng-select>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="selectedType === 'media'">
+  <div class="current-media" *ngIf="innerValue && innerValue.value && innerValue.type === 'media'">
+    <div class="row align-items-center">
+      <div class="col-auto text-center">
+        <ng-container *ngIf="isImage(innerValue.value.mimeType); else noImage">
+          <span class="transparent-img-bg border-radius"><img [src]="innerValue.value.thumb" class="img-fluid"/></span>
+        </ng-container>
+        <ng-template #noImage class="media-container"><i
+          [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(innerValue.value.mimeType)"></i></ng-template>
+      </div>
+      <div class="col">
+        <b>Current File:</b><br/>
+        {{ innerValue.value.filename }}
+      </div>
+    </div>
+  </div>
+  <ixo-media-list class="media-inline" (select)="onSelectType($event)"></ixo-media-list>
+</ng-container>
+
+<ng-container *ngFor="let configLinkType of configLinkTypes">
+  <ng-container *ngIf="selectedType === configLinkType.type && selectItems[selectedType]">
+    <div class="modal-body">
+      <div class="row align-items-center">
+        <div class="col-sm">
+          <ng-select [items]="selectItems[selectedType]" [(ngModel)]="selectedItem[selectedType]" bindLabel="name"
+                     (change)="onConfigTypeSelect(configLinkType)">
+          </ng-select>
+        </div>
+        <div class="col-sm-4 mt-2 mt-sm-0" *ngIf="configLinkType.hasLocales && locales.length > 1">
+          <ng-select [items]="locales" bindLabel="name" bindValue="locale" [(ngModel)]="selectedLocale"
+                     [clearable]="false" (change)="onChangeLocale(configLinkType)"></ng-select>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+
+<ng-container *ngIf="selectedType === 'external'">
+  <div class="modal-body">
+    <input type="text" placeholder="Enter URL of external Link (http://...)" class="form-control"
+           [(ngModel)]="externalLinkInputValue">
+  </div>
+  <div class="modal-footer text-right">
+    <button type="button" class="btn btn-primary" (click)="onSelectType(externalLinkInputValue);"><i
+      class="fa fa-check"></i> Select
+    </button>
+  </div>
+</ng-container>

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { AdminComponent } from '../../projects/ixocreate/ngx-admin/src/lib/admin.component';
 import { environment } from '../environments/environment';
-import { KiwiAdminModule } from '../../projects/ixocreate/ngx-admin/src/lib/kiwi-admin.module';
+import { IxoAdminModule } from '../../projects/ixocreate/ngx-admin/src/lib/ixo-admin.module';
 
 @NgModule({
   imports: [
-    KiwiAdminModule.forRoot({
+    IxoAdminModule.forRoot({
       environment,
     }),
   ],

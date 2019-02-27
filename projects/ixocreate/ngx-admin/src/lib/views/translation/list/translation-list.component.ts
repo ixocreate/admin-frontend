@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ViewAbstractComponent } from '../../../components/view.abstract.component';
-import { TableColumnData } from '../../../components/kiwi-datatable/table-column.interface';
+import { TableColumnData } from '../../../components/ixo-datatable/table-column.interface';
 import { ActivatedRoute } from '@angular/router';
-import { TableResponse } from '../../../components/kiwi-datatable/table-response.interface';
+import { TableResponse } from '../../../components/ixo-datatable/table-response.interface';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({

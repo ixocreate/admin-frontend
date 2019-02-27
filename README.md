@@ -1,6 +1,6 @@
 # IXOCREATE Admin Frontend
 
-Angular 6 application that interacts with [Kiwi's Admin API](https://github.com/ixocreate/admin).
+Angular 6 application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin).
 It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin) by default to ensure API client compatibility.
 
 ## Features
@@ -32,7 +32,7 @@ Extend the application with custom features as explained in detail below.
 
 ## Development
 
-Kiwi's admin application can be customized by extending the feature set with custom components and building the application.
+IXOCREATE's admin application can be customized by extending the feature set with custom components and building the application.
 
 The application layout is based on a default `angular-cli` project setup to not get in the way of common Angular development workflows.
 

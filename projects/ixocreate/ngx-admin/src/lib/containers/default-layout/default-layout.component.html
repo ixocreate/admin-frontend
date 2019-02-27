@@ -6,7 +6,7 @@
   [asideMenuToggler]="false"
   [mobileAsideMenuToggler]="false">
   <ul class="nav navbar-nav ml-auto pr-2">
-    <li class="nav-item dropdown" kiwiDropdown *ngIf="accountData.user$ | async as user">
+    <li class="nav-item dropdown" ixoDropdown *ngIf="accountData.user$ | async as user">
       <button class="nav-link dropdown-btn py-2">
         <span class="header-email">{{ user.email }}</span>
       </button>
@@ -32,7 +32,7 @@
       <div class="row align-items-center">
         <div class="col-md-auto">
           <ol class="breadcrumb">
-            <kiwi-breadcrumb></kiwi-breadcrumb>
+            <ixo-breadcrumb></ixo-breadcrumb>
           </ol>
         </div>
         <div class="col-md">
@@ -45,9 +45,9 @@
     <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
   </main>
 
-  <kiwi-aside [visible]="!!aside">
+  <ixo-aside [visible]="!!aside">
     <ng-container *ngTemplateOutlet="aside"></ng-container>
-  </kiwi-aside>
+  </ixo-aside>
 </div>
 
 <app-footer>

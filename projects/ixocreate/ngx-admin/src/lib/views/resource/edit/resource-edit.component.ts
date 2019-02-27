@@ -7,8 +7,8 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
 import { BsModalService } from 'ngx-bootstrap';
-import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
-import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
+import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
 import { PageTitleService } from '../../../services/page-title.service';
 import { ResourceConfig } from '../../../interfaces/config.interface';
 import { ConfigService } from '../../../services/config.service';
@@ -86,7 +86,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
         }).catch((error) => this.notification.apiError(error));
       },
     };
-    this.modal.show(KiwiConfirmModalComponent, {initialState});
+    this.modal.show(IxoConfirmModalComponent, {initialState});
   }
 
 }

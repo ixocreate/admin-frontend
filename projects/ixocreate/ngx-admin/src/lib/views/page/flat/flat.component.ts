@@ -4,9 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AppDataService } from '../../../services/data/app-data.service';
 import { ConfigService } from '../../../services/config.service';
 import { LocalStorageService } from '../../../services/local-storage.service';
-import { TableResponse } from '../../../components/kiwi-datatable/table-response.interface';
-import { KiwiDateTimePipe } from '../../../pipes/kiwi-date-time.pipe';
-import { PageAddComponent } from '../add/page-add.component';
+import { TableResponse } from '../../../components/ixo-datatable/table-response.interface';
+import { IxoDateTimePipe } from '../../../pipes/ixo-date-time.pipe';
 
 @Component({
   templateUrl: './flat.component.html',
@@ -30,7 +29,7 @@ export class FlatComponent extends ViewAbstractComponent implements OnInit {
     private config: ConfigService,
     private localStorage: LocalStorageService,
     protected appData: AppDataService,
-    private dateTimePipe: KiwiDateTimePipe,
+    private dateTimePipe: IxoDateTimePipe,
   ) {
     super();
   }

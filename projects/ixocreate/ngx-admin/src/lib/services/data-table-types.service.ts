@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { KiwiDatePipe } from '../pipes/kiwi-date.pipe';
-import { KiwiDateTimePipe } from '../pipes/kiwi-date-time.pipe';
+import { IxoDatePipe } from '../pipes/ixo-date.pipe';
+import { IxoDateTimePipe } from '../pipes/ixo-date-time.pipe';
 import { MediaHelper } from '../helpers/media.helper';
 import { Media } from '../interfaces/media.interface';
 
@@ -20,19 +20,19 @@ export interface DataTableTypesOptions {
 export class DataTableTypesService {
   private types: { [type: string]: (options: any) => DataTableTypesOptions } = {};
 
-  constructor(kiwiDate: KiwiDatePipe, kiwiDateTime: KiwiDateTimePipe) {
+  constructor(ixoDate: IxoDatePipe, ixoDateTime: IxoDateTimePipe) {
     this.registerType('string', () => ({
       render: (value: any) => value,
     }));
 
     this.registerType('date', () => ({
       align: 'right',
-      render: (value: any) => '<span class="date">' + kiwiDate.transform(value) + '</span>',
+      render: (value: any) => '<span class="date">' + ixoDate.transform(value) + '</span>',
     }));
 
     this.registerType('datetime', () => ({
       align: 'right',
-      render: (value: any) => '<span class="date">' + kiwiDateTime.transform(value) + '</span>',
+      render: (value: any) => '<span class="date">' + ixoDateTime.transform(value) + '</span>',
     }));
 
     this.registerType('bool', (options) => ({

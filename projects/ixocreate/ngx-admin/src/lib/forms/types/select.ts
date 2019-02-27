@@ -42,8 +42,8 @@ export interface SelectOption {
         </div>
       </div>
       <ng-template #modalTemplate>
-        <kiwi-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="multiple ? value : []"
-                        (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></kiwi-datatable>
+        <ixo-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="multiple ? value : []"
+                        (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></ixo-datatable>
         <div class="bg-white text-center p-2" *ngIf="multiple">
           <button class="btn btn-primary" (click)="closeModal()">Close</button>
         </div>

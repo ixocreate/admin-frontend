@@ -39,7 +39,7 @@ export interface BlockSelect {
                 <div>{{ blockTitle(model[i], fieldGroup) }}</div>
                 <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
               </div>
-              <div class="btn-group" kiwiDropdown>
+              <div class="btn-group" ixoDropdown>
                 <button class="btn-more dropdown-btn" type="button">
                   <i class="fa fa-fw fa-ellipsis-h"></i>
                 </button>

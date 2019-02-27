@@ -136,11 +136,11 @@
         }
       }
     },
-    "@ixocreate/ngx-admin": {
+    "ixocreate-ngx-admin": {
       "root": "projects/ixocreate/ngx-admin",
       "sourceRoot": "projects/ixocreate/ngx-admin/src",
       "projectType": "library",
-      "prefix": "kiwi",
+      "prefix": "ixo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

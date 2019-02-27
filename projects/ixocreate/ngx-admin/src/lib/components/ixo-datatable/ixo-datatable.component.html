@@ -1,0 +1,173 @@
+<div class="card card-accent-primary datatable-card">
+  <div class="card-header" *ngIf="!advancedSearch || tableTitle">
+    <div class="row align-items-center">
+      <div class="col-sm-7"><h6 class="m-0 mt-1 mt-sm-0 py-2 text-center text-sm-left" [innerHTML]="tableTitle"></h6>
+      </div>
+      <div class="col-sm mt-2 mt-sm-0" *ngIf="!advancedSearch">
+        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="search"
+               (keyup)="applyFilter()"/>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <ng-container *ngIf="data; else isLoading">
+      <ngx-datatable #table class="bootstrap"
+                     [class.advanced-search]="advancedSearch"
+                     [rows]="data.result"
+                     [loadingIndicator]="loading"
+                     [columnMode]="'force'"
+                     [reorderable]="false"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [count]="data.count"
+                     [offset]="pageNumber"
+                     [limit]="limit"
+                     [externalPaging]="true"
+                     [rowHeight]="'auto'"
+                     (page)="setPage($event)"
+                     (sort)="onSort($event)">
+
+        <ngx-datatable-row-detail [rowHeight]="'auto'">
+          <ng-template let-row="row" let-value="value" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div class="detail-content">
+              <table class="detail-table">
+                <tbody>
+                <ng-container *ngFor="let data of detailColumns">
+                  <tr *ngIf="data.render || data.prop">
+                    <th [innerHtml]="data.name"></th>
+                    <td>
+                      <span *ngIf="data.render" [innerHtml]="data.render(row[data.prop], row)"></span>
+                      <ng-container *ngIf="!data.render">{{ row[data.prop] }}</ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+
+        <ngx-datatable-column [canAutoResize]="false" [width]="40" cellClass="collapse-cell"
+                              *ngIf="detailColumns.length">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <button class="datatable-collapse" [class.datatable-icon-right]="!expanded"
+                    [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+                    (click)="toggleExpandRow(row)"></button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ng-container *ngFor="let data of tableColumns">
+          <ngx-datatable-column
+            [name]="data.name"
+            [prop]="data.prop"
+            [sortable]="data.sortable"
+            [headerClass]="data.headerClass"
+            [cellClass]="data.cellClass"
+            [cellTemplate]="data.cellTemplate"
+            [canAutoResize]="data.canAutoResize"
+            [width]="data.width || 150" *ngIf="data.cellTemplate">
+          </ngx-datatable-column>
+
+          <ngx-datatable-column
+            [name]="data.name"
+            [prop]="data.prop"
+            [sortable]="data.sortable"
+            [headerClass]="data.headerClass"
+            [cellClass]="data.cellClass"
+            [canAutoResize]="data.canAutoResize"
+            [width]="data.width || 150" *ngIf="!data.cellTemplate">
+
+            <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+              <div (click)="sort()" class="table-header-name" [class.sortable]="column.sortable"
+                   [innerHTML]="column.name"></div>
+              <ng-container *ngIf="advancedSearch && searchableData && searchableData[column.prop]">
+
+                <input *ngIf="!data.searchElement || data.searchElement.type === 'input'"
+                       class="form-control form-control-sm mb-0"
+                       [placeholder]="'Search ' + column?.name + '...'"
+                       [(ngModel)]="filters[column.prop]"
+                       (keyup)="doAdvancedSearch($event, column)"/>
+
+                <select *ngIf="data.searchElement && data.searchElement.type === 'select'"
+                        class="form-control form-control-sm mb-0"
+                        [(ngModel)]="filters[column.prop]"
+                        (change)="doAdvancedSearch($event, column)">
+                  <option value="">-</option>
+                  <option *ngFor="let option of data.searchElement.options" [value]="option.value">
+                    {{ option.name }}
+                  </option>
+                </select>
+
+              </ng-container>
+            </ng-template>
+
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <span *ngIf="data.render" [innerHtml]="data.render(value, row)"></span>
+              <ng-container *ngIf="!data.render">{{ value }}</ng-container>
+            </ng-template>
+          </ngx-datatable-column>
+        </ng-container>
+
+        <ngx-datatable-footer>
+          <ng-template
+            ngx-datatable-footer-template
+            let-rowCount="rowCount"
+            let-pageSize="pageSize"
+            let-selectedMessage="selectedMessage"
+            let-totalMessage="totalMessage"
+            let-selectedCount="selectedCount"
+            let-curPage="curPage"
+            let-offset="offset"
+            let-isVisible="isVisible">
+            <div class="page-count">
+              <span *ngIf="selectedMessage">
+                {{selectedCount.toLocaleString()}} {{selectedMessage}} /
+              </span>
+              {{rowCount.toLocaleString()}} Items
+              <span class="d-inline d-sm-none">
+                (Page {{ curPage }} of {{ ceil(rowCount / pageSize) }})
+              </span>
+
+            </div>
+            <datatable-pager
+              [pagerLeftArrowIcon]="'datatable-icon-left'"
+              [pagerRightArrowIcon]="'datatable-icon-right'"
+              [pagerPreviousIcon]="'datatable-icon-prev'"
+              [pagerNextIcon]="'datatable-icon-skip'"
+              [page]="curPage"
+              [size]="pageSize"
+              [count]="rowCount"
+              [hidden]="!((rowCount / pageSize) > 1)"
+              (change)="table.onFooterPage($event)">
+            </datatable-pager>
+          </ng-template>
+        </ngx-datatable-footer>
+
+      </ngx-datatable>
+    </ng-container>
+    <ng-template #isLoading>
+      <div class="text-center my-3 loading">
+        <ixo-loading class="big-center"></ixo-loading>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
+  <div class="text-right" *ngIf="type === 'edit'">
+    <a class="btn btn-sm btn-warning mr-1" [routerLink]="row.id + '/view'"
+       *ngIf="resourceInfo && resourceInfo.canView ">
+      <i class="fa fa-eye"></i> View
+    </a>
+    <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'">
+      <i class="fa fa-pencil"></i> Edit
+    </a>
+  </div>
+  <div class="text-right" *ngIf="type === 'select'">
+    <button class="btn btn-sm btn-danger" (click)="onDeSelect(row)" *ngIf="isSelected(row.id)">
+      <i class="fa fa-minus"></i> Deselect
+    </button>
+    <button class="btn btn-sm btn-primary" (click)="onSelect(row)" *ngIf="!isSelected(row.id)">
+      <i class="fa fa-plus"></i> Select
+    </button>
+  </div>
+</ng-template>

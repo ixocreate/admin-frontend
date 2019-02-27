@@ -1,4 +1,4 @@
-<kiwi-content>
+<ixo-content>
   <ng-template #headerButtons>
     <ng-container *ngIf="loaded && !viewOnly">
       <a [routerLink]="'../../'" class="btn btn-outline-dark">
@@ -14,7 +14,7 @@
   </ng-template>
 
   <ng-container *ngIf="aboveWidgetData$ | async as data">
-    <kiwi-dashboard [data]="data"></kiwi-dashboard>
+    <ixo-dashboard [data]="data"></ixo-dashboard>
   </ng-container>
 
   <ng-container *ngIf="data$ | async as data; else isLoading">
@@ -24,7 +24,7 @@
       </div>
       <div class="card-body">
         <ng-container *ngIf="form && fields; else isLoading">
-          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form kiwi-form-inline"
+          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="ixo-form ixo-form-inline"
                        (ngSubmit)="onSubmit()">
           </formly-form>
         </ng-container>
@@ -35,12 +35,12 @@
     </div>
   </ng-container>
   <ng-container *ngIf="belowWidgetData$ | async as data">
-    <kiwi-dashboard [data]="data"></kiwi-dashboard>
+    <ixo-dashboard [data]="data"></ixo-dashboard>
   </ng-container>
 
   <ng-template #isLoading>
     <div class="text-center my-3 loading">
-      <kiwi-loading class="big-center"></kiwi-loading>
+      <ixo-loading class="big-center"></ixo-loading>
     </div>
   </ng-template>
-</kiwi-content>
+</ixo-content>

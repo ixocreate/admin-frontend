@@ -5,12 +5,12 @@ import { FieldWrapper } from '@ngx-formly/core';
   selector: 'formly-wrapper-form-field',
   template: `
     <div class="form-group" [class.d-none]="to.type === 'hidden'" [class.center-label]="to['centerLabel']" [class.has-error]="showError">
-      <label *ngIf="to.label && to['hideLabel'] !== true" [attr.for]="id" class="kiwi-form-label">
+      <label *ngIf="to.label && to['hideLabel'] !== true" [attr.for]="id" class="ixo-form-label">
         {{ to.label }}
         <ng-container *ngIf="to.required && to['hideRequiredMarker'] !== true"><b class="text-danger">*</b></ng-container>
       </label>
 
-      <div class="kiwi-form-control-container">
+      <div class="ixo-form-control-container">
         <ng-template #fieldComponent></ng-template>
 
         <div *ngIf="showError" class="invalid-feedback" [style.display]="'block'">

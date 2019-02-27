@@ -15,11 +15,11 @@ import { Media } from '../../interfaces/media.interface';
             <ng-container *ngIf="isImage(value.mimeType); else noImage">
               <span class="transparent-img-bg">
                 <a [href]="value.original" target="_blank" class="input-media-preview"
-                   [style.backgroundImage]="'url(' + value.thumb + ')'" kiwiClickStopPropagation></a>
+                   [style.backgroundImage]="'url(' + value.thumb + ')'" ixoClickStopPropagation></a>
               </span>
             </ng-container>
             <ng-template #noImage class="media-container">
-              <a [href]="value.original" target="_blank" class="input-media-preview" kiwiClickStopPropagation>
+              <a [href]="value.original" target="_blank" class="input-media-preview" ixoClickStopPropagation>
                 <i [class]="'fa fa-fw ' + mimeTypeIcon(value.mimeType)"></i>
               </a>
             </ng-template>
@@ -30,7 +30,7 @@ import { Media } from '../../interfaces/media.interface';
              [class.is-invalid]="showError" [disabled]="to.disabled">
       <div class="input-group-append" *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
-                kiwiClickStopPropagation>
+                ixoClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>
@@ -49,7 +49,7 @@ import { Media } from '../../interfaces/media.interface';
           </div>
         </div>
       </div>
-      <kiwi-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></kiwi-media-list>
+      <ixo-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></ixo-media-list>
     </ng-template>
   `,
 })

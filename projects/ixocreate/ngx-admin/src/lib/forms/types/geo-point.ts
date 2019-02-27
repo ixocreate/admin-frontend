@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { GeoPoint, MapModalData } from '../../modals/kiwi-map-modal/map-modal-data.interface';
+import { GeoPoint, MapModalData } from '../../modals/ixo-map-modal/map-modal-data.interface';
 import { BsModalService } from 'ngx-bootstrap';
-import { KiwiMapModalComponent } from '../../modals/kiwi-map-modal/kiwi-map-modal.component';
+import { IxoMapModalComponent } from '../../modals/ixo-map-modal/ixo-map-modal.component';
 
 declare var ol: any;
 
@@ -20,7 +20,7 @@ declare var ol: any;
           <i class="fa fa-map"></i>
         </button>
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
-                kiwiClickStopPropagation>
+                ixoClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>
@@ -67,7 +67,7 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
     if (this.value) {
       initialState.geoPoint = this.value;
     }
-    this.modal.show(KiwiMapModalComponent, {initialState});
+    this.modal.show(IxoMapModalComponent, {initialState});
   }
 
 }

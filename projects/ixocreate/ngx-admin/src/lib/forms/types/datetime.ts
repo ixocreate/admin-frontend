@@ -4,8 +4,8 @@ import * as moment from 'moment';
 import { LocaleSettings } from 'primeng/components/calendar/calendar';
 import { Calendar } from 'primeng/primeng';
 import { DefaultHelper } from '../../helpers/default.helper';
-import { KiwiDateTimePipe } from '../../pipes/kiwi-date-time.pipe';
-import { KiwiDatePipe } from '../../pipes/kiwi-date.pipe';
+import { IxoDateTimePipe } from '../../pipes/ixo-date-time.pipe';
+import { IxoDatePipe } from '../../pipes/ixo-date.pipe';
 import { NotificationService } from '../../services/notification.service';
 import { ConfigService } from '../../services/config.service';
 
@@ -79,8 +79,8 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
               private zone: NgZone,
               private notification: NotificationService,
               private config: ConfigService,
-              private kiwiDate: KiwiDatePipe,
-              private kiwiDateTime: KiwiDateTimePipe) {
+              private ixoDate: IxoDatePipe,
+              private ixoDateTime: IxoDateTimePipe) {
     super();
   }
 
@@ -112,9 +112,9 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
 
   get formatDateString() {
     if (this.calendarConfig.showTime) {
-      return this.kiwiDateTime.formatString;
+      return this.ixoDateTime.formatString;
     }
-    return this.kiwiDate.formatString;
+    return this.ixoDate.formatString;
   }
 
   set dateValue(value: Date) {

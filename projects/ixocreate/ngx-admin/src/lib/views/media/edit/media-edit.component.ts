@@ -6,11 +6,11 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
-import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
-import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
+import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
 import { ConfigService } from '../../../services/config.service';
 import { BsModalService } from 'ngx-bootstrap';
-import { CropperPosition, KiwiImageCropperComponent } from '../../../components/kiwi-image-cropper/kiwi-image-cropper.component';
+import { CropperPosition, IxoImageCropperComponent } from '../../../components/ixo-image-cropper/ixo-image-cropper.component';
 
 interface Entity {
   name: string;
@@ -29,7 +29,7 @@ interface Entity {
 })
 export class MediaEditComponent extends ViewAbstractComponent implements OnInit {
 
-  @ViewChild(KiwiImageCropperComponent) cropper: KiwiImageCropperComponent;
+  @ViewChild(IxoImageCropperComponent) cropper: IxoImageCropperComponent;
 
   data$: Promise<any>;
 
@@ -167,7 +167,7 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
         }).catch((error) => this.notification.apiError(error));
       },
     };
-    this.modal.show(KiwiConfirmModalComponent, {initialState});
+    this.modal.show(IxoConfirmModalComponent, {initialState});
   }
 
 }

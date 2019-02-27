@@ -2,8 +2,8 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { QuillEditorComponent } from 'ngx-quill';
 import { CustomValidators } from '../../validators/CustomValidators';
-import { LinkSelectModalData } from '../../modals/kiwi-link-select-modal/link-select-modal-data.interface';
-import { KiwiLinkSelectModalComponent } from '../../modals/kiwi-link-select-modal/kiwi-link-select-modal.component';
+import { LinkSelectModalData } from '../../modals/ixo-link-select-modal/link-select-modal-data.interface';
+import { IxoLinkSelectModalComponent } from '../../modals/ixo-link-select-modal/ixo-link-select-modal.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { IxoLinkType } from '../../lib/quill/quill-extentions';
 
@@ -134,7 +134,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         }
       },
     };
-    this.modalService.show(KiwiLinkSelectModalComponent, {class: 'modal-lg', initialState});
+    this.modalService.show(IxoLinkSelectModalComponent, {class: 'modal-lg', initialState});
   }
 
   onContentChanged(data: any) {

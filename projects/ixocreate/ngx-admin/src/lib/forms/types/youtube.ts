@@ -9,7 +9,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
         <span class="input-group-text p-0" [class.is-invalid]="showError">
           <div class="input-youtube-preview" *ngIf="!value"><i class="fa fa-fw fa-video-camera"></i></div>
           <a [href]="youtubeUrl + value" target="_blank" class="input-youtube-preview" *ngIf="value"
-             [style.backgroundImage]="'url(https://img.youtube.com/vi/' + value + '/sddefault.jpg)'" kiwiClickStopPropagation></a>
+             [style.backgroundImage]="'url(https://img.youtube.com/vi/' + value + '/sddefault.jpg)'" ixoClickStopPropagation></a>
         </span>
       </div>
       <input type="text" class="form-control" [(ngModel)]="inputValue" (keyup)="checkYoutubeLink()" [placeholder]="to.placeholder"

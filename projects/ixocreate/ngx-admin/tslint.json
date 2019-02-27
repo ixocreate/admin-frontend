@@ -4,13 +4,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "kiwi",
+      "ixo",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      ["kiwi", "formly", "app", "sitemap"],
+      ["ixo", "formly", "app", "sitemap"],
       "kebab-case"
     ]
   }

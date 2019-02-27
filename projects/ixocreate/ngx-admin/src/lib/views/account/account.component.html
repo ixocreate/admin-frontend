@@ -1,4 +1,4 @@
-<kiwi-content>
+<ixo-content>
   <ng-container *ngIf="accountData.user$ | async as user">
     <div class="row">
       <div class="col-md">
@@ -54,7 +54,7 @@
         </div>
         <div class="card-body">
           <formly-form [form]="additionalForm" [fields]="additionalFields" [model]="user.accountAttributes"
-                       class="kiwi-form kiwi-form-inline"></formly-form>
+                       class="ixo-form ixo-form-inline"></formly-form>
         </div>
         <div class="card-footer d-lg-flex justify-content-between align-items-center">
           <div class="text-muted">
@@ -69,9 +69,9 @@
     </ng-container>
     <ng-template #isLoading>
       <div class="text-center my-3 loading">
-        <kiwi-loading class="big-center"></kiwi-loading>
+        <ixo-loading class="big-center"></ixo-loading>
       </div>
     </ng-template>
   </ng-container>
 
-</kiwi-content>
+</ixo-content>

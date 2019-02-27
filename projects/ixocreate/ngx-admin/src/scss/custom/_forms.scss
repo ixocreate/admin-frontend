@@ -1,6 +1,6 @@
 $form-element-spacer: .5rem;
 
-.kiwi-form {
+.ixo-form {
   label {
     margin-bottom: 0;
     font-size: .8rem;
@@ -25,7 +25,7 @@ $form-element-spacer: .5rem;
     margin-bottom: 0;
   }
 
-  &.kiwi-form-inline {
+  &.ixo-form-inline {
     @include media-breakpoint-up(sm) {
       .form-group {
         display: flex;
@@ -35,21 +35,21 @@ $form-element-spacer: .5rem;
         }
       }
 
-      .kiwi-form-label {
+      .ixo-form-label {
         width: 140px + $grid-gutter-width;
         padding: 8px $grid-gutter-width 8px 0;
       }
 
-      .kiwi-form-control-container {
+      .ixo-form-control-container {
         flex: 1;
       }
     }
   }
 
-  .kiwi-toggle-right {
+  .ixo-toggle-right {
     display: flex;
 
-    .kiwi-form-label {
+    .ixo-form-label {
       padding: 8px $grid-gutter-width 8px 0;
       flex: 1;
     }
