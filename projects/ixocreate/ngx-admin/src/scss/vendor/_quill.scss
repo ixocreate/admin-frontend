@@ -153,8 +153,8 @@
 }
 
 .is-invalid {
-  .ql-toolbar.ql-snow,
-  .ql-container.ql-snow {
+  & > .ql-toolbar.ql-snow,
+  & > .ql-container.ql-snow {
     border-color: $danger;
   }
 }
