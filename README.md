@@ -1,6 +1,6 @@
 # IXOCREATE Admin Frontend
 
-Angular 6 application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin).
+Angular application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin).
 It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin) by default to ensure API client compatibility.
 
 ## Features
