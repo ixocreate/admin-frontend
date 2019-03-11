@@ -181,6 +181,7 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
         }
       });
     } catch (e) {
+      console.error(e);
       router.navigateByUrl('/error');
     }
     return Promise.resolve();
