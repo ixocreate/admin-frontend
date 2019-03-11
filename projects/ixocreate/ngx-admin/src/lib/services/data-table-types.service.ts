@@ -58,6 +58,20 @@ export class DataTableTypesService {
       },
     }));
 
+    this.registerType('select', (options) => {
+      const valueOptions = [];
+      for (const key of Object.keys(options.values)) {
+        valueOptions.push({value: key, name: options.values[key]});
+      }
+      return {
+        searchElement: {
+          type: 'select',
+          options: valueOptions,
+        },
+        render: (value: any) => `${options.values[value]}`,
+      };
+    });
+
     this.registerType('media', () => ({
       render: (media: Media) => {
         if (!media) {
