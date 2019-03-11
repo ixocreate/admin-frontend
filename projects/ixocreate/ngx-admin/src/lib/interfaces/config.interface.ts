@@ -32,6 +32,8 @@ export interface Project {
   icon?: string;
   logo?: ProjectLogo;
   loginMessage?: string;
+  logoutUrl?: string;
+  loginUrl?: string;
 }
 
 export interface ProjectLogo {

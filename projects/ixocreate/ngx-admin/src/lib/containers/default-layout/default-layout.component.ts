@@ -60,9 +60,7 @@ export class DefaultLayoutComponent implements AfterViewInit {
   }
 
   logout() {
-    this.accountData.logout().then(() => {
-      window.location.reload();
-    });
+    window.location.href = this.config.config.project.logoutUrl;
   }
 
 }
