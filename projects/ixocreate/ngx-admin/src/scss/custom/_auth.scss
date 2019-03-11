@@ -35,4 +35,9 @@
     max-height: 180px;
     margin: 0 auto $spacer;
   }
+
+  .form-control,
+  .btn {
+    transition: none;
+  }
 }
