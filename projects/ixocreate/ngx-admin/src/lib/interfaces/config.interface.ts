@@ -30,8 +30,14 @@ export interface Project {
   version?: string;
   background?: string;
   icon?: string;
-  logo?: string;
+  logo?: ProjectLogo;
   loginMessage?: string;
+}
+
+export interface ProjectLogo {
+  image: string;
+  width: number;
+  height: number;
 }
 
 export interface Navigation {
