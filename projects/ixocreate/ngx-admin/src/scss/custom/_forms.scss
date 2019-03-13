@@ -36,8 +36,8 @@ $form-element-spacer: .5rem;
       }
 
       .ixo-form-label {
-        width: 140px + $grid-gutter-width;
-        padding: 8px $grid-gutter-width 8px 0;
+        width: $ixo-form-label-width + $grid-gutter-width;
+        padding: 8px $grid-gutter-width / 2 8px 0;
       }
 
       .ixo-form-control-container {
