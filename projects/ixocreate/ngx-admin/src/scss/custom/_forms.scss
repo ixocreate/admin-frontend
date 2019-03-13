@@ -66,6 +66,11 @@ a.input-group-text {
   }
 }
 
+formly-wrapper-section {
+  margin-bottom: $form-element-spacer;
+  display: block;
+}
+
 .tabset-content {
   background: #fff;
   border: 1px solid $border-color;
