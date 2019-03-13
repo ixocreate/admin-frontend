@@ -71,6 +71,12 @@ export class SchemaTransformService {
           ...templateOptions,
         },
       };
+      if(value.metadata) {
+        data.templateOptions.metadata = {...value.metadata};
+        // if(data.templateOptions.metadata.default) {
+        //   data.default = data.templateOptions.metadata.default;
+        // }
+      }
       keysToTemplateOptions.forEach((key) => {
         data.templateOptions[key] = value[key];
       });
