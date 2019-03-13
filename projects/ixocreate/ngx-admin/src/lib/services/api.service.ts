@@ -4,6 +4,7 @@ import { ConfigService } from './config.service';
 import { BehaviorSubject, Observable, throwError as _throw } from 'rxjs';
 import { catchError, map, publishLast, refCount, timeout } from 'rxjs/operators';
 import { APIErrorElement, APIResponse } from '../interfaces/api-response.interface';
+import { environment } from '../../../../../../src/environments/environment';
 
 export enum ApiRequestMethod {
   GET = 'get',
@@ -22,10 +23,6 @@ export class ApiService {
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   constructor(protected http: HttpClient, protected config: ConfigService) {
-  }
-
-  get isAuthorized$(): Observable<boolean> {
-    return this._isAuthorized$.asObservable();
   }
 
   /**
@@ -72,14 +69,15 @@ export class ApiService {
       refCount(),
       catchError((error) => {
         if (error.status === 401) {
-          this._isAuthorized$.next(false);
+          if (environment.production) {
+            window.location.href = this.config.config.project.loginUrl;
+          } else {
+            alert('You are not logged in!');
+          }
         }
         return _throw(error.error ? this.errorMapping(error.error) : null);
       }),
       map((response: HttpResponse<any>) => {
-        if (url !== this.config.config.routes.session && url !== this.config.config.routes.config) {
-          this._isAuthorized$.next(true);
-        }
         const apiResponse: APIResponse = response.body;
         if (typeof apiResponse.success === 'undefined') {
           return apiResponse;

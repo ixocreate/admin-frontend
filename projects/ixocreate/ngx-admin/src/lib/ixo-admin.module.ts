@@ -12,12 +12,11 @@ import { ServiceModule } from './services/service.module';
 import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { LoginComponent } from './views/auth/login/login.component';
 import { AlertModule, BsDatepickerModule, CarouselModule, ModalModule, PaginationModule, ProgressbarModule, TabsModule, TypeaheadModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, Router, RouteReuseStrategy, RouterModule } from '@angular/router';
+import { Router, RouteReuseStrategy, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { IXO_CONFIG, IxoConfig } from './services/config.service';
 import { AppDataService } from './services/data/app-data.service';
@@ -53,8 +52,6 @@ import { PipesModule } from './pipes/pipes.module';
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
-import { AuthGuard } from './guards/auth.guard';
-import { NoAuthGuard } from './guards/no-auth.guard';
 import { CalendarModule } from 'primeng/primeng';
 import { QuillModule } from 'ngx-quill';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -80,7 +77,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { IxoDashboardSlideshowComponent } from './dashboard/ixo-slideshow/ixo-slideshow.component';
 import { IxoDashboardCounterComponent } from './dashboard/ixo-counter/ixo-counter.component';
 import { IxoDashboardStatisticsOverviewComponent } from './dashboard/ixo-statistics-overview/ixo-statistics-overview.component';
-import { RedirectComponent } from './views/auth/redirect/redirect.component';
+import { RedirectComponent } from './views/redirect/redirect.component';
 import { IxoDashboardComponent } from './components/ixo-dashboard/ixo-dashboard.component';
 import { IxoDashboardGalleryComponent } from './dashboard/ixo-gallery/ixo-gallery.component';
 import { IxoDashboardGraphComponent } from './dashboard/ixo-graph/ixo-graph.component';
@@ -127,7 +124,6 @@ const APP_COMPONENTS = [
   // Views
   ErrorComponent,
   AdminComponent,
-  LoginComponent,
   AccountComponent,
   RedirectComponent,
 
@@ -173,15 +169,13 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
   return async (): Promise<any> => {
     const router = injector.get(Router);
     try {
-      await appData.loadSession();
       await appData.loadConfig();
       setTimeout(() => {
         if (router.url === '/error') {
-          router.navigateByUrl('/login');
+          router.navigateByUrl('/');
         }
       });
     } catch (e) {
-      console.error(e);
       router.navigateByUrl('/error');
     }
     return Promise.resolve();
@@ -272,8 +266,6 @@ export class IxoAdminModule {
       ngModule: IxoAdminModule,
       providers: [
         PermissionGuard,
-        NoAuthGuard,
-        AuthGuard,
         {
           provide: IXO_CONFIG,
           useValue: config,

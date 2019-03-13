@@ -12,17 +12,9 @@ import { ConfigService } from '../config.service';
 export class AccountDataService extends DataServiceAbstract {
 
   user$: Observable<User>;
-  isAuthorized$: Observable<boolean>;
 
   constructor(protected api: ApiService, protected config: ConfigService, protected store: Store<AppState>) {
     super(store);
-
-    this.isAuthorized$ = this.api.isAuthorized$;
-    this.isAuthorized$.subscribe((isAuthorized) => {
-      if (!isAuthorized) {
-        this.store.dispatch(DefaultStore.Actions.Clear('USER'));
-      }
-    });
 
     this.store.addReducer('user', DefaultStore.Handle('USER'));
 
@@ -52,14 +44,6 @@ export class AccountDataService extends DataServiceAbstract {
 
   updatePassword(passwordOld: string, password: string, passwordRepeat: string) {
     return this.api.patch(this.config.config.routes.accountPassword, {passwordOld, password, passwordRepeat});
-  }
-
-  login(email: string, password: string) {
-    return this.api.post(this.config.config.routes.authLogin, {email, password});
-  }
-
-  logout() {
-    return this.api.post(this.config.config.routes.authLogout);
   }
 
 }

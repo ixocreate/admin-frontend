@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './views/auth/login/login.component';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
 import { AccountComponent } from './views/account/account.component';
 import { PageComponent } from './views/page/page.component';
@@ -15,8 +14,6 @@ import { ResourceEditComponent } from './views/resource/edit/resource-edit.compo
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
-import { AuthGuard } from './guards/auth.guard';
-import { NoAuthGuard } from './guards/no-auth.guard';
 import { MediaEditComponent } from './views/media/edit/media-edit.component';
 import { UserComponent } from './views/user/user.component';
 import { UserCreateComponent } from './views/user/create/user-create.component';
@@ -28,7 +25,7 @@ import { FlatAddComponent } from './views/page/flat/flat-add.component';
 import { SubCreateComponent } from './views/page/sub/sub-create.component';
 import { SubAddComponent } from './views/page/sub/sub-add.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { RedirectComponent } from './views/auth/redirect/redirect.component';
+import { RedirectComponent } from './views/redirect/redirect.component';
 import { RegistryComponent } from './views/registry/registry.component';
 import { RegistryEditComponent } from './views/registry/edit/registry-edit.component';
 import { ErrorComponent } from './views/error/error.component';
@@ -40,15 +37,8 @@ export const routes: Routes = [
     data: {title: 'Error'},
   },
   {
-    path: 'login',
-    component: LoginComponent,
-    data: {title: 'Login'},
-    canActivate: [NoAuthGuard],
-  },
-  {
     path: '',
     component: DefaultLayoutComponent,
-    canActivate: [AuthGuard],
     children: [
       {path: '', component: RedirectComponent},
       {
