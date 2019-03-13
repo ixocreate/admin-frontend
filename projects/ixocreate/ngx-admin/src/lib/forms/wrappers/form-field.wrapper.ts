@@ -11,7 +11,20 @@ import { FieldWrapper } from '@ngx-formly/core';
       </label>
 
       <div class="ixo-form-control-container">
-        <ng-template #fieldComponent></ng-template>
+        <!--{{ to | json }}-->
+        <div class="input-group">
+          <div class="input-group-prepend" *ngIf="prependIcon || prependText">
+            <span class="input-group-text">
+              <i *ngIf="prependIcon" class="fa fa-fw" [ngClass]="prependIconClass"></i>
+              <div *ngIf="prependText" style="min-width: 1.28571429em">
+                <small><b>{{ prependText }}</b></small>
+              </div>
+            </span>
+          </div>
+          <div style="flex-grow: 1">
+            <ng-template #fieldComponent></ng-template>
+          </div>
+        </div>
 
         <div *ngIf="showError" class="invalid-feedback" [style.display]="'block'">
           <formly-validation-message [field]="field"></formly-validation-message>
@@ -24,4 +37,22 @@ import { FieldWrapper } from '@ngx-formly/core';
 })
 export class FormlyWrapperFormFieldComponent extends FieldWrapper {
   @ViewChild('fieldComponent', {read: ViewContainerRef}) fieldComponent: ViewContainerRef;
+
+  get prependIconClass() {
+    const classes = {};
+    classes[this.prependIcon] = true;
+    return classes;
+  }
+
+  get prependIcon() {
+    return this.metadata('prependIcon');
+  }
+
+  get prependText() {
+    return this.metadata('prependText');
+  }
+
+  metadata(key) {
+    return this.to['metadata'] && this.to['metadata'][key];
+  }
 }
