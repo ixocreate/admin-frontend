@@ -32,6 +32,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   hasChildren = true;
 
+  currentPageVersion: string = null;
+
   pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
 
   constructor(protected route: ActivatedRoute,
@@ -62,12 +64,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   private loadDetailData() {
     this.data$ = this.appData.getPageDetail(this.id).then((data) => {
-      data.schema = this.schemaTransform.transformForm(data.schema);
-      this.versionFields = data.schema ? data.schema : [];
-      this.loadNavigationData(data.navigation);
-
-      this.hasChildren = data.hasChildren;
-
       this.pageData = {
         id: data.page.page.id,
         name: data.page.page.name,
@@ -77,9 +73,16 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         online: data.page.page.status === 'online',
       };
 
-      this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
-        return versionData;
-      });
+      if (this.currentPageVersion !== data.page.version.head) {
+        this.currentPageVersion = data.page.version.head;
+        data.schema = this.schemaTransform.transformForm(data.schema);
+        this.versionFields = data.schema ? data.schema : [];
+        this.loadNavigationData(data.navigation);
+        this.hasChildren = data.hasChildren;
+        this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
+          return versionData;
+        });
+      }
       return data;
     });
   }
