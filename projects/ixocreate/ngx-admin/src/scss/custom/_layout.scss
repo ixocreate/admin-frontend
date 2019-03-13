@@ -34,6 +34,10 @@
 
 .main .container-fluid {
   padding: 0 25px;
+
+  @include media-breakpoint-down(sm) {
+    padding: 0 15px;
+  }
 }
 
 .card-header {
