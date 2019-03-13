@@ -22,8 +22,8 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
       type: 'input',
       templateOptions: {
         type: 'password',
-        label: 'Enter your current password',
-        placeholder: 'Enter your current password',
+        label: 'Current password',
+        placeholder: 'Current password',
         required: true,
       },
     },
@@ -74,8 +74,12 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
     },
   ];
 
-  additionalForm: FormGroup = new FormGroup({});
-  additionalFields: FormlyFieldConfig[];
+  localeForm: FormGroup = new FormGroup({});
+  localeFormOptions: FormlyFormOptions = {};
+  localeFormFields: FormlyFieldConfig[];
+
+  attributesForm: FormGroup = new FormGroup({});
+  attributesFormFields: FormlyFieldConfig[];
 
   constructor(protected notification: NotificationService,
               protected appData: AppDataService,
@@ -86,14 +90,15 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
 
   ngOnInit() {
     this.accountData.getAccountConfig().then((data: any) => {
-      this.additionalFields = data.accountAttributesSchema ? this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
+      this.attributesFormFields = data.accountAttributesSchema ? this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
+      this.localeFormFields = data.localeAttributesSchema ? this.schemaTransform.transformForm(data.localeAttributesSchema) : [];
     });
   }
 
   onSubmitAttributes() {
-    const data = this.additionalForm.getRawValue();
-    if (this.additionalForm.valid === false) {
-      this.notification.formErrors(this.additionalForm);
+    const data = this.attributesForm.getRawValue();
+    if (this.attributesForm.valid === false) {
+      this.notification.formErrors(this.attributesForm);
     } else {
       this.accountData.updateAccountAttributes(data).then(() => {
         this.notification.success('successfully updated', 'Success');
@@ -106,6 +111,13 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
     this.accountData.updateEmail(data.email, data.emailRepeat).then(() => {
       this.emailFormOptions.resetModel();
       this.notification.success('The email was successfully updated', 'Success');
+    }).catch((error) => this.notification.apiError(error));
+  }
+
+  onSubmitLocale() {
+    const data = this.localeForm.getRawValue();
+    this.accountData.updateLocale(data).then(() => {
+      this.notification.success('Locale, Language & Timezone successfully updated', 'Success');
     }).catch((error) => this.notification.apiError(error));
   }
 

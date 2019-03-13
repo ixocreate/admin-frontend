@@ -46,4 +46,7 @@ export class AccountDataService extends DataServiceAbstract {
     return this.api.patch(this.config.config.routes.accountPassword, {passwordOld, password, passwordRepeat});
   }
 
+  updateLocale(data: any) {
+    return this.api.patch(this.config.config.routes.accountLocale, data);
+  }
 }

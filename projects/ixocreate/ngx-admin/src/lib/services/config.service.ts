@@ -15,9 +15,11 @@ export interface EnvironmentConfig {
 }
 
 export interface UserLocaleConfig {
+  language: string;
   dateFormat: string;
   dateTimeFormat: string;
-  numberFormat: 'en' | 'de';
+  numberFormat: string;
+  timezone: string;
 }
 
 @Injectable()
@@ -69,10 +71,24 @@ export class ConfigService {
     return {
       // dateFormat: 'DD.MM.YYYY',
       // dateTimeFormat: 'DD.MM.YYYY HH:mm',
+      language: 'en',
       dateFormat: 'YYYY-MM-DD',
       dateTimeFormat: 'YYYY-MM-DD HH:mm',
       numberFormat: 'en',
+      timezone: 'UTC',
     };
+  }
+
+  get dateFormat(): string {
+    return this.userLocaleConfig.dateTimeFormat || 'YYYY-MM-DD';
+  }
+
+  get dateTimeFormat(): string {
+    return this.userLocaleConfig.dateTimeFormat || 'YYYY-MM-DD HH:mm';
+  }
+
+  get language(): string {
+    return 'en';
   }
 
   get namespace(): string {

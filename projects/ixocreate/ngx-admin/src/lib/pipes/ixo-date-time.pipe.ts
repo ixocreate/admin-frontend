@@ -11,11 +11,7 @@ export class IxoDateTimePipe implements PipeTransform {
   }
 
   get formatString(): string {
-    let format = 'YYYY-MM-DD HH:mm';
-    if (this.config.userLocaleConfig && this.config.userLocaleConfig.dateTimeFormat) {
-      format = this.config.userLocaleConfig.dateTimeFormat;
-    }
-    return format;
+    return this.config.dateTimeFormat;
   }
 
   transform(value: any, args?: any): any {
