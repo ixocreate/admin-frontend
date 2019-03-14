@@ -98,10 +98,7 @@ export class ConfigService {
   }
 
   get timezone(): string {
-    if(this._user && this._user.timezone) {
-      return this._user.timezone;
-    }
-    return 'UTC';
+    return this._user.timezone || 'UTC';
   }
 
   get namespace(): string {
