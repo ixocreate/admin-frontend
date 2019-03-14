@@ -9,4 +9,8 @@ export interface User {
   status: string;
   userAttributes: any[];
   accountAttributes: any[];
+  locale?: string;
+  numberLocale?: string;
+  dateLocale?: string;
+  timezone?: string;
 }

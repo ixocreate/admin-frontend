@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 import * as moment from 'moment';
+import 'moment-timezone';
 
 @Pipe({
   name: 'ixoDate',
@@ -18,7 +19,7 @@ export class IxoDatePipe implements PipeTransform {
     if (!value) {
       return '';
     }
-    return moment(value).format(this.formatString);
+    return moment(value).tz(this.config.timezone).locale(this.config.dateLocale).format(this.config.dateFormat);
   }
 
 }

@@ -1,3 +1,4 @@
+import localeDeAt from "@angular/common/locales/de-AT";
 import { APP_INITIALIZER, Injector, ModuleWithProviders, NgModule } from '@angular/core';
 import { environment } from '../../../../../src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -11,8 +12,18 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ServiceModule } from './services/service.module';
 import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { AlertModule, BsDatepickerModule, CarouselModule, ModalModule, PaginationModule, ProgressbarModule, TabsModule, TypeaheadModule } from 'ngx-bootstrap';
+import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
+import {
+  AlertModule,
+  BsDatepickerModule,
+  CarouselModule,
+  ModalModule,
+  PaginationModule,
+  ProgressbarModule,
+  TabsModule,
+  TypeaheadModule,
+  zhCnLocale
+} from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
@@ -87,6 +98,13 @@ import { RegistryEditComponent } from './views/registry/edit/registry-edit.compo
 import { ErrorComponent } from './views/error/error.component';
 import { IxoReuseStrategy } from './lib/ixo-reuse-strategy';
 import { IxoLinkSelectModalComponent } from './modals/ixo-link-select-modal/ixo-link-select-modal.component';
+
+/**
+ * TODO: move to a dynamic approach to support more locales
+ * https://blog.angularindepth.com/dynamic-import-of-locales-in-angular-b994d3c07197
+ * https://medium.com/dailyjs/dynamic-locales-in-angular-dd9a527ebe1f
+ */
+registerLocaleData(localeDeAt);
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,

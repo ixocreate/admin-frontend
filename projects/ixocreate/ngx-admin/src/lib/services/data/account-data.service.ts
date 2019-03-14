@@ -21,6 +21,7 @@ export class AccountDataService extends DataServiceAbstract {
     this.user$ = this.loadFromStore('user', this.loadUser);
     this.user$.subscribe((user) => {
       this.config.setUserPermissions(user ? user.permissions : null);
+      this.config.setUser(user);
     });
   }
 
@@ -47,6 +48,11 @@ export class AccountDataService extends DataServiceAbstract {
   }
 
   updateLocale(data: any) {
-    return this.api.patch(this.config.config.routes.accountLocale, data);
+    return this.api.patch(this.config.config.routes.accountLocale, data).then(() => {
+      /**
+       * TODO: reload user instead -> should cascade through to config
+       */
+      window.location.reload();
+    });
   }
 }

@@ -26,12 +26,12 @@ export class DataTableTypesService {
     }));
 
     this.registerType('date', () => ({
-      align: 'right',
+      // align: 'right',
       render: (value: any) => '<span class="date">' + ixoDate.transform(value) + '</span>',
     }));
 
     this.registerType('datetime', () => ({
-      align: 'right',
+      // align: 'right',
       render: (value: any) => '<span class="date">' + ixoDateTime.transform(value) + '</span>',
     }));
 

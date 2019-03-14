@@ -14,6 +14,19 @@
                            [options]="localeFormOptions"
                            [model]="user"></formly-form>
             </div>
+            <div class="card-body">
+              <h6>Examples</h6>
+              <dl class="row">
+                <dt class="col-md-3">Date & Time</dt>
+                <dd class="col-md-9">{{ exampleDate | ixoDateTime }}</dd>
+                <dt class="col-md-3">Date</dt>
+                <dd class="col-md-9">{{ exampleDate | ixoDate }}</dd>
+                <dt class="col-md-3">Time</dt>
+                <dd class="col-md-9">{{ exampleDate | ixoTime }}</dd>
+                <dt class="col-md-3">Number</dt>
+                <dd class="col-md-9">{{ 1234.567890 | ixoNumber }}</dd>
+              </dl>
+            </div>
             <div class="card-footer d-lg-flex justify-content-between align-items-center">
               <div class="text-muted">
                 <b class="text-danger">*</b> Required Field

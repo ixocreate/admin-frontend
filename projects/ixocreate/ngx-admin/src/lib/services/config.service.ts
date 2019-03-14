@@ -1,6 +1,7 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Config, ResourceConfig } from '../interfaces/config.interface';
 import { DefaultHelper } from '../helpers/default.helper';
+import {User} from "../interfaces/user.interface";
 
 export const IXO_CONFIG = new InjectionToken<IxoConfig>('IXO_CONFIG');
 
@@ -14,18 +15,11 @@ export interface EnvironmentConfig {
   production: boolean;
 }
 
-export interface UserLocaleConfig {
-  language: string;
-  dateFormat: string;
-  dateTimeFormat: string;
-  numberFormat: string;
-  timezone: string;
-}
-
 @Injectable()
 export class ConfigService {
 
   private _config: Config;
+  private _user: User = null;
   private _userPermissions: string[] = null;
   private _navigation: any = [];
 
@@ -59,6 +53,10 @@ export class ConfigService {
     return null;
   }
 
+  setUser(user: User) {
+    this._user = user;
+  }
+
   setUserPermissions(permissions: string[]) {
     this._userPermissions = permissions;
   }
@@ -67,28 +65,36 @@ export class ConfigService {
     return this._userPermissions;
   }
 
-  get userLocaleConfig(): UserLocaleConfig {
-    return {
-      // dateFormat: 'DD.MM.YYYY',
-      // dateTimeFormat: 'DD.MM.YYYY HH:mm',
-      language: 'en',
-      dateFormat: 'YYYY-MM-DD',
-      dateTimeFormat: 'YYYY-MM-DD HH:mm',
-      numberFormat: 'en',
-      timezone: 'UTC',
-    };
-  }
-
   get dateFormat(): string {
-    return this.userLocaleConfig.dateTimeFormat || 'YYYY-MM-DD';
+    return 'L';
   }
 
   get dateTimeFormat(): string {
-    return this.userLocaleConfig.dateTimeFormat || 'YYYY-MM-DD HH:mm';
+    return 'LLL';
+  }
+
+  get timeFormat(): string {
+    return 'LT';
   }
 
   get language(): string {
-    return 'en';
+    return this.locale;
+  }
+
+  get locale(): string {
+    return this._user.locale || 'en-US';
+  }
+
+  get numberLocale(): string {
+    return this._user.numberLocale || this.locale;
+  }
+
+  get dateLocale(): string {
+    return this._user.dateLocale || this.locale;
+  }
+
+  get timezone(): string {
+    return this._user.timezone || 'UTC';
   }
 
   get namespace(): string {

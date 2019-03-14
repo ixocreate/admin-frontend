@@ -81,11 +81,14 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
   attributesForm: FormGroup = new FormGroup({});
   attributesFormFields: FormlyFieldConfig[];
 
+  exampleDate: Date;
+
   constructor(protected notification: NotificationService,
               protected appData: AppDataService,
               protected schemaTransform: SchemaTransformService,
               public accountData: AccountDataService) {
     super();
+    this.exampleDate = new Date();
   }
 
   ngOnInit() {
