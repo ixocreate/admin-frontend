@@ -2,6 +2,7 @@ import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Config, ResourceConfig } from '../interfaces/config.interface';
 import { DefaultHelper } from '../helpers/default.helper';
 import {User} from "../interfaces/user.interface";
+import * as moment from 'moment';
 
 export const IXO_CONFIG = new InjectionToken<IxoConfig>('IXO_CONFIG');
 
@@ -66,15 +67,18 @@ export class ConfigService {
   }
 
   get dateFormat(): string {
-    return 'L';
+    // from https://stackoverflow.com/a/49852591/580651
+    return moment().locale(this.locale).creationData().locale.longDateFormat('L');
   }
 
   get dateTimeFormat(): string {
-    return 'LLL';
+    // from https://stackoverflow.com/a/49852591/580651
+    return moment().locale(this.locale).creationData().locale.longDateFormat('LLL');
   }
 
   get timeFormat(): string {
-    return 'LT';
+    // from https://stackoverflow.com/a/49852591/580651
+    return moment().locale(this.locale).creationData().locale.longDateFormat('LT');
   }
 
   get language(): string {
@@ -94,7 +98,10 @@ export class ConfigService {
   }
 
   get timezone(): string {
-    return this._user.timezone || 'UTC';
+    if(this._user && this._user.timezone) {
+      return this._user.timezone;
+    }
+    return 'UTC';
   }
 
   get namespace(): string {

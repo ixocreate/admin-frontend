@@ -6,6 +6,7 @@ import { Calendar } from 'primeng/primeng';
 import { DefaultHelper } from '../../helpers/default.helper';
 import { IxoDateTimePipe } from '../../pipes/ixo-date-time.pipe';
 import { IxoDatePipe } from '../../pipes/ixo-date.pipe';
+import { IxoTimePipe } from "../../pipes/ixo-time.pipe";
 import { NotificationService } from '../../services/notification.service';
 import { ConfigService } from '../../services/config.service';
 
@@ -16,7 +17,7 @@ import { ConfigService } from '../../services/config.service';
       <div class="input-group">
         <input type="text"
                class="form-control"
-               [(ngModel)]="formatedDate"
+               [(ngModel)]="formattedDate"
                (change)="onChange($event)"
                [placeholder]="to.placeholder"
                [class.is-invalid]="showError"
@@ -55,7 +56,7 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
   _date: Date;
   locale: LocaleSettings;
   showOverlay = false;
-  formatedDate = '';
+  formattedDate = '';
 
   calendarConfig = {
     showTime: true,
@@ -80,28 +81,54 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
               private notification: NotificationService,
               private config: ConfigService,
               private ixoDate: IxoDatePipe,
-              private ixoDateTime: IxoDateTimePipe) {
+              private ixoDateTime: IxoDateTimePipe,
+              private ixoTime: IxoTimePipe) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+
+    /**
+     * TODO: read locale settings from angular i18n data
+     * https://www.primefaces.org/primeng/#/calendar
+     */
+    // this.en = {
+    //   firstDayOfWeek: 0,
+    //   dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    //   dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    //   dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
+    //   monthNames: [ "January","February","March","April","May","June","July","August","September","October","November","December" ],
+    //   monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
+    //   today: 'Today',
+    //   clear: 'Clear',
+    //   dateFormat: 'mm/dd/yy'
+    // };
     this.locale = {
-      ...this.calendar.locale,
       firstDayOfWeek: 1,
+      dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      today: 'Today',
+      clear: 'Clear',
+      dateFormat: this.config.dateFormat,
     };
-    if (this.value) {
-      this._date = moment(this.value).toDate();
-      this.formatedDate = moment(this.dateValue).format(this.formatDateString);
-    }
+
     this.calendarConfig = {
       ...this.calendarConfig,
       ...this.to.config,
     };
+
+    if (this.value) {
+      this._date = moment(this.value).toDate();
+      this.formattedDate = moment(this.dateValue).format(this.inputFormat);
+    }
   }
 
   onChange(event: any) {
-    const date = moment(event.target.value, this.formatDateString);
+    const date = moment(event.target.value, this.inputFormat);
     if (date.isValid()) {
       this.dateValue = date.toDate();
     } else {
@@ -110,18 +137,18 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
     }
   }
 
-  get formatDateString() {
+  get inputFormat() {
     if (this.calendarConfig.showTime) {
-      return this.ixoDateTime.formatString;
+      return this.config.dateFormat + ' ' + this.config.timeFormat;
     }
-    return this.ixoDate.formatString;
+    return this.config.dateFormat;
   }
 
   set dateValue(value: Date) {
     this.setValue(moment(value).utc(this.calendarConfig.useUtcTime).seconds(0).toISOString());
     this._date = value;
     const dateForFormat = moment(this.dateValue);
-    this.formatedDate = dateForFormat.isValid() ? dateForFormat.format(this.formatDateString) : '';
+    this.formattedDate = dateForFormat.isValid() ? dateForFormat.format(this.inputFormat) : '';
   }
 
   get dateValue() {

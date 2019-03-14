@@ -19,7 +19,7 @@ export class IxoDatePipe implements PipeTransform {
     if (!value) {
       return '';
     }
-    return moment(value).tz(this.config.timezone).locale(this.config.dateLocale).format(this.config.dateFormat);
+    return moment(value).locale(this.config.dateLocale).format(this.config.dateFormat);
   }
 
 }
