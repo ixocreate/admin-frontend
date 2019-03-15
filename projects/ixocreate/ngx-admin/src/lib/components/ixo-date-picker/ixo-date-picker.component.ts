@@ -127,8 +127,47 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
 
     setTimeout(() => {
       if (this.value) {
-        this._date = moment(this.value).toDate();
-        this.formattedDate = moment(this.dateValue).format(this.inputFormat);
+        // this._date = moment(this.value).toDate();
+        // this.formattedDate = moment(this.dateValue).format(this.inputFormat);
+        if(this.showTime) {
+          /**
+           * date from db comes in utc
+           */
+          const utcDate = moment(this.value).utc();
+          // console.warn('utcDate', utcDate.utc().format());
+
+          /**
+           * the date in the user's desired timezone
+           */
+          let userDate = utcDate.tz(this.config.timezone);
+          if(!this.showTime) {
+            /**
+             * interpret as utc for dates without time
+             */
+            userDate = moment(utcDate.format('YYYY-MM-DD'));
+          }
+          // console.log('userDate', userDate.format());
+          // console.log('userDate offset', userDate.utcOffset());
+
+          /**
+           * for the datepicker remove timezone information so user sees the expected value
+           * as the datepicker itself always displays browser timezone
+           */
+          this._date = moment(moment(userDate).format('YYYY-MM-DD HH:mm:00')).toDate();
+
+          /**
+           * display is much easier - just display date in the user's desired timezone
+           */
+          this.formattedDate = moment(this.value).tz(this.config.timezone).format(this.inputFormat);
+
+        } else {
+          /**
+           * take any date without time as is without taking timezone into account
+           */
+          this._date = moment(this.value).toDate();
+
+          this.formattedDate = moment(this.value).format(this.inputFormat);
+        }
       }
     });
   }
@@ -151,10 +190,47 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   set dateValue(value: Date) {
-    this.value = moment(value).utc(this.useUtcTime).seconds(0).toISOString();
+    // this.value = moment(value).utc(this.useUtcTime).seconds(0).toISOString();
+    // this._date = value;
+    // const dateForFormat = moment(this.dateValue);
+    // this.formattedDate = dateForFormat.isValid() ? dateForFormat.format(this.inputFormat) : '';
+    let utcDate = null;
+
+    /**
+     * the shifted date in the datepicker
+     */
     this._date = value;
-    const dateForFormat = moment(this.dateValue);
-    this.formattedDate = dateForFormat.isValid() ? dateForFormat.format(this.inputFormat) : '';
+    // console.warn(this._date);
+
+    // const browserOffset = moment().format('Z');
+    // console.log('browserOffset', browserOffset);
+
+    if(this.showTime) {
+      /**
+       * reverse the timezone truncation
+       * calendar always displays browser's timezone
+       * disregard that and assume that the time entered is the configured timezone
+       */
+      const userOffset = moment(value).tz(this.config.timezone).format('Z');
+      // console.log('userOffset', userOffset);
+
+      const userDate = moment(moment(value).format('YYYY-MM-DD HH:mm:00')+userOffset);
+      // console.log('userDate', moment(value).format('YYYY-MM-DD HH:mm:00')+userOffset);
+
+      /**
+       * the utcDate to be used as value internalle
+       */
+      utcDate = moment(userDate).utc().toISOString();
+    } else {
+      /**
+       * interpret as utc for dates without time
+       */
+      utcDate = moment.utc(moment(value).format('YYYY-MM-DD')).toISOString();
+    }
+    this.value = utcDate;
+    // console.log('utcDate', utcDate);
+
+    this.formattedDate = moment.utc(utcDate).tz(this.config.timezone).format(this.inputFormat);
   }
 
   get dateValue() {

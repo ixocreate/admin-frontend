@@ -219,7 +219,7 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
       utcDate = moment.utc(moment(value).format('YYYY-MM-DD')).toISOString();
     }
     this.setValue(utcDate);
-    console.log('utcDate', utcDate);
+    // console.log('utcDate', utcDate);
 
     this.formattedDate = moment.utc(utcDate).tz(this.config.timezone).format(this.inputFormat);
   }
