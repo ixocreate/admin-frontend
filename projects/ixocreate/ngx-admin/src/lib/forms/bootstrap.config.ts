@@ -131,7 +131,7 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
                 [{header: [1, 2, 3, 4, 5, 6, false]}],
                 [{align: []}],
                 ['clean'],
-                ['link'], // TODO: Enable IxoLink: ['ixolink']
+                ['ixolink'], // TODO: Enable IxoLink: ['ixolink']
               ],
             },
           },
