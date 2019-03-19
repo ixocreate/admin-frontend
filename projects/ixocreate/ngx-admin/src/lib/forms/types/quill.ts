@@ -116,6 +116,27 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
             return;
           }
         }
+        quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+          delta.ops = delta.ops.map((op) => {
+            const opsData: any = {
+              insert: op.insert.replace(/\n\s*\n/g, '\n'),
+            };
+            if (op.attributes) {
+              const filteredAttributes = {};
+              const allowedAttributes = ['header', 'linebreak'];
+              for (const attribute of allowedAttributes) {
+                if (op.attributes[attribute]) {
+                  filteredAttributes[attribute] = op.attributes[attribute];
+                }
+              }
+              if (Object.keys(filteredAttributes).length) {
+                opsData.attributes = filteredAttributes;
+              }
+            }
+            return opsData;
+          });
+          return delta;
+        });
       });
       this.element.nativeElement.addEventListener('open-modal', (event: CustomEvent) => {
         this.openLinkModal(event.detail.value);

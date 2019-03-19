@@ -8,7 +8,7 @@ import { NotificationService } from '../../services/notification.service';
 import { ConfigService } from '../../services/config.service';
 import { IxoDatePipe } from '../../pipes/ixo-date.pipe';
 import { IxoDateTimePipe } from '../../pipes/ixo-date-time.pipe';
-import { IxoTimePipe } from "../../pipes/ixo-time.pipe";
+import { IxoTimePipe } from '../../pipes/ixo-time.pipe';
 
 const noop = () => {
 };
@@ -115,11 +115,11 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
     // };
     this.locale = {
       firstDayOfWeek: 1,
-      dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-      monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      dayNamesMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       today: 'Today',
       clear: 'Clear',
       dateFormat: this.config.dateFormat,
@@ -129,7 +129,7 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
       if (this.value) {
         // this._date = moment(this.value).toDate();
         // this.formattedDate = moment(this.dateValue).format(this.inputFormat);
-        if(this.showTime) {
+        if (this.showTime) {
           /**
            * date from db comes in utc
            */
@@ -140,7 +140,7 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
            * the date in the user's desired timezone
            */
           let userDate = utcDate.tz(this.config.timezone);
-          if(!this.showTime) {
+          if (!this.showTime) {
             /**
              * interpret as utc for dates without time
              */
@@ -205,7 +205,7 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
     // const browserOffset = moment().format('Z');
     // console.log('browserOffset', browserOffset);
 
-    if(this.showTime) {
+    if (this.showTime) {
       /**
        * reverse the timezone truncation
        * calendar always displays browser's timezone
@@ -214,7 +214,7 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
       const userOffset = moment(value).tz(this.config.timezone).format('Z');
       // console.log('userOffset', userOffset);
 
-      const userDate = moment(moment(value).format('YYYY-MM-DD HH:mm:00')+userOffset);
+      const userDate = moment(moment(value).format('YYYY-MM-DD HH:mm:00') + userOffset);
       // console.log('userDate', moment(value).format('YYYY-MM-DD HH:mm:00')+userOffset);
 
       /**
