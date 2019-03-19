@@ -53,8 +53,8 @@ export class IxoMapModalComponent implements OnInit {
     let center = new google.maps.LatLng(48.210033, 16.363449);
 
     if (this.geoPoint) {
-      this.latitude = this.geoPoint.latitude;
-      this.longitude = this.geoPoint.longitude;
+      this.latitude = this.geoPoint.lat;
+      this.longitude = this.geoPoint.lng;
       center = new google.maps.LatLng(this.latitude, this.longitude);
     }
 
@@ -107,16 +107,16 @@ export class IxoMapModalComponent implements OnInit {
       const latitude: any = parseFloat(this.latitude as any);
       const longitude: any = parseFloat(this.longitude as any);
 
-      this.geoPoint = {latitude, longitude};
+      this.geoPoint = {lat: latitude, lng: longitude};
 
       this.marker = new google.maps.Marker({
-        position: {lat: this.geoPoint.latitude, lng: this.geoPoint.longitude},
+        position: {lat: this.geoPoint.lat, lng: this.geoPoint.lng},
         map: this.map,
         title: 'Position',
       });
 
       if (centerMap) {
-        this.map.panTo(new google.maps.LatLng(this.geoPoint.latitude, this.geoPoint.longitude));
+        this.map.panTo(new google.maps.LatLng(this.geoPoint.lat, this.geoPoint.lng));
       }
     } else {
       this.geoPoint = null;
