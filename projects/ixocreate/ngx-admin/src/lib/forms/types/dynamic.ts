@@ -143,8 +143,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
   }
 
   blockTitle(model, fieldGroup) {
-    // let titleConfig = 'Name: %id%';
-    let titleConfig = '';
+    let titleConfig = fieldGroup.templateOptions.nameExpression;
     for (const key of Object.keys(model)) {
       titleConfig = titleConfig.replace(`%${key}%`, model[key]);
     }

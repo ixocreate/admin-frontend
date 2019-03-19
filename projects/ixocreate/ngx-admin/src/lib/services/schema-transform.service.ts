@@ -115,6 +115,7 @@ export class SchemaTransformService {
         templateOptions: {
           label: element.label,
           description: element.description,
+          nameExpression: element.nameExpression,
           collapsed: false,
           allowCopy: false,
         },
@@ -144,6 +145,7 @@ export class SchemaTransformService {
         templateOptions: {
           label: element.label,
           description: element.description,
+          nameExpression: element.nameExpression,
           collapsed: false,
           allowCopy: true,
         },
