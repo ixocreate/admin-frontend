@@ -68,17 +68,17 @@ export class ConfigService {
 
   get dateFormat(): string {
     // from https://stackoverflow.com/a/49852591/580651
-    return moment().locale(this.locale).creationData().locale.longDateFormat('L');
+    return moment().locale(this.dateLocale).creationData().locale.longDateFormat('L');
   }
 
   get dateTimeFormat(): string {
     // from https://stackoverflow.com/a/49852591/580651
-    return moment().locale(this.locale).creationData().locale.longDateFormat('LLL');
+    return moment().locale(this.dateLocale).creationData().locale.longDateFormat('LLL');
   }
 
   get timeFormat(): string {
     // from https://stackoverflow.com/a/49852591/580651
-    return moment().locale(this.locale).creationData().locale.longDateFormat('LT');
+    return moment().locale(this.dateLocale).creationData().locale.longDateFormat('LT');
   }
 
   get language(): string {
