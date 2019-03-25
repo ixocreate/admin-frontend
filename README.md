@@ -40,19 +40,19 @@ The application layout is based on a default `angular-cli` project setup to not 
 
 ### Development server
 
-    $ npm run serve
+    $ yarn run serve
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 To specify the port the app should be served at (e.g. `4201` instead of the angular default `4200`) change the port in package.json or use:
 
-    $ npm run serve --port=4201
+    $ yarn run serve --port=4201
 
 ### Update ngx-admin
 
 To update the core library run
 
-    $ npm i @ixocreate/ngx-admin
+    $ yarn install @ixocreate/ngx-admin
 
 **Note:** make sure the updated library version is compatible with the current Admin API version that is used in your project.
 
@@ -64,7 +64,7 @@ Run `ng g component component-name` to generate a new component. You can also us
 
 ### Build
 
-    $ npm run build
+    $ yarn run build
 
 The build artifacts will be stored in the `build/` directory. The `--prod` flag for a production build is default.
 
@@ -72,14 +72,14 @@ The build artifacts will be stored in the `build/` directory. The `--prod` flag 
 
 Execute the unit tests via [Karma](https://karma-runner.github.io):
 
-    $ npm run test
+    $ yarn run test
 
 
 ### Running end-to-end tests
 
 Execute the end-to-end tests via [Protractor](http://www.protractortest.org/):
 
-    $ npm run e2e
+    $ yarn run e2e
 
 ## License
 
