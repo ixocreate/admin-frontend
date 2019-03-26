@@ -42,7 +42,6 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
 
   parseLocationString() {
     const geoPoint: GeoPoint = this.value;
-    console.log(this.value);
     if (geoPoint) {
       this.locationString = geoPoint.lat + ' / ' + geoPoint.lng;
     } else {

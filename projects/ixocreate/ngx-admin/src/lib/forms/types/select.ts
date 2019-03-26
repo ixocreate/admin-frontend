@@ -31,6 +31,7 @@ export interface SelectOption {
           [searchable]="!to.extendedSelect"
           [bindValue]="valueProp"
           [bindLabel]="labelProp"
+          [virtualScroll]="true"
           [clearable]="false"
           [multiple]="multiple"
           [formControl]="formControl">
