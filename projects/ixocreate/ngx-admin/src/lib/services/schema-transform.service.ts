@@ -98,7 +98,7 @@ export class SchemaTransformService {
         options,
         description: value.description,
         resource: value.resource,
-        clearable: value.clearable || false,
+        clearable: !value.required || false,
         labelProp: 'label',
         valueProp: 'value',
         ...templateOptions,
@@ -221,7 +221,7 @@ export class SchemaTransformService {
     return transformer.handleDefault('select', {
       options,
       resource: value.resource,
-      clearable: value.clearable || false,
+      clearable: !value.required || true,
       extendedSelect: value.extendedSelect || false,
     })(value);
   }
@@ -231,7 +231,7 @@ export class SchemaTransformService {
     data.templateOptions = Object.assign({
       ...data.templateOptions,
       multiple: true,
-      clearable: value.clearable || true,
+      clearable: !value.required || true,
     });
     return data;
   }
