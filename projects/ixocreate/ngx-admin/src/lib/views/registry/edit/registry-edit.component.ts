@@ -20,6 +20,8 @@ export class RegistryEditComponent extends ViewAbstractComponent implements OnIn
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
+  loading = false;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -44,9 +46,14 @@ export class RegistryEditComponent extends ViewAbstractComponent implements OnIn
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       this.appData.updateRegistry(this.registryId, this.form.getRawValue()).then(() => {
+        this.loading = false;
         this.notification.success('Entry successfully updated', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 }

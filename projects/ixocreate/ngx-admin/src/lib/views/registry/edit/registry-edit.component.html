@@ -3,9 +3,7 @@
     <a [routerLink]="'../../'" class="btn btn-outline-dark">
       <i class="fa fa-ban"></i> Cancel
     </a>
-    <button class="btn btn-primary" (click)="onSubmit()">
-      <i class="fa fa-save"></i> Update
-    </button>
+    <ixo-button [loading]="loading" icon="save" (click)="onSubmit()">Update</ixo-button>
   </ng-template>
 
   <ng-container *ngIf="data$ | async as data">

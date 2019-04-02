@@ -27,6 +27,8 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
   aboveWidgetData$: Promise<any>;
   belowWidgetData$: Promise<any>;
 
+  loading = true;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -92,10 +94,15 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       this.appData.createResource(this.resourceKey, this.form.getRawValue()).then((response) => {
+        this.loading = false;
         this.notification.success(this.resourceInfo.label + ' successfully created', 'Success');
         this.router.navigateByUrl('/resource/' + this.resourceKey + '/' + response.id + '/edit');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 }

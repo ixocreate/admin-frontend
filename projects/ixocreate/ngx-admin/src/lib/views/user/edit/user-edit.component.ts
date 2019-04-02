@@ -23,6 +23,8 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
+  loading = false;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -48,9 +50,14 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       this.appData.updateUser(this.userId, this.form.getRawValue()).then(() => {
+        this.loading = false;
         this.notification.success('User successfully updated', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error)
+      });
     }
   }
 

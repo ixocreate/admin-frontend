@@ -48,6 +48,8 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   activeEntity: Entity;
   entities: Entity[] = [];
 
+  loading = false;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -128,10 +130,12 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   }
 
   saveCrop(entity: Entity) {
+    this.loading = true;
     this.appData.mediaEditor(this.id, entity.name, entity.unsavedCrop).then(() => {
+      this.loading = false;
       entity.crop = entity.unsavedCrop;
       this.checkUnsavedStatus(entity);
-    });
+    }).catch(() => this.loading = false);
   }
 
   resetCrop(entity: Entity) {

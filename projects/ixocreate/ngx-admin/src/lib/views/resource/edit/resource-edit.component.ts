@@ -33,6 +33,7 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
   belowWidgetData$: Promise<any>;
 
   viewOnly = false;
+  loading = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -69,9 +70,14 @@ export class ResourceEditComponent extends ViewAbstractComponent implements OnIn
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       this.appData.updateResource(this.resourceKey, this.resourceId, this.form.getRawValue()).then(() => {
+        this.loading = false;
         this.notification.success(this.resourceInfo.label + ' successfully updated', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 

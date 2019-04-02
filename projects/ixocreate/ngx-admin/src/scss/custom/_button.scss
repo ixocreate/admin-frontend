@@ -4,6 +4,7 @@ ixo-button[type="button"], ixo-button[type="reset"], ixo-button[type="submit"] {
 
 ixo-button {
   display: inline-flex;
+  vertical-align: middle;
 
   &.ixo-button-block {
     display: flex;

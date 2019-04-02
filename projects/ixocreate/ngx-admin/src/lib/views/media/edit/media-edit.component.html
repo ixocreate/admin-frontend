@@ -95,10 +95,15 @@
                 <div class="entity-name">{{ entity.label }}</div>
                 <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
                 <div class="entity-buttons mt-1">
-                  <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2"
-                          (click)="saveCrop(entity)" ixoClickStopPropagation>
-                    <i class="fa fa-save"></i> Save Crop
-                  </button>
+                  <ixo-button size="sm"
+                              [outline]="true"
+                              color="white"
+                              [loading]="loading"
+                              icon="save"
+                              (click)="saveCrop(entity)"
+                              ixoClickStopPropagation class="flex-grow-1 mr-2">
+                    Save Crop
+                  </ixo-button>
                   <button type="button" class="btn btn-outline-white btn-sm" (click)="resetCrop(entity)"
                           ixoClickStopPropagation>
                     <i class="fa fa-times"></i>
