@@ -42,6 +42,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   pageLocales: Array<{ locale: string, page: any }> = [];
   replacePageLocales: Array<{ locale: string, page: any }> = [];
 
+  otherPagesWithPageType: Array<{ id: string, name: string }> = [];
+  selectedPageWithPageType: { id: string, name: string } = null;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected config: ConfigService,
@@ -71,6 +74,12 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   private loadDetailData() {
     this.data$ = this.appData.getPageDetail(this.id).then((data) => {
       this.setPageLocales(data);
+
+      this.appData.getSitemap(data.page.page.locale, data.pageType.name).then((response) => {
+        this.selectedPageWithPageType = null;
+        this.otherPagesWithPageType = response;
+      });
+
       this.replacePageLocales = this.pageLocales.filter((a) => a.page);
       this.pageData = {
         id: data.page.page.id,
@@ -123,7 +132,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     }
   }
 
-  onReplaceContentModal(data) {
+  onReplaceContentModal(fromPageId) {
     const initialState: ConfirmModalData = {
       title: 'Replace Content?',
       confirmBtnType: 'warning',
@@ -131,7 +140,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       confirmBtnTitle: 'Replace',
       text: 'Do you really want to replace the Content of this Page?',
       onConfirm: () => {
-        this.appData.postPageCopyToPageId(data.page.id, this.pageData.id).then(() => {
+        this.appData.postPageCopyToPageId(fromPageId, this.pageData.id).then(() => {
           this.loadDetailData();
           this.updateVersionIndex();
           this.notification.success('Page Data successfully copied', 'Success');

@@ -24,6 +24,7 @@ body .ng-select .ng-select-container {
 .input-group > .ng-select {
   flex: 1;
   position: relative;
+  min-width: 0;
 
   &:not(:last-child) {
     .ng-select-container {

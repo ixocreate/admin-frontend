@@ -62,8 +62,8 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.pageList, data);
   }
 
-  getSitemap(locale: string): Promise<any> {
-    return this.api.get(this.config.config.routes.pageList, {locale});
+  getSitemap(locale: string, pageType?: string): Promise<any> {
+    return this.api.get(this.config.config.routes.pageList, {locale, pageType});
   }
 
   getSitemapIndex(): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {

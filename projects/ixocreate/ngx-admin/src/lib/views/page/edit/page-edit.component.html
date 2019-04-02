@@ -187,27 +187,36 @@
               <div>
                 <small><b>From other language</b></small>
               </div>
-              <div class="row mb-3 mt-1" >
+              <div class="row mb-3 mt-1">
                 <ng-container *ngFor="let language of replacePageLocales">
                   <div class="col">
-                    <button type="button" class="btn btn-outline-primary" (click)="onReplaceContentModal(language)" ixoClickStopPropagation>
+                    <button type="button" class="btn btn-outline-primary" (click)="onReplaceContentModal(language.page.id)"
+                            ixoClickStopPropagation>
                       <i class="flag-icon flag-icon-{{ language.locale.substr(3) | lowercase }}"></i>
                     </button>
                   </div>
                 </ng-container>
               </div>
             </ng-container>
-            <!--
-            <ng-container *ngIf="detailData.meta.samePageTypePages.length > 0">
+            <ng-container *ngIf="otherPagesWithPageType.length > 0">
               <div>
                 <small><b>From other page</b></small>
               </div>
-              <ng-select [items]="detailData.meta.samePageTypePages" (change)="onReplaceContentModal($event)"
-                         bindLabel="name" bindValue="id" [clearable]="false">
-              </ng-select>
+              <div class="form-group">
+                <div class="input-group flex-nowrap">
+                  <ng-select
+                    [(ngModel)]="selectedPageWithPageType"
+                    [items]="otherPagesWithPageType"
+                    placeholder="Page..."
+                    bindValue="id"
+                    bindLabel="name"></ng-select>
+                  <div class="input-group-append">
+                    <ixo-button [outline]="true" icon="edit"
+                                (click)="onReplaceContentModal(selectedPageWithPageType)"></ixo-button>
+                  </div>
+                </div>
+              </div>
             </ng-container>
-            <hr>
-            -->
           </ng-container>
 
         </div>
