@@ -67,7 +67,7 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   getPageIndex(): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
-    return this.api.get(this.config.config.routes.pageIndex);
+    return this.api.get(this.config.config.routes.sitemapIndex);
   }
 
   getSubPageIndex(handle: string): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
@@ -79,7 +79,7 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   postPageMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
-    return this.api.post(this.config.config.routes.pageMove, {
+    return this.api.post(this.config.config.routes.sitemapMove, {
       id: sitemapId,
       prevSibling: prevSiblingSitemapId,
       parent: parentSitemapId,
