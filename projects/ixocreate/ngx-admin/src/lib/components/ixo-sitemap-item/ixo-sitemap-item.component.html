@@ -62,8 +62,8 @@
   </button>
 
   <div class="sitemap-sub-item" *ngIf="page.children.length > 0" [hidden]="collapsed">
-    <button class="sitemap-insert-btn 2" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">{{ moveType }}
-      here
+    <button class="sitemap-insert-btn 2" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">
+      {{ moveType }} here
     </button>
 
     <ng-container *ngFor="let subPage of page.children">
@@ -72,8 +72,8 @@
     </ng-container>
   </div>
 
-  <button class="sitemap-insert-btn 2" *ngIf="allowedInsertSibling" (click)="movePageEnd(page, null)">{{ moveType }}
-    here
+  <button class="sitemap-insert-btn 2" *ngIf="allowedInsertSibling" (click)="movePageEnd(page, null)">
+    {{ moveType }} here
   </button>
 
 </div>

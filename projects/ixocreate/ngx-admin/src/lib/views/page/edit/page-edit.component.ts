@@ -86,10 +86,10 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
           this.versionSaving = false;
           return versionData;
-        });
+        }).catch(() => this.versionSaving = false);
       }
       return data;
-    });
+    }).catch(() => this.versionSaving = false);
   }
 
   private loadNavigationData(navigation) {
@@ -141,7 +141,10 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       this.loadDetailData();
       this.pageDataSaving = false;
       this.notification.success(key + ' successfully saved', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.notification.apiError(error);
+      this.pageDataSaving = false;
+    });
   }
 
   openPreview() {

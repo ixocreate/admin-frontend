@@ -3,9 +3,7 @@
     <a [routerLink]="'../../../'" class="btn btn-outline-dark">
       <i class="fa fa-ban"></i> Cancel
     </a>
-    <button class="btn btn-success" (click)="onSubmit()">
-      <i class="fa fa-plus"></i> Add
-    </button>
+    <ixo-button color="success" [loading]="loading" icon="plus" (click)="onSubmit()">Add</ixo-button>
   </ng-template>
 
   <div class="card card-accent-primary">

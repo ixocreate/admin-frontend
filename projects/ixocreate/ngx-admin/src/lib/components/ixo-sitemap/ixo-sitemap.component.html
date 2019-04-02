@@ -9,6 +9,13 @@
     </div>
   </div>
   <div class="card-body">
+    <div *ngIf="isCopying" class="text-center mb-3">
+      <button class="btn btn-outline-dark" (click)="cancelCopy()">
+        <i class="fa fa-ban"></i>
+        Cancel <span style="text-transform: capitalize">{{ copy.moveType }}</span>
+      </button>
+    </div>
+
     <ng-container *ngIf="pageIndex$ | async as pageIndex; else isLoading">
       <ng-container *ngIf="pageIndex.items.length > 0; else noPages">
         <ng-container *ngFor="let page of pageIndex.items">

@@ -17,6 +17,7 @@ export class PageAddComponent extends ViewAbstractComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
+  loading = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -47,11 +48,16 @@ export class PageAddComponent extends ViewAbstractComponent implements OnInit {
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       const data = this.form.getRawValue();
       this.appData.pageAdd(data.name, this.locale, this.sitemapId).then((response) => {
+        this.loading = false;
         this.notification.success('Page successfully added', 'Success');
         this.router.navigateByUrl(this.getRedirectUrl(response));
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 
