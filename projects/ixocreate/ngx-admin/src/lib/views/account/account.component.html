@@ -31,9 +31,9 @@
               <div class="text-muted">
                 <b class="text-danger">*</b> Required Field
               </div>
-              <button type="submit" class="btn btn-primary">
-                <i class="fa fa-save"></i> Update
-              </button>
+              <ixo-button type="submit" [loading]="loading" icon="save">
+                Change Attributes
+              </ixo-button>
             </div>
           </div>
         </form>
@@ -52,11 +52,10 @@
               <div class="text-muted">
                 <b class="text-danger">*</b> Required Field
               </div>
-              <button type="submit" class="btn btn-primary"
-                      [disabled]="!attributesForm.valid"
-                      (click)="onSubmitAttributes()">
-                <i class="fa fa-save"></i> Update
-              </button>
+              <ixo-button type="submit" [loading]="loading" icon="save"
+                          [disabled]="!attributesForm.valid">
+                Change Attributes
+              </ixo-button>
             </div>
           </div>
         </ng-container>
@@ -82,9 +81,10 @@
               <div class="text-muted">
                 <b class="text-danger">*</b> Required Field
               </div>
-              <button type="submit" class="btn btn-primary" [disabled]="!emailForm.valid">
-                <i class="fa fa-save"></i> Change Email
-              </button>
+              <ixo-button type="submit" [loading]="loading" icon="save"
+                          [disabled]="!emailForm.valid">
+                Change Email
+              </ixo-button>
             </div>
           </div>
         </form>
@@ -102,10 +102,10 @@
               <div class="text-muted">
                 <b class="text-danger">*</b> Required Field
               </div>
-              <button type="submit" class="btn btn-primary"
-                      [disabled]="!passwordForm.valid">
-                <i class="fa fa-save"></i> Change Password
-              </button>
+              <ixo-button type="submit" [loading]="loading" icon="save"
+                          [disabled]="!passwordForm.valid">
+                Change Password
+              </ixo-button>
             </div>
           </div>
         </form>

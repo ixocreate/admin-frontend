@@ -82,6 +82,7 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
   attributesFormFields: FormlyFieldConfig[];
 
   exampleDate: Date;
+  loading = false;
 
   constructor(protected notification: NotificationService,
               protected appData: AppDataService,
@@ -99,36 +100,56 @@ export class AccountComponent extends ViewAbstractComponent implements OnInit {
   }
 
   onSubmitAttributes() {
+    this.loading = true;
     const data = this.attributesForm.getRawValue();
     if (this.attributesForm.valid === false) {
       this.notification.formErrors(this.attributesForm);
     } else {
       this.accountData.updateAccountAttributes(data).then(() => {
+        this.loading = false;
         this.notification.success('successfully updated', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 
   onSubmitEmail() {
+    this.loading = true;
     const data = this.emailForm.getRawValue();
     this.accountData.updateEmail(data.email, data.emailRepeat).then(() => {
+      this.loading = false;
       this.emailFormOptions.resetModel();
       this.notification.success('The email was successfully updated', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.loading = false;
+      this.notification.apiError(error);
+    });
   }
 
   onSubmitLocale() {
+    this.loading = true;
     const data = this.localeForm.getRawValue();
     this.accountData.updateLocale(data).then(() => {
+      this.loading = false;
       this.notification.success('Locale, Language & Timezone successfully updated', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.loading = false;
+      this.notification.apiError(error);
+    });
   }
 
   onSubmitPassword() {
+    this.loading = true;
     const data = this.passwordForm.getRawValue();
     this.accountData.updatePassword(data.passwordOld, data.password, data.passwordRepeat).then(() => {
+      this.loading = false;
       this.passwordFormOptions.resetModel();
       this.notification.success('The password was successfully updated', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.loading = false;
+      this.notification.apiError(error);
+    });
   }
 }
