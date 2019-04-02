@@ -98,6 +98,7 @@ import { RegistryEditComponent } from './views/registry/edit/registry-edit.compo
 import { ErrorComponent } from './views/error/error.component';
 import { IxoReuseStrategy } from './lib/ixo-reuse-strategy';
 import { IxoLinkSelectModalComponent } from './modals/ixo-link-select-modal/ixo-link-select-modal.component';
+import { IxoButtonComponent } from './components/ixo-button/ixo-button.component';
 
 /**
  * TODO: move to a dynamic approach to support more locales
@@ -178,6 +179,8 @@ const APP_COMPONENTS = [
   IxoDashboardStatisticsOverviewComponent,
   IxoDashboardGalleryComponent,
   IxoDashboardGraphComponent,
+
+  IxoButtonComponent,
 
   RegistryComponent,
   RegistryEditComponent,

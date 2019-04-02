@@ -1,0 +1,102 @@
+ixo-button[type="button"], ixo-button[type="reset"], ixo-button[type="submit"] {
+  -webkit-appearance: none;
+}
+
+ixo-button {
+  display: inline-flex;
+
+  &.ixo-button-block {
+    display: flex;
+  }
+}
+
+.ixo-btn {
+  display: inline-flex;
+  padding: 0;
+  justify-content: center;
+  align-items: stretch;
+
+  &.disabled {
+    &:focus,
+    &.focus {
+      box-shadow: none;
+    }
+  }
+
+  .btn-content {
+    padding: $btn-padding-y $btn-padding-x;
+  }
+
+  &.btn-has-icon {
+    .btn-content {
+      padding-left: 0;
+    }
+  }
+
+  .btn-icon {
+    @include border-left-radius($btn-border-radius);
+    padding: $btn-padding-y 0;
+
+    display: flex;
+    width: 35px;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.is-loading {
+    cursor: default;
+  }
+
+  &.is-loading:not(.btn-has-icon) {
+    color: transparent;
+    position: relative;
+
+    .btn-icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      @include border-right-radius($btn-border-radius);
+
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+  }
+
+  @each $color, $value in $theme-colors {
+    &.btn-outline-#{$color} {
+      .ixo-loading {
+        border-color: transparentize($value, .8);
+        border-top-color: $value;
+      }
+    }
+  }
+
+  @each $color, $value in $theme-colors {
+    &.btn-#{$color} {
+      .ixo-loading {
+        border-color: color-yiq($value, transparentize(#333, .8), transparentize(#fff, .8));
+        border-top-color: color-yiq($value, #333, #fff);
+      }
+    }
+  }
+}
+
+.input-group > .input-group-prepend > ixo-button > .btn,
+.input-group > .input-group-prepend > ixo-button > .input-group-text,
+.input-group > .input-group-append:not(:last-child) > ixo-button > .btn,
+.input-group > .input-group-append:not(:last-child) > ixo-button > .input-group-text,
+.input-group > .input-group-append:last-child > ixo-button > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group > .input-group-append:last-child > ixo-button > .input-group-text:not(:last-child) {
+  @include border-right-radius(0);
+}
+
+.input-group > .input-group-append > ixo-button > .btn,
+.input-group > .input-group-append > ixo-button > .input-group-text,
+.input-group > .input-group-prepend:not(:first-child) > ixo-button > .btn,
+.input-group > .input-group-prepend:not(:first-child) > ixo-button > .input-group-text,
+.input-group > .input-group-prepend:first-child > ixo-button > .btn:not(:first-child),
+.input-group > .input-group-prepend:first-child > ixo-button > .input-group-text:not(:first-child) {
+  @include border-left-radius(0);
+}

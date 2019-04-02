@@ -3,12 +3,7 @@
     <a [routerLink]="'../../'" class="btn btn-outline-dark">
       <i class="fa fa-ban"></i> Cancel
     </a>
-    <ng-container *ngIf="data$ | async as data">
-      <button class="btn btn-primary" (click)="onSubmit()">
-        <i class="fa fa-save"></i> Update
-      </button>
-    </ng-container>
-
+    <ixo-button [loading]="versionSaving || pageDataSaving" icon="save" (click)="onSubmit()">Update</ixo-button>
   </ng-template>
 
   <ng-container *ngIf="versionData$ | async as versionData; else isLoading">
@@ -50,12 +45,14 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="data$ | async as data">
-            <a class="btn btn-outline-primary btn-block mb-3" [href]="data.page.url" target="_blank"
-               *ngIf="data.page.isOnline">
-              <i class="fa fa-expand"></i> Open Page
-            </a>
-          </ng-container>
+          <ixo-button [loading]="versionSaving || pageDataSaving"
+                      [outline]="true"
+                      [block]="true"
+                      icon="expand"
+                      class="mb-3"
+                      (click)="openPreview()">
+            Open Page
+          </ixo-button>
 
           <div class="ixo-form" *ngIf="pageData">
             <h6><i class="fa fa-fw fa-cog"></i> General</h6>
@@ -69,9 +66,8 @@
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Name" [(ngModel)]="pageData.name">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('name', pageData.name)">
-                      <i class="fa fa-save"></i>
-                    </button>
+                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                                (click)="savePageData('name', pageData.name)"></ixo-button>
                   </div>
                 </div>
               </div>
@@ -86,9 +82,8 @@
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Slug" [(ngModel)]="pageData.slug">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary" (click)="savePageData('slug', pageData.slug)">
-                      <i class="fa fa-save"></i>
-                    </button>
+                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                                (click)="savePageData('slug', pageData.slug)"></ixo-button>
                   </div>
                 </div>
                 <small class="form-text text-muted">The slug is used to create the Website URL</small>
@@ -119,12 +114,10 @@
               <div class="ixo-form-control-container">
                 <div class="input-group">
                   <ixo-date-picker placeholder="Published From"
-                                    [(ngModel)]="pageData.publishedFrom"></ixo-date-picker>
+                                   [(ngModel)]="pageData.publishedFrom"></ixo-date-picker>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary"
-                            (click)="savePageData('publishedFrom', pageData.publishedFrom)">
-                      <i class="fa fa-save"></i>
-                    </button>
+                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                                (click)="savePageData('publishedFrom', pageData.publishedFrom)"></ixo-button>
                   </div>
                 </div>
               </div>
@@ -137,12 +130,10 @@
               <div class="ixo-form-control-container">
                 <div class="input-group">
                   <ixo-date-picker placeholder="Published Until"
-                                    [(ngModel)]="pageData.publishedUntil"></ixo-date-picker>
+                                   [(ngModel)]="pageData.publishedUntil"></ixo-date-picker>
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary"
-                            (click)="savePageData('publishedUntil', pageData.publishedUntil)">
-                      <i class="fa fa-save"></i>
-                    </button>
+                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                                (click)="savePageData('publishedUntil', pageData.publishedUntil)"></ixo-button>
                   </div>
                 </div>
               </div>
@@ -163,10 +154,8 @@
                   [multiple]="true">
                 </ng-select>
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-outline-primary"
-                          (click)="savePageData('navigation', selectedNavigationOptions)">
-                    <i class="fa fa-save"></i>
-                  </button>
+                  <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                              (click)="savePageData('navigation', selectedNavigationOptions)"></ixo-button>
                 </div>
               </div>
             </div>

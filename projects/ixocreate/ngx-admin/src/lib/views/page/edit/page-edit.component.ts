@@ -10,6 +10,7 @@ import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-moda
 import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { ConfigService } from '../../../services/config.service';
+import { RxService } from '../../../services/rx.service';
 
 @Component({
   templateUrl: './page-edit.component.html',
@@ -35,6 +36,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   currentPageVersion: string = null;
 
   pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
+
+  versionSaving = true;
+  pageDataSaving = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -80,6 +84,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.loadNavigationData(data.navigation);
         this.hasChildren = data.hasChildren;
         this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
+          this.versionSaving = false;
           return versionData;
         });
       }
@@ -100,6 +105,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     if (this.versionForm.valid === false) {
       this.notification.formErrors(this.versionForm);
     } else {
+      this.versionSaving = true;
       const data = this.versionForm.getRawValue();
       this.appData.createPageVersion(this.id, {content: data}).then((response) => {
         this.loadDetailData();
@@ -128,11 +134,19 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   savePageData(key: string, value: any) {
+    this.pageDataSaving = true;
     const postData = {};
     postData[key] = value;
     this.appData.updatePage(this.id, postData).then((response) => {
       this.loadDetailData();
+      this.pageDataSaving = false;
       this.notification.success(key + ' successfully saved', 'Success');
     }).catch((error) => this.notification.apiError(error));
+  }
+
+  openPreview() {
+    this.data$.then((data) => {
+      window.open(data.page.url);
+    });
   }
 }
