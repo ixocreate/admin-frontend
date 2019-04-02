@@ -18,7 +18,7 @@ export class IxoSitemapComponent implements OnInit {
   @Output() changeLocale = new EventEmitter<any>();
 
   @Input() items = () => {
-    return this.appData.getPageIndex();
+    return this.appData.getSitemapIndex();
   };
 
   constructor(private config: ConfigService,

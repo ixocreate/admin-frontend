@@ -37,6 +37,7 @@ export interface Routes {
    */
   pageIndex?: string;
   pageMove?: string;
+  pageCopy?: string;
   pageDetail?: string;
   pageVersionIndex?: string;
   pageVersionDetail?: string;

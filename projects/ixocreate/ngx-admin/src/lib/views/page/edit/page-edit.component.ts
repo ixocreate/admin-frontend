@@ -10,7 +10,6 @@ import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-moda
 import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { ConfigService } from '../../../services/config.service';
-import { RxService } from '../../../services/rx.service';
 
 @Component({
   templateUrl: './page-edit.component.html',
@@ -35,10 +34,13 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   currentPageVersion: string = null;
 
-  pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
+  pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean, sitemapId: string };
 
   versionSaving = true;
   pageDataSaving = false;
+
+  pageLocales: Array<{ locale: string, page: any }> = [];
+  replacePageLocales: Array<{ locale: string, page: any }> = [];
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -68,12 +70,15 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   private loadDetailData() {
     this.data$ = this.appData.getPageDetail(this.id).then((data) => {
+      this.setPageLocales(data);
+      this.replacePageLocales = this.pageLocales.filter((a) => a.page);
       this.pageData = {
         id: data.page.page.id,
         name: data.page.page.name,
         publishedFrom: data.page.page.publishedFrom,
         publishedUntil: data.page.page.publishedUntil,
         slug: data.page.page.slug,
+        sitemapId: data.page.page.sitemapId,
         online: data.page.page.status === 'online',
       };
 
@@ -97,8 +102,43 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     this.selectedNavigationOptions = navigation.filter((element) => element.active).map((element) => element.name);
   }
 
-  onReplaceContentModal(fromPage) {
-    console.log(fromPage);
+  goToOtherLanguage(data) {
+    if (data.page) {
+      this.router.navigateByUrl(`/page/${data.page.id}/edit`);
+    } else {
+      const initialState: ConfirmModalData = {
+        title: 'Create Content?',
+        confirmBtnType: 'success',
+        confirmBtnIcon: 'fa fa-plus',
+        confirmBtnTitle: 'Create',
+        text: 'Page in this Language dosn\'t exist yet. Do you want to create it and copy the content of this page?',
+        onConfirm: () => {
+          this.appData.postPageCopyToSitemapId(this.pageData.id, this.pageData.sitemapId, data.locale).then((response) => {
+            this.router.navigateByUrl(`/page/${response}/edit`);
+            this.notification.success('Page Data successfully copied', 'Success');
+          });
+        },
+      };
+      this.modal.show(IxoConfirmModalComponent, {initialState});
+    }
+  }
+
+  onReplaceContentModal(data) {
+    const initialState: ConfirmModalData = {
+      title: 'Replace Content?',
+      confirmBtnType: 'warning',
+      confirmBtnIcon: 'fa fa-edit',
+      confirmBtnTitle: 'Replace',
+      text: 'Do you really want to replace the Content of this Page?',
+      onConfirm: () => {
+        this.appData.postPageCopyToPageId(data.page.id, this.pageData.id).then(() => {
+          this.loadDetailData();
+          this.updateVersionIndex();
+          this.notification.success('Page Data successfully copied', 'Success');
+        });
+      },
+    };
+    this.modal.show(IxoConfirmModalComponent, {initialState});
   }
 
   onSubmit(): void {
@@ -111,7 +151,10 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.loadDetailData();
         this.updateVersionIndex();
         this.notification.success('Page Version successfully created', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.versionSaving = false;
+        this.notification.apiError(error);
+      });
     }
   }
 
@@ -151,5 +194,35 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     this.data$.then((data) => {
       window.open(data.page.url);
     });
+  }
+
+  get locales() {
+    return this.config.config.intl.locales;
+  }
+
+  setPageLocales(data) {
+    const responseData = [];
+    if (data && data.localizedPages) {
+      for (const locale in data.localizedPages) {
+        if (data.localizedPages.hasOwnProperty(locale)) {
+
+          responseData.push({
+            locale,
+            page: data.localizedPages[locale].page,
+          });
+        }
+      }
+    }
+    for (const locale of this.locales) {
+      if (responseData.filter((a) => a.locale === locale.locale).length === 0) {
+        if (locale.locale !== data.page.page.locale) {
+          responseData.push({
+            locale: locale.locale,
+            page: null,
+          });
+        }
+      }
+    }
+    this.pageLocales = responseData;
   }
 }

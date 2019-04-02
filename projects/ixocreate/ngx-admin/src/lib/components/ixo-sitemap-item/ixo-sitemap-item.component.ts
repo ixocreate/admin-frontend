@@ -135,9 +135,12 @@ export class IxoSitemapItemComponent implements OnInit {
     const parentSitemapId: string = parent ? parent.sitemap.id : null;
 
     if (this.copy.moveType === 'copy') {
-      alert('copy call missing');
+      this.appData.postSitemapCopy(this.copyPage.sitemap.id, prevSiblingSitemapId, parentSitemapId).then(() => {
+        this.copy.setCopyPage(null, null);
+        this.triggerMoved(this.page);
+      });
     } else {
-      this.appData.postPageMove(this.copyPage.sitemap.id, prevSiblingSitemapId, parentSitemapId).then(() => {
+      this.appData.postSitemapMove(this.copyPage.sitemap.id, prevSiblingSitemapId, parentSitemapId).then(() => {
         this.copy.setCopyPage(null, null);
         this.triggerMoved(this.page);
       });

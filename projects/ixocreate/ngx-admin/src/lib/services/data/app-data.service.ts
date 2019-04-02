@@ -66,7 +66,7 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.pageList, {locale});
   }
 
-  getPageIndex(): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
+  getSitemapIndex(): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
     return this.api.get(this.config.config.routes.sitemapIndex);
   }
 
@@ -78,11 +78,35 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.pageIndexFlat.replace('{handle}', handle) + '?' + parseParams(params));
   }
 
-  postPageMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
+  postSitemapMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
     return this.api.post(this.config.config.routes.sitemapMove, {
       id: sitemapId,
       prevSibling: prevSiblingSitemapId,
       parent: parentSitemapId,
+    });
+  }
+
+  postSitemapCopy(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string, locales = null): Promise<any> {
+    return this.api.post(this.config.config.routes.sitemapCopy, {
+      fromSitemapId: sitemapId,
+      prevSiblingId: prevSiblingSitemapId,
+      parentId: parentSitemapId,
+      locales,
+    });
+  }
+
+  postPageCopyToSitemapId(fromPageId: string, toSitemapId: string = null, locale: string = null): Promise<any> {
+    return this.api.post(this.config.config.routes.pageCopy, {
+      fromPageId,
+      toSitemapId,
+      locale,
+    });
+  }
+
+  postPageCopyToPageId(fromPageId: string, toPageId = null): Promise<any> {
+    return this.api.post(this.config.config.routes.pageCopy, {
+      fromPageId,
+      toPageId,
     });
   }
 
@@ -125,7 +149,7 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   createPageVersion(pageId: string, data: any): Promise<any> {
-    return this.api.post(this.config.config.routes.pageVersionCreate.replace('{pageId}', pageId), data);
+    return this.api.post(this.config.config.routes.pageVersionCreate.replace('{id}', pageId), data);
   }
 
   pageDelete(pageId: string): Promise<any> {
