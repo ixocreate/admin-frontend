@@ -37,7 +37,8 @@
             </div>
           </div>
         </form>
-        <ng-container *ngIf="attributesForm && attributesFormFields">
+        <form [formGroup]="localeForm" (ngSubmit)="onSubmitAttributes()" class="ixo-form ixo-form-inline"
+              *ngIf="attributesForm && attributesFormFields">
           <div class="card card-accent-primary" *ngIf="attributesFormFields.length > 0">
             <div class="card-header custom-card-header">
               <h6 class="mb-0"><b>Attributes</b></h6>
@@ -45,8 +46,7 @@
             <div class="card-body">
               <formly-form [form]="attributesForm"
                            [fields]="attributesFormFields"
-                           [model]="user.accountAttributes"
-                           class="ixo-form ixo-form-inline"></formly-form>
+                           [model]="user.accountAttributes"></formly-form>
             </div>
             <div class="card-footer d-lg-flex justify-content-between align-items-center">
               <div class="text-muted">
@@ -58,7 +58,7 @@
               </ixo-button>
             </div>
           </div>
-        </ng-container>
+        </form>
       </div>
       <div class="col-xl-6">
         <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()" class="ixo-form ixo-form-inline">
