@@ -6,7 +6,7 @@
     <ixo-button [loading]="versionSaving || pageDataSaving" icon="save" (click)="onSubmit()">Update</ixo-button>
   </ng-template>
 
-  <ng-container *ngIf="versionData$ | async as versionData; else isLoading">
+  <ng-container *ngIf="versionData; else isLoading">
     <ng-container *ngIf="versionForm && versionFields">
       <formly-form [form]="versionForm" [fields]="versionFields" [model]="versionData.content"
                    class="ixo-form ixo-form-inline"></formly-form>

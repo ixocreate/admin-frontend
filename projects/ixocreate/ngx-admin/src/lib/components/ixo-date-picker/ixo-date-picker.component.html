@@ -5,7 +5,7 @@
          (change)="onChange($event)"
          [placeholder]="placeholder"
          [class.is-invalid]="showError">
-  <div class="calender-overlay" [hidden]="!showOverlay">
+  <div class="calender-overlay" [hidden]="!showOverlay" ixoClickStopPropagation>
     <p-calendar class="date-picker"
                 [inline]="true"
                 [placeholder]="placeholder"

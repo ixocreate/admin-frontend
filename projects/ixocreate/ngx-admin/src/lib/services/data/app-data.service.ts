@@ -81,8 +81,8 @@ export class AppDataService extends DataServiceAbstract {
   postSitemapMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
     return this.api.post(this.config.config.routes.sitemapMove, {
       id: sitemapId,
-      prevSibling: prevSiblingSitemapId,
-      parent: parentSitemapId,
+      prevSiblingId: prevSiblingSitemapId,
+      parentId: parentSitemapId,
     });
   }
 

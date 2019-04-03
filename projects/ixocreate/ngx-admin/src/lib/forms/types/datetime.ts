@@ -35,7 +35,7 @@ import { ConfigService } from '../../services/config.service';
           </button>
         </div>
       </div>
-      <div class="calender-overlay" [hidden]="!showOverlay">
+      <div class="calender-overlay" [hidden]="!showOverlay" ixoClickStopPropagation>
         <p-calendar class="date-picker"
                     [inline]="true"
                     [placeholder]="to.placeholder"

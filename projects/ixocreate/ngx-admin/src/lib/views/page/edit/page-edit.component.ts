@@ -17,7 +17,7 @@ import { ConfigService } from '../../../services/config.service';
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   versionIndex$: Promise<any>;
-  versionData$: Promise<any>;
+  versionData: any;
   data$: Promise<any>;
 
   id: string;
@@ -91,13 +91,21 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         online: data.page.page.status === 'online',
       };
 
-      if (this.currentPageVersion !== data.page.version.head) {
+      data.schema = this.schemaTransform.transformForm(data.schema);
+      this.versionFields = data.schema ? data.schema : [];
+      this.loadNavigationData(data.navigation);
+      this.hasChildren = data.hasChildren;
+
+      if (data.page.version.head === null) {
+        this.versionData = {
+          content: {},
+        };
+        this.versionSaving = false;
+      } else if (this.currentPageVersion !== data.page.version.head) {
+        this.versionData = null;
         this.currentPageVersion = data.page.version.head;
-        data.schema = this.schemaTransform.transformForm(data.schema);
-        this.versionFields = data.schema ? data.schema : [];
-        this.loadNavigationData(data.navigation);
-        this.hasChildren = data.hasChildren;
-        this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
+        this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
+          this.versionData = versionData;
           this.versionSaving = false;
           return versionData;
         }).catch(() => this.versionSaving = false);
@@ -123,7 +131,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         text: 'Page in this Language dosn\'t exist yet. Do you want to create it and copy the content of this page?',
         onConfirm: () => {
           this.appData.postPageCopyToSitemapId(this.pageData.id, this.pageData.sitemapId, data.locale).then((response) => {
-            this.router.navigateByUrl(`/page/${response}/edit`);
+            this.router.navigateByUrl(`/page/${response.toPageId}/edit`);
             this.notification.success('Page Data successfully copied', 'Success');
           });
         },
