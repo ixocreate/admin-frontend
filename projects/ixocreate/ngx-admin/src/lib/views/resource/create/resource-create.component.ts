@@ -27,7 +27,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
   aboveWidgetData$: Promise<any>;
   belowWidgetData$: Promise<any>;
 
-  loading = true;
+  loading = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
