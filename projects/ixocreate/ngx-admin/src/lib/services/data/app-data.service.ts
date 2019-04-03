@@ -95,11 +95,12 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
-  postPageCopyToSitemapId(fromPageId: string, toSitemapId: string = null, locale: string = null): Promise<any> {
+  postPageCopyToSitemapId(fromPageId: string, toSitemapId: string = null, locale: string = null, name: string = null): Promise<any> {
     return this.api.post(this.config.config.routes.pageCopy, {
       fromPageId,
       toSitemapId,
       locale,
+      name,
     });
   }
 

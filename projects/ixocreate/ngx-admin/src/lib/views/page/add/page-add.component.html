@@ -15,6 +15,17 @@
         <formly-form [form]="form" [fields]="fields" class="ixo-form" (ngSubmit)="onSubmit()">
         </formly-form>
       </ng-container>
+      <div class="form-group mt-3 ixo-form" *ngIf="fromPages.length">
+        <label class="ixo-form-label">Copy content from other language (you can leave this empty)</label>
+        <div class="ixo-form-control-container">
+          <ng-select
+            [(ngModel)]="selectedFromPage"
+            [items]="fromPages"
+            placeholder="Language..."
+            bindValue="id"
+            bindLabel="name"></ng-select>
+        </div>
+      </div>
       <ng-template #isLoading>
         <div class="text-center my-3 loading">
           <ixo-loading class="big-center"></ixo-loading>

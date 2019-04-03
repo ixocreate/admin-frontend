@@ -131,8 +131,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         text: 'Page in this Language dosn\'t exist yet. Do you want to create it and copy the content of this page?',
         onConfirm: () => {
           this.appData.postPageCopyToSitemapId(this.pageData.id, this.pageData.sitemapId, data.locale).then((response) => {
-            this.router.navigateByUrl(`/page/${response.toPageId}/edit`);
             this.notification.success('Page Data successfully copied', 'Success');
+            this.router.navigateByUrl(`/page/${response.toPageId}/edit`);
           });
         },
       };
