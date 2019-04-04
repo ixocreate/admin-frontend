@@ -6,7 +6,7 @@ import { ViewAbstractComponent } from '../../../components/view.abstract.compone
 import { AppDataService } from '../../../services/data/app-data.service';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   templateUrl: './registry-edit.component.html',

@@ -8,7 +8,7 @@ import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
 import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
 import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({

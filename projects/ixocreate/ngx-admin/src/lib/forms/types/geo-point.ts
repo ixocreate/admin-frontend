@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { GeoPoint, MapModalData } from '../../modals/ixo-map-modal/map-modal-data.interface';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { IxoMapModalComponent } from '../../modals/ixo-map-modal/ixo-map-modal.component';
 
 declare var ol: any;

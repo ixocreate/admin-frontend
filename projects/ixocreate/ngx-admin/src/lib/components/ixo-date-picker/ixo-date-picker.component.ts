@@ -1,7 +1,6 @@
 import { Component, ElementRef, forwardRef, HostBinding, HostListener, Input, NgZone, OnInit, ViewChild } from '@angular/core';
-import * as moment from 'moment';
-import { Calendar } from 'primeng/primeng';
-import { LocaleSettings } from 'primeng/components/calendar/calendar';
+import * as moment from 'moment-timezone';
+import { Calendar, LocaleSettings } from 'primeng/components/calendar/calendar';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DefaultHelper } from '../../helpers/default.helper';
 import { NotificationService } from '../../services/notification.service';

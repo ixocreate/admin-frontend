@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { IxoLinkSelectModalComponent } from '../../modals/ixo-link-select-modal/ixo-link-select-modal.component';
 import { LinkSelectModalData } from '../../modals/ixo-link-select-modal/link-select-modal-data.interface';

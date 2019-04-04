@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IxoConfirmModalComponent } from '../modals/ixo-confirm-modal/ixo-confirm-modal.component';
 import { ConfirmModalData } from '../modals/ixo-confirm-modal/confirm-modal-data.interface';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { LocalStorageService } from './local-storage.service';
 import { IxoInputModalComponent } from '../modals/ixo-input-modal/ixo-input-modal.component';
 import { InputModalData } from '../modals/ixo-input-modal/input-modal-data.interface';

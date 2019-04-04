@@ -6,6 +6,8 @@
     "ng": "ng",
     "serve": "ng serve --proxy-config proxy.config.json",
     "build": "ng build --prod --output-path=build/ && rm build/index.html",
+    "build-with-stats": "ng build --prod --output-path=build/ --stats-json && rm build/index.html",
+    "bundle-report": "webpack-bundle-analyzer build/stats.json",
     "test": "ng test",
     "test:once": "ng test --watch=false",
     "lint": "ng lint",
@@ -89,6 +91,7 @@
     "tslint": "^5.10.0",
     "typescript": "3.1.6",
     "url-parse": ">=1.4.3",
+    "webpack-bundle-analyzer": "^3.1.0",
     "webpack-dev-server": ">=3.1.11"
   },
   "engines": {

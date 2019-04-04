@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ConfigService } from '../services/config.service';
-import * as moment from 'moment';
-import 'moment-timezone';
+import * as moment from 'moment-timezone';
 
 @Pipe({
   name: 'ixoDateTime',

@@ -1,4 +1,4 @@
-import localeDeAt from "@angular/common/locales/de-AT";
+import localeDeAt from '@angular/common/locales/de-AT';
 import { APP_INITIALIZER, Injector, ModuleWithProviders, NgModule } from '@angular/core';
 import { environment } from '../../../../../src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -13,17 +13,16 @@ import { ServiceModule } from './services/service.module';
 import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
 import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
-import {
-  AlertModule,
-  BsDatepickerModule,
-  CarouselModule,
-  ModalModule,
-  PaginationModule,
-  ProgressbarModule,
-  TabsModule,
-  TypeaheadModule,
-  zhCnLocale
-} from 'ngx-bootstrap';
+
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
@@ -63,7 +62,6 @@ import { PipesModule } from './pipes/pipes.module';
 import { PageCreateComponent } from './views/page/create/page-create.component';
 import { PageAddComponent } from './views/page/add/page-add.component';
 import { PageEditComponent } from './views/page/edit/page-edit.component';
-import { CalendarModule } from 'primeng/primeng';
 import { QuillModule } from 'ngx-quill';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
@@ -99,6 +97,7 @@ import { ErrorComponent } from './views/error/error.component';
 import { IxoReuseStrategy } from './lib/ixo-reuse-strategy';
 import { IxoLinkSelectModalComponent } from './modals/ixo-link-select-modal/ixo-link-select-modal.component';
 import { IxoButtonComponent } from './components/ixo-button/ixo-button.component';
+import { CalendarModule } from 'primeng/components/calendar/calendar';
 
 /**
  * TODO: move to a dynamic approach to support more locales

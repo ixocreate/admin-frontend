@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfigService } from '../../services/config.service';
 import { AppDataService } from '../../services/data/app-data.service';
 import { LocalStorageService } from '../../services/local-storage.service';

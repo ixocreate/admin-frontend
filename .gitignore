@@ -46,3 +46,4 @@ Thumbs.db
 
 package-lock.json
 proxy.config.json
+/build/stats.json

@@ -4,7 +4,7 @@ import { QuillEditorComponent } from 'ngx-quill';
 import { CustomValidators } from '../../validators/CustomValidators';
 import { LinkSelectModalData } from '../../modals/ixo-link-select-modal/link-select-modal-data.interface';
 import { IxoLinkSelectModalComponent } from '../../modals/ixo-link-select-modal/ixo-link-select-modal.component';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { IxoLinkType } from '../../lib/quill/quill-extentions';
 
 @Component({

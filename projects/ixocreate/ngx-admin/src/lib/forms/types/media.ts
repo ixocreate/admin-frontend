@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { MediaHelper } from '../../helpers/media.helper';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { Media } from '../../interfaces/media.interface';
 

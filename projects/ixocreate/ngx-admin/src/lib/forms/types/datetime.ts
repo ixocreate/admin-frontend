@@ -1,13 +1,11 @@
 import { Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import * as moment from 'moment';
-import 'moment-timezone';
-import { LocaleSettings } from 'primeng/components/calendar/calendar';
-import { Calendar } from 'primeng/primeng';
+import * as moment from 'moment-timezone';
+import { Calendar, LocaleSettings } from 'primeng/components/calendar/calendar';
 import { DefaultHelper } from '../../helpers/default.helper';
 import { IxoDateTimePipe } from '../../pipes/ixo-date-time.pipe';
 import { IxoDatePipe } from '../../pipes/ixo-date.pipe';
-import { IxoTimePipe } from "../../pipes/ixo-time.pipe";
+import { IxoTimePipe } from '../../pipes/ixo-time.pipe';
 import { NotificationService } from '../../services/notification.service';
 import { ConfigService } from '../../services/config.service';
 

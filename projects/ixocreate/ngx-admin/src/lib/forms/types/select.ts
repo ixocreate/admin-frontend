@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AppDataService } from '../../services/data/app-data.service';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 export interface SelectOption {
   label: string;

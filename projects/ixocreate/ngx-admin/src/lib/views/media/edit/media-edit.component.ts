@@ -9,7 +9,7 @@ import { SchemaTransformService } from '../../../services/schema-transform.servi
 import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
 import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
 import { ConfigService } from '../../../services/config.service';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { CropperPosition, IxoImageCropperComponent } from '../../../components/ixo-image-cropper/ixo-image-cropper.component';
 
 interface Entity {
