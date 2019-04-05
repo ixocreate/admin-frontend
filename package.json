@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "serve": "ng serve --proxy-config proxy.config.json --extra-webpack-config webpack.partial.js",
-    "build": "ng build --prod --extra-webpack-config webpack.partial.js --output-path=build/ && rm build/index.html",
-    "build-with-stats": "ng build --prod --extra-webpack-config webpack.partial.js --output-path=build/ --stats-json && rm build/index.html && yarn run bundle-report",
+    "build": "ng build --prod --build-optimizer --extra-webpack-config webpack.partial.js --output-path=build/ && rm build/index.html",
+    "build-with-stats": "ng build --prod --build-optimizer --extra-webpack-config webpack.partial.js --output-path=build/ --stats-json && rm build/index.html && yarn run bundle-report",
     "bundle-report": "webpack-bundle-analyzer build/stats.json",
     "test": "ng test",
     "test:once": "ng test --watch=false",
@@ -65,8 +65,11 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.13.8",
     "@angular-devkit/build-angular": "^0.13.2",
     "@angular-devkit/build-ng-packagr": "~0.13.2",
+    "@angular-devkit/build-optimizer": "^0.13.8",
+    "@angular-devkit/core": "^7.3.8",
     "@angular/cli": "^7.3.2",
     "@angular/compiler-cli": "^7.2.6",
     "@angular/language-service": "^7.2.6",
@@ -91,6 +94,7 @@
     "tslint": "^5.10.0",
     "typescript": "3.1.6",
     "url-parse": ">=1.4.3",
+    "webpack": "^4.29.6",
     "webpack-bundle-analyzer": "^3.1.0",
     "webpack-dev-server": ">=3.1.11"
   },
