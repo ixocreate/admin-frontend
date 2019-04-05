@@ -15,7 +15,6 @@ import { UndoStore } from './store/undo.store';
 import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
 
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
@@ -23,7 +22,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable/release';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
 import { Router, RouteReuseStrategy, RouterModule } from '@angular/router';
@@ -224,7 +223,7 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
     FormlyBootstrapModule,
     FileUploadModule,
     NgSelectModule,
-    QuillModule,
+    QuillModule.forRoot(),
     CalendarModule,
     ColorPickerModule,
     NgxDnDModule,
@@ -235,7 +234,6 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
     ProgressbarModule.forRoot(),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
-    BsDatepickerModule.forRoot(),
     TypeaheadModule.forRoot(),
     CarouselModule.forRoot(),
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import { filter } from 'rxjs/internal/operators';
+import { filter } from 'rxjs/internal/operators/filter';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AppDataService } from './data/app-data.service';

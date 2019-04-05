@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { BehaviorSubject, Observable, throwError as _throw } from 'rxjs';
-import { catchError, map, publishLast, refCount, timeout } from 'rxjs/operators';
+import { Observable} from 'rxjs/observable';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { catchError } from 'rxjs/operators/catchError';
+import { map } from 'rxjs/operators/map';
+import { publishLast } from 'rxjs/operators/publishLast';
+import { refCount } from 'rxjs/operators/refCount';
+import { timeout } from 'rxjs/operators/timeout';
 import { APIErrorElement, APIResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../../../../src/environments/environment';
+import { _throw } from 'rxjs/observable/throw';
 
 export enum ApiRequestMethod {
   GET = 'get',

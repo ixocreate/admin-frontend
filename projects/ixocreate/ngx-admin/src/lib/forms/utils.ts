@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 
 export function isNullOrUndefined(value: any) {
   return value === undefined || value === null;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 import { DataServiceAbstract } from './data.service.abstract';
 import { Config } from '../../interfaces/config.interface';
 import { ApiService } from '../api.service';
@@ -8,7 +8,7 @@ import { AppState } from '../../store/app.state';
 import { DefaultStore } from '../../store/default.store';
 import { DefaultHelper } from '../../helpers/default.helper';
 import { ConfigService } from '../config.service';
-import { tap } from 'rxjs/internal/operators';
+import { tap } from 'rxjs/internal/operators/tap';
 import { parseParams } from '../../shared/parseParams';
 import { ResourceList } from '../../interfaces/resource-list.interface';
 import { Resource } from '../../interfaces/resource.interface';

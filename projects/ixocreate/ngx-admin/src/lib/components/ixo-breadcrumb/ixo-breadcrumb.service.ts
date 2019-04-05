@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs/observable';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { filter } from 'rxjs/operators/filter';
 
 @Injectable()
 export class IxoBreadcrumbService {

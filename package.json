@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "serve": "ng serve --proxy-config proxy.config.json --extra-webpack-config webpack.partial.js",
-    "build": "ng build --prod --build-optimizer --extra-webpack-config webpack.partial.js --output-path=build/ && rm build/index.html",
-    "build-with-stats": "ng build --prod --build-optimizer --extra-webpack-config webpack.partial.js --output-path=build/ --stats-json && rm build/index.html && yarn run bundle-report",
+    "build": "ng build --prod --extra-webpack-config webpack.partial.js --output-path=build/ && rm build/index.html",
+    "build-with-stats": "ng build --prod --extra-webpack-config webpack.partial.js --output-path=build/ --stats-json && rm build/index.html && yarn run bundle-report",
     "bundle-report": "webpack-bundle-analyzer build/stats.json",
     "test": "ng test",
     "test:once": "ng test --watch=false",
