@@ -31,7 +31,6 @@
               ]
             },
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js"
             ]
           },
           "configurations": {
@@ -49,6 +48,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "node_modules/quill/dist/quill.js",
+                  "with": "node_modules/quill/dist/quill.core.js"
                 }
               ]
             }
@@ -61,7 +64,13 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng:build:production"
+              "browserTarget": "ng:build:production",
+              "fileReplacements": [
+                {
+                  "replace": "node_modules/quill/dist/quill.js",
+                  "with": "node_modules/quill/dist/quill.core.js"
+                }
+              ]
             }
           }
         },

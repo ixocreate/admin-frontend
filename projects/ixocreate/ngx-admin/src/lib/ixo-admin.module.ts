@@ -8,7 +8,6 @@ import { PerfectScrollbarConfigInterface, PerfectScrollbarModule } from 'ngx-per
 import { BrowserModule, EventManager } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppFooterModule, AppHeaderModule, AppSidebarModule } from '@coreui/angular';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ServiceModule } from './services/service.module';
 import { NgrxHelperModule } from './store/store.module';
 import { UndoStore } from './store/undo.store';
@@ -215,7 +214,6 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
     AppHeaderModule,
     AppSidebarModule,
     PerfectScrollbarModule,
-    ChartsModule,
     NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
