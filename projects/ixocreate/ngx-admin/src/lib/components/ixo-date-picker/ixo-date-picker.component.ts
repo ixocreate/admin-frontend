@@ -1,5 +1,5 @@
 import { Component, ElementRef, forwardRef, HostBinding, HostListener, Input, NgZone, OnInit, ViewChild } from '@angular/core';
-import * as moment from 'moment-timezone';
+import * as moment from 'moment-timezone/builds/moment-timezone-with-data-2012-2022.min';
 import { Calendar, LocaleSettings } from 'primeng/components/calendar/calendar';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DefaultHelper } from '../../helpers/default.helper';

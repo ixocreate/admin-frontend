@@ -2,7 +2,7 @@ import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Config, ResourceConfig } from '../interfaces/config.interface';
 import { DefaultHelper } from '../helpers/default.helper';
 import { User } from '../interfaces/user.interface';
-import * as moment from 'moment-timezone';
+import * as moment from 'moment-timezone/builds/moment-timezone-with-data-2012-2022.min';
 
 export const IXO_CONFIG = new InjectionToken<IxoConfig>('IXO_CONFIG');
 
