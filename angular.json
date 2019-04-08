@@ -78,7 +78,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js"
             ],
             "styles": [
               "node_modules/flag-icon-css/css/flag-icon.css",
