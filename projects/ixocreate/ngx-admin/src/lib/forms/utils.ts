@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/observable';
-
 export function isNullOrUndefined(value: any) {
   return value === undefined || value === null;
 }
@@ -9,7 +7,7 @@ export function isObject(x: any) {
 }
 
 export function clone(value: any): any {
-  if (!isObject(value) || value instanceof RegExp || value instanceof Observable) {
+  if (!isObject(value) || value instanceof RegExp) {
     return value;
   }
 
