@@ -2,21 +2,7 @@
   <div class="row">
     <div *ngFor="let widget of data.items"
          [ngClass]="{'col-md-12': widget.size === 3, 'col-md-8': widget.size === 2, 'col-md-4': widget.size === 1}">
-      <ng-container *ngIf="widget.type === 'slideshow'">
-        <ixo-dashboard-slideshow [data]="widget.data"></ixo-dashboard-slideshow>
-      </ng-container>
-      <ng-container *ngIf="widget.type === 'counter'">
-        <ixo-dashboard-counter [data]="widget.data"></ixo-dashboard-counter>
-      </ng-container>
-      <ng-container *ngIf="widget.type === 'statistic-overview'">
-        <ixo-dashboard-statistics-overview [data]="widget.data"></ixo-dashboard-statistics-overview>
-      </ng-container>
-      <ng-container *ngIf="widget.type === 'gallery'">
-        <ixo-dashboard-gallery [data]="widget.data"></ixo-dashboard-gallery>
-      </ng-container>
-      <ng-container *ngIf="widget.type === 'graph'">
-        <ixo-dashboard-graph [data]="widget.data"></ixo-dashboard-graph>
-      </ng-container>
+      <ixo-dashboard-element [data]="widget"></ixo-dashboard-element>
     </div>
   </div>
 </ng-container>

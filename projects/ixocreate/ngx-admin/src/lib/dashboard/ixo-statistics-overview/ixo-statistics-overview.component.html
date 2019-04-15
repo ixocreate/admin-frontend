@@ -10,11 +10,11 @@
               <div class="custom-progress-bar-bg" [style.background-color]="progress.color"></div>
               <div class="custom-progress-bar" [style.width]="(progress.current / progress.max * 100) + '%'"
                    [style.background-color]="progress.color"></div>
-              <div class="custom-progress-text">{{progress.current}} / {{progress.max}} {{ progress.title }}</div>
+              <div class="custom-progress-text" [style.color]="progress.textColor">{{progress.current}} / {{progress.max}} {{ progress.title }}</div>
             </div>
           </div>
         </div>
-        <div class="col-sm-2" *ngFor="let counter of element.counter">
+        <div class="col-sm" *ngFor="let counter of element.counter">
           <h2 class="mb-0" [style.color]="counter.color">{{ counter.counter }}</h2>
           <div class="text-muted text-uppercase font-weight-bold">{{ counter.title }}</div>
         </div>

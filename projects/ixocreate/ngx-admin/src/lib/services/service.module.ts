@@ -9,6 +9,7 @@ import { SchemaTransformService } from './schema-transform.service';
 import { PageTitleService } from './page-title.service';
 import { CopyService } from './copy.service';
 import { DataTableTypesService } from './data-table-types.service';
+import { DashboardService } from './dashboard.service';
 
 @NgModule({
   imports: [],
@@ -28,6 +29,7 @@ export class ServiceModule {
         PageTitleService,
         CopyService,
         DataTableTypesService,
+        DashboardService,
 
         AppDataService,
         AccountDataService,

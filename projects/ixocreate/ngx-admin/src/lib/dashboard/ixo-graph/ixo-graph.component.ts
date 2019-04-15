@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, Input } from '@angular/core';
 import * as shape from 'd3-shape';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'ixo-dashboard-graph',
@@ -16,8 +17,7 @@ export class IxoDashboardGraphComponent {
 
   public customColors = [];
 
-  @Input('data')
-  set model(data) {
+  @Input() set data(data) {
     if (!data) {
       return;
     }
