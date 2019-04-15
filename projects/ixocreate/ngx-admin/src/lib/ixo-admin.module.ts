@@ -97,6 +97,7 @@ import { IxoLinkSelectModalComponent } from './modals/ixo-link-select-modal/ixo-
 import { IxoButtonComponent } from './components/ixo-button/ixo-button.component';
 import { CalendarModule } from 'primeng/components/calendar/calendar';
 import { IxoDashboardElementComponent } from './components/ixo-dashboard-element/ixo-dashboard-element.component';
+import { IxoDashboardTableComponent } from './dashboard/ixo-dashboard-table/ixo-dashboard-table.component';
 
 /**
  * TODO: move to a dynamic approach to support more locales
@@ -185,6 +186,7 @@ const APP_DASHBOARD_COMPONENTS = [
   IxoDashboardStatisticsOverviewComponent,
   IxoDashboardGalleryComponent,
   IxoDashboardGraphComponent,
+  IxoDashboardTableComponent,
 ];
 
 export function initConfig(appData: AppDataService, injector: Injector): () => Promise<any> {

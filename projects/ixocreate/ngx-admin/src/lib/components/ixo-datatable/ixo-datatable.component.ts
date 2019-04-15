@@ -77,7 +77,9 @@ export class IxoDatatableComponent implements OnInit {
 
   ngOnInit() {
     if (this.resource) {
-      this.apiUrl = this.config.config.routes.resourceIndex.replace('{resource}', this.resource);
+      if (!this.apiUrl) {
+        this.apiUrl = this.config.config.routes.resourceIndex.replace('{resource}', this.resource);
+      }
       this.resourceInfo = this.config.getResourceConfig(this.resource);
     }
     if (this.apiUrl) {
