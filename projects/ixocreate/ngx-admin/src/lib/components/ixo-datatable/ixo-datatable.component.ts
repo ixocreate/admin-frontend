@@ -87,6 +87,13 @@ export class IxoDatatableComponent implements OnInit {
     }
   }
 
+  getLink(row: any, type: string) {
+    if (this.resource) {
+      return '/resource/' + this.resource + '/' + row.id + '/' + type;
+    }
+    return row.id + '/view';
+  }
+
   private setColumns(columns: any[]) {
     for (const column of columns) {
       this.searchableData[column.prop] = !!column.searchable;

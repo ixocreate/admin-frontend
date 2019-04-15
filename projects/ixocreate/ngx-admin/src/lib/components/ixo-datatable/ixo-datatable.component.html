@@ -154,11 +154,11 @@
 
 <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
   <div class="text-right" *ngIf="type === 'edit'">
-    <a class="btn btn-sm btn-warning mr-1" [routerLink]="row.id + '/view'"
+    <a class="btn btn-sm btn-warning mr-1" [routerLink]="getLink(row, 'view')"
        *ngIf="resourceInfo && resourceInfo.canView ">
       <i class="fa fa-eye"></i> View
     </a>
-    <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'">
+    <a class="btn btn-sm btn-primary" [routerLink]="getLink(row, 'edit')">
       <i class="fa fa-pencil"></i> Edit
     </a>
   </div>
