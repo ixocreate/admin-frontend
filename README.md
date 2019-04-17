@@ -1,4 +1,6 @@
-# IXOCREATE Admin Frontend
+# IXOCREATE Admin Frontend Application
+
+[![License](https://img.shields.io/github/license/ixocreate/admin-frontend.svg)](LICENSE)
 
 Angular application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin).
 It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin) by default to ensure API client compatibility.
@@ -80,6 +82,10 @@ Execute the unit tests via [Karma](https://karma-runner.github.io):
 Execute the end-to-end tests via [Protractor](http://www.protractortest.org/):
 
     $ yarn run e2e
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## License
 
