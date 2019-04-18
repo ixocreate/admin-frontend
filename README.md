@@ -83,9 +83,25 @@ Execute the end-to-end tests via [Protractor](http://www.protractortest.org/):
 
     $ yarn run e2e
 
+## Documentation
+
+Learn more about IXOCREATE by reading its [Documentation](https://ixocreate.github.io/).
+
+## Documentation
+
+Learn more about IXOCREATE by reading its [Documentation](https://ixocreate.github.io/).
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Security Vulnerabilities
+
+If you discover security vulnerabilities, please address issues directly to opensource@ixocreate.com via e-mail.
+
+## Security Vulnerabilities
+
+If you discover security vulnerabilities, please address issues directly to opensource@ixocreate.com via e-mail.
 
 ## License
 
