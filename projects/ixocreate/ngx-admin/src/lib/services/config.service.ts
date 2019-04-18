@@ -86,19 +86,19 @@ export class ConfigService {
   }
 
   get locale(): string {
-    return this._user.locale || 'en-US';
+    return this._user ? this._user.locale || 'en-US' : 'en-US';
   }
 
   get numberLocale(): string {
-    return this._user.numberLocale || this.locale;
+    return this._user ? this._user.numberLocale || this.locale : this.locale;
   }
 
   get dateLocale(): string {
-    return this._user.dateLocale || this.locale;
+    return this._user ? this._user.dateLocale || this.locale : this.locale;
   }
 
   get timezone(): string {
-    return this._user.timezone || 'UTC';
+    return this._user ? this._user.timezone || 'UTC' : 'UTC';
   }
 
   get namespace(): string {
