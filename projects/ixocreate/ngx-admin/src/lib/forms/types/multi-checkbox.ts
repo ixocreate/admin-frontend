@@ -15,7 +15,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 })
 export class FormlyFieldMultiCheckboxComponent extends CustomFieldTypeAbstract implements OnInit {
 
-  innerValues: any[] = [];
+  innerValues: { [key: string]: boolean } = {};
 
   ngOnInit() {
     super.ngOnInit();
@@ -24,6 +24,15 @@ export class FormlyFieldMultiCheckboxComponent extends CustomFieldTypeAbstract i
     }
     for (const option of this.to.options as any) {
       this.innerValues[option.value] = (this.value.indexOf(option.value) !== -1);
+    }
+  }
+
+  setValue(value: any) {
+    super.setValue(value);
+    for (const key in this.innerValues) {
+      if (this.innerValues.hasOwnProperty(key)) {
+        this.innerValues[key] = (this.value.indexOf(key) !== -1);
+      }
     }
   }
 

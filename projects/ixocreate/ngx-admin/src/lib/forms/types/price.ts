@@ -9,7 +9,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
         <div class="input-group-text" [class.is-invalid]="showError || !isValid">
           <div class="input-group-select-wrapper">
             <select class="input-group-select" [(ngModel)]="selectedOption" (change)="setPrice()" [disabled]="to.disabled">
-              <option *ngFor="let option of selectOptions" [ngValue]="option">{{ option.label }}</option>
+              <option *ngFor="let option of selectOptions" [ngValue]="option.value">{{ option.label }}</option>
             </select>
           </div>
         </div>
@@ -36,7 +36,11 @@ export class FormlyFieldPriceComponent extends CustomFieldTypeAbstract implement
     for (const currency of this.to.currencies) {
       this.selectOptions.push({label: currency, value: currency});
     }
-    this.selectedOption = this.selectOptions[0];
+    if (this.value) {
+      this.selectedOption = this.value.currency;
+    } else {
+      this.selectedOption = this.selectOptions[0].value;
+    }
   }
 
   setPrice() {
@@ -48,9 +52,17 @@ export class FormlyFieldPriceComponent extends CustomFieldTypeAbstract implement
     } else {
       price = parseFloat(price.toFixed(this.decimal));
       this.setValue({
-        currency: this.selectedOption.value,
+        currency: this.selectedOption,
         price,
       });
+    }
+  }
+
+  setValue(value: any) {
+    super.setValue(value);
+    if (value) {
+      this.selectedOption = value.currency;
+      this.currentPrice = value.price;
     }
   }
 

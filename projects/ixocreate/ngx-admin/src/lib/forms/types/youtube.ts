@@ -52,6 +52,14 @@ export class FormlyFieldYouTubeComponent extends CustomFieldTypeAbstract impleme
     }
   }
 
+  setValue(value: any) {
+    super.setValue(value);
+    console.log(value);
+    if (this.value) {
+      this.inputValue = this.youtubeUrl + this.value;
+    }
+  }
+
   remove() {
     this.inputValue = '';
     super.remove();

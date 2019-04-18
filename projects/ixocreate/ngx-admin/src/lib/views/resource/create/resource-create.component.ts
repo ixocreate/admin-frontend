@@ -50,7 +50,13 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
       this.appData.getResourceDefaultValue(this.resourceKey).then((response) => {
         for (const key of Object.keys(response.item)) {
           if (this.form && this.form.controls && this.form.controls[key]) {
-            this.form.controls[key].setValue(response.item[key]);
+            const control = this.form.controls[key];
+            const component = (control as any).component;
+            if (component) {
+              component.setValue(response.item[key]);
+            } else {
+              control.setValue(response.item[key]);
+            }
           } else {
             this.data[key] = response.item[key];
           }

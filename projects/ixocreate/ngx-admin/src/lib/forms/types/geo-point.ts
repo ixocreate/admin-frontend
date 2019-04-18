@@ -54,6 +54,11 @@ export class FormlyFieldGeoPointComponent extends CustomFieldTypeAbstract implem
     this.parseLocationString();
   }
 
+  setValue(value: any) {
+    super.setValue(value);
+    this.parseLocationString();
+  }
+
   openMapModal() {
     if (this.to.disabled) {
       return;

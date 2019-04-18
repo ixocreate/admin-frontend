@@ -105,11 +105,11 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
     // };
     this.locale = {
       firstDayOfWeek: 1,
-      dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-      monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      dayNamesMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       today: 'Today',
       clear: 'Clear',
       dateFormat: this.config.dateFormat,
@@ -121,9 +121,12 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
     };
 
     // console.warn(this.config.timezone);
+    this.setDateValues();
+  }
 
+  setDateValues() {
     if (this.value) {
-      if(this.calendarConfig.showTime) {
+      if (this.calendarConfig.showTime) {
         /**
          * date from db comes in utc
          */
@@ -134,7 +137,7 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
          * the date in the user's desired timezone
          */
         let userDate = utcDate.tz(this.config.timezone);
-        if(!this.calendarConfig.showTime) {
+        if (!this.calendarConfig.showTime) {
           /**
            * interpret as utc for dates without time
            */
@@ -182,6 +185,11 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
     return this.config.dateFormat;
   }
 
+  setValue(value: any) {
+    super.setValue(value);
+    this.setDateValues();
+  }
+
   set dateValue(value: Date) {
     let utcDate = null;
 
@@ -194,7 +202,7 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
     // const browserOffset = moment().format('Z');
     // console.log('browserOffset', browserOffset);
 
-    if(this.calendarConfig.showTime) {
+    if (this.calendarConfig.showTime) {
       /**
        * reverse the timezone truncation
        * calendar always displays browser's timezone
@@ -203,7 +211,7 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
       const userOffset = moment(value).tz(this.config.timezone).format('Z');
       // console.log('userOffset', userOffset);
 
-      const userDate = moment(moment(value).format('YYYY-MM-DD HH:mm:00')+userOffset);
+      const userDate = moment(moment(value).format('YYYY-MM-DD HH:mm:00') + userOffset);
       // console.log('userDate', moment(value).format('YYYY-MM-DD HH:mm:00')+userOffset);
 
       /**
