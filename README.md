@@ -95,10 +95,6 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 If you discover security vulnerabilities, please address issues directly to opensource@ixocreate.com via e-mail.
 
-## Security Vulnerabilities
-
-If you discover security vulnerabilities, please address issues directly to opensource@ixocreate.com via e-mail.
-
 ## License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
