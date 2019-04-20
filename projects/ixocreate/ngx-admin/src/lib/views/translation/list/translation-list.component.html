@@ -1,7 +1,7 @@
-<kiwi-content>
+<ixo-content>
   <ng-container *ngIf="dataUrl">
-    <kiwi-datatable [tableTitle]="'Translation Catalogue: <b>' + catalogueId + '</b>'" [apiUrl]="dataUrl"
-                    [columns]="columns" (updatedData)="setColumns($event)"></kiwi-datatable>
+    <ixo-datatable [tableTitle]="'Translation Catalogue: <b>' + catalogueId + '</b>'" [apiUrl]="dataUrl"
+                    [columns]="columns" (updatedData)="setColumns($event)"></ixo-datatable>
   </ng-container>
 
   <ng-template #buttonColumnTemplate let-row="row" let-value="value" let-i="index">
@@ -9,7 +9,7 @@
       <a class="btn btn-sm btn-primary" [routerLink]="row.id + '/edit'"><i class="fa fa-pencil"></i> Edit</a>
     </div>
   </ng-template>
-</kiwi-content>
+</ixo-content>
 
 <!--
 <ng-container>

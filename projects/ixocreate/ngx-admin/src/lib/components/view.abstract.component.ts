@@ -1,11 +1,11 @@
 import { ViewChild } from '@angular/core';
-import { KiwiContentComponent } from './kiwi-content/kiwi-content.component';
+import { IxoContentComponent } from './ixo-content/ixo-content.component';
 
 export abstract class ViewAbstractComponent {
 
-  @ViewChild(KiwiContentComponent) kiwiContent: KiwiContentComponent;
+  @ViewChild(IxoContentComponent) ixoContent: IxoContentComponent;
 
-  constructor() {
+  protected constructor() {
   }
 
 }

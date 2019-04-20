@@ -27,10 +27,17 @@ export interface Routes {
   mediaUpload?: string;
   mediaEditor?: string;
   /**
+   * sitemap
+   */
+  sitemapIndex?: string;
+  sitemapMove?: string;
+  sitemapCopy?: string;
+  /**
    * page
    */
   pageIndex?: string;
   pageMove?: string;
+  pageCopy?: string;
   pageDetail?: string;
   pageVersionIndex?: string;
   pageVersionDetail?: string;
@@ -77,6 +84,3 @@ export interface Routes {
 
   [key: string]: string;
 }
-
-
-

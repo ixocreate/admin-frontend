@@ -1,6 +1,6 @@
 $form-element-spacer: .5rem;
 
-.kiwi-form {
+.ixo-form {
   label {
     margin-bottom: 0;
     font-size: .8rem;
@@ -25,7 +25,7 @@ $form-element-spacer: .5rem;
     margin-bottom: 0;
   }
 
-  &.kiwi-form-inline {
+  &.ixo-form-inline {
     @include media-breakpoint-up(sm) {
       .form-group {
         display: flex;
@@ -35,31 +35,40 @@ $form-element-spacer: .5rem;
         }
       }
 
-      .kiwi-form-label {
-        width: 140px + $grid-gutter-width;
-        padding: 8px $grid-gutter-width 8px 0;
+      .ixo-form-label {
+        width: $ixo-form-label-width + $grid-gutter-width;
+        padding: 8px $grid-gutter-width / 2 8px 0;
       }
 
-      .kiwi-form-control-container {
+      .ixo-form-control-container {
         flex: 1;
       }
     }
   }
 
-  .kiwi-toggle-right {
+  .ixo-toggle-right {
     display: flex;
 
-    .kiwi-form-label {
+    .ixo-form-label {
       padding: 8px $grid-gutter-width 8px 0;
       flex: 1;
     }
   }
 }
 
+.input-group-text {
+  overflow: hidden;
+}
+
 a.input-group-text {
   &:hover {
     text-decoration: none;
   }
+}
+
+formly-wrapper-section {
+  margin-bottom: $form-element-spacer;
+  display: block;
 }
 
 .tabset-content {
@@ -387,6 +396,10 @@ formly-wrapper-validation-messages > div > .invalid-feedback {
       border-bottom-right-radius: 0;
     }
   }
+}
+
+.input-group > .form-control {
+  height: auto;
 }
 
 .input-disabled {

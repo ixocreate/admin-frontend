@@ -1,17 +1,17 @@
 {
-    "extends": "../../../tslint.json",
-    "rules": {
-        "directive-selector": [
-            true,
-            "attribute",
-            "kiwi",
-            "camelCase"
-        ],
-        "component-selector": [
-            true,
-            "element",
-            "kiwi",
-            "kebab-case"
-        ]
-    }
+  "extends": "../../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "ixo",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      ["ixo", "formly", "app", "sitemap"],
+      "kebab-case"
+    ]
+  }
 }

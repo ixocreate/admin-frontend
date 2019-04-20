@@ -27,6 +27,8 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
   aboveWidgetData$: Promise<any>;
   belowWidgetData$: Promise<any>;
 
+  loading = false;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -38,7 +40,7 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.resourceKey = params.type || this.resourceKey;
       this.resourceInfo = this.config.getResourceConfig(this.resourceKey);
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.resourceInfo.label}]);
@@ -48,7 +50,13 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
       this.appData.getResourceDefaultValue(this.resourceKey).then((response) => {
         for (const key of Object.keys(response.item)) {
           if (this.form && this.form.controls && this.form.controls[key]) {
-            this.form.controls[key].setValue(response.item[key]);
+            const control = this.form.controls[key];
+            const component = (control as any).component;
+            if (component) {
+              component.setValue(response.item[key]);
+            } else {
+              control.setValue(response.item[key]);
+            }
           } else {
             this.data[key] = response.item[key];
           }
@@ -92,10 +100,15 @@ export class ResourceCreateComponent extends ViewAbstractComponent implements On
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       this.appData.createResource(this.resourceKey, this.form.getRawValue()).then((response) => {
+        this.loading = false;
         this.notification.success(this.resourceInfo.label + ' successfully created', 'Success');
         this.router.navigateByUrl('/resource/' + this.resourceKey + '/' + response.id + '/edit');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 }

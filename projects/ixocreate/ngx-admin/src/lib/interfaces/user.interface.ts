@@ -7,6 +7,10 @@ export interface User {
   permissions: string[];
   role: string;
   status: string;
-  userAttributes: Array<any>;
-  accountAttributes: Array<any>;
+  userAttributes: any[];
+  accountAttributes: any[];
+  locale?: string;
+  numberLocale?: string;
+  dateLocale?: string;
+  timezone?: string;
 }

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { AccountDataService } from '../../services/data/account-data.service';
-import { KiwiContentComponent } from '../../components/kiwi-content/kiwi-content.component';
+import { IxoContentComponent } from '../../components/ixo-content/ixo-content.component';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class DefaultLayoutComponent implements AfterViewInit {
 
   aside: TemplateRef<any>;
   headerButtons: TemplateRef<any>;
-  kiwiContent: KiwiContentComponent;
+  ixoContent: IxoContentComponent;
 
   paddingTop = 26;
 
@@ -31,7 +31,7 @@ export class DefaultLayoutComponent implements AfterViewInit {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
 
-    this.changes.observe(<Element>this.element, {
+    this.changes.observe(this.element as Element, {
       attributes: true,
     });
 
@@ -39,10 +39,10 @@ export class DefaultLayoutComponent implements AfterViewInit {
   }
 
   onRouterOutletActivate(event: any) {
-    this.kiwiContent = event.kiwiContent;
-    if (event.kiwiContent) {
-      this.aside = event.kiwiContent.aside;
-      this.headerButtons = event.kiwiContent.headerButtons;
+    this.ixoContent = event.ixoContent;
+    if (event.ixoContent) {
+      this.aside = event.ixoContent.aside;
+      this.headerButtons = event.ixoContent.headerButtons;
       this.setHeaderHeight();
     }
   }
@@ -52,17 +52,15 @@ export class DefaultLayoutComponent implements AfterViewInit {
   }
 
   setHeaderHeight() {
-    if (this.kiwiContent) {
+    if (this.ixoContent) {
       setTimeout(() => {
-        this.kiwiContent.headerHeight = this.header.nativeElement.clientHeight + this.paddingTop;
+        this.ixoContent.headerHeight = this.header.nativeElement.clientHeight + this.paddingTop;
       });
     }
   }
 
   logout() {
-    this.accountData.logout().then(() => {
-      window.location.reload();
-    });
+    window.location.href = this.config.config.project.logoutUrl;
   }
 
 }

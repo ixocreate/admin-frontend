@@ -1,7 +1,7 @@
 import { Directive, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[kiwiClickStopPropagation]',
+  selector: '[ixoClickStopPropagation]',
 })
 export class ClickStopPropagationDirective {
 

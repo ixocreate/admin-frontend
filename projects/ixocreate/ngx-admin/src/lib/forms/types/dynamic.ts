@@ -1,4 +1,4 @@
-import { Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { clone, isNullOrUndefined } from '../utils';
 import { FormlyFieldRepeatableComponent } from './repeatable';
@@ -35,12 +35,11 @@ export interface BlockSelect {
                 <i class="fa fa-fw fa-chevron-up"></i>
               </button>
               <div class="form-dynamic-title">
-                <!--
-                <input [(ngModel)]="fieldGroup.model._meta.name" placeholder="Click to enter custom name..." class="form-dynamic-input"/>
+                <!-- <input [(ngModel)]="fieldGroup.model._meta.name" placeholder="Click to enter custom name..." class="form-dynamic-input"/> -->
+                <div>{{ blockTitle(model[i], fieldGroup) }}</div>
                 <div class="ml-auto">{{ (fieldGroup.templateOptions && fieldGroup.templateOptions.label) || fieldGroup['_type'] }}</div>
-                -->
               </div>
-              <div class="btn-group" kiwiDropdown>
+              <div class="btn-group" ixoDropdown>
                 <button class="btn-more dropdown-btn" type="button">
                   <i class="fa fa-fw fa-ellipsis-h"></i>
                 </button>
@@ -65,7 +64,7 @@ export interface BlockSelect {
           </div>
         </ng-container>
       </div>
-      <div class="form-dynamic-footer" *ngIf="fieldGroups && fieldGroups.length > 0">
+      <div class="form-dynamic-footer" *ngIf="footerVisible(fieldGroups, field, model)">
         <ng-container *ngIf="fieldGroupTypes.length > 1; else singleField">
           <div class="input-group">
             <ng-select [items]="fieldGroupTypes" [(ngModel)]="selectedFieldGroupType" bindLabel="label" [clearable]="false">
@@ -89,7 +88,7 @@ export interface BlockSelect {
         <ng-template #singleField>
           <div class="text-right">
             <button class="btn btn-success" type="button" (click)="add()" *ngIf="fieldGroupTypes[0]">
-              <i class="fa fa-plus"></i> Add {{ fieldGroupTypes[0].label }}
+              <i class="fa fa-plus"></i> {{ fieldGroupTypes[0].label }}
             </button>
           </div>
         </ng-template>
@@ -100,7 +99,7 @@ export interface BlockSelect {
 export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent implements OnInit {
 
   selectedFieldGroupType: BlockSelect;
-  fieldGroupTypes: Array<BlockSelect>;
+  fieldGroupTypes: BlockSelect[];
 
   removeControls = [];
 
@@ -134,13 +133,27 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     /**
      * cleanup - remove controls that are marked for removal
      */
-    this.removeControls.forEach(index => this.remove(index));
+    this.removeControls.forEach((index) => this.remove(index));
 
     this.setFieldGroupTypes();
   }
 
   get fieldGroups() {
     return this.field['fieldGroups'];
+  }
+
+  blockTitle(model, fieldGroup) {
+    let titleConfig = fieldGroup.templateOptions.nameExpression;
+    for (const key of Object.keys(model)) {
+      titleConfig = titleConfig.replace(`%${key}%`, model[key] || '');
+    }
+    titleConfig = titleConfig.replace(/%.*%/g, '');
+    return titleConfig;
+  }
+
+  footerVisible(fieldGroups, field, model) {
+    return fieldGroups && fieldGroups.length > 0 &&
+      (!field.templateOptions['limit'] || field.templateOptions['limit'] === null || (field.templateOptions['limit'] > model.length));
   }
 
   private setFieldGroupTypes() {
@@ -165,7 +178,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
         this.fieldGroupTypes.push({
           label: copy.name + ' - ' + nameMap[copy.model._type],
           value: copy.model,
-          copy: copy,
+          copy,
         });
       }
     });
@@ -236,7 +249,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     this.model.splice(i, 0, model);
 
     let typeDefinition = null;
-    this.fieldGroups.map(fieldGroup => {
+    this.fieldGroups.map((fieldGroup) => {
       if (fieldGroup._type === model._type) {
         typeDefinition = fieldGroup;
       }
@@ -275,6 +288,6 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     this.formBuilder.buildForm(form, [this.field.fieldGroup[i]], this.model, this.options);
     this.formControl.insert(i, form.at(0));
 
-    (<any> this.options).resetTrackModelChanges();
+    (this.options as any).resetTrackModelChanges();
   }
 }

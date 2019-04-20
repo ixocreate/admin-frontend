@@ -1,6 +1,8 @@
-# IXOCREATE Admin Frontend
+# IXOCREATE Admin Frontend Application
 
-Angular 6 application that interacts with [Kiwi's Admin API](https://github.com/ixocreate/admin).
+[![License](https://img.shields.io/github/license/ixocreate/admin-frontend.svg)](LICENSE)
+
+Angular application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin).
 It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin) by default to ensure API client compatibility.
 
 ## Features
@@ -32,7 +34,7 @@ Extend the application with custom features as explained in detail below.
 
 ## Development
 
-Kiwi's admin application can be customized by extending the feature set with custom components and building the application.
+IXOCREATE's admin application can be customized by extending the feature set with custom components and building the application.
 
 The application layout is based on a default `angular-cli` project setup to not get in the way of common Angular development workflows.
 
@@ -40,19 +42,19 @@ The application layout is based on a default `angular-cli` project setup to not 
 
 ### Development server
 
-    $ npm run serve
+    $ yarn run serve
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 To specify the port the app should be served at (e.g. `4201` instead of the angular default `4200`) change the port in package.json or use:
 
-    $ npm run serve --port=4201
+    $ yarn run serve --port=4201
 
 ### Update ngx-admin
 
 To update the core library run
 
-    $ npm i @ixocreate/ngx-admin
+    $ yarn install @ixocreate/ngx-admin
 
 **Note:** make sure the updated library version is compatible with the current Admin API version that is used in your project.
 
@@ -64,7 +66,7 @@ Run `ng g component component-name` to generate a new component. You can also us
 
 ### Build
 
-    $ npm run build
+    $ yarn run build
 
 The build artifacts will be stored in the `build/` directory. The `--prod` flag for a production build is default.
 
@@ -72,14 +74,26 @@ The build artifacts will be stored in the `build/` directory. The `--prod` flag 
 
 Execute the unit tests via [Karma](https://karma-runner.github.io):
 
-    $ npm run test
+    $ yarn run test
 
 
 ### Running end-to-end tests
 
 Execute the end-to-end tests via [Protractor](http://www.protractortest.org/):
 
-    $ npm run e2e
+    $ yarn run e2e
+
+## Documentation
+
+Learn more about IXOCREATE by reading its [Documentation](https://ixocreate.github.io/).
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Security Vulnerabilities
+
+If you discover security vulnerabilities, please address issues directly to opensource@ixocreate.com via e-mail.
 
 ## License
 

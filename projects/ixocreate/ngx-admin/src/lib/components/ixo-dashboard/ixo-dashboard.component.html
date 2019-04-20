@@ -1,0 +1,8 @@
+<ng-container *ngIf="data">
+  <div class="row">
+    <div *ngFor="let widget of data.items"
+         [ngClass]="{'col-md-12': widget.size === 3, 'col-md-8': widget.size === 2, 'col-md-4': widget.size === 1}">
+      <ixo-dashboard-element [data]="widget"></ixo-dashboard-element>
+    </div>
+  </div>
+</ng-container>

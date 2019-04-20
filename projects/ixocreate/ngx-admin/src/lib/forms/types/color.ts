@@ -15,7 +15,7 @@ import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
       <input type="text" class="form-control pointer-events-none" [value]="value" [class.is-invalid]="showError" [disabled]="to.disabled">
       <div class="input-group-append" #button *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError"
-                (click)="remove()" kiwiClickStopPropagation>
+                (click)="remove()" ixoClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>

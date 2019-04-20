@@ -1,9 +1,9 @@
-export function canActivateWithPermissions(permissions: Array<string>, abilities: string[]) {
+export function canActivateWithPermissions(permissions: string[], abilities: string[]) {
   let can = true;
   if (!permissions) {
     can = false;
   } else {
-    abilities.map(ability => {
+    abilities.map((ability) => {
       const wildCardAbility = ability.split('.').slice(0, -1).join('.') + '.*';
       if (permissions.indexOf('*') > -1 || permissions.indexOf(wildCardAbility) > -1 || permissions.indexOf(ability) > -1) {
         // all good

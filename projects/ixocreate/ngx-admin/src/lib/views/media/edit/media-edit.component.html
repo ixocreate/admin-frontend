@@ -1,4 +1,4 @@
-<kiwi-content>
+<ixo-content>
   <ng-template #headerButtons>
     <a [routerLink]="'../../'" class="btn btn-outline-dark">
       <i class="fa fa-ban"></i> Cancel
@@ -29,7 +29,7 @@
         </div>
         <div class="row mb-1">
           <div class="col-sm-3 font-weight-bold">Size</div>
-          <div class="col-sm">{{ data.media.size | kiwiFileSize }}</div>
+          <div class="col-sm">{{ data.media.size | ixoFileSize }}</div>
         </div>
         <div class="row mb-1">
           <div class="col-sm-3 font-weight-bold">Uploaded At</div>
@@ -53,12 +53,12 @@
       </div>
       <div class="card-body">
         <ng-container *ngIf="form && fields; else isLoading">
-          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="kiwi-form kiwi-form-inline" (ngSubmit)="onSubmit()">
+          <formly-form [form]="form" [fields]="fields" [model]="data.item" class="ixo-form ixo-form-inline" (ngSubmit)="onSubmit()">
           </formly-form>
         </ng-container>
         <ng-template #isLoading>
           <div class="text-center my-3 loading">
-            <kiwi-loading class="big-center"></kiwi-loading>
+            <ixo-loading class="big-center"></ixo-loading>
           </div>
         </ng-template>
       </div>
@@ -76,14 +76,14 @@
         <div class="cropper-container" [class.unsaved]="activeEntity && activeEntity.unsaved">
           <div class="cropper">
             <ng-container *ngIf="image">
-              <kiwi-image-cropper
+              <ixo-image-cropper
                 [imageUrl]="image"
                 [maintainAspectRatio]="maintainAspectRatio"
                 [aspectRatio]="aspectRatio"
                 [minWidth]="minWidth"
                 [minHeight]="minHeight"
                 (cropped)="onCrop($event)">
-              </kiwi-image-cropper>
+              </ixo-image-cropper>
             </ng-container>
           </div>
           <ul class="entity-list">
@@ -95,10 +95,17 @@
                 <div class="entity-name">{{ entity.label }}</div>
                 <div class="entity-size">{{ entity.width || '...' }}x{{ entity.height || '...' }}</div>
                 <div class="entity-buttons mt-1">
-                  <button type="button" class="btn btn-outline-white btn-block btn-sm flex-grow-1 mr-2" (click)="saveCrop(entity)" kiwiClickStopPropagation>
-                    <i class="fa fa-save"></i> Save Crop
-                  </button>
-                  <button type="button" class="btn btn-outline-white btn-sm" (click)="resetCrop(entity)" kiwiClickStopPropagation>
+                  <ixo-button size="sm"
+                              [outline]="true"
+                              color="white"
+                              [loading]="loading"
+                              icon="save"
+                              (click)="saveCrop(entity)"
+                              ixoClickStopPropagation class="flex-grow-1 mr-2">
+                    Save Crop
+                  </ixo-button>
+                  <button type="button" class="btn btn-outline-white btn-sm" (click)="resetCrop(entity)"
+                          ixoClickStopPropagation>
                     <i class="fa fa-times"></i>
                   </button>
                 </div>
@@ -117,4 +124,4 @@
 
 
   </ng-container>
-</kiwi-content>
+</ixo-content>

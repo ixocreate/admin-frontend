@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/observable';
 import { DataServiceAbstract } from './data.service.abstract';
 import { Config } from '../../interfaces/config.interface';
 import { ApiService } from '../api.service';
@@ -8,12 +8,12 @@ import { AppState } from '../../store/app.state';
 import { DefaultStore } from '../../store/default.store';
 import { DefaultHelper } from '../../helpers/default.helper';
 import { ConfigService } from '../config.service';
-import { tap } from 'rxjs/internal/operators';
+import { tap } from 'rxjs/internal/operators/tap';
 import { parseParams } from '../../shared/parseParams';
 import { ResourceList } from '../../interfaces/resource-list.interface';
 import { Resource } from '../../interfaces/resource.interface';
 import { Page } from '../../interfaces/page.interface';
-import { CropperPosition } from '../../components/kiwi-image-cropper/kiwi-image-cropper.component';
+import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
 
 @Injectable()
 export class AppDataService extends DataServiceAbstract {
@@ -50,31 +50,64 @@ export class AppDataService extends DataServiceAbstract {
 
   loadConfig(): Promise<any> {
     return this.api.get(this.config.config.routes.config).then((data: Config) => {
-      this.saveToDefaultStore('CONFIG', Object.assign({}, DefaultHelper.windowVar('__kiwi'), data));
+      this.saveToDefaultStore('CONFIG', Object.assign({}, DefaultHelper.windowVar('__ixo'), data));
     });
   }
 
-  getSitemap(locale: string): Promise<any> {
-    return this.api.get(this.config.config.routes.pageList, {locale: locale});
+  getByUrl(url, locale: string): Promise<any> {
+    const data: any = {};
+    if (locale) {
+      data.locale = locale;
+    }
+    return this.api.get(this.config.config.routes.pageList, data);
   }
 
-  getPageIndex(): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
-    return this.api.get(this.config.config.routes.pageIndex);
+  getSitemap(locale: string, pageType?: string): Promise<any> {
+    return this.api.get(this.config.config.routes.pageList, {locale, pageType});
   }
 
-  getSubPageIndex(handle: string): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
+  getSitemapIndex(): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
+    return this.api.get(this.config.config.routes.sitemapIndex);
+  }
+
+  getSubPageIndex(handle: string): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
     return this.api.get(this.config.config.routes.pageIndexSub.replace('{handle}', handle));
   }
 
-  getFlatPageIndex(handle: string, params: any = {}): Promise<{ allowedAddingRoot: boolean, items: Array<Page> }> {
+  getFlatPageIndex(handle: string, params: any = {}): Promise<{ allowedAddingRoot: boolean, items: Page[] }> {
     return this.api.get(this.config.config.routes.pageIndexFlat.replace('{handle}', handle) + '?' + parseParams(params));
   }
 
-  postPageMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
-    return this.api.post(this.config.config.routes.pageMove, {
+  postSitemapMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
+    return this.api.post(this.config.config.routes.sitemapMove, {
       id: sitemapId,
-      prevSibling: prevSiblingSitemapId,
-      parent: parentSitemapId,
+      prevSiblingId: prevSiblingSitemapId,
+      parentId: parentSitemapId,
+    });
+  }
+
+  postSitemapCopy(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string, locales = null): Promise<any> {
+    return this.api.post(this.config.config.routes.sitemapCopy, {
+      fromSitemapId: sitemapId,
+      prevSiblingId: prevSiblingSitemapId,
+      parentId: parentSitemapId,
+      locales,
+    });
+  }
+
+  postPageCopyToSitemapId(fromPageId: string, toSitemapId: string = null, locale: string = null, name: string = null): Promise<any> {
+    return this.api.post(this.config.config.routes.pageCopy, {
+      fromPageId,
+      toSitemapId,
+      locale,
+      name,
+    });
+  }
+
+  postPageCopyToPageId(fromPageId: string, toPageId = null): Promise<any> {
+    return this.api.post(this.config.config.routes.pageCopy, {
+      fromPageId,
+      toPageId,
     });
   }
 
@@ -117,7 +150,7 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   createPageVersion(pageId: string, data: any): Promise<any> {
-    return this.api.post(this.config.config.routes.pageVersionCreate.replace('{pageId}', pageId), data);
+    return this.api.post(this.config.config.routes.pageVersionCreate.replace('{id}', pageId), data);
   }
 
   pageDelete(pageId: string): Promise<any> {
@@ -150,7 +183,7 @@ export class AppDataService extends DataServiceAbstract {
     }
   }
 
-  getResourceSelect(resource: string): Promise<Array<any>> {
+  getResourceSelect(resource: string): Promise<any[]> {
     if (!this.savedResourceSelects[resource]) {
       this.savedResourceSelects[resource] = this.getResourceIndex(resource, 500);
     }
@@ -162,7 +195,7 @@ export class AppDataService extends DataServiceAbstract {
   getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null): Promise<ResourceList> {
     const params: any = {
       offset: (pageNumber - 1) * limit,
-      limit: limit,
+      limit,
     };
     if (search && search !== '') {
       params.search = search;
@@ -203,7 +236,7 @@ export class AppDataService extends DataServiceAbstract {
   getMediaIndex(limit: number = 10, pageNumber: number = 1, search: string = null, type: string = null): Promise<ResourceList> {
     const params: any = {
       offset: (pageNumber - 1) * limit,
-      limit: limit,
+      limit,
     };
     if (search && search !== '') {
       params.filter = {};
@@ -252,6 +285,16 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
+  getRegistryDetail(id: string): Promise<any> {
+    return this.api.get(this.config.config.routes.registryDetail.replace('{id}', id));
+  }
+
+  updateRegistry(id: string, data: any): Promise<void> {
+    return this.api.patch(this.config.config.routes.registryUpdate.replace('{id}', id), data).then((response) => {
+      return response;
+    });
+  }
+
   getDashboard(): Promise<any> {
     return this.api.get(this.config.config.routes.dashboardIndex);
   }
@@ -261,7 +304,11 @@ export class AppDataService extends DataServiceAbstract {
       return Promise.resolve([]);
     }
     if (id === null) {
-      return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource).replace('{position}', position).replace('{type}', type).replace('[/{id}]', ''));
+      return this.api.get(
+        this.config.config.routes.resourceWidgets
+          .replace('{resource}', resource).replace('{position}', position)
+          .replace('{type}', type).replace('[/{id}]', ''),
+      );
     }
     return this.api.get(this.config.config.routes.resourceWidgets.replace('{resource}', resource)
       .replace('{position}', position).replace('{type}', type).replace('[/{id}]', '/' + id));

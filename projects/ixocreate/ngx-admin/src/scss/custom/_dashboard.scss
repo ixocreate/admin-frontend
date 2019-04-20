@@ -1,0 +1,56 @@
+.counter-widget-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  min-height: 60px;
+  color: #fff;
+  font-size: 1.75rem;
+  border-radius: $card-border-radius;
+  margin-right: $spacer;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.media-grid {
+  a {
+    color: $body-color;
+  }
+
+  .media-image-icon {
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    font-size: 13px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    background: $input-border-color;
+    @include border-top-left-radius($card-border-radius);
+    color: $body-color;
+  }
+
+  .media-container:hover {
+    .media-image-icon {
+      background: $primary;
+      color: #fff;
+    }
+  }
+}
+
+.dashboard-carousel {
+  padding: $spacer;
+
+  .carousel-inner {
+    border-radius: $card-border-radius;
+    overflow: hidden;
+  }
+
+  .carousel-control {
+    background: rgba(0, 0, 0, .2);
+    width: 50px;
+  }
+}

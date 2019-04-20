@@ -1,0 +1,79 @@
+<div class="sitemap-item-container" [class.is-copy-page]="isCopyPage">
+  <div class="sitemap-item" [class.not-created]="!pageData">
+    <button class="btn-collapse toggle" (click)="collapsed = !collapsed" *ngIf="page.children.length > 0">
+      <i class="fa fa-fw" [ngClass]="{'fa-minus': !collapsed, 'fa-plus': collapsed}"></i>
+    </button>
+    <div class="btn-collapse" *ngIf="page.children.length === 0"></div>
+    <div class="sitemap-item-content-container">
+      <div class="sitemap-item-content" [innerHtml]="pageName"></div>
+      <div class="sitemap-item-handle d-none d-sm-block">{{ page.pageType.label }}</div>
+      <div class="sitemap-item-icons d-none d-sm-block" *ngIf="pageData">
+        <ng-container *ngIf="pageData.status === 'online'; else offline">
+          <i class="fa fa-fw fa-power-off text-success" title="online"></i>
+        </ng-container>
+        <ng-template #offline>
+          <i class="fa fa-fw fa-power-off text-danger" title="offline"></i>
+        </ng-template>
+        <ng-container *ngIf="publishedString; else noPublishTime">
+          <i class="fa fa-fw fa-clock-o" [title]="publishedString"></i>
+        </ng-container>
+        <ng-template #noPublishTime>
+          <i class="fa fa-fw fa-clock-o" style="opacity: .2;"></i>
+        </ng-template>
+      </div>
+      <a class="btn btn-primary btn-sitemap btn-sitemap d-none d-sm-block" [routerLink]="pageData.id + '/edit'"
+         *ngIf="pageData">
+        <i class="fa fa-fw fa-pencil"></i> Edit
+      </a>
+      <div class="btn-group" ixoDropdown>
+        <button class="btn-more dropdown-btn" type="button">
+          <i class="fa fa-fw fa-ellipsis-h"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item dropdown-item-primary d-block d-sm-none" [routerLink]="pageData.id + '/edit'"
+             *ngIf="pageData">
+            <i class="fa fa-fw fa-pencil"></i> Edit
+          </a>
+          <a class="dropdown-item dropdown-item-success" [routerLink]="'add/' + locale + '/' + this.page.sitemap.id"
+             *ngIf="!pageData">
+            <i class="fa fa-fw fa-plus"></i> Add Page for this Language
+          </a>
+          <a class="dropdown-item dropdown-item-success" *ngIf="pageData && page.childrenAllowed"
+             [routerLink]="'create/' + locale + '/' + this.page.sitemap.id">
+            <i class="fa fa-fw fa-plus"></i> Add Sub-Page
+          </a>
+          <button class="dropdown-item" type="button" (click)="movePageStart('move')">
+            <i class="fa fa-fw fa-sort"></i> Move Page
+          </button>
+          <button class="dropdown-item" type="button" (click)="movePageStart('copy')"
+                  *ngIf="!page.pageType.handle">
+            <i class="fa fa-fw fa-clone"></i> Copy Page
+          </button>
+          <a class="dropdown-item dropdown-item-info" *ngIf="pageUrl && isOnline" [href]="pageUrl" target="_blank">
+            <i class="fa fa-fw fa-eye"></i> View Page
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="sitemap-insert-btn as-child" *ngIf="page.children.length === 0 && allowedInsertChild"
+          (click)="movePageEnd(null, page)">{{ moveType }} as child
+  </button>
+
+  <div class="sitemap-sub-item" *ngIf="page.children.length > 0" [hidden]="collapsed">
+    <button class="sitemap-insert-btn 2" *ngIf="allowedInsertChild" (click)="movePageEnd(null, page)">
+      {{ moveType }} here
+    </button>
+
+    <ng-container *ngFor="let subPage of page.children">
+      <ixo-sitemap-item [page]="subPage" [parentPage]="page" [locale]="locale"
+                         (moved)="triggerMoved($event)"></ixo-sitemap-item>
+    </ng-container>
+  </div>
+
+  <button class="sitemap-insert-btn 2" *ngIf="allowedInsertSibling" (click)="movePageEnd(page, null)">
+    {{ moveType }} here
+  </button>
+
+</div>

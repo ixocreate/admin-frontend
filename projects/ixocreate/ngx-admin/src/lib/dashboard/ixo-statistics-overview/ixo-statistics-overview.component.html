@@ -1,0 +1,24 @@
+<div class="card" *ngIf="data">
+  <div class="card-body">
+    <div *ngFor="let element of data; let index = index">
+      <hr *ngIf="index !== 0"/>
+      <h6 class="mb-3">{{ element.name }}</h6>
+      <div class="row align-items-center">
+        <div class="col-sm-6" *ngIf="element.progress.length > 0">
+          <div *ngFor="let progress of element.progress; let index = index" [class.mt-3]="index !== 0">
+            <div class="custom-progress">
+              <div class="custom-progress-bar-bg" [style.background-color]="progress.color"></div>
+              <div class="custom-progress-bar" [style.width]="(progress.current / progress.max * 100) + '%'"
+                   [style.background-color]="progress.color"></div>
+              <div class="custom-progress-text" [style.color]="progress.textColor">{{progress.current}} / {{progress.max}} {{ progress.title }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm" *ngFor="let counter of element.counter">
+          <h2 class="mb-0" [style.color]="counter.color">{{ counter.counter }}</h2>
+          <div class="text-muted text-uppercase font-weight-bold">{{ counter.title }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

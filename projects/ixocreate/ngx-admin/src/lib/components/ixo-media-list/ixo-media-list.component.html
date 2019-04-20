@@ -1,0 +1,76 @@
+<div class="card card-accent-primary">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-sm-4"><h6 class="m-0 mt-1 mt-sm-0 text-center text-sm-left">Media Files</h6></div>
+      <div class="col-sm-4 mt-2 mt-sm-0">
+        <ng-select *ngIf="showTypeFilter" [items]="types" bindLabel="label" bindValue="name" [(ngModel)]="selectedType"
+                   [clearable]="false" (change)="onChangeType()"></ng-select>
+      </div>
+      <div class="col-sm-4 mt-2 mt-sm-0">
+        <input class="form-control" type="text" placeholder="Filter..." [(ngModel)]="filterValue"
+               (keyup)="applyFilter()"/>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div *ixoCan="['admin.api.media.upload']">
+      <div ng2FileDrop [uploader]="uploader">
+        <div class="upload-container">
+          <div class="drop-box">
+            <input class="file-upload" type="file" ng2FileSelect [uploader]="uploader" multiple>
+            <div class="upload-center">
+              <button class="btn btn-primary" type="button">Choose a file</button>
+              <p>or drag it here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="data$ | async as data; else isLoading">
+      <div class="row no-gutters media-grid">
+        <div *ngFor="let item of uploader.queue" class="col-xl-2 col-sm-4 col-6">
+          <div class="media-container">
+            <div class="progress-bar-container">
+              <progressbar class="progress-sm" [value]="item.progress" type="primary"></progressbar>
+            </div>
+            <div class="media-icon">
+              <span [class]="'file-icon fa fa-4x fa-fw ' + mimeTypeIcon(item.file.type)"></span>
+            </div>
+            <div class="media-image-title p-1 text-nowrap text-truncate">
+              <div>{{ item.file.name }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngFor="let media of data.items" class="col-xl-2 col-sm-4 col-6">
+          <div class="media-container" (click)="selectMedia(media)" [class.is-image]="isImage(media.mimeType)">
+            <ng-container *ngIf="isImage(media.mimeType); else noImage">
+              <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + media.thumb + ')'}"></div>
+              <div class="media-image-title">
+                <div>{{ media.filename }}</div>
+              </div>
+            </ng-container>
+            <ng-template #noImage>
+              <div class="media-icon">
+                <span [class]="'file-icon fa fa-4x fa-fw ' + mimeTypeIcon(media.mimeType)"></span>
+              </div>
+              <div class="media-image-title">
+                <div>{{ media.filename }}</div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #isLoading>
+      <div class="p-3">
+        <ixo-loading class="big-center"></ixo-loading>
+      </div>
+    </ng-template>
+  </div>
+  <div class="card-footer">
+    <ixo-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [currentPage]="currentPage"
+                     (pageChanged)="onPage($event)"></ixo-pagination>
+  </div>
+</div>

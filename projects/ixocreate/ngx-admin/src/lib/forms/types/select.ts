@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AppDataService } from '../../services/data/app-data.service';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
-export class SelectOption {
+export interface SelectOption {
   label: string;
   value?: any;
   group?: SelectOption[];
@@ -31,6 +31,7 @@ export class SelectOption {
           [searchable]="!to.extendedSelect"
           [bindValue]="valueProp"
           [bindLabel]="labelProp"
+          [virtualScroll]="true"
           [clearable]="false"
           [multiple]="multiple"
           [formControl]="formControl">
@@ -42,8 +43,8 @@ export class SelectOption {
         </div>
       </div>
       <ng-template #modalTemplate>
-        <kiwi-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="multiple ? value : []"
-                        (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></kiwi-datatable>
+        <ixo-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="multiple ? value : []"
+                        (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></ixo-datatable>
         <div class="bg-white text-center p-2" *ngIf="multiple">
           <button class="btn btn-primary" (click)="closeModal()">Close</button>
         </div>
@@ -144,16 +145,19 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   }
 
   onSelect(row) {
-    const value = row.id ? row.id : row[this.to.valueProp || 'value'];
     if (this.multiple) {
-      this.setValue([...this.value, value]);
+      const values = row.map((value) => {
+        return value.id ? value.id : value[this.to.valueProp || 'value'];
+      });
+      this.setValue(values);
     } else {
+      const value = row.id ? row.id : row[this.to.valueProp || 'value'];
       this.closeModal();
       this.setValue(value);
     }
   }
 
   onDeSelect(row) {
-    this.setValue(this.value.filter(el => el !== row.id));
+    this.setValue(this.value.filter((el) => el !== row.id));
   }
 }

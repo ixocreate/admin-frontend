@@ -1,15 +1,16 @@
-<kiwi-content>
+<ixo-content>
   <ng-template #headerButtons>
     <a class="btn btn-success" routerLink="create" *ngIf="canCreate"><i class="fa fa-plus"></i> Create</a>
   </ng-template>
 
   <ng-container *ngIf="resourceKey">
     <ng-container *ngIf="aboveWidgetData$ | async as data">
-      <kiwi-dashboard [data]="data"></kiwi-dashboard>
+      <ixo-dashboard [data]="data"></ixo-dashboard>
     </ng-container>
-    <kiwi-datatable [resource]="resourceKey" [advancedSearch]="true" [filters]="filters" [search]="search"></kiwi-datatable>
+    <ixo-datatable [resource]="resourceKey" [advancedSearch]="true" [filters]="filters"
+                    [search]="search"></ixo-datatable>
     <ng-container *ngIf="belowWidgetData$ | async as data">
-      <kiwi-dashboard [data]="data"></kiwi-dashboard>
+      <ixo-dashboard [data]="data"></ixo-dashboard>
     </ng-container>
   </ng-container>
-</kiwi-content>
+</ixo-content>

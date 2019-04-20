@@ -43,12 +43,15 @@
   & > .toast-warning:before {
     content: '\f075';
   }
+
   & > .toast-error:before {
     content: '\f071';
   }
+
   & > .toast-info:before {
     content: '\f1cd';
   }
+
   & > .toast-success:before {
     content: '\f00C';
   }

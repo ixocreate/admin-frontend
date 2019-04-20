@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, NgZone, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[kiwiDropdown]',
+  selector: '[ixoDropdown]',
 })
 export class DropdownDirective implements OnInit {
 

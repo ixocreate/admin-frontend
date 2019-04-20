@@ -6,10 +6,10 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
-import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
-import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
-import { BsModalService } from 'ngx-bootstrap';
-import {ConfigService} from "../../../services/config.service";
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
+import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   templateUrl: './page-edit.component.html',
@@ -17,7 +17,7 @@ import {ConfigService} from "../../../services/config.service";
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   versionIndex$: Promise<any>;
-  versionData$: Promise<any>;
+  versionData: any;
   data$: Promise<any>;
 
   id: string;
@@ -26,16 +26,24 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   versionFields: FormlyFieldConfig[];
 
   navigationForm: FormGroup = new FormGroup({});
-  navigationModel: { navigation: Array<string> };
-  navigationFields: FormlyFieldConfig[];
 
-  navigationOptions: Array<any>;
-  selectedNavigationOptions: Array<any>;
+  navigationOptions: any[];
+  selectedNavigationOptions: any[];
 
   hasChildren = true;
 
+  currentPageVersion: string = null;
 
-  pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean };
+  pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean, sitemapId: string };
+
+  versionSaving = true;
+  pageDataSaving = false;
+
+  pageLocales: Array<{ locale: string, page: any }> = [];
+  replacePageLocales: Array<{ locale: string, page: any }> = [];
+
+  otherPagesWithPageType: Array<{ id: string, name: string }> = [];
+  selectedPageWithPageType: { id: string, name: string } = null;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -48,7 +56,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.id = params.id;
       this.loadDetailData();
       this.updateVersionIndex();
@@ -65,26 +73,45 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   private loadDetailData() {
     this.data$ = this.appData.getPageDetail(this.id).then((data) => {
-      data.schema = this.schemaTransform.transformForm(data.schema);
-      this.versionFields = data.schema ? data.schema : [];
-      this.loadNavigationData(data.navigation);
+      this.setPageLocales(data);
 
-      this.hasChildren = data.hasChildren;
+      this.appData.getSitemap(data.page.page.locale, data.pageType.name).then((response) => {
+        this.selectedPageWithPageType = null;
+        this.otherPagesWithPageType = response;
+      });
 
+      this.replacePageLocales = this.pageLocales.filter((a) => a.page);
       this.pageData = {
         id: data.page.page.id,
         name: data.page.page.name,
         publishedFrom: data.page.page.publishedFrom,
         publishedUntil: data.page.page.publishedUntil,
         slug: data.page.page.slug,
+        sitemapId: data.page.page.sitemapId,
         online: data.page.page.status === 'online',
       };
 
-      this.versionData$ = this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
-        return versionData;
-      });
+      data.schema = this.schemaTransform.transformForm(data.schema);
+      this.versionFields = data.schema ? data.schema : [];
+      this.loadNavigationData(data.navigation);
+      this.hasChildren = data.hasChildren;
+
+      if (data.page.version.head === null) {
+        this.versionData = {
+          content: {},
+        };
+        this.versionSaving = false;
+      } else if (this.currentPageVersion !== data.page.version.head) {
+        this.versionData = null;
+        this.currentPageVersion = data.page.version.head;
+        this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
+          this.versionData = versionData;
+          this.versionSaving = false;
+          return versionData;
+        }).catch(() => this.versionSaving = false);
+      }
       return data;
-    });
+    }).catch(() => this.versionSaving = false);
   }
 
   private loadNavigationData(navigation) {
@@ -92,20 +119,59 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     this.selectedNavigationOptions = navigation.filter((element) => element.active).map((element) => element.name);
   }
 
-  onReplaceContentModal(fromPage) {
-    console.log(fromPage);
+  goToOtherLanguage(data) {
+    if (data.page) {
+      this.router.navigateByUrl(`/page/${data.page.id}/edit`);
+    } else {
+      const initialState: ConfirmModalData = {
+        title: 'Create Content?',
+        confirmBtnType: 'success',
+        confirmBtnIcon: 'fa fa-plus',
+        confirmBtnTitle: 'Create',
+        text: 'Page in this Language dosn\'t exist yet. Do you want to create it and copy the content of this page?',
+        onConfirm: () => {
+          this.appData.postPageCopyToSitemapId(this.pageData.id, this.pageData.sitemapId, data.locale).then((response) => {
+            this.notification.success('Page Data successfully copied', 'Success');
+            this.router.navigateByUrl(`/page/${response.toPageId}/edit`);
+          });
+        },
+      };
+      this.modal.show(IxoConfirmModalComponent, {initialState});
+    }
+  }
+
+  onReplaceContentModal(fromPageId) {
+    const initialState: ConfirmModalData = {
+      title: 'Replace Content?',
+      confirmBtnType: 'warning',
+      confirmBtnIcon: 'fa fa-edit',
+      confirmBtnTitle: 'Replace',
+      text: 'Do you really want to replace the Content of this Page?',
+      onConfirm: () => {
+        this.appData.postPageCopyToPageId(fromPageId, this.pageData.id).then(() => {
+          this.loadDetailData();
+          this.updateVersionIndex();
+          this.notification.success('Page Data successfully copied', 'Success');
+        });
+      },
+    };
+    this.modal.show(IxoConfirmModalComponent, {initialState});
   }
 
   onSubmit(): void {
     if (this.versionForm.valid === false) {
       this.notification.formErrors(this.versionForm);
     } else {
+      this.versionSaving = true;
       const data = this.versionForm.getRawValue();
       this.appData.createPageVersion(this.id, {content: data}).then((response) => {
         this.loadDetailData();
         this.updateVersionIndex();
         this.notification.success('Page Version successfully created', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.versionSaving = false;
+        this.notification.apiError(error);
+      });
     }
   }
 
@@ -124,18 +190,56 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         }).catch((error) => this.notification.apiError(error));
       },
     };
-    this.modal.show(KiwiConfirmModalComponent, {initialState});
+    this.modal.show(IxoConfirmModalComponent, {initialState});
   }
 
   savePageData(key: string, value: any) {
+    this.pageDataSaving = true;
     const postData = {};
     postData[key] = value;
     this.appData.updatePage(this.id, postData).then((response) => {
       this.loadDetailData();
+      this.pageDataSaving = false;
       this.notification.success(key + ' successfully saved', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.notification.apiError(error);
+      this.pageDataSaving = false;
+    });
+  }
+
+  openPreview() {
+    this.data$.then((data) => {
+      window.open(data.page.url);
+    });
+  }
+
+  get locales() {
+    return this.config.config.intl.locales;
+  }
+
+  setPageLocales(data) {
+    const responseData = [];
+    if (data && data.localizedPages) {
+      for (const locale in data.localizedPages) {
+        if (data.localizedPages.hasOwnProperty(locale)) {
+
+          responseData.push({
+            locale,
+            page: data.localizedPages[locale].page,
+          });
+        }
+      }
+    }
+    for (const locale of this.locales) {
+      if (responseData.filter((a) => a.locale === locale.locale).length === 0) {
+        if (locale.locale !== data.page.page.locale) {
+          responseData.push({
+            locale: locale.locale,
+            page: null,
+          });
+        }
+      }
+    }
+    this.pageLocales = responseData;
   }
 }
-
-
-

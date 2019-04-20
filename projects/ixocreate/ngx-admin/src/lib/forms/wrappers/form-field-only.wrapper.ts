@@ -5,7 +5,7 @@ import { FieldWrapper } from '@ngx-formly/core';
   selector: 'formly-wrapper-form-field-only',
   template: `
     <div [class.has-error]="showError">
-      <div class="kiwi-form-control-container">
+      <div class="ixo-form-control-container">
         <ng-template #fieldComponent></ng-template>
       </div>
     </div>

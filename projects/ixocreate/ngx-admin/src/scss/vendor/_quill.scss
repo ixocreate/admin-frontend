@@ -1,5 +1,33 @@
-.ql-editor {
+.ql-snow .ql-editor {
   color: $input-color;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  h3 {
+    font-size: 1.6em;
+  }
+
+  h4 {
+    font-size: 1.4em;
+  }
+
+  h5 {
+    font-size: 1.2em;
+  }
+
+  h6 {
+    font-size: 1em;
+  }
 
   p, ul, ol {
     margin-top: 10px;
@@ -11,6 +39,11 @@
     &:first-child {
       margin-top: 0;
     }
+  }
+
+  a {
+    color: $primary;
+    text-decoration: underline;
   }
 }
 
@@ -120,8 +153,8 @@
 }
 
 .is-invalid {
-  .ql-toolbar.ql-snow,
-  .ql-container.ql-snow {
+  & > .ql-toolbar.ql-snow,
+  & > .ql-container.ql-snow {
     border-color: $danger;
   }
 }
@@ -136,3 +169,16 @@
   }
 }
 
+.ql-ixolink {
+  position: relative;
+
+  &:after {
+    display: inline-block;
+    font-family: FontAwesome;
+    content: '\f0c1';
+    position: absolute;
+    left: 7px;
+    top: 2px;
+    font-size: 15px;
+  }
+}

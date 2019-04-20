@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 export interface Schema {
   key: string;
@@ -21,7 +21,8 @@ export class SchemaTransformService {
     this.registerTransform('number', this.handleDefault('input', {type: 'number'}));
     this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}));
     this.registerTransform('checkbox', this.handleDefault('checkbox'));
-    this.registerTransform('radio', this.handleRadio);
+    this.registerTransform('multiCheckbox', this.handleDefaultMulti('multiCheckbox'));
+    this.registerTransform('radio', this.handleDefaultMulti('radio'));
 
     this.registerTransform('date', this.handleDefault('date'));
     this.registerTransform('datetime', this.handleDefault('datetime'));
@@ -56,11 +57,11 @@ export class SchemaTransformService {
     return formSchema;
   }
 
-  private handleDefault(type: string, templateOptions: any = {}, keysToTemplateOptions: Array<string> = []) {
+  private handleDefault(type: string, templateOptions: any = {}, keysToTemplateOptions: string[] = []) {
     return (value: any): Schema => {
       const data = {
         key: value.name,
-        type: type,
+        type,
         templateOptions: {
           label: value.label,
           description: value.description,
@@ -70,10 +71,38 @@ export class SchemaTransformService {
           ...templateOptions,
         },
       };
+      if(value.metadata) {
+        data.templateOptions.metadata = {...value.metadata};
+        // if(data.templateOptions.metadata.default) {
+        //   data.default = data.templateOptions.metadata.default;
+        // }
+      }
       keysToTemplateOptions.forEach((key) => {
         data.templateOptions[key] = value[key];
       });
       return data;
+    };
+  }
+
+  private handleDefaultMulti(type: string, templateOptions: any = {}, keysToTemplateOptions: string[] = []) {
+    return (value: any): Schema => {
+      const options = [];
+
+      for (const key in value.options) {
+        if (value.options.hasOwnProperty(key)) {
+          options.push({value: key, label: value.options[key]});
+        }
+      }
+
+      return this.handleDefault(type, {
+        options,
+        description: value.description,
+        resource: value.resource,
+        clearable: !value.required || false,
+        labelProp: 'label',
+        valueProp: 'value',
+        ...templateOptions,
+      }, keysToTemplateOptions)(value);
     };
   }
 
@@ -86,6 +115,7 @@ export class SchemaTransformService {
         templateOptions: {
           label: element.label,
           description: element.description,
+          nameExpression: element.nameExpression,
           collapsed: false,
           allowCopy: false,
         },
@@ -99,6 +129,7 @@ export class SchemaTransformService {
       templateOptions: {
         label: value.label,
         description: value.description,
+        limit: value.limit,
       },
       fieldArray: [],
       fieldGroups: groups,
@@ -114,6 +145,7 @@ export class SchemaTransformService {
         templateOptions: {
           label: element.label,
           description: element.description,
+          nameExpression: element.nameExpression,
           collapsed: false,
           allowCopy: true,
         },
@@ -126,6 +158,7 @@ export class SchemaTransformService {
       type: 'dynamic',
       templateOptions: {
         label: value.label,
+        limit: value.limit,
       },
       fieldArray: [],
       fieldGroups: groups,
@@ -135,14 +168,14 @@ export class SchemaTransformService {
   private handleTabbedGroup(value: any, transformer: SchemaTransformService): any {
     const groups = [];
 
-    value.elements.forEach(element => {
+    value.elements.forEach((element) => {
       groups.push({
         wrappers: ['tab'],
         templateOptions: {
           label: element.label,
           description: element.description,
           icon: element.icon,
-          name: element.name
+          name: element.name,
         },
         fieldGroup: transformer.transformForm(element.elements),
         elements: element.elements,
@@ -154,7 +187,7 @@ export class SchemaTransformService {
       templateOptions: {
         label: value.label,
         description: value.description,
-        name: value.name
+        name: value.name,
       },
       fieldGroup: groups,
     };
@@ -180,35 +213,16 @@ export class SchemaTransformService {
       if (value.options.hasOwnProperty(key)) {
         options.push({
           value: key,
-          label: value.options[key]
+          label: value.options[key],
         });
       }
     }
 
     return transformer.handleDefault('select', {
-      options: options,
+      options,
       resource: value.resource,
-      clearable: value.clearable || false,
+      clearable: !value.required || true,
       extendedSelect: value.extendedSelect || false,
-    })(value);
-  }
-
-  private handleRadio(value: any, transformer: SchemaTransformService): Schema {
-    const options = [];
-
-    for (const key in value.options) {
-      if (value.options.hasOwnProperty(key)) {
-        options.push({value: key, label: value.options[key]});
-      }
-    }
-
-    return transformer.handleDefault('radio', {
-      options: options,
-      description: value.description,
-      resource: value.resource,
-      clearable: value.clearable || false,
-      labelProp: 'label',
-      valueProp: 'value',
     })(value);
   }
 
@@ -217,7 +231,7 @@ export class SchemaTransformService {
     data.templateOptions = Object.assign({
       ...data.templateOptions,
       multiple: true,
-      clearable: value.clearable || true,
+      clearable: !value.required || true,
     });
     return data;
   }

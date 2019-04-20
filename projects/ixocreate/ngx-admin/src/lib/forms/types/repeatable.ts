@@ -61,7 +61,7 @@ export class FormlyFieldRepeatableComponent extends FieldArrayType {
       this.add(index, data.model, data.templateOptions);
     });
 
-    (<any> this.options).resetTrackModelChanges();
+    (this.options as any).resetTrackModelChanges();
   }
 
   add(i?: number, initialModel?: any, templateOptions?: FormlyTemplateOptions) {

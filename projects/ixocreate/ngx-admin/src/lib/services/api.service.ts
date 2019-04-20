@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Observable } from 'rxjs/Observable';
-import { catchError, map, publishLast, refCount, timeout } from 'rxjs/operators';
-import { _throw } from 'rxjs/observable/throw';
-import { BehaviorSubject } from 'rxjs';
+import { Observable} from 'rxjs/observable';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { catchError } from 'rxjs/operators/catchError';
+import { map } from 'rxjs/operators/map';
+import { publishLast } from 'rxjs/operators/publishLast';
+import { refCount } from 'rxjs/operators/refCount';
+import { timeout } from 'rxjs/operators/timeout';
 import { APIErrorElement, APIResponse } from '../interfaces/api-response.interface';
+import { environment } from '../../../../../../src/environments/environment';
+import { _throw } from 'rxjs/observable/throw';
 
 export enum ApiRequestMethod {
   GET = 'get',
@@ -26,14 +31,19 @@ export class ApiService {
   constructor(protected http: HttpClient, protected config: ConfigService) {
   }
 
-  get isAuthorized$(): Observable<boolean> {
-    return this._isAuthorized$.asObservable();
-  }
-
   /**
    * @description Headers for requests
    */
   private errorMapping(response: APIResponse): APIErrorElement {
+    if (!response.errorCode) {
+      return {
+        code: 'unknown-error',
+        data: {
+          title: 'Error',
+          messages: ['An unknown error occurred.'],
+        },
+      };
+    }
     const errors: APIErrorElement = {
       code: response.errorCode,
       data: {
@@ -41,7 +51,10 @@ export class ApiService {
         messages: [],
       },
     };
-    for (const message of response.errorMessages) {
+    for (let message of response.errorMessages) {
+      if (message.length > 200) {
+        message = message.substring(0, 200) + '...';
+      }
       errors.data.messages.push(message);
     }
     return errors;
@@ -51,7 +64,7 @@ export class ApiService {
    * @description Sends a request to the server
    */
   protected request(method: ApiRequestMethod, url: string, body: any = null): Observable<any> {
-    return this.http.request(<string>method, url, {
+    return this.http.request(method as string, url, {
       body,
       headers: this.headers,
       observe: 'events',
@@ -62,14 +75,15 @@ export class ApiService {
       refCount(),
       catchError((error) => {
         if (error.status === 401) {
-          this._isAuthorized$.next(false);
+          if (environment.production) {
+            window.location.href = this.config.config.project.loginUrl;
+          } else {
+            alert('You are not logged in!');
+          }
         }
         return _throw(error.error ? this.errorMapping(error.error) : null);
       }),
       map((response: HttpResponse<any>) => {
-        if (url !== this.config.config.routes.session && url !== this.config.config.routes.config) {
-          this._isAuthorized$.next(true);
-        }
         const apiResponse: APIResponse = response.body;
         if (typeof apiResponse.success === 'undefined') {
           return apiResponse;

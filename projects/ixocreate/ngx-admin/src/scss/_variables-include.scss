@@ -1,9 +1,7 @@
 @import 'variables';
 @import '~@coreui/coreui/scss/variables';
-@import "~bootstrap/scss/variables";
-
 @import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
-
-@import '~@coreui/coreui/scss/bootstrap/variables';
 @import '~@coreui/coreui/scss/mixins';
+@import "custom/mixins";

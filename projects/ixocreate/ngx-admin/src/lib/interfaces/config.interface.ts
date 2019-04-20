@@ -5,12 +5,12 @@ export interface Config {
     production: boolean;
   };
   project?: Project;
-  media?: Array<Media>;
-  navigation?: Array<Navigation>;
+  media?: Media[];
+  navigation?: Navigation[];
   routes?: Routes;
-  resources?: Array<ResourceConfig>;
+  resources?: ResourceConfig[];
   googleApiKey?: string;
-  intl?: { default: string, locales: Array<Locale> };
+  intl?: { default: string, locales: Locale[] };
 }
 
 export interface Media {
@@ -30,8 +30,16 @@ export interface Project {
   version?: string;
   background?: string;
   icon?: string;
-  logo?: string;
+  logo?: ProjectLogo;
   loginMessage?: string;
+  logoutUrl?: string;
+  loginUrl?: string;
+}
+
+export interface ProjectLogo {
+  image: string;
+  width: number;
+  height: number;
 }
 
 export interface Navigation {

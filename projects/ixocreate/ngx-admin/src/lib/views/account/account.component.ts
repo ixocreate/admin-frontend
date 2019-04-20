@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { AccountDataService } from '../../services/data/account-data.service';
 import { NotificationService } from '../../services/notification.service';
 import { User } from '../../interfaces/user.interface';
 import { ViewAbstractComponent } from '../../components/view.abstract.component';
-import {AppDataService} from "../../services/data/app-data.service";
-import {SchemaTransformService} from "../../services/schema-transform.service";
+import { AppDataService } from '../../services/data/app-data.service';
+import { SchemaTransformService } from '../../services/schema-transform.service';
 
 @Component({
   templateUrl: './account.component.html',
 })
-export class AccountComponent extends ViewAbstractComponent {
+export class AccountComponent extends ViewAbstractComponent implements OnInit {
   account: User;
 
   passwordForm: FormGroup = new FormGroup({});
@@ -22,8 +22,8 @@ export class AccountComponent extends ViewAbstractComponent {
       type: 'input',
       templateOptions: {
         type: 'password',
-        label: 'Enter your current password',
-        placeholder: 'Enter your current password',
+        label: 'Current password',
+        placeholder: 'Current password',
         required: true,
       },
     },
@@ -74,46 +74,82 @@ export class AccountComponent extends ViewAbstractComponent {
     },
   ];
 
-  additionalForm: FormGroup = new FormGroup({});
-  additionalFields: FormlyFieldConfig[];
+  localeForm: FormGroup = new FormGroup({});
+  localeFormOptions: FormlyFormOptions = {};
+  localeFormFields: FormlyFieldConfig[];
+
+  attributesForm: FormGroup = new FormGroup({});
+  attributesFormFields: FormlyFieldConfig[];
+
+  exampleDate: Date;
+  loading = false;
 
   constructor(protected notification: NotificationService,
               protected appData: AppDataService,
               protected schemaTransform: SchemaTransformService,
               public accountData: AccountDataService) {
     super();
+    this.exampleDate = new Date();
   }
 
   ngOnInit() {
     this.accountData.getAccountConfig().then((data: any) => {
-      this.additionalFields = data.accountAttributesSchema ?  this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
+      this.attributesFormFields = data.accountAttributesSchema ? this.schemaTransform.transformForm(data.accountAttributesSchema) : [];
+      this.localeFormFields = data.localeAttributesSchema ? this.schemaTransform.transformForm(data.localeAttributesSchema) : [];
     });
   }
 
   onSubmitAttributes() {
-    const data = this.additionalForm.getRawValue();
-    if (this.additionalForm.valid === false) {
-      this.notification.formErrors(this.additionalForm);
+    this.loading = true;
+    const data = this.attributesForm.getRawValue();
+    if (this.attributesForm.valid === false) {
+      this.notification.formErrors(this.attributesForm);
     } else {
       this.accountData.updateAccountAttributes(data).then(() => {
+        this.loading = false;
         this.notification.success('successfully updated', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 
   onSubmitEmail() {
+    this.loading = true;
     const data = this.emailForm.getRawValue();
     this.accountData.updateEmail(data.email, data.emailRepeat).then(() => {
+      this.loading = false;
       this.emailFormOptions.resetModel();
       this.notification.success('The email was successfully updated', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.loading = false;
+      this.notification.apiError(error);
+    });
+  }
+
+  onSubmitLocale() {
+    this.loading = true;
+    const data = this.localeForm.getRawValue();
+    this.accountData.updateLocale(data).then(() => {
+      this.loading = false;
+      this.notification.success('Locale, Language & Timezone successfully updated', 'Success');
+    }).catch((error) => {
+      this.loading = false;
+      this.notification.apiError(error);
+    });
   }
 
   onSubmitPassword() {
+    this.loading = true;
     const data = this.passwordForm.getRawValue();
     this.accountData.updatePassword(data.passwordOld, data.password, data.passwordRepeat).then(() => {
+      this.loading = false;
       this.passwordFormOptions.resetModel();
       this.notification.success('The password was successfully updated', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.loading = false;
+      this.notification.apiError(error);
+    });
   }
 }

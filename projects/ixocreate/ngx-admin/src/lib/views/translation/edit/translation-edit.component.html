@@ -1,4 +1,4 @@
-<kiwi-content>
+<ixo-content>
   <ng-template #headerButtons>
     <a [routerLink]="'../../'" class="btn btn-outline-dark">
       <i class="fa fa-ban"></i> Cancel
@@ -14,9 +14,7 @@
         <textarea rows="4" class="form-control" [(ngModel)]="locale.message"></textarea>
       </div>
       <div class="card-footer text-right">
-        <button type="button" class="btn btn-primary" (click)="saveTranslation(locale)">
-          <i class="fa fa-save"></i> Update
-        </button>
+        <ixo-button [loading]="loading" icon="save" (click)="saveTranslation(locale)">Update</ixo-button>
       </div>
     </div>
   </ng-container>
@@ -54,4 +52,4 @@
       </tab>
     </tabset>
   </ng-template>
-</kiwi-content>
+</ixo-content>

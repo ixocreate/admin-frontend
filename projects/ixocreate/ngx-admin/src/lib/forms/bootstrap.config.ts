@@ -16,6 +16,7 @@ import { FormlyFieldRepeatableComponent } from './types/repeatable';
 import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
 import { FormlyFieldPriceComponent } from './types/price';
 import { FormlyFieldGeoPointComponent } from './types/geo-point';
+import { FormlyFieldMultiCheckboxComponent } from './types/multi-checkbox';
 
 export const FIELD_TYPE_COMPONENTS = [
   // types
@@ -27,6 +28,7 @@ export const FIELD_TYPE_COMPONENTS = [
   FormlyFieldYouTubeComponent,
   FormlyFieldQuillComponent,
   FormlyFieldCheckboxComponent,
+  FormlyFieldMultiCheckboxComponent,
   FormlyFieldRepeatableComponent,
   FormlyFieldDynamicComponent,
   FormlyFieldPriceComponent,
@@ -44,7 +46,7 @@ export function renderCustomError(error) {
   return error;
 }
 
-export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
+export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
   validationMessages: [
     {name: 'required', message: 'This field is required'},
     {name: 'custom', message: renderCustomError},
@@ -58,6 +60,11 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'checkbox',
       component: FormlyFieldCheckboxComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'multiCheckbox',
+      component: FormlyFieldMultiCheckboxComponent,
       wrappers: ['form-field'],
     },
     {
@@ -115,16 +122,18 @@ export const KIWI_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
         templateOptions: {
           height: 200,
           modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              [{'list': 'ordered'}, {'list': 'bullet'}],
-              [{'script': 'sub'}, {'script': 'super'}],
-              [{'indent': '-1'}, {'indent': '+1'}],
-              [{'header': [1, 2, 3, 4, 5, 6, false]}],
-              [{'align': []}],
-              ['clean'],
-              ['link'],
-            ],
+            toolbar: {
+              container: [
+                ['bold', 'italic', 'underline', 'strike'],
+                [{list: 'ordered'}, {list: 'bullet'}],
+                [{script: 'sub'}, {script: 'super'}],
+                [{indent: '-1'}, {indent: '+1'}],
+                [{header: [1, 2, 3, 4, 5, 6, false]}],
+                [{align: []}],
+                ['clean'],
+                ['ixolink'], // TODO: Enable IxoLink: ['ixolink']
+              ],
+            },
           },
         },
       },

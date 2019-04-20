@@ -16,6 +16,8 @@ export class UserCreateComponent extends ViewAbstractComponent implements OnInit
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
+  loading = false;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -27,7 +29,7 @@ export class UserCreateComponent extends ViewAbstractComponent implements OnInit
 
   ngOnInit() {
     this.appData.getUserConfig().then((data: any) => {
-      this.fields = data.create ?  this.schemaTransform.transformForm(data.create) : [];
+      this.fields = data.create ? this.schemaTransform.transformForm(data.create) : [];
     });
   }
 
@@ -35,10 +37,15 @@ export class UserCreateComponent extends ViewAbstractComponent implements OnInit
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       this.appData.createUser(this.form.getRawValue()).then((response) => {
+        this.loading = false;
         this.notification.success('User successfully created', 'Success');
         this.router.navigateByUrl('/admin-user/' + response.id + '/edit');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error);
+      });
     }
   }
 }

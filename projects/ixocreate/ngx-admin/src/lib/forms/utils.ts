@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-
 export function isNullOrUndefined(value: any) {
   return value === undefined || value === null;
 }
@@ -9,7 +7,7 @@ export function isObject(x: any) {
 }
 
 export function clone(value: any): any {
-  if (!isObject(value) || value instanceof RegExp || value instanceof Observable) {
+  if (!isObject(value) || value instanceof RegExp) {
     return value;
   }
 
@@ -18,11 +16,11 @@ export function clone(value: any): any {
   }
 
   if (Array.isArray(value)) {
-    return value.slice(0).map(v => clone(v));
+    return value.slice(0).map((v) => clone(v));
   }
 
   value = Object.assign({}, value);
-  Object.keys(value).forEach(k => value[k] = clone(value[k]));
+  Object.keys(value).forEach((k) => value[k] = clone(value[k]));
 
   return value;
 }

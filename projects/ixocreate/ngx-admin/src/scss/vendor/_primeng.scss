@@ -58,3 +58,15 @@ body .ui-shadow {
     border-radius: $input-border-radius 0 0 $input-border-radius;
   }
 }
+
+.calendar-group {
+  position: relative;
+}
+
+.calender-overlay {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 100;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}

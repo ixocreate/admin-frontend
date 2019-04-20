@@ -5,12 +5,12 @@ export interface APIErrorElement {
 
 export interface APIErrorMessages {
   title: string;
-  messages: Array<string>;
+  messages: string[];
 }
 
 export interface APIResponse {
-  success: Boolean;
+  success: boolean;
   result?: any;
   errorCode?: string;
-  errorMessages?: Array<string>;
+  errorMessages?: string[];
 }

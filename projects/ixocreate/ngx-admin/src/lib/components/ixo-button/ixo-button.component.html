@@ -1,0 +1,15 @@
+<button [type]="type" (click)="buttonClick($event)"
+        class="ixo-btn btn btn-{{ this.outline ? 'outline-' + color : color  }}" [ngClass]="{
+        'btn-has-icon': icon !== null,
+        'is-loading': loading,
+        'btn-block': block,
+        'disabled': disabled || loading
+      }">
+  <i class="fa fa-{{ icon }} btn-icon" *ngIf="icon !== null && !loading"></i>
+  <div class="btn-icon" *ngIf="loading">
+    <ixo-loading></ixo-loading>
+  </div>
+  <div class="btn-content" [hidden]="!textVisible" #contentWrapper>
+    <ng-content></ng-content>
+  </div>
+</button>

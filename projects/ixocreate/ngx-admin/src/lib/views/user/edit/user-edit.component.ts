@@ -6,9 +6,9 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
-import { BsModalService } from 'ngx-bootstrap';
-import { KiwiConfirmModalComponent } from '../../../modals/kiwi-confirm-modal/kiwi-confirm-modal.component';
-import { ConfirmModalData } from '../../../modals/kiwi-confirm-modal/confirm-modal-data.interface';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
@@ -23,6 +23,8 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[];
 
+  loading = false;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected appData: AppDataService,
@@ -34,13 +36,13 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.userId = params.id;
       this.data$ = this.appData.getUserDetail(this.userId);
     });
 
     this.appData.getUserConfig().then((data: any) => {
-      this.fields = data.update ?  this.schemaTransform.transformForm(data.update) : [];
+      this.fields = data.update ? this.schemaTransform.transformForm(data.update) : [];
     });
   }
 
@@ -48,9 +50,14 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
     } else {
+      this.loading = true;
       this.appData.updateUser(this.userId, this.form.getRawValue()).then(() => {
+        this.loading = false;
         this.notification.success('User successfully updated', 'Success');
-      }).catch((error) => this.notification.apiError(error));
+      }).catch((error) => {
+        this.loading = false;
+        this.notification.apiError(error)
+      });
     }
   }
 
@@ -65,7 +72,7 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
         }).catch((error) => this.notification.apiError(error));
       },
     };
-    this.modal.show(KiwiConfirmModalComponent, {initialState});
+    this.modal.show(IxoConfirmModalComponent, {initialState});
   }
 
 }

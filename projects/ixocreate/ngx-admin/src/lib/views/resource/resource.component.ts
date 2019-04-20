@@ -24,7 +24,7 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.resourceKey = params.type || this.resourceKey;
       this.pageTitle.setPageTitle([{search: '{resource}', replace: this.config.getResourceConfig(this.resourceKey).label}]);
       setTimeout(() => {
@@ -35,7 +35,6 @@ export class ResourceComponent extends ViewAbstractComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe((params: Params) => {
-      console.log(params);
       for (let key of Object.keys(params)) {
         const value = params[key];
         if (key.indexOf('filter[') > -1) {

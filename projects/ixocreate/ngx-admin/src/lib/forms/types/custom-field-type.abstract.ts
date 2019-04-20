@@ -6,6 +6,7 @@ export class CustomFieldTypeAbstract extends FieldType implements OnInit {
   value: any;
 
   ngOnInit() {
+    (this.formControl as any).component = this;
     this.setValue(this.formControl.value);
   }
 

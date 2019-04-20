@@ -34,6 +34,10 @@
 
 .main .container-fluid {
   padding: 0 25px;
+
+  @include media-breakpoint-down(sm) {
+    padding: 0 15px;
+  }
 }
 
 .card-header {
@@ -303,3 +307,41 @@
   border-right: 0;
   border-bottom: 0;
 }
+
+.border-radius {
+  border-radius: $border-radius;
+}
+
+.transparent-img-bg {
+  display: inline-block;
+  @include transparent-img-bg;
+
+  a {
+    display: block;
+  }
+}
+
+.table-img {
+  max-width: 80px;
+  height: auto;
+  margin: 0;
+}
+
+.table-media-icon {
+  max-width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: $border-radius;
+
+  .file-icon {
+    display: block;
+    color: $input-border-color;
+  }
+}
+
+//.date {
+//  font-family: monospace;
+//}

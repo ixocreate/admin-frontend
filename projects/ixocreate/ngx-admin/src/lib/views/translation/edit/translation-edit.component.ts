@@ -12,6 +12,7 @@ export class TranslationEditComponent extends ViewAbstractComponent implements O
   data$: Promise<any>;
   catalogueId: string;
   definitionId: string;
+  loading = false;
 
   constructor(private route: ActivatedRoute,
               private appData: AppDataService,
@@ -20,7 +21,7 @@ export class TranslationEditComponent extends ViewAbstractComponent implements O
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.catalogueId = params.catalogue;
       this.definitionId = params.id;
       this.data$ = this.appData.getTranslationDetail(this.catalogueId, this.definitionId);
@@ -28,9 +29,14 @@ export class TranslationEditComponent extends ViewAbstractComponent implements O
   }
 
   saveTranslation(data) {
+    this.loading = true;
     this.appData.saveTranslation(data.locale, this.definitionId, data.id, data.message).then(() => {
+      this.loading = false;
       this.notification.success('Translation saved!', 'Success');
-    }).catch((error) => this.notification.apiError(error));
+    }).catch((error) => {
+      this.loading = false;
+      this.notification.apiError(error);
+    });
   }
 
 }

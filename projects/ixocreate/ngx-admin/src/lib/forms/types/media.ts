@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { MediaHelper } from '../../helpers/media.helper';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
 import { Media } from '../../interfaces/media.interface';
 
@@ -13,11 +13,13 @@ import { Media } from '../../interfaces/media.interface';
           <div class="input-media-preview" *ngIf="!value"><i class="fa fa-fw fa-file-o"></i></div>
           <ng-container *ngIf="value">
             <ng-container *ngIf="isImage(value.mimeType); else noImage">
-              <a [href]="value.original" target="_blank" class="input-media-preview"
-                 [style.backgroundImage]="'url(' + value.thumb + ')'" kiwiClickStopPropagation></a>
+              <span class="transparent-img-bg">
+                <a [href]="value.original" target="_blank" class="input-media-preview"
+                   [style.backgroundImage]="'url(' + value.thumb + ')'" ixoClickStopPropagation></a>
+              </span>
             </ng-container>
             <ng-template #noImage class="media-container">
-              <a [href]="value.original" target="_blank" class="input-media-preview" kiwiClickStopPropagation>
+              <a [href]="value.original" target="_blank" class="input-media-preview" ixoClickStopPropagation>
                 <i [class]="'fa fa-fw ' + mimeTypeIcon(value.mimeType)"></i>
               </a>
             </ng-template>
@@ -28,7 +30,7 @@ import { Media } from '../../interfaces/media.interface';
              [class.is-invalid]="showError" [disabled]="to.disabled">
       <div class="input-group-append" *ngIf="!to.required && !to.disabled">
         <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError" (click)="remove()"
-                kiwiClickStopPropagation>
+                ixoClickStopPropagation>
           <i class="fa fa-close"></i>
         </button>
       </div>
@@ -38,7 +40,7 @@ import { Media } from '../../interfaces/media.interface';
       <div class="current-media is-top" *ngIf="value">
         <div class="row align-items-center">
           <div class="col-auto text-center">
-            <ng-container *ngIf="isImage(value.mimeType); else noImage"><img [src]="value.thumb" class="img-fluid" /></ng-container>
+            <ng-container *ngIf="isImage(value.mimeType); else noImage"><img [src]="value.thumb" class="img-fluid"/></ng-container>
             <ng-template #noImage class="media-container"><i [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.mimeType)"></i></ng-template>
           </div>
           <div class="col">
@@ -47,7 +49,7 @@ import { Media } from '../../interfaces/media.interface';
           </div>
         </div>
       </div>
-      <kiwi-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></kiwi-media-list>
+      <ixo-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></ixo-media-list>
     </ng-template>
   `,
 })

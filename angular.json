@@ -9,7 +9,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:build",
           "options": {
             "preserveSymlinks": true,
             "outputPath": "dist",
@@ -31,7 +31,6 @@
               ]
             },
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js"
             ]
           },
           "configurations": {
@@ -55,7 +54,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
             "browserTarget": "ng:build"
           },
@@ -72,14 +71,13 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "ngx-build-plus:karma",
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js"
             ],
             "styles": [
               "node_modules/flag-icon-css/css/flag-icon.css",
@@ -136,11 +134,11 @@
         }
       }
     },
-    "@ixocreate/ngx-admin": {
+    "ixocreate-ngx-admin": {
       "root": "projects/ixocreate/ngx-admin",
       "sourceRoot": "projects/ixocreate/ngx-admin/src",
       "projectType": "library",
-      "prefix": "kiwi",
+      "prefix": "ixo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

@@ -4,7 +4,7 @@ import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { DefaultStore } from '../../store/default.store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/observable';
 import { User } from '../../interfaces/user.interface';
 import { ConfigService } from '../config.service';
 
@@ -12,23 +12,16 @@ import { ConfigService } from '../config.service';
 export class AccountDataService extends DataServiceAbstract {
 
   user$: Observable<User>;
-  isAuthorized$: Observable<boolean>;
 
   constructor(protected api: ApiService, protected config: ConfigService, protected store: Store<AppState>) {
     super(store);
-
-    this.isAuthorized$ = this.api.isAuthorized$;
-    this.isAuthorized$.subscribe((isAuthorized) => {
-      if (!isAuthorized) {
-        this.store.dispatch(DefaultStore.Actions.Clear('USER'));
-      }
-    });
 
     this.store.addReducer('user', DefaultStore.Handle('USER'));
 
     this.user$ = this.loadFromStore('user', this.loadUser);
     this.user$.subscribe((user) => {
       this.config.setUserPermissions(user ? user.permissions : null);
+      this.config.setUser(user);
     });
   }
 
@@ -54,12 +47,12 @@ export class AccountDataService extends DataServiceAbstract {
     return this.api.patch(this.config.config.routes.accountPassword, {passwordOld, password, passwordRepeat});
   }
 
-  login(email: string, password: string) {
-    return this.api.post(this.config.config.routes.authLogin, {email, password});
+  updateLocale(data: any) {
+    return this.api.patch(this.config.config.routes.accountLocale, data).then(() => {
+      /**
+       * TODO: reload user instead -> should cascade through to config
+       */
+      window.location.reload();
+    });
   }
-
-  logout() {
-    return this.api.post(this.config.config.routes.authLogout);
-  }
-
 }

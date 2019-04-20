@@ -22,7 +22,7 @@ export class FormlyWrapperTabComponent extends FieldWrapper {
 
   showSubError(): boolean {
     for (const element of this.field['elements']) {
-      if (this.form.controls[element.name].invalid && this.form.controls[element.name].touched) {
+      if (this.form.controls[element.name] && this.form.controls[element.name].invalid && this.form.controls[element.name].touched) {
         return true;
       }
     }

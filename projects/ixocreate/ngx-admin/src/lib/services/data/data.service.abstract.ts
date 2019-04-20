@@ -1,12 +1,12 @@
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { DefaultStore } from '../../store/default.store';
-import { tap } from 'rxjs/internal/operators';
+import { tap } from 'rxjs/internal/operators/tap';
 
 export abstract class DataServiceAbstract {
   protected loadingKeys = [];
 
-  constructor(protected store: Store<AppState>) {
+  protected constructor(protected store: Store<AppState>) {
   }
 
   protected saveToDefaultStore(actionName: string, data: any) {

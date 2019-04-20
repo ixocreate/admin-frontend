@@ -2,7 +2,7 @@ export interface Page {
   pages: { [key: string]: PageInfo };
   sitemap: Sitemap;
   pageType: PageType;
-  children: Array<Page>;
+  children: Page[];
   childrenAllowed: boolean;
   handle: string;
 }

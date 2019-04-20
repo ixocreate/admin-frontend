@@ -1,0 +1,19 @@
+<div class="calendar-group">
+  <input type="text"
+         class="form-control"
+         [(ngModel)]="formattedDate"
+         (change)="onChange($event)"
+         [placeholder]="placeholder"
+         [class.is-invalid]="showError">
+  <div class="calender-overlay" [hidden]="!showOverlay" ixoClickStopPropagation>
+    <p-calendar class="date-picker"
+                [inline]="true"
+                [placeholder]="placeholder"
+                [(ngModel)]="dateValue"
+                [locale]="locale"
+                [showTime]="showTime"
+                [class.is-invalid]="showError"
+    >
+    </p-calendar>
+  </div>
+</div>
