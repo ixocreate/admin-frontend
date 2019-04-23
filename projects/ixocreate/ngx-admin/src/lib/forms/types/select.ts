@@ -147,13 +147,12 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   onSelect(row) {
     if (this.multiple) {
       const values = row.map((value) => {
-        return value.id ? value.id : value[this.to.valueProp || 'value'];
+        return value[this.valueProp];
       });
       this.setValue(values);
     } else {
-      const value = row.id ? row.id : row[this.to.valueProp || 'value'];
       this.closeModal();
-      this.setValue(value);
+      this.setValue(row[this.valueProp]);
     }
   }
 
