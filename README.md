@@ -3,8 +3,8 @@
 [![Packagist](https://img.shields.io/packagist/v/ixocreate/admin-frontend.svg)](https://packagist.org/packages/ixocreate/admin-frontend)
 [![License](https://img.shields.io/github/license/ixocreate/admin-frontend.svg)](LICENSE)
 
-Angular application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin).
-It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin) by default to ensure API client compatibility.
+Angular application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin-package).
+It is added as Composer dependency in the [Admin package](https://github.com/ixocreate/admin-package) by default to ensure API client compatibility.
 
 ## Features
 
