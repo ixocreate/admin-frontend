@@ -1,5 +1,6 @@
 # IXOCREATE Admin Frontend Application
 
+[![Packagist](https://img.shields.io/packagist/v/ixocreate/admin-frontend.svg)](https://packagist.org/packages/ixocreate/admin-frontend)
 [![License](https://img.shields.io/github/license/ixocreate/admin-frontend.svg)](LICENSE)
 
 Angular application that interacts with [IXOCREATE's Admin API](https://github.com/ixocreate/admin).
