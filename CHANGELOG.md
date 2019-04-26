@@ -1,6 +1,8 @@
 # Release Notes
 
-## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.1...develop)
+## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.2...develop)
+
+## [v0.1.2 (2019-04-26)](https://github.com/ixocreate/admin-frontend/compare/0.1.1...0.1.2)
 
 ### Fixed
 - Datatable view type
