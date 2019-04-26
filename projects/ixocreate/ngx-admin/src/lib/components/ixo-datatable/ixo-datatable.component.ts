@@ -91,7 +91,7 @@ export class IxoDatatableComponent implements OnInit {
     if (this.resource) {
       return '/resource/' + this.resource + '/' + row.id + '/' + type;
     }
-    return row.id + type;
+    return row.id + '/' + type;
   }
 
   private setColumns(columns: any[]) {
