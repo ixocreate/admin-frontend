@@ -33,26 +33,53 @@ export class PageCreateComponent extends ViewAbstractComponent implements OnInit
       this.parentSitemapId = params.parentSitemapId;
 
       this.appData.pageAvailablePageTypes(this.parentSitemapId).then((response) => {
-        this.fields = [
-          {
-            key: 'pageType',
-            type: 'select',
-            templateOptions: {
-              label: 'PageType',
-              valueProp: 'name',
-              options: response,
-              required: true,
-            },
-          },
-          {
-            key: 'name',
-            type: 'input',
-            templateOptions: {
-              label: 'Name',
-              required: true,
-            },
-          },
-        ];
+        this.fields = [];
+
+        if (response.length == 1) {
+          this.fields.push(
+              {
+                key: 'pageType',
+                type: 'input',
+                defaultValue: response[0].name,
+                hide: true,
+              }
+          );
+          this.fields.push(
+              {
+                key: 'pageTypeDisplay',
+                type: 'input',
+                defaultValue: response[0].label,
+                templateOptions: {
+                  label: 'PageType',
+                  disabled: true,
+                },
+              }
+          );
+        } else {
+          this.fields.push(
+              {
+                key: 'pageType',
+                type: 'select',
+                templateOptions: {
+                  label: 'PageType',
+                  valueProp: 'name',
+                  options: response,
+                  required: true,
+                },
+              }
+          );
+        }
+
+        this.fields.push(
+            {
+              key: 'name',
+              type: 'input',
+              templateOptions: {
+                label: 'Name',
+                required: true,
+              },
+            }
+        );
       });
     });
   }

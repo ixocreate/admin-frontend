@@ -78,6 +78,10 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.pageIndexFlat.replace('{handle}', handle) + '?' + parseParams(params));
   }
 
+  getSitemapPages(sitemapId: string): Promise<any[]> {
+    return this.api.get(this.config.config.routes.sitemapListPages.replace('{id}', sitemapId));
+  }
+
   postSitemapMove(sitemapId: string, prevSiblingSitemapId: string, parentSitemapId: string): Promise<any> {
     return this.api.post(this.config.config.routes.sitemapMove, {
       id: sitemapId,
@@ -95,11 +99,11 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
-  postPageCopyToSitemapId(fromPageId: string, toSitemapId: string = null, locale: string = null, name: string = null): Promise<any> {
+  postPageCopyToSitemapId(fromPageId: string, toSitemapId: string = null, toLocale: string = null, name: string = null): Promise<any> {
     return this.api.post(this.config.config.routes.pageCopy, {
       fromPageId,
       toSitemapId,
-      locale,
+      toLocale,
       name,
     });
   }

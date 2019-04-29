@@ -32,6 +32,7 @@ export interface Routes {
   sitemapIndex?: string;
   sitemapMove?: string;
   sitemapCopy?: string;
+  sitemapListPages?: string;
   /**
    * page
    */

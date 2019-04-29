@@ -48,34 +48,18 @@ export class PageAddComponent extends ViewAbstractComponent implements OnInit {
     });
   }
 
-  getPagesBySitemapId(items, sitemapId) {
-    for (const item of items) {
-      if (item.sitemap.id === sitemapId) {
-        return item.pages;
-      }
-      const page = this.getPagesBySitemapId(item.children, sitemapId);
-      if (page) {
-        return page;
-      }
-    }
-    return null;
-  }
-
   setPageLocales() {
-    this.appData.getSitemapIndex().then((allPages) => {
-      const pages = this.getPagesBySitemapId(allPages.items, this.sitemapId);
+    this.appData.getSitemapPages(this.sitemapId).then((pages) => {
       const responseData = [];
-      this.fromPages = [];
-      if (pages) {
-        for (const locale in pages) {
-          if (pages.hasOwnProperty(locale)) {
-            responseData.push({
-              id: pages[locale].page.id,
-              name: locale,
-            });
-          }
+      for (const page of pages) {
+        if (page.hasOwnProperty('id') && page.hasOwnProperty('locale')) {
+          responseData.push({
+            id: page.id,
+            name: page.locale,
+          });
         }
       }
+
       this.fromPages = responseData;
     });
   }
