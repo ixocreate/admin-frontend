@@ -8,7 +8,7 @@
 ### Fixed
 - fix moving copied blocks
 
-## [v0.1.4 (2019-04-26)](https://github.com/ixocreate/admin-frontend/compare/0.1.4...0.1.2)
+## [v0.1.4 (2019-04-29)](https://github.com/ixocreate/admin-frontend/compare/0.1.2...0.1.4)
 ### Changed
 - skip pagetType selection if not necessary
 ### Fixed
