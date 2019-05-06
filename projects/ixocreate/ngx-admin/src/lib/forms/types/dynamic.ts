@@ -228,9 +228,10 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
   }
 
   add(i?: number, initialModel ?: any, templateOptions?: FormlyTemplateOptions) {
+    const isNew = (!i && !initialModel);
     i = isNullOrUndefined(i) ? this.field.fieldGroup.length : i;
 
-    if (this.selectedFieldGroupType && this.selectedFieldGroupType.copy) {
+    if (isNew && this.selectedFieldGroupType && this.selectedFieldGroupType.copy) {
       initialModel = this.selectedFieldGroupType.copy.model;
     }
 
