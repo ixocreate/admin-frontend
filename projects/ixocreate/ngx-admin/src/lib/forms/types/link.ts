@@ -49,7 +49,11 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     if (this.value === null || !this.value.value) {
       return '';
     }
-    return this.value.value.filename || this.value.value.name || this.value.value;
+    let string = this.value.value.filename || this.value.value.name || this.value.value;
+    if (this.value && this.value.value && this.value.value.locale) {
+      string += ' (' + this.value.value.locale + ')';
+    }
+    return string;
   }
 
   get valueLink() {
