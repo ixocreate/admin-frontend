@@ -75,6 +75,9 @@ export class IxoLinkSelectModalComponent implements OnInit {
       this.selectedTarget = this.innerValue.target;
     }
     this.selectedLocale = this.localStorage.getItem(LocalStorageService.SELECTED_LANGUAGE, this.config.config.intl.default);
+    if (this.innerValue && this.innerValue.value && this.innerValue.value.locale) {
+      this.selectedLocale = this.innerValue.value.locale;
+    }
     this.onTypeSelect();
   }
 

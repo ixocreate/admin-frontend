@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.5...develop)
+## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.6...develop)
+
+## [v0.1.6 (2019-05-09)](https://github.com/ixocreate/admin-frontend/compare/0.1.5...0.1.6)
+### Fixed
+- fixes link selection
 
 ## [v0.1.5 (2019-05-06)](https://github.com/ixocreate/admin-frontend/compare/0.1.4...0.1.5)
 ### Changed
@@ -8,7 +12,7 @@
 ### Fixed
 - fix moving copied blocks
 
-## [v0.1.4 (2019-04-26)](https://github.com/ixocreate/admin-frontend/compare/0.1.4...0.1.2)
+## [v0.1.4 (2019-04-29)](https://github.com/ixocreate/admin-frontend/compare/0.1.2...0.1.4)
 ### Changed
 - skip pagetType selection if not necessary
 ### Fixed
