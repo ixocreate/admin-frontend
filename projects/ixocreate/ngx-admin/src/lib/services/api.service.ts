@@ -70,7 +70,7 @@ export class ApiService {
       observe: 'events',
       withCredentials: !this.config.environment.production,
     }).pipe(
-      timeout(10000),
+      timeout(60000),
       publishLast(),
       refCount(),
       catchError((error) => {
