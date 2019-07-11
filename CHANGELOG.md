@@ -1,6 +1,8 @@
 # Release Notes
 
 ## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.6...develop)
+### Changed
+- increase request timeout
 
 ## [v0.1.6 (2019-05-09)](https://github.com/ixocreate/admin-frontend/compare/0.1.5...0.1.6)
 ### Fixed
