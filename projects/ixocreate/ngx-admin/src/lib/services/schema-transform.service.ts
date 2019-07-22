@@ -231,6 +231,8 @@ export class SchemaTransformService {
     data.templateOptions = Object.assign({
       ...data.templateOptions,
       multiple: true,
+      createNew: value.createNew || false,
+      createNewDeferred: value.createNewDeferred || false,
       clearable: !value.required || true,
     });
     return data;

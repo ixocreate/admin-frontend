@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AppDataService } from '../../services/data/app-data.service';
-import { CustomFieldTypeAbstract } from './custom-field-type.abstract';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {AppDataService} from '../../services/data/app-data.service';
+import {CustomFieldTypeAbstract} from './custom-field-type.abstract';
 
 export interface SelectOption {
   label: string;
@@ -32,6 +32,7 @@ export interface SelectOption {
           [bindValue]="valueProp"
           [bindLabel]="labelProp"
           [virtualScroll]="true"
+          [addTag]="addTagNowRef"
           [clearable]="false"
           [multiple]="multiple"
           [formControl]="formControl">
@@ -44,7 +45,7 @@ export interface SelectOption {
       </div>
       <ng-template #modalTemplate>
         <ixo-datatable [resource]="resourceKey" [advancedSearch]="true" type="select" [selectedElements]="multiple ? value : []"
-                        (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></ixo-datatable>
+                       (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></ixo-datatable>
         <div class="bg-white text-center p-2" *ngIf="multiple">
           <button class="btn btn-primary" (click)="closeModal()">Close</button>
         </div>
@@ -57,6 +58,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   @ViewChild('select') select;
   @ViewChild('modalTemplate') modal;
 
+  addTagNowRef: (name) => void;
   selectOptions: any;
   modalRef: BsModalRef;
 
@@ -87,6 +89,10 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
 
   ngOnInit() {
     super.ngOnInit();
+
+    /**
+     * TODO: move this to some load() method so it can be reloaded after non-deferred entry creation
+     */
     if (this.resourceKey) {
       this.appData.getResourceSelect(this.resourceKey).then((options) => {
         this.selectOptions = options;
@@ -113,6 +119,10 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
       }
       this.selectOptions = options;
     }
+
+    if (this.createNew) {
+      this.addTagNowRef = (name) => this.addTag(name);
+    }
   }
 
   onOpen() {
@@ -120,6 +130,20 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
       this.select.close();
       this.openModal();
     }
+  }
+
+  addTag(tag) {
+    const newTag = {};
+    newTag[this.valueProp] = tag;
+    /**
+     * createNewDeferred: server will take care of new entry creation
+     * note: this only works if the tag text instead of the uuid is stored/transmitted
+     * TODO: find a way to send both, uuids as well as new tags' text, to the server
+     */
+    if (!this.createNewDeferred) {
+      // TODO: create new entry on the fly
+    }
+    return newTag;
   }
 
   get labelProp(): string {
@@ -142,6 +166,14 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
 
   get multiple() {
     return this.to.multiple || false;
+  }
+
+  get createNew() {
+    return this.to.createNew || false;
+  }
+
+  get createNewDeferred() {
+    return this.to.createNewDeferred || false;
   }
 
   onSelect(row) {
