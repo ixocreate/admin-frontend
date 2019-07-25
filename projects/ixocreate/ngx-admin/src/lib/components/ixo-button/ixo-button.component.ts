@@ -15,7 +15,7 @@ export class IxoButtonComponent implements OnInit {
   @HostBinding('class.ixo-button-block') public btnBlock = false;
 
   @Input() type: 'button' | 'submit' = 'button';
-  @Input() color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'dark' | 'ligh' = 'primary';
+  @Input() color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'dark' | 'light' = 'primary';
   @Input() icon: string | null = null;
   @Input() outline = false;
 
