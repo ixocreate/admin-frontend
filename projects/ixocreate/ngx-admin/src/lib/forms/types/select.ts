@@ -98,31 +98,35 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
         this.selectOptions = options;
       });
     } else {
-      const options: SelectOption[] = [];
-      const groups: { [key: string]: SelectOption[] } = {};
-      if (Array.isArray(this.to.options)) {
-        this.to.options.map((option: SelectOption) => {
-          if (!option[this.groupProp]) {
-            options.push(option);
-          } else {
-            if (groups[option[this.groupProp]]) {
-              groups[option[this.groupProp]].push(option);
-            } else {
-              groups[option[this.groupProp]] = [option];
-              options.push({
-                label: option[this.groupProp],
-                group: groups[option[this.groupProp]],
-              });
-            }
-          }
-        });
-      }
-      this.selectOptions = options;
+      this.setOptionsFromTemplateOptions(this.to.options);
     }
 
     if (this.createNew) {
       this.addTagNowRef = (name) => this.addTag(name);
     }
+  }
+
+  setOptionsFromTemplateOptions(toOptions) {
+    const options: SelectOption[] = [];
+    const groups: { [key: string]: SelectOption[] } = {};
+    if (Array.isArray(toOptions)) {
+      toOptions.map((option: SelectOption) => {
+        if (!option[this.groupProp]) {
+          options.push(option);
+        } else {
+          if (groups[option[this.groupProp]]) {
+            groups[option[this.groupProp]].push(option);
+          } else {
+            groups[option[this.groupProp]] = [option];
+            options.push({
+              label: option[this.groupProp],
+              group: groups[option[this.groupProp]],
+            });
+          }
+        }
+      });
+    }
+    this.selectOptions = options;
   }
 
   onOpen() {
