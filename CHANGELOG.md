@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.8...develop)
 ### Changed
 - Reactive CustomFieldType by listening to FormControl model changes
+- Allow to set select options dynamically
 
 ## [v0.1.8 (2019-07-22)](https://github.com/ixocreate/admin-frontend/compare/0.1.7...0.1.8)
 ### Changed
