@@ -6,6 +6,7 @@ import { LocalStorageService } from './local-storage.service';
 import { IxoInputModalComponent } from '../modals/ixo-input-modal/ixo-input-modal.component';
 import { InputModalData } from '../modals/ixo-input-modal/input-modal-data.interface';
 import { Page } from '../interfaces/page.interface';
+import {v4 as uuid} from 'uuid';
 
 export interface BlockCopy {
   id: string;
@@ -25,10 +26,6 @@ export class CopyService {
   constructor(private modal: BsModalService, private localStorage: LocalStorageService) {
   }
 
-  private getRandomString(): string {
-    return Math.random().toString(36).substring(3);
-  }
-
   setCopyPage(page: Page, type: string) {
     this.moveType = type;
     this.copiedPage = page;
@@ -45,13 +42,12 @@ export class CopyService {
         text: 'Enter a name which will identify your copy:',
         onConfirm: (name) => {
           const copiedBlocks = this.copiedBlocks;
-          const id = this.getRandomString();
-          copiedBlocks.push({id, name, model});
+          copiedBlocks.push({id: uuid(), name, model});
           this.localStorage.setItem(this.COPIED_BLOCKS_STORAGE_KEY, copiedBlocks);
         },
       };
       this.modal.show(IxoInputModalComponent, {initialState});
-      const sub = this.modal.onHidden.subscribe(() => {
+      this.modal.onHidden.subscribe(() => {
         resolve(true);
       });
     });
@@ -75,7 +71,7 @@ export class CopyService {
         },
       };
       this.modal.show(IxoConfirmModalComponent, {initialState});
-      const sub = this.modal.onHidden.subscribe(() => {
+      this.modal.onHidden.subscribe(() => {
         resolve(true);
       });
     });

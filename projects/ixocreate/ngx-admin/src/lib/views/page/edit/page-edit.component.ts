@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ViewAbstractComponent } from '../../../components/view.abstract.component';
-import { AppDataService } from '../../../services/data/app-data.service';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { NotificationService } from '../../../services/notification.service';
-import { SchemaTransformService } from '../../../services/schema-transform.service';
-import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
-import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { ConfigService } from '../../../services/config.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ViewAbstractComponent} from '../../../components/view.abstract.component';
+import {AppDataService} from '../../../services/data/app-data.service';
+import {FormGroup} from '@angular/forms';
+import {FormlyFieldConfig} from '@ngx-formly/core';
+import {NotificationService} from '../../../services/notification.service';
+import {SchemaTransformService} from '../../../services/schema-transform.service';
+import {ConfirmModalData} from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
+import {IxoConfirmModalComponent} from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {ConfigService} from '../../../services/config.service';
 
 @Component({
   templateUrl: './page-edit.component.html',
@@ -105,6 +105,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.versionData = null;
         this.currentPageVersion = data.page.version.head;
         this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
+          this.versionForm = new FormGroup({});
           this.versionData = versionData;
           this.versionSaving = false;
           return versionData;
@@ -128,7 +129,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         confirmBtnType: 'success',
         confirmBtnIcon: 'fa fa-plus',
         confirmBtnTitle: 'Create',
-        text: 'Page in this Language dosn\'t exist yet. Do you want to create it and copy the content of this page?',
+        text: 'Page in this language doesn\'t exist yet. Do you want to create it and copy the content of this page?',
         onConfirm: () => {
           this.appData.postPageCopyToSitemapId(this.pageData.id, this.pageData.sitemapId, data.locale).then((response) => {
             this.notification.success('Page Data successfully copied', 'Success');
