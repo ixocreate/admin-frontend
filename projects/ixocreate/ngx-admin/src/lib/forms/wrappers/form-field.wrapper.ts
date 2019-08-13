@@ -11,7 +11,7 @@ import { FieldWrapper } from '@ngx-formly/core';
       </label>
 
       <div class="ixo-form-control-container">
-        <!--{{ to | json }}-->
+        {{ to | json }}
         <div class="input-group">
           <div class="input-group-prepend" *ngIf="prependIcon || prependText">
             <span class="input-group-text">

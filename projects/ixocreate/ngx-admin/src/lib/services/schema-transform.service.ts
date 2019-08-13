@@ -57,6 +57,12 @@ export class SchemaTransformService {
     return formSchema;
   }
 
+  /**
+   * This transforms the data from the backend to the frontend model
+   * @param type
+   * @param templateOptions
+   * @param keysToTemplateOptions
+   */
   private handleDefault(type: string, templateOptions: any = {}, keysToTemplateOptions: string[] = []) {
     return (value: any): Schema => {
       const data = {

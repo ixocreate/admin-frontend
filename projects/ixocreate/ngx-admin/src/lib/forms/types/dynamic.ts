@@ -117,6 +117,8 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
      */
     this.field.fieldGroup = [];
 
+    console.log(this.model);
+
     const modelClone = clone(this.model);
 
     for (let i = modelClone.length - 1; i >= 0; i--) {
@@ -257,7 +259,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     });
 
     /**
-     * if there is no type defintion remove control
+     * if there is no type definition remove control
      * might be from a stored element which was removed since then
      */
     if (!typeDefinition) {

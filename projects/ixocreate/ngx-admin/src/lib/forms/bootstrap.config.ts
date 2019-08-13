@@ -126,10 +126,7 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
               container: [
                 ['bold', 'italic', 'underline', 'strike'],
                 [{list: 'ordered'}, {list: 'bullet'}],
-                [{script: 'sub'}, {script: 'super'}],
-                [{indent: '-1'}, {indent: '+1'}],
                 [{header: [1, 2, 3, 4, 5, 6, false]}],
-                [{align: []}],
                 ['clean'],
                 ['ixolink'], // TODO: Enable IxoLink: ['ixolink']
               ],

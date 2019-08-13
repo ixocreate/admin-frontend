@@ -10,18 +10,18 @@ import { IxoLinkType } from '../../lib/quill/quill-extentions';
 @Component({
   selector: 'formly-field-quill',
   template: `
-    <quill-editor #editor
-                  [ngModel]="quillDelta"
-                  format="object"
-                  [style]="{height: height}"
-                  [readOnly]="to.disabled"
-                  [modules]="modules"
-                  [placeholder]="to.placeholder"
-                  [required]="to.required"
-                  [class.is-invalid]="showError"
-                  [class.read-only]="to.disabled"
-                  (onContentChanged)="onContentChanged($event)">
-    </quill-editor>
+      <quill-editor #editor
+                    [ngModel]="quillDelta"
+                    format="object"
+                    [style]="{height: height}"
+                    [readOnly]="to.disabled"
+                    [modules]="modules"
+                    [placeholder]="to.placeholder"
+                    [required]="to.required"
+                    [class.is-invalid]="showError"
+                    [class.read-only]="to.disabled"
+                    (onContentChanged)="onContentChanged($event)">
+      </quill-editor>
   `,
 })
 export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
@@ -43,21 +43,28 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
   }
 
   ngOnInit() {
+    console.log(this.to);
     if (this.to.required) {
       this.formControl.setValidators([CustomValidators.quillRequired]);
     }
     if (this.formControl.value && this.formControl.value.quill) {
       this.quillDelta = this.formControl.value.quill;
+      console.log(this.quillDelta);
     }
     setTimeout(() => {
       this.setValue(this.formControl.value || {html: '', quill: []});
     });
+    // this.to.modules.toolbar = {
+    //   container: [
+    //     ['bold', 'italic', 'underline', 'strike'],
+    //   ],
+    // };
     this.to.modules.keyboard = {
       bindings: {
         smartbreak: {
           key: 13,
           shiftKey: true,
-          handler(range, context) {
+          handler(range) {
             this.quill.setSelection(range.index, 'silent');
             this.quill.insertText(range.index, '\n', 'user');
             this.quill.setSelection(range.index + 1, 'silent');
@@ -66,7 +73,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         },
         paragraph: {
           key: 13,
-          handler(range, context) {
+          handler(range) {
             this.quill.setSelection(range.index, 'silent');
             this.quill.insertText(range.index, '\n', 'user');
             this.quill.setSelection(range.index + 1, 'silent');
@@ -99,6 +106,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
 
     setTimeout(() => {
       const quill = this.editor.quillEditor;
+      console.log(this.editor);
       quill.on('selection-change', (range, oldRange, source) => {
         if (range === null) {
           return;
@@ -110,7 +118,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
               index: range.index - offset,
               length: link.length(),
             });
-            // workaround for modal not workin when called here
+            // workaround for modal not working when called here
             const event = new CustomEvent('open-modal', {detail: {value: link.getData()}});
             this.element.nativeElement.dispatchEvent(event);
             return;
@@ -142,6 +150,12 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         this.openLinkModal(event.detail.value);
       }, false);
     });
+
+    /**
+     * The toolbar of the quill WYSIWYG Editor should be changed to by what the backend gives us
+     * So we override the globally defined toolbar
+     */
+    // this.to.modules.toolbar = undefined;
   }
 
   openLinkModal(value: any = null) {
