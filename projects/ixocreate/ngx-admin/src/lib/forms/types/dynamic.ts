@@ -264,7 +264,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
       this.removeControls.push(i);
     }
 
-    if (templateOptions) {
+    if (typeDefinition && templateOptions) {
       typeDefinition.templateOptions = templateOptions;
     }
 
