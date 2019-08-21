@@ -38,6 +38,8 @@ export class SchemaTransformService {
 
     this.registerTransform('html', this.handleDefault('wysiwyg'));
 
+    this.registerTransform('annotated-image', this.handleDefault('annotated-image'));
+
     this.registerTransform('media', this.handleDefault('media', {centerLabel: true, type: ''}));
     this.registerTransform('image', this.handleDefault('media', {centerLabel: true, type: 'image'}));
     this.registerTransform('document', this.handleDefault('media', {centerLabel: true, type: 'document'}));

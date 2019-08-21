@@ -90,6 +90,11 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       wrappers: ['form-field'],
     },
     {
+      name: 'annotated-image',
+      component: FormlyFieldPriceComponent,
+      wrappers: ['form-field'],
+    },
+    {
       name: 'wysiwyg',
       component: FormlyFieldQuillComponent,
       wrappers: ['form-field'],
