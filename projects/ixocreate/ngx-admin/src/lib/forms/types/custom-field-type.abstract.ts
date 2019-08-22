@@ -19,7 +19,7 @@ export class CustomFieldTypeAbstract extends FieldType implements OnInit, OnDest
      */
     this.formControl.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(value => {
+      .subscribe((value) => {
         this.value = value;
       });
   }

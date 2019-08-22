@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LocalStorageService {
 
   static readonly SELECTED_LANGUAGE = 'selectedLanguage';

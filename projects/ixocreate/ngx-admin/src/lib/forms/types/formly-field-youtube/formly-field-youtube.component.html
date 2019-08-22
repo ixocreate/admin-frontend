@@ -1,0 +1,20 @@
+<div class="input-group" [class.has-error]="showError || !isValid">
+  <div class="input-group-prepend">
+        <span class="input-group-text p-0" [class.is-invalid]="showError">
+          <div class="input-youtube-preview" *ngIf="!value"><i class="fa fa-fw fa-video-camera"></i></div>
+          <a [href]="youtubeUrl + value" target="_blank" class="input-youtube-preview" *ngIf="value"
+             [style.backgroundImage]="'url(https://img.youtube.com/vi/' + value + '/sddefault.jpg)'"
+             ixoClickStopPropagation></a>
+        </span>
+  </div>
+  <input type="text" class="form-control" [(ngModel)]="inputValue" (keyup)="checkYoutubeLink()"
+         [placeholder]="to.placeholder"
+         [class.is-invalid]="showError || !isValid" [disabled]="to.disabled">
+  <div class="input-group-append" *ngIf="!to.required && !to.disabled">
+    <button type="button" class="btn" [class.btn-outline-input]="!showError && isValid"
+            [class.btn-outline-danger]="showError || !isValid" (click)="remove()">
+      <i class="fa fa-close"></i>
+    </button>
+  </div>
+</div>
+<div class="invalid-feedback d-block" *ngIf="!isValid && !showError">Not a valid Youtube-URL</div>

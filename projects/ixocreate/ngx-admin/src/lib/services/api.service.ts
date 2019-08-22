@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Observable} from 'rxjs/observable';
+import { Observable } from 'rxjs/observable';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError } from 'rxjs/operators/catchError';
 import { map } from 'rxjs/operators/map';
@@ -22,7 +22,9 @@ export enum ApiRequestMethod {
   OPTIONS = 'options',
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiService {
 
   private _isAuthorized$: BehaviorSubject<boolean> = new BehaviorSubject(null);
@@ -31,33 +33,41 @@ export class ApiService {
   constructor(protected http: HttpClient, protected config: ConfigService) {
   }
 
-  /**
-   * @description Headers for requests
-   */
-  private errorMapping(response: APIResponse): APIErrorElement {
-    if (!response.errorCode) {
-      return {
-        code: 'unknown-error',
-        data: {
-          title: 'Error',
-          messages: ['An unknown error occurred.'],
-        },
-      };
-    }
-    const errors: APIErrorElement = {
-      code: response.errorCode,
-      data: {
-        title: 'Error',
-        messages: [],
-      },
-    };
-    for (let message of response.errorMessages) {
-      if (message.length > 200) {
-        message = message.substring(0, 200) + '...';
+  get(url: string, params: any = {}): Promise<any> {
+    const urlParams = new URLSearchParams();
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        urlParams.set(key, params[key]);
       }
-      errors.data.messages.push(message);
     }
-    return errors;
+    if (urlParams.toString() !== '') {
+      url = url + '?' + urlParams.toString();
+    }
+    return this.request(ApiRequestMethod.GET, url, null).toPromise();
+  }
+
+  post(url: string, body: any = {}): Promise<any> {
+    return this.request(ApiRequestMethod.POST, url, body).toPromise();
+  }
+
+  put(url: string, body: any = {}): Promise<any> {
+    return this.request(ApiRequestMethod.PUT, url, body).toPromise();
+  }
+
+  delete(url: string): Promise<any> {
+    return this.request(ApiRequestMethod.DELETE, url, null).toPromise();
+  }
+
+  patch(url: string, body: any = {}): Promise<any> {
+    return this.request(ApiRequestMethod.PATCH, url, body).toPromise();
+  }
+
+  head(url: string): Promise<any> {
+    return this.request(ApiRequestMethod.HEAD, url, null).toPromise();
+  }
+
+  options(url: string): Promise<any> {
+    return this.request(ApiRequestMethod.OPTIONS, url, null).toPromise();
   }
 
   /**
@@ -97,41 +107,33 @@ export class ApiService {
     );
   }
 
-  get(url: string, params: any = {}): Promise<any> {
-    const urlParams = new URLSearchParams();
-    for (const key in params) {
-      if (params.hasOwnProperty(key)) {
-        urlParams.set(key, params[key]);
+  /**
+   * @description Headers for requests
+   */
+  private errorMapping(response: APIResponse): APIErrorElement {
+    if (!response.errorCode) {
+      return {
+        code: 'unknown-error',
+        data: {
+          title: 'Error',
+          messages: ['An unknown error occurred.'],
+        },
+      };
+    }
+    const errors: APIErrorElement = {
+      code: response.errorCode,
+      data: {
+        title: 'Error',
+        messages: [],
+      },
+    };
+    for (let message of response.errorMessages) {
+      if (message.length > 200) {
+        message = message.substring(0, 200) + '...';
       }
+      errors.data.messages.push(message);
     }
-    if (urlParams.toString() !== '') {
-      url = url + '?' + urlParams.toString();
-    }
-    return this.request(ApiRequestMethod.GET, url, null).toPromise();
-  }
-
-  post(url: string, body: any = {}): Promise<any> {
-    return this.request(ApiRequestMethod.POST, url, body).toPromise();
-  }
-
-  put(url: string, body: any = {}): Promise<any> {
-    return this.request(ApiRequestMethod.PUT, url, body).toPromise();
-  }
-
-  delete(url: string): Promise<any> {
-    return this.request(ApiRequestMethod.DELETE, url, null).toPromise();
-  }
-
-  patch(url: string, body: any = {}): Promise<any> {
-    return this.request(ApiRequestMethod.PATCH, url, body).toPromise();
-  }
-
-  head(url: string): Promise<any> {
-    return this.request(ApiRequestMethod.HEAD, url, null).toPromise();
-  }
-
-  options(url: string): Promise<any> {
-    return this.request(ApiRequestMethod.OPTIONS, url, null).toPromise();
+    return errors;
   }
 
 }

@@ -1,0 +1,21 @@
+<div *ngIf="results" class="card">
+  <div class="card-body">
+    <div style="height: 320px;">
+      <ngx-charts-line-chart
+        [autoScale]="true"
+        [customColors]="customColors"
+        [gradient]="lineChartGradient"
+        [legend]="lineChartShowLegend"
+        [results]="results"
+        [scheme]="lineChartColorScheme"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [xAxis]="lineChartShowXAxis"
+        [yAxisLabel]="yAxisLabel"
+        [yAxis]="lineChartShowYAxis"
+        [yScaleMin]="0">
+      </ngx-charts-line-chart>
+    </div>
+  </div>
+</div>

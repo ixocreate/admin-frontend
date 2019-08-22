@@ -8,7 +8,7 @@ import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
-import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
@@ -56,7 +56,7 @@ export class UserEditComponent extends ViewAbstractComponent implements OnInit {
         this.notification.success('User successfully updated', 'Success');
       }).catch((error) => {
         this.loading = false;
-        this.notification.apiError(error)
+        this.notification.apiError(error);
       });
     }
   }
