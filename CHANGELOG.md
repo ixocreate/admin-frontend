@@ -1,11 +1,17 @@
 # Release Notes
 
-## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.2.0...develop)
+## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.11...develop)
 
-## [v0.2.0 (2019-08-13)](https://github.com/ixocreate/admin-frontend/compare/0.1.9...0.2.0)
+## [v0.1.11 (2019-08-22)](https://github.com/ixocreate/admin-frontend/compare/0.1.10...0.1.11)
+### Changed
+- Improved module management in the app
+- Removed commented-out code
+- Various file names corrected to angular-standard
+
+## [v0.1.10 (2019-08-13)](https://github.com/ixocreate/admin-frontend/compare/0.1.9...0.1.10)
 ### Changed
 - when adding blocks to a page, switching language, the selected, but unsaved changes are not kept in memory anymore.
-- fixed a typo in the new langugae modal
+- fixed a typo in the new language modal
 - replaced an Math.rand() implementation with a UUID library
 
 ## [v0.1.9 (2019-07-25)](https://github.com/ixocreate/admin-frontend/compare/0.1.8...0.1.9)
