@@ -6,23 +6,22 @@ import { Component, HostBinding, Input, OnInit, ViewChild } from '@angular/core'
 })
 export class IxoButtonComponent implements OnInit {
 
-  private _block: boolean = false;
+  @HostBinding('class.ixo-button-block') public btnBlock = false;
+  private _block = false;
 
   get block() {
     return this._block;
   }
 
-  @HostBinding('class.ixo-button-block') public btnBlock = false;
-
-  @Input() type: 'button' | 'submit' = 'button';
-  @Input() color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'dark' | 'light' = 'primary';
-  @Input() icon: string | null = null;
-  @Input() outline = false;
-
   @Input() set block(block: boolean) {
     this.btnBlock = block;
     this._block = block;
   }
+
+  @Input() type: 'button' | 'submit' = 'button';
+  @Input() color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'dark' | 'light' = 'primary';
+  @Input() icon: string;
+  @Input() outline = false;
 
   @Input() loading = false;
   @Input() disabled = false;

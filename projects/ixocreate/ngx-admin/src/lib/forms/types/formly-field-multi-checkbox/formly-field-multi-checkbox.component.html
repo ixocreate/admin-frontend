@@ -1,0 +1,7 @@
+<div *ngFor="let option of to.options" class="d-flex align-items-center">
+  <label class="switch switch-primary" [class.input-disabled]="to.disabled">
+    <input type="checkbox" class="switch-input" [(ngModel)]="innerValues[option.value]" (change)="onToggleCheckbox()">
+    <span class="switch-slider"></span>
+  </label>
+  <div class="ml-2">{{ option.label }}</div>
+</div>

@@ -6,7 +6,7 @@ import {FormGroup} from '@angular/forms';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NotificationService} from '../../../services/notification.service';
 import {SchemaTransformService} from '../../../services/schema-transform.service';
-import {ConfirmModalData} from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
+import {ConfirmModalData} from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
 import {IxoConfirmModalComponent} from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {ConfigService} from '../../../services/config.service';

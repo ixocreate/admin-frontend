@@ -5,15 +5,15 @@ import { FormlyWrapperTabComponent } from './tab.wrapper';
 @Component({
   selector: 'formly-wrapper-tabset',
   template: `
-    <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let tab of tabs;let index = index;">
-        <a class="nav-link" [class.active]="isActive(index)" [class.is-invalid]="showSubError(index)" (click)="activate(index)" href="#">
-          <i *ngIf="tab.to.icon" [class]="'mr-2 ' + tab.to.icon"></i>
-          {{ tab.to.label }}
-        </a>
-      </li>
-    </ul>
-    <ng-template #fieldComponent></ng-template>
+      <ul class="nav nav-tabs">
+          <li class="nav-item" *ngFor="let tab of tabs;let index = index;">
+              <a class="nav-link" [class.active]="isActive(index)" [class.is-invalid]="showSubError(index)" (click)="activate(index)" href="#">
+                  <i *ngIf="tab.to.icon" [class]="'mr-2 ' + tab.to.icon"></i>
+                  {{ tab.to.label }}
+              </a>
+          </li>
+      </ul>
+      <ng-template #fieldComponent></ng-template>
   `,
 })
 export class FormlyWrapperTabsetComponent extends FieldWrapper implements OnInit {
@@ -26,12 +26,6 @@ export class FormlyWrapperTabsetComponent extends FieldWrapper implements OnInit
     return this._tabs;
   }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.activate(0);
-    });
-  }
-
   get groups() {
     if (!this.field) {
       return [];
@@ -41,6 +35,12 @@ export class FormlyWrapperTabsetComponent extends FieldWrapper implements OnInit
       return [];
     }
     return this.field.fieldGroup;
+  }
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.activate(0);
+    });
   }
 
   isActive(index): boolean {

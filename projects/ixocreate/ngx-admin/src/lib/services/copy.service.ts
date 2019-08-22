@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { IxoConfirmModalComponent } from '../modals/ixo-confirm-modal/ixo-confirm-modal.component';
-import { ConfirmModalData } from '../modals/ixo-confirm-modal/confirm-modal-data.interface';
+import { ConfirmModalData } from '../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { LocalStorageService } from './local-storage.service';
 import { IxoInputModalComponent } from '../modals/ixo-input-modal/ixo-input-modal.component';
-import { InputModalData } from '../modals/ixo-input-modal/input-modal-data.interface';
+import { InputModalData } from '../modals/ixo-input-modal/ixo-input-modal.component.model';
 import { Page } from '../interfaces/page.interface';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 export interface BlockCopy {
   id: string;
@@ -14,25 +14,29 @@ export interface BlockCopy {
   model: any;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CopyService {
 
+  moveType: string;
   private readonly COPIED_BLOCKS_STORAGE_KEY = 'copiedBlocks';
-
   private copiedPage: Page;
 
-  moveType: string;
-
   constructor(private modal: BsModalService, private localStorage: LocalStorageService) {
+  }
+
+  get copyPage(): Page {
+    return this.copiedPage;
+  }
+
+  get copiedBlocks(): BlockCopy[] {
+    return this.localStorage.getItem(this.COPIED_BLOCKS_STORAGE_KEY, []);
   }
 
   setCopyPage(page: Page, type: string) {
     this.moveType = type;
     this.copiedPage = page;
-  }
-
-  get copyPage(): Page {
-    return this.copiedPage;
   }
 
   addCopiedBlock(model: any): Promise<boolean> {
@@ -51,10 +55,6 @@ export class CopyService {
         resolve(true);
       });
     });
-  }
-
-  get copiedBlocks(): BlockCopy[] {
-    return this.localStorage.getItem(this.COPIED_BLOCKS_STORAGE_KEY, []);
   }
 
   removeCopiedBlock(copiedBlock: BlockCopy) {

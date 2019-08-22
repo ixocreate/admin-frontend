@@ -1,7 +1,7 @@
 /// <reference types="@types/googlemaps" />
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { GeoPoint } from './map-modal-data.interface';
+import { GeoPoint } from './ixo-map-modal.component.model';
 
 declare var google: any;
 
@@ -26,7 +26,7 @@ export class IxoMapModalComponent implements OnInit {
   confirmBtnTitle = 'Confirm';
   cancelBtnTitle = 'Cancel';
 
-  geoPoint: GeoPoint = null;
+  geoPoint: GeoPoint;
 
   marker: google.maps.Marker;
 

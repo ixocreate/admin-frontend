@@ -8,7 +8,7 @@ import { NotificationService } from '../../../services/notification.service';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
-import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
 import { PageTitleService } from '../../../services/page-title.service';
 import { ResourceConfig } from '../../../interfaces/config.interface';
 import { ConfigService } from '../../../services/config.service';

@@ -5,23 +5,12 @@ import { AppDataService } from '../../../services/data/app-data.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../../../services/notification.service';
-import { SchemaTransformService } from '../../../services/schema-transform.service';
 import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
-import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/confirm-modal-data.interface';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
 import { ConfigService } from '../../../services/config.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { CropperPosition, IxoImageCropperComponent } from '../../../components/ixo-image-cropper/ixo-image-cropper.component';
-
-interface Entity {
-  name: string;
-  label: string;
-  width: number;
-  height: number;
-  crop: CropperPosition;
-  unsavedCrop?: CropperPosition;
-  unsaved: boolean;
-  isCropable: boolean;
-}
+import { Entity } from './media-edit.component.model';
 
 @Component({
   templateUrl: './media-edit.component.html',
@@ -55,18 +44,8 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
               protected appData: AppDataService,
               protected notification: NotificationService,
               protected config: ConfigService,
-              protected schemaTransform: SchemaTransformService,
               protected modal: BsModalService) {
     super();
-  }
-
-  private getDefinitionByName(definitions, name): { cropParameter: CropperPosition, isCropable: boolean, name: string } {
-    for (const definition of definitions) {
-      if (name === definition.name) {
-        return definition;
-      }
-    }
-    return null;
   }
 
   ngOnInit() {
@@ -117,18 +96,6 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     this.cropper.setCropperPosition(entity.unsavedCrop || entity.crop);
   }
 
-  private isSameCropPosition(crop1: CropperPosition, crop2: CropperPosition): boolean {
-    return !(crop1.x1 !== crop2.x1 || crop1.x2 !== crop2.x2 || crop1.y1 !== crop2.y1 || crop1.y2 !== crop2.y2);
-  }
-
-  private checkUnsavedStatus(entity: Entity) {
-    if (entity.unsavedCrop) {
-      this.activeEntity.unsaved = !this.isSameCropPosition(entity.crop, entity.unsavedCrop);
-    } else {
-      this.activeEntity.unsaved = false;
-    }
-  }
-
   saveCrop(entity: Entity) {
     this.loading = true;
     this.appData.mediaEditor(this.id, entity.name, entity.unsavedCrop).then(() => {
@@ -148,19 +115,13 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     this.checkUnsavedStatus(this.activeEntity);
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.form.valid === false) {
       this.notification.formErrors(this.form);
-    } else {
-      /*
-      this.appData.mediaEdit(this.id, this.form.getRawValue()).then(() => {
-        this.notification.success(this.resourceInfo.label + ' successfully updated', 'Success');
-      }).catch((error) => this.notification.apiError(error));
-      */
     }
   }
 
-  doDelete(): void {
+  doDelete() {
     const initialState: ConfirmModalData = {
       title: 'Delete this Media?',
       text: 'Do you really want to delete this Media?',
@@ -172,6 +133,27 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
       },
     };
     this.modal.show(IxoConfirmModalComponent, {initialState});
+  }
+
+  private isSameCropPosition(crop1: CropperPosition, crop2: CropperPosition): boolean {
+    return !(crop1.x1 !== crop2.x1 || crop1.x2 !== crop2.x2 || crop1.y1 !== crop2.y1 || crop1.y2 !== crop2.y2);
+  }
+
+  private checkUnsavedStatus(entity: Entity) {
+    if (entity.unsavedCrop) {
+      this.activeEntity.unsaved = !this.isSameCropPosition(entity.crop, entity.unsavedCrop);
+    } else {
+      this.activeEntity.unsaved = false;
+    }
+  }
+
+  private getDefinitionByName(definitions, name): { cropParameter: CropperPosition, isCropable: boolean, name: string } {
+    for (const definition of definitions) {
+      if (name === definition.name) {
+        return definition;
+      }
+    }
+    return null;
   }
 
 }

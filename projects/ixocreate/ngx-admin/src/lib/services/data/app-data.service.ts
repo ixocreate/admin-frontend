@@ -15,7 +15,9 @@ import { Resource } from '../../interfaces/resource.interface';
 import { Page } from '../../interfaces/page.interface';
 import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AppDataService extends DataServiceAbstract {
 
   config$: Observable<Config>;
