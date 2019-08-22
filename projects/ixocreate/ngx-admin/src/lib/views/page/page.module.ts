@@ -17,6 +17,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ContainersModule } from '../../containers/containers.module';
 
 const COMPONENTS = [
   PageAddComponent,
@@ -36,6 +37,7 @@ const COMPONENTS = [
   imports: [
     TabsModule.forRoot(),
     IxoComponentsModule,
+    ContainersModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
@@ -43,8 +45,7 @@ const COMPONENTS = [
     NgSelectModule,
     NgxDatatableModule,
     CommonModule
-  ],
-  exports: COMPONENTS
+  ]
 })
 export class PageModule {
 }

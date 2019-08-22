@@ -3,14 +3,32 @@
     <a [routerLink]="'../../'" class="btn btn-outline-dark">
       <i class="fa fa-ban"></i> Cancel
     </a>
-    <ixo-button [loading]="versionSaving || pageDataSaving" icon="save" (click)="onSubmit()">Update</ixo-button>
+    <ixo-button [loading]="savingVersion || savingPageData" icon="save" (click)="onSubmit()">
+      Update
+    </ixo-button>
+    <ixo-button icon="{{hideSidebarIcon}}" (click)="toggleSidebar()" [outline]="true"
+                class="d-none d-lg-inline"></ixo-button>
   </ng-template>
 
-  <ng-container *ngIf="versionData; else isLoading">
-    <ng-container *ngIf="versionForm && versionFields">
-      <formly-form [form]="versionForm" [fields]="versionFields" [model]="versionData.content"
-                   class="ixo-form ixo-form-inline"></formly-form>
-    </ng-container>
+  <ng-container *ngIf="versionData && versionForm && versionFields; else isLoading">
+    <div [class.content]="previewIsOpen">
+      <div [class.split]="previewIsOpen" [class.page-edit-left-panel]="previewIsOpen" id="formly-container">
+        <formly-form [form]="versionForm"
+                     [fields]="versionFields"
+                     [model]="versionData.content"
+                     class="ixo-form ixo-form-inline">
+        </formly-form>
+      </div>
+      <div class="split page-edit-right-panel" [hidden]="!previewIsOpen">
+        <app-iframe [height]="iframeHeight"></app-iframe>
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+          <button class="btn btn-outline-primary" (click)="calculatePreviewSplitView('MOBILE')">Mobile</button>
+          <button class="btn btn-outline-primary" (click)="calculatePreviewSplitView('TABLET')">Tablet</button>
+          <button class="btn btn-outline-primary" (click)="calculatePreviewSplitView('DESKTOP')">Desktop</button>
+        </div>
+      </div>
+
+    </div>
   </ng-container>
   <ng-template #isLoading>
     <div class="text-center my-3 loading">
@@ -29,10 +47,13 @@
           <ng-container *ngIf="pageData">
             <div class="row mb-3">
               <div class="col">
-                <form ngNoForm method="post" [action]="previewUrl + '?pageId=' + pageData.id" target="preview"
-                      *ngIf="versionForm">
+                <form *ngIf="versionForm"
+                      (submit)="handlePreviewSubmit()"
+                      [action]="previewUrl + '?pageId=' + pageData.id"
+                      ngNoForm method="post" target="IXOCREATE-IFRAME">
                   <input type="hidden" name="preview" value="{{ versionForm.getRawValue() | json }}">
-                  <button type="submit" class="btn btn-primary btn-block">
+                  <button type="submit" class="btn btn-primary btn-block"
+                          id="update-preview">
                     <i class="fa fa-eye"></i> Preview
                   </button>
                 </form>
@@ -45,12 +66,12 @@
             </div>
           </ng-container>
 
-          <ixo-button [loading]="versionSaving || pageDataSaving"
+          <ixo-button [loading]="savingVersion || savingPageData"
                       [outline]="true"
                       [block]="true"
                       icon="expand"
                       class="mb-3"
-                      (click)="openPreview()">
+                      (click)="openPreviewInNewTab()">
             Open Page
           </ixo-button>
 
@@ -66,7 +87,7 @@
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Name" [(ngModel)]="pageData.name">
                   <div class="input-group-append">
-                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                    <ixo-button [loading]="savingVersion || savingPageData" [outline]="true" icon="save"
                                 (click)="savePageData('name', pageData.name)"></ixo-button>
                   </div>
                 </div>
@@ -82,7 +103,7 @@
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Slug" [(ngModel)]="pageData.slug">
                   <div class="input-group-append">
-                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                    <ixo-button [loading]="savingVersion || savingPageData" [outline]="true" icon="save"
                                 (click)="savePageData('slug', pageData.slug)"></ixo-button>
                   </div>
                 </div>
@@ -113,10 +134,9 @@
               </label>
               <div class="ixo-form-control-container">
                 <div class="input-group">
-                  <ixo-date-picker placeholder="Published From"
-                                   [(ngModel)]="pageData.publishedFrom"></ixo-date-picker>
+                  <ixo-date-picker placeholder="Published From" [(ngModel)]="pageData.publishedFrom"></ixo-date-picker>
                   <div class="input-group-append">
-                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                    <ixo-button [loading]="savingVersion || savingPageData" [outline]="true" icon="save"
                                 (click)="savePageData('publishedFrom', pageData.publishedFrom)"></ixo-button>
                   </div>
                 </div>
@@ -132,7 +152,7 @@
                   <ixo-date-picker placeholder="Published Until"
                                    [(ngModel)]="pageData.publishedUntil"></ixo-date-picker>
                   <div class="input-group-append">
-                    <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                    <ixo-button [loading]="savingVersion || savingPageData" [outline]="true" icon="save"
                                 (click)="savePageData('publishedUntil', pageData.publishedUntil)"></ixo-button>
                   </div>
                 </div>
@@ -154,7 +174,7 @@
                   [multiple]="true">
                 </ng-select>
                 <div class="input-group-append">
-                  <ixo-button [loading]="versionSaving || pageDataSaving" [outline]="true" icon="save"
+                  <ixo-button [loading]="savingVersion || savingPageData" [outline]="true" icon="save"
                               (click)="savePageData('navigation', selectedNavigationOptions)"></ixo-button>
                 </div>
               </div>
@@ -190,7 +210,8 @@
               <div class="row mb-3 mt-1">
                 <ng-container *ngFor="let language of replacePageLocales">
                   <div class="col">
-                    <button type="button" class="btn btn-outline-primary" (click)="onReplaceContentModal(language.page.id)"
+                    <button type="button" class="btn btn-outline-primary"
+                            (click)="onReplaceContentModal(language.page.id)"
                             ixoClickStopPropagation>
                       <i class="flag-icon flag-icon-{{ language.locale.substr(3) | lowercase }}"></i>
                     </button>
@@ -239,12 +260,10 @@
                         <small class="text-muted">{{ element.createdAt | date:'yyyy-MM-dd HH:mm' }}</small>
                       </div>
                       <div class="mt-1">
-                        <a *ngIf="pageData" [href]="previewUrl + '?pageId=' + pageData.id + '&versionId=' + element.id"
+                        <a *ngIf="pageData"
+                           [href]="previewUrl + '?pageId=' + pageData.id + '&versionId=' + element.id"
                            class="btn btn-sm btn-outline-success mr-1" title="Preview" target="preview"><i
                           class="fa fa-eye"></i></a>
-                        <!--<button class="btn btn-sm btn-outline-success mr-1" title="Approve"><i class="fa fa-thumbs-up"></i></button>-->
-                        <!--<button class="btn btn-sm btn-outline-primary mr-1" title="Replace"><i class="fa fa-history"></i></button>-->
-                        <!--<button class="btn btn-sm btn-outline-danger" title="Delete"><i class="fa fa-trash"></i></button>-->
                       </div>
                     </div>
                     <div class="col-auto">
