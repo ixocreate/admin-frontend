@@ -57,9 +57,9 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
   imports: [
     RouterModule,
     HttpClientModule,
-
+    BrowserModule,
+    BrowserAnimationsModule,
     IxoAdminRouting,
-
     IxoComponentsModule,
     ContainersModule,
     DirectivesModule,
@@ -67,6 +67,8 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
     TypesModule,
     DashboardModule,
     FormsModule,
+    ServicesModule,
+    PipesModule,
 
     StoreModule.forRoot({}, {
       metaReducers: [
@@ -74,15 +76,10 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
       ],
     }),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    NgrxHelperModule.forRoot(),
-
-    BrowserModule,
-    BrowserAnimationsModule,
-    ServicesModule,
-    PipesModule,
+    NgrxHelperModule.forRoot()
   ],
   declarations: [
-    AdminComponent,
+    AdminComponent
   ],
   exports: [
     IxoComponentsModule,

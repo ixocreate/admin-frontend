@@ -5,11 +5,15 @@ import { AppFooterModule, AppHeaderModule, AppSidebarModule } from '@coreui/angu
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { IxoComponentsModule } from '../components/ixo-components.module';
 import { RouterModule } from '@angular/router';
+import { IframeComponent } from './iframe/iframe.component';
+
+const COMPONENTS = [
+  DefaultLayoutComponent,
+  IframeComponent
+];
 
 @NgModule({
-  declarations: [
-    DefaultLayoutComponent
-  ],
+  declarations: COMPONENTS,
   imports: [
     CommonModule,
     RouterModule,
@@ -17,8 +21,9 @@ import { RouterModule } from '@angular/router';
     AppHeaderModule,
     AppSidebarModule,
     PerfectScrollbarModule,
-    IxoComponentsModule,
-  ]
+    IxoComponentsModule
+  ],
+  exports: COMPONENTS
 })
 export class ContainersModule {
 }

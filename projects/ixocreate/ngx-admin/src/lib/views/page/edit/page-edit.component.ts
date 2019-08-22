@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ViewAbstractComponent} from '../../../components/view.abstract.component';
 import {AppDataService} from '../../../services/data/app-data.service';
@@ -10,9 +10,15 @@ import {ConfirmModalData} from '../../../modals/ixo-confirm-modal/ixo-confirm-mo
 import {IxoConfirmModalComponent} from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {ConfigService} from '../../../services/config.service';
+import { DisplayTypes, FOOTER_HEIGHT, HEADING_HEIGHT, screensInPixels } from './page-edit.component.model';
+import { Observable } from 'rxjs';
+import { debounceTime, take, takeWhile } from 'rxjs/operators';
+import { SidebarService } from '../../../services/layout/sidebar.service';
+import Split from 'split.js';
 
 @Component({
   templateUrl: './page-edit.component.html',
+  styleUrls: ['./page-edit.component.scss']
 })
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
@@ -25,19 +31,25 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   versionForm: FormGroup = new FormGroup({});
   versionFields: FormlyFieldConfig[];
 
-  navigationForm: FormGroup = new FormGroup({});
-
   navigationOptions: any[];
   selectedNavigationOptions: any[];
 
-  hasChildren = true;
+  pageHasChildren = true;
 
-  currentPageVersion: string = null;
+  currentPageVersion: string;
 
-  pageData: { id: string, name: string, publishedFrom: string, publishedUntil: string, slug: string, online: boolean, sitemapId: string };
+  pageData: {
+    id: string,
+    name: string,
+    publishedFrom: string,
+    publishedUntil: string,
+    slug: string,
+    online: boolean,
+    sitemapId: string
+  };
 
-  versionSaving = true;
-  pageDataSaving = false;
+  savingVersion = true;
+  savingPageData = false;
 
   pageLocales: Array<{ locale: string, page: any }> = [];
   replacePageLocales: Array<{ locale: string, page: any }> = [];
@@ -45,22 +57,35 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   otherPagesWithPageType: Array<{ id: string, name: string }> = [];
   selectedPageWithPageType: { id: string, name: string } = null;
 
+  iframeHeight: number;
+  previewIsOpen = false;
+  hideSidebarIcon = 'arrow-right';
+
+  private formChanges: Observable<any>;
+  keepPreviewOpen = false;
+  private split: Split;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected config: ConfigService,
               protected appData: AppDataService,
               protected notification: NotificationService,
               protected schemaTransform: SchemaTransformService,
-              protected modal: BsModalService) {
+              protected modal: BsModalService,
+              private sidebar: SidebarService) {
     super();
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.id = params.id;
-      this.loadDetailData();
-      this.updateVersionIndex();
-    });
+    this.updateIFrameHeight();
+
+    this.route.params
+      .pipe(take(1))
+      .subscribe((params) => {
+        this.id = params.id;
+        this.loadDetailData();
+        this.updateVersionIndex();
+      });
   }
 
   get previewUrl() {
@@ -94,25 +119,25 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       data.schema = this.schemaTransform.transformForm(data.schema);
       this.versionFields = data.schema ? data.schema : [];
       this.loadNavigationData(data.navigation);
-      this.hasChildren = data.hasChildren;
+      this.pageHasChildren = data.hasChildren;
 
       if (data.page.version.head === null) {
         this.versionData = {
           content: {},
         };
-        this.versionSaving = false;
+        this.savingVersion = false;
       } else if (this.currentPageVersion !== data.page.version.head) {
         this.versionData = null;
         this.currentPageVersion = data.page.version.head;
         this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
           this.versionForm = new FormGroup({});
           this.versionData = versionData;
-          this.versionSaving = false;
+          this.savingVersion = false;
           return versionData;
-        }).catch(() => this.versionSaving = false);
+        }).catch(() => this.savingVersion = false);
       }
       return data;
-    }).catch(() => this.versionSaving = false);
+    }).catch(() => this.savingVersion = false);
   }
 
   private loadNavigationData(navigation) {
@@ -163,21 +188,30 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     if (this.versionForm.valid === false) {
       this.notification.formErrors(this.versionForm);
     } else {
-      this.versionSaving = true;
-      const data = this.versionForm.getRawValue();
-      this.appData.createPageVersion(this.id, {content: data}).then((response) => {
-        this.loadDetailData();
-        this.updateVersionIndex();
-        this.notification.success('Page Version successfully created', 'Success');
-      }).catch((error) => {
-        this.versionSaving = false;
-        this.notification.apiError(error);
-      });
+      this.savingVersion = true;
+      const content = this.versionForm.getRawValue();
+      this.appData.createPageVersion(this.id, {content})
+        .then(() => this.pageVersionCreated())
+        .catch((error) => {
+          this.savingVersion = false;
+          this.notification.apiError(error);
+        });
+    }
+  }
+
+  private pageVersionCreated() {
+    this.loadDetailData();
+    this.updateVersionIndex();
+    this.notification.success('Page Version successfully created', 'Success');
+    this.savingVersion = false;
+    this.previewIsOpen = false;
+    if (this.previewIsOpen) {
+      this.updatePreviewIFrame();
     }
   }
 
   doDelete(): void {
-    if (this.hasChildren) {
+    if (this.pageHasChildren) {
       this.notification.error('You can\'t delete a page having child pages', 'Error');
       return;
     }
@@ -195,20 +229,20 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   savePageData(key: string, value: any) {
-    this.pageDataSaving = true;
+    this.savingPageData = true;
     const postData = {};
     postData[key] = value;
-    this.appData.updatePage(this.id, postData).then((response) => {
+    this.appData.updatePage(this.id, postData).then(() => {
       this.loadDetailData();
-      this.pageDataSaving = false;
+      this.savingPageData = false;
       this.notification.success(key + ' successfully saved', 'Success');
     }).catch((error) => {
       this.notification.apiError(error);
-      this.pageDataSaving = false;
+      this.savingPageData = false;
     });
   }
 
-  openPreview() {
+  openPreviewInNewTab() {
     this.data$.then((data) => {
       window.open(data.page.url);
     });
@@ -223,7 +257,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     if (data && data.localizedPages) {
       for (const locale in data.localizedPages) {
         if (data.localizedPages.hasOwnProperty(locale)) {
-
           responseData.push({
             locale,
             page: data.localizedPages[locale].page,
@@ -242,5 +275,98 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       }
     }
     this.pageLocales = responseData;
+  }
+
+  /**
+   * Update the Preview iFrame
+   */
+  private updatePreviewIFrame() {
+    this.keepPreviewOpen = true;
+    document.getElementById('update-preview').click();
+    this.keepPreviewOpen = false;
+  }
+
+  /**
+   * React to changes in the screen-size and update the height of the preview iframe
+   */
+  @HostListener('window:resize', ['$event'])
+  updateIFrameHeight() {
+    this.iframeHeight = window.innerHeight - HEADING_HEIGHT - FOOTER_HEIGHT;
+  }
+
+  toggleSidebar() {
+    this.sidebar.toggleSidebar();
+    this.hideSidebarIcon = this.sidebar.arrowIcon;
+  }
+
+  /**
+   * Show/Hide the preview of the current edit version, etc.
+   */
+  private handlePreviewSubmit() {
+    const defaultPreview: DisplayTypes = 'MOBILE';
+
+    if (!this.keepPreviewOpen) {
+
+      this.previewIsOpen = !this.previewIsOpen;
+
+      if (this.previewIsOpen) {
+        this.calculatePreviewSplitView(defaultPreview);
+
+        /**
+         * Listen to changes in the form and update the preview while the preview ist active
+         */
+        this.formChanges = this.versionForm.valueChanges.pipe(
+          takeWhile(() => this.previewIsOpen),
+          debounceTime(700));
+
+        this.formChanges
+          .subscribe(() => this.updatePreviewIFrame());
+
+      } else {
+        /**
+         * When preview is not active anymore, destroy the Split instance
+         */
+        if (this.split) {
+          this.split.destroy();
+        }
+      }
+    }
+  }
+
+  /**
+   * Use split.js to add a splitter between the panels.
+   *
+   * The gutter is the dragging line in-between the panels.
+   *
+   * @param size the minimal size of the right panel. By default 100px is the smallest.
+   */
+  private calculatePreviewSplitView(size: DisplayTypes = 'MOBILE') {
+    const gutterHeight = HEADING_HEIGHT + FOOTER_HEIGHT;
+    const iframePixels = screensInPixels(size);
+
+    if (this.split) {
+      const oldGutter = document.getElementsByClassName('gutter gutter-horizontal').item(0);
+      if (oldGutter) {
+        oldGutter.remove();
+      }
+    }
+
+    setTimeout(() =>
+      this.split = Split(['.page-edit-left-panel', '.page-edit-right-panel'], {
+        dragInterval: 50,
+        sizes: [99, 1],
+        minSize: [300, iframePixels],
+        expandToMin: true,
+        gutterStyle: () => ({
+          'width': '5px',
+          'height': 'calc(100vh - ' + gutterHeight + 'px)',
+          'background-color': 'rgba(0,0,0,0.06)',
+          'border-radius': '10px',
+          'margin-left': '7px',
+          'margin-right': '7px',
+          'cursor': 'col-resize'
+        })
+      })
+    );
   }
 }

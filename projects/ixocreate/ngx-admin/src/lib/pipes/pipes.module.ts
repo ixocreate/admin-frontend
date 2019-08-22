@@ -12,7 +12,7 @@ const COMPONENTS = [
   IxoDateTimePipe,
   IxoFileSizePipe,
   IxoNumberPipe,
-  IxoTimePipe,
+  IxoTimePipe
 ];
 
 @NgModule({
