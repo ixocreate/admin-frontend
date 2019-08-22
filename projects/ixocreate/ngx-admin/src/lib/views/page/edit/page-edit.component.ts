@@ -309,8 +309,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
       this.previewIsOpen = !this.previewIsOpen;
 
-      console.log('preview is currently open', this.previewIsOpen);
-
       if (this.previewIsOpen) {
         this.calculatePreviewSplitView(defaultPreview);
 
