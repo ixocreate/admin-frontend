@@ -1,4 +1,4 @@
-<div class="input-group" (click)="openModal(modalTemplate)" [class.cursor-pointer]="!to.disabled">
+<div class="input-group" (click)="openModal(modalTemplate2)" [class.cursor-pointer]="!to.disabled">
   <div class="input-group-prepend">
         <span class="input-group-text p-0" [class.is-invalid]="showError">
           <div class="input-media-preview" *ngIf="!value"><i class="fa fa-fw fa-file-o"></i></div>
@@ -28,6 +28,13 @@
   </div>
 </div>
 
+<div class="test">
+  <ng-container *ngIf="value && isImage(value.mimeType)">
+    <a [href]="value.original" target="_blank" class="selected-image-preview"
+       [style.backgroundImage]="'url(' + value.original + ')'" ixoClickStopPropagation></a>
+  </ng-container>
+</div>
+
 <ng-template #modalTemplate>
   <div class="current-media is-top" *ngIf="value">
     <div class="row align-items-center">
@@ -44,4 +51,34 @@
     </div>
   </div>
   <ixo-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></ixo-media-list>
+</ng-template>
+
+<ng-template #modalTemplate2>
+  <div class="card annotation-card">
+    <div class="card-body p-0">
+      <div class="annotation-container">
+        <div id="tagged" class="tag">
+          <span id="span-id">0</span>
+        </div>
+        <img [src]="value.original" id="pointer_div" (click)="annotate($event)">
+        You pointed on
+        x = {{posx}}
+        y = {{posy}}
+        <app-formly-field-annotated-image [model]="value"></app-formly-field-annotated-image>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="pagination-container">
+        <div class="row align-items-center">
+          <div class="col-sm">
+            Click on the image to append text to it.
+          </div>
+          <div class="col-sm text-right">
+            <ixo-button color="light" icon="ban" (click)="close()">Cancel</ixo-button>
+            <ixo-button color="success" icon="save" (click)="onSelect(value)">Save</ixo-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>

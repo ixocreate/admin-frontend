@@ -16,6 +16,7 @@ import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.
 import { FormlyFieldPriceComponent } from './types/formly-field-price/formly-field-price.component';
 import { FormlyFieldGeoPointComponent } from './types/formly-field-geo-point/formly-field-geo-point.component';
 import { FormlyFieldMultiCheckboxComponent } from './types/formly-field-multi-checkbox/formly-field-multi-checkbox.component';
+import { RepeatTypeComponent } from './types/formly-field-media/formly-field-annotated-image/annotated-image-field/annotated-image-field.component';
 
 export function renderCustomError(error) {
   return error;
@@ -27,6 +28,11 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {name: 'custom', message: renderCustomError},
   ],
   types: [
+    {
+      name: 'repeat',
+      component: RepeatTypeComponent,
+      wrappers: ['form-field'],
+    },
     {
       name: 'select',
       component: FormlyFieldSelectComponent,

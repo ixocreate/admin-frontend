@@ -1,15 +1,15 @@
-import {Component, OnInit, HostListener} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ViewAbstractComponent} from '../../../components/view.abstract.component';
-import {AppDataService} from '../../../services/data/app-data.service';
-import {FormGroup} from '@angular/forms';
-import {FormlyFieldConfig} from '@ngx-formly/core';
-import {NotificationService} from '../../../services/notification.service';
-import {SchemaTransformService} from '../../../services/schema-transform.service';
-import {ConfirmModalData} from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
-import {IxoConfirmModalComponent} from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
-import {BsModalService} from 'ngx-bootstrap/modal';
-import {ConfigService} from '../../../services/config.service';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ViewAbstractComponent } from '../../../components/view.abstract.component';
+import { AppDataService } from '../../../services/data/app-data.service';
+import { FormGroup } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
+import { NotificationService } from '../../../services/notification.service';
+import { SchemaTransformService } from '../../../services/schema-transform.service';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
+import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ConfigService } from '../../../services/config.service';
 import { DisplayTypes, FOOTER_HEIGHT, HEADING_HEIGHT, screensInPixels } from './page-edit.component.model';
 import { Observable } from 'rxjs';
 import { debounceTime, take, takeWhile } from 'rxjs/operators';
@@ -115,8 +115,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         sitemapId: data.page.page.sitemapId,
         online: data.page.page.status === 'online',
       };
-
       data.schema = this.schemaTransform.transformForm(data.schema);
+      console.log(data);
       this.versionFields = data.schema ? data.schema : [];
       this.loadNavigationData(data.navigation);
       this.pageHasChildren = data.hasChildren;
@@ -132,6 +132,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
           this.versionForm = new FormGroup({});
           this.versionData = versionData;
+          console.log(versionData.content);
           this.savingVersion = false;
           return versionData;
         }).catch(() => this.savingVersion = false);
@@ -338,7 +339,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
    *
    * The gutter is the dragging line in-between the panels.
    *
-   * @param size the minimal size of the right panel. By default 100px is the smallest.
+   * @param size the minimal size of the right panel. By default MOBILE is the smallest.
    */
   private calculatePreviewSplitView(size: DisplayTypes = 'MOBILE') {
     const gutterHeight = HEADING_HEIGHT + FOOTER_HEIGHT;

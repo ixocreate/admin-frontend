@@ -35,6 +35,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { DirectivesModule } from '../../directives/directives.module';
+import { FormlyFieldAnnotatedImageComponent } from './formly-field-media/formly-field-annotated-image/formly-field-annotated-image.component';
+import { RepeatTypeComponent } from './formly-field-media/formly-field-annotated-image/annotated-image-field/annotated-image-field.component';
 
 const COMPONENTS = [
   FormlyFieldCheckboxComponent,
@@ -49,7 +51,9 @@ const COMPONENTS = [
   FormlyFieldQuillComponent,
   FormlyFieldRepeatableComponent,
   FormlyFieldSelectComponent,
-  FormlyFieldYouTubeComponent
+  FormlyFieldYouTubeComponent,
+  FormlyFieldAnnotatedImageComponent,
+  RepeatTypeComponent,
 ];
 
 @NgModule({
