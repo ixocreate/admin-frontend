@@ -1,0 +1,29 @@
+<div class="calendar-group">
+  <div class="input-group">
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="formattedDate"
+           (change)="onChange($event)"
+           [placeholder]="to.placeholder"
+           [class.is-invalid]="showError"
+           [disabled]="to.disabled">
+    <div class="input-group-append" *ngIf="!to.required && !to.disabled">
+      <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError"
+              (click)="remove()">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+  </div>
+  <div class="calender-overlay" [hidden]="!showOverlay" ixoClickStopPropagation>
+    <p-calendar class="date-picker"
+                [inline]="true"
+                [placeholder]="to.placeholder"
+                [(ngModel)]="dateValue"
+                [locale]="locale"
+                [showTime]="calendarConfig.showTime"
+                [disabled]="to.disabled"
+                [class.is-invalid]="showError"
+    >
+    </p-calendar>
+  </div>
+</div>

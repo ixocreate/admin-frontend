@@ -16,14 +16,12 @@ export interface EnvironmentConfig {
   production: boolean;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ConfigService {
 
-  private _config: Config;
   private _user: User = null;
-  private _userPermissions: string[] = null;
-  private _navigation: any = [];
-
   private readonly _ixoConfig: IxoConfig = {
     namespace: '@ixo',
     configVariable: '__ixo',
@@ -36,34 +34,22 @@ export class ConfigService {
     this._ixoConfig = Object.assign({}, this._ixoConfig, config);
   }
 
-  setConfig(config: Config) {
-    this._config = Object.assign({}, this.config, DefaultHelper.windowVar(this._ixoConfig.configVariable), config);
-    this.parseNavigation();
-  }
+  private _config: Config;
 
   get config(): Config {
     return this._config;
   }
 
-  getResourceConfig(resourceName: string): ResourceConfig {
-    for (const resourceConfig of this.config.resources) {
-      if (resourceConfig.name === resourceName) {
-        return resourceConfig;
-      }
-    }
-    return null;
-  }
-
-  setUser(user: User) {
-    this._user = user;
-  }
-
-  setUserPermissions(permissions: string[]) {
-    this._userPermissions = permissions;
-  }
+  private _userPermissions: string[] = null;
 
   get userPermissions(): string[] {
     return this._userPermissions;
+  }
+
+  private _navigation: any = [];
+
+  get navigation() {
+    return this._navigation;
   }
 
   get dateFormat(): string {
@@ -109,8 +95,26 @@ export class ConfigService {
     return this._ixoConfig.environment;
   }
 
-  get navigation() {
-    return this._navigation;
+  setConfig(config: Config) {
+    this._config = Object.assign({}, this.config, DefaultHelper.windowVar(this._ixoConfig.configVariable), config);
+    this.parseNavigation();
+  }
+
+  getResourceConfig(resourceName: string): ResourceConfig {
+    for (const resourceConfig of this.config.resources) {
+      if (resourceConfig.name === resourceName) {
+        return resourceConfig;
+      }
+    }
+    return null;
+  }
+
+  setUser(user: User) {
+    this._user = user;
+  }
+
+  setUserPermissions(permissions: string[]) {
+    this._userPermissions = permissions;
   }
 
   private parseNavigation() {

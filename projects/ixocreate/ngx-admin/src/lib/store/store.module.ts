@@ -4,10 +4,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [
     CommonModule,
-  ],
-  declarations: [],
-  providers: [],
-  exports: [],
+  ]
 })
 export class NgrxHelperModule {
   static forRoot(): ModuleWithProviders {

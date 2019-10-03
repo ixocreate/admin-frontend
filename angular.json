@@ -31,6 +31,7 @@
               ]
             },
             "scripts": [
+              "node_modules/split.js/dist/split.min.js"
             ]
           },
           "configurations": {

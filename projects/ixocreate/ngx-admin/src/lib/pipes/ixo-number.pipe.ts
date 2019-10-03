@@ -1,6 +1,6 @@
-import {formatNumber} from "@angular/common";
-import {Pipe, PipeTransform} from '@angular/core';
-import {ConfigService} from '../services/config.service';
+import { formatNumber } from '@angular/common';
+import { Pipe, PipeTransform } from '@angular/core';
+import { ConfigService } from '../services/config.service';
 
 @Pipe({
   name: 'ixoNumber',

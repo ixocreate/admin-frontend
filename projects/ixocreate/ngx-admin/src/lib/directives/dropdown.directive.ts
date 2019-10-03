@@ -8,6 +8,9 @@ export class DropdownDirective implements OnInit {
   private isOpen = false;
   private button: HTMLElement;
 
+  constructor(private element: ElementRef, private zone: NgZone) {
+  }
+
   @HostListener('document:click.out-zone', ['$event']) clickOutside(event) {
     if (event.target !== this.button && event.target.parentElement !== this.button) {
       if (this.isOpen) {
@@ -16,9 +19,6 @@ export class DropdownDirective implements OnInit {
         });
       }
     }
-  }
-
-  constructor(private element: ElementRef, private zone: NgZone) {
   }
 
   ngOnInit() {

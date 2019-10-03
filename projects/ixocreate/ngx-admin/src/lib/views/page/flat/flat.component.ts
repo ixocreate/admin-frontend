@@ -16,21 +16,19 @@ export class FlatComponent extends ViewAbstractComponent implements OnInit {
   pageNumber = 0;
   limit = 10;
   loading = false;
-  private inputTimeout = null;
+  private inputTimeout;
   selectedLocale: string;
   data: TableResponse<any> = null;
   parentSitemapId = null;
 
-  private orderBy: string = null;
+  private orderBy: string;
   private orderDirection: 'DESC' | 'ASC' = null;
 
-  constructor(
-    protected route: ActivatedRoute,
-    private config: ConfigService,
-    private localStorage: LocalStorageService,
-    protected appData: AppDataService,
-    private dateTimePipe: IxoDateTimePipe,
-  ) {
+  constructor(protected route: ActivatedRoute,
+              private config: ConfigService,
+              private localStorage: LocalStorageService,
+              protected appData: AppDataService,
+              private dateTimePipe: IxoDateTimePipe) {
     super();
   }
 
@@ -108,11 +106,6 @@ export class FlatComponent extends ViewAbstractComponent implements OnInit {
       limit: this.limit,
     };
 
-    /*if (this.orderBy && this.orderDirection) {
-      params.orderBy = this.orderBy;
-      params.orderDirection = this.orderDirection;
-    }*/
-
     if (this.filterValue && this.filterValue !== '') {
       params.search = this.filterValue;
     }
@@ -136,59 +129,5 @@ export class FlatComponent extends ViewAbstractComponent implements OnInit {
       }
     });
 
-    /*
-    return this.api.get(this.apiUrl + '?' + this.parseParams(params)).then((data: any) => {
-      this.loading = false;
-
-      if (this.tableTitle === null && data.label) {
-        this.tableTitle = data.label;
-      }
-
-      let schema = null;
-      if (this.resourceInfo) {
-        schema = this.resourceInfo.listSchema;
-      } else if (data.schema) {
-        schema = data.schema;
-      }
-
-      if (this.hostColumns.length === 0 && schema) {
-        const columns = schema.elements.map((element) => {
-          return {
-            name: element.label,
-            prop: element.name,
-          };
-        });
-        columns.push({
-          cellTemplate: this.buttonColumnTemplate,
-        });
-        this.setColumns(columns);
-      }
-
-      if (data.items) {
-        this.data = {
-          label: data.label,
-          count: data.meta.count,
-          limit: this.limit,
-          offset: params.offset,
-          search: params.search,
-          orderBy: this.orderBy,
-          orderDirection: this.orderDirection,
-          result: data.items,
-        };
-      } else {
-        // TODO: Update
-        this.data = {
-          label: '',
-          count: 1000,
-          limit: this.limit,
-          offset: params.offset,
-          search: params.search,
-          orderBy: this.orderBy,
-          orderDirection: this.orderDirection,
-          result: data,
-        };
-      }
-      this.updatedData.emit(this.data);
-    });*/
   }
 }

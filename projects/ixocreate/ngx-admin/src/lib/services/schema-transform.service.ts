@@ -6,7 +6,9 @@ export interface Schema {
   templateOptions: { [key: string]: any };
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SchemaTransformService {
 
   private transformers: { [inputType: string]: (value: any, transformer: SchemaTransformService) => any } = {};
@@ -65,17 +67,14 @@ export class SchemaTransformService {
         templateOptions: {
           label: value.label,
           description: value.description,
-          placeholder: value.placeholder || value.label + '...',
+          placeholder: value.placeholder || (value.label ? value.label + '...' : ''),
           required: value.required,
           disabled: value.disabled,
           ...templateOptions,
         },
       };
-      if(value.metadata) {
+      if (value.metadata) {
         data.templateOptions.metadata = {...value.metadata};
-        // if(data.templateOptions.metadata.default) {
-        //   data.default = data.templateOptions.metadata.default;
-        // }
       }
       keysToTemplateOptions.forEach((key) => {
         data.templateOptions[key] = value[key];

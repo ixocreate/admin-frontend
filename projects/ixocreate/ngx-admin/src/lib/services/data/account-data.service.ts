@@ -8,7 +8,9 @@ import { Observable } from 'rxjs/observable';
 import { User } from '../../interfaces/user.interface';
 import { ConfigService } from '../config.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AccountDataService extends DataServiceAbstract {
 
   user$: Observable<User>;
