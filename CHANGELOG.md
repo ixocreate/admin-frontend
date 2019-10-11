@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.12...develop)
 
+## [v0.1.14 (2019-10-11)](https://github.com/ixocreate/admin-frontend/compare/0.1.12...0.1.14)
+### Added
+- Annotated Image field type
+
 ## [v0.1.12 (2019-08-22)](https://github.com/ixocreate/admin-frontend/compare/0.1.11...0.1.12)
 ### Changed
 - Added a preview button and a live updating preview screen
