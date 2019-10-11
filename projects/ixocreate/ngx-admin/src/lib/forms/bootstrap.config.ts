@@ -1,46 +1,23 @@
 import { ConfigOption } from '@ngx-formly/core';
+import { FormlyFieldCheckboxComponent } from './types/formly-field-checkbox/formly-field-checkbox.component';
+import { FormlyFieldColorComponent } from './types/formly-field-color/formly-field-color.component';
+import { FormlyFieldDateTimeComponent } from './types/formly-field-datetime/formly-field-datetime.component';
+import { FormlyFieldDynamicComponent } from './types/formly-field-dynamic/fomly-field-dynamic.component';
+import { FormlyFieldGeoPointComponent } from './types/formly-field-geo-point/formly-field-geo-point.component';
+import { FormlyFieldLinkComponent } from './types/formly-field-link/formly-field-link.component';
+import { FormlyFieldMediaAnnotatedComponent } from './types/formly-field-media-annotated/formly-field-media-annotated.component';
+import { FormlyFieldMediaComponent } from './types/formly-field-media/formly-field-media.component';
+import { FormlyFieldMultiCheckboxComponent } from './types/formly-field-multi-checkbox/formly-field-multi-checkbox.component';
+import { FormlyFieldPriceComponent } from './types/formly-field-price/formly-field-price.component';
+import { FormlyFieldQuillComponent } from './types/formly-field-quill/formly-field-quill.component';
+import { FormlyFieldRepeatableComponent } from './types/formly-field-repeatable/formly-field-repeatable.component';
+import { FormlyFieldSelectComponent } from './types/formly-field-select/formly-field-select.component';
+import { FormlyFieldYouTubeComponent } from './types/formly-field-youtube/formly-field-youtube.component';
+import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
 import { FormlyWrapperFormFieldComponent } from './wrappers/form-field.wrapper';
 import { FormlyWrapperSectionComponent } from './wrappers/section.wrapper';
-import { FormlyWrapperTabsetComponent } from './wrappers/tabset.wrapper';
 import { FormlyWrapperTabComponent } from './wrappers/tab.wrapper';
-import { FormlyFieldMediaComponent } from './types/media';
-import { FormlyFieldDateTimeComponent } from './types/datetime';
-import { FormlyFieldLinkComponent } from './types/link';
-import { FormlyFieldSelectComponent } from './types/select';
-import { FormlyFieldColorComponent } from './types/color';
-import { FormlyFieldYouTubeComponent } from './types/youtube';
-import { FormlyFieldQuillComponent } from './types/quill';
-import { FormlyFieldCheckboxComponent } from './types/checkbox';
-import { FormlyFieldDynamicComponent } from './types/dynamic';
-import { FormlyFieldRepeatableComponent } from './types/repeatable';
-import { FormlyWrapperFormFieldOnlyComponent } from './wrappers/form-field-only.wrapper';
-import { FormlyFieldPriceComponent } from './types/price';
-import { FormlyFieldGeoPointComponent } from './types/geo-point';
-import { FormlyFieldMultiCheckboxComponent } from './types/multi-checkbox';
-
-export const FIELD_TYPE_COMPONENTS = [
-  // types
-  FormlyFieldSelectComponent,
-  FormlyFieldMediaComponent,
-  FormlyFieldDateTimeComponent,
-  FormlyFieldLinkComponent,
-  FormlyFieldColorComponent,
-  FormlyFieldYouTubeComponent,
-  FormlyFieldQuillComponent,
-  FormlyFieldCheckboxComponent,
-  FormlyFieldMultiCheckboxComponent,
-  FormlyFieldRepeatableComponent,
-  FormlyFieldDynamicComponent,
-  FormlyFieldPriceComponent,
-  FormlyFieldGeoPointComponent,
-
-  // wrappers
-  FormlyWrapperFormFieldComponent,
-  FormlyWrapperFormFieldOnlyComponent,
-  FormlyWrapperSectionComponent,
-  FormlyWrapperTabsetComponent,
-  FormlyWrapperTabComponent,
-];
+import { FormlyWrapperTabsetComponent } from './wrappers/tabset.wrapper';
 
 export function renderCustomError(error) {
   return error;
@@ -53,33 +30,13 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
   ],
   types: [
     {
-      name: 'select',
-      component: FormlyFieldSelectComponent,
-      wrappers: ['form-field'],
-    },
-    {
       name: 'checkbox',
       component: FormlyFieldCheckboxComponent,
       wrappers: ['form-field'],
     },
     {
-      name: 'multiCheckbox',
-      component: FormlyFieldMultiCheckboxComponent,
-      wrappers: ['form-field'],
-    },
-    {
-      name: 'media',
-      component: FormlyFieldMediaComponent,
-      wrappers: ['form-field'],
-    },
-    {
-      name: 'link',
-      component: FormlyFieldLinkComponent,
-      wrappers: ['form-field'],
-    },
-    {
-      name: 'datetime',
-      component: FormlyFieldDateTimeComponent,
+      name: 'color',
+      component: FormlyFieldColorComponent,
       wrappers: ['form-field'],
     },
     {
@@ -95,13 +52,33 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       },
     },
     {
-      name: 'color',
-      component: FormlyFieldColorComponent,
+      name: 'datetime',
+      component: FormlyFieldDateTimeComponent,
       wrappers: ['form-field'],
     },
     {
-      name: 'youtube',
-      component: FormlyFieldYouTubeComponent,
+      name: 'dynamic',
+      component: FormlyFieldDynamicComponent,
+      wrappers: ['form-field-only'],
+    },
+    {
+      name: 'link',
+      component: FormlyFieldLinkComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'multiCheckbox',
+      component: FormlyFieldMultiCheckboxComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'media',
+      component: FormlyFieldMediaComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'mediaAnnotated',
+      component: FormlyFieldMediaAnnotatedComponent,
       wrappers: ['form-field'],
     },
     {
@@ -112,6 +89,16 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'price',
       component: FormlyFieldPriceComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'repeatable',
+      component: FormlyFieldRepeatableComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'select',
+      component: FormlyFieldSelectComponent,
       wrappers: ['form-field'],
     },
     {
@@ -139,17 +126,10 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       },
     },
     {
-      name: 'dynamic',
-      component: FormlyFieldDynamicComponent,
-      wrappers: ['form-field-only'],
+      name: 'youtube',
+      component: FormlyFieldYouTubeComponent,
+      wrappers: ['form-field'],
     },
-    /*
-    {
-      name: 'repeat',
-      component: FormlyFieldRepeatableComponent,
-      wrappers: ['form-field-only'],
-    },
-    */
   ],
   wrappers: [
     {name: 'form-field', component: FormlyWrapperFormFieldComponent},

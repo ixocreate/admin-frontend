@@ -5,9 +5,9 @@ import { FormlyWrapperTabsetComponent } from './tabset.wrapper';
 @Component({
   selector: 'formly-wrapper-tab',
   template: `
-    <div class="tabset-content" [class.is-invalid]="showSubError()" [class.d-none]="!show">
-      <ng-template #fieldComponent></ng-template>
-    </div>
+      <div class="tabset-content" [class.is-invalid]="showSubError()" [class.d-none]="!show">
+          <ng-template #fieldComponent></ng-template>
+      </div>
   `,
 })
 export class FormlyWrapperTabComponent extends FieldWrapper {

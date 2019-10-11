@@ -4,11 +4,11 @@ import { FieldWrapper } from '@ngx-formly/core';
 @Component({
   selector: 'formly-wrapper-form-field-only',
   template: `
-    <div [class.has-error]="showError">
-      <div class="ixo-form-control-container">
-        <ng-template #fieldComponent></ng-template>
+      <div [class.has-error]="showError">
+          <div class="ixo-form-control-container">
+              <ng-template #fieldComponent></ng-template>
+          </div>
       </div>
-    </div>
   `,
 })
 export class FormlyWrapperFormFieldOnlyComponent extends FieldWrapper {

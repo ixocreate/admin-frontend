@@ -4,7 +4,9 @@ import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { FormlyConfig } from '@ngx-formly/core';
 import { APIErrorElement } from '../interfaces/api-response.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NotificationService {
 
   constructor(private toastr: ToastrService,
@@ -38,6 +40,11 @@ export class NotificationService {
     return null;
   }
 
+  formErrors(form: FormGroup) {
+    const errors: string[] = this.parseControlErrors([], form.controls, form);
+    return this.error(errors.join('<br/>'), 'Form Error');
+  }
+
   private parseControlErrors(errors: string[], controls: AbstractControl[] | { [key: string]: AbstractControl }, form: FormGroup): string[] {
     Object.keys(controls).forEach((key) => {
       const control: any = form.get(key);
@@ -53,11 +60,6 @@ export class NotificationService {
       }
     });
     return errors;
-  }
-
-  formErrors(form: FormGroup) {
-    const errors: string[] = this.parseControlErrors([], form.controls, form);
-    return this.error(errors.join('<br/>'), 'Form Error');
   }
 
 }

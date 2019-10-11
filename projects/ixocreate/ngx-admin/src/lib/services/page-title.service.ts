@@ -6,7 +6,9 @@ import { Title } from '@angular/platform-browser';
 import { AppDataService } from './data/app-data.service';
 import { IxoBreadcrumbService } from '../components/ixo-breadcrumb/ixo-breadcrumb.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PageTitleService {
 
   private projectName;

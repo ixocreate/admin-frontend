@@ -15,7 +15,9 @@ import { Resource } from '../../interfaces/resource.interface';
 import { Page } from '../../interfaces/page.interface';
 import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AppDataService extends DataServiceAbstract {
 
   config$: Observable<Config>;
@@ -115,10 +117,21 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
+  /**
+   * Get general data about a page, like its schema, localizedPages, navigation, page, pageType, sitemap
+   *
+   * @param pageId UUID of the page to load
+   */
   getPageDetail(pageId: string): Promise<any> {
     return this.api.get(this.config.config.routes.pageDetail.replace('{id}', pageId));
   }
 
+  /**
+   * Get the specific content of a page and its version, the backend decides how the structure looks like, this is why we have <any> here
+   *
+   * @param pageId UUID of the page to get
+   * @param pageVersionId UUID of its content version to get
+   */
   getPageVersionDetail(pageId: string, pageVersionId: string): Promise<any> {
     return this.api.get(this.config.config.routes.pageVersionDetail.replace('{pageId}', pageId).replace('{id}', pageVersionId));
   }

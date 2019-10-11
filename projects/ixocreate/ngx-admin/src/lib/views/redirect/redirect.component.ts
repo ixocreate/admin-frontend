@@ -13,7 +13,7 @@ export class RedirectComponent implements OnInit {
   }
 
   ngOnInit() {
-    let url = null;
+    let url;
 
     for (const value of this.config.navigation) {
       if (value.hasOwnProperty('title') && value.title === true) {

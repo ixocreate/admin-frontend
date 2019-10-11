@@ -1,0 +1,37 @@
+$HEADING_HEIGHT: 100;
+$FOOTER_HEIGHT: 100;
+
+.page-edit-right-panel {
+  background: #fff;
+  border: 1px solid #c8ced3;
+  border-radius: 0.25rem;
+
+  button {
+    margin: 10px;
+  }
+}
+
+.page-edit-left-panel {
+  height: calc(100vh - #{$HEADING_HEIGHT + $FOOTER_HEIGHT}px);
+}
+
+.content {
+  display: flex;
+  justify-items: baseline;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.split {
+  overflow-y: auto;
+  border-radius: 0.25rem;
+}
+
+.gutter:hover {
+  cursor: col-resize !important;
+}
+
+.preview-btn-form {
+  margin-right: 4em;
+  display: inline;
+}

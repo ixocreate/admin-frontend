@@ -1,0 +1,100 @@
+<div class="input-group" (click)="openModal(modalTemplate)" [class.cursor-pointer]="!to.disabled">
+  <div class="input-group-prepend">
+    <span class="input-group-text p-0" [class.is-invalid]="showError">
+      <div class="input-media-preview" *ngIf="!value?.media"><i class="fa fa-fw fa-file-o"></i></div>
+      <ng-container *ngIf="value && value.media">
+        <ng-container *ngIf="isImage(value.media.mimeType); else isNotImage">
+          <span class="transparent-img-bg">
+            <a [href]="value.media.original" target="_blank" class="input-media-preview"
+               [style.backgroundImage]="'url(' + value.media.thumb + ')'" ixoClickStopPropagation></a>
+          </span>
+        </ng-container>
+        <ng-template #isNotImage class="media-container">
+          <a [href]="value.media.original" target="_blank" class="input-media-preview" ixoClickStopPropagation>
+            <i [class]="'fa fa-fw ' + mimeTypeIcon(value.media.mimeType)"></i>
+          </a>
+        </ng-template>
+      </ng-container>
+    </span>
+  </div>
+  <input type="text" class="form-control pointer-events-none" [value]="value?.media?.filename" [placeholder]="to.placeholder"
+         [class.is-invalid]="showError" [disabled]="to.disabled">
+  <div class="input-group-append" *ngIf="value && value.media" (click)="openModal(imageAnnotatorModalTemplate)" ixoClickStopPropagation>
+    <div class="input-group-text">Annotate</div>
+  </div>
+  <div class="input-group-append" *ngIf="!to.required && !to.disabled">
+    <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError"
+            (click)="remove()"
+            ixoClickStopPropagation>
+      <i class="fa fa-close"></i>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="value?.annotations" class="text-muted">
+  <small>
+    {{ value.annotations.length }} Annotation{{ value.annotations.length != 1 ? 's' : '' }}
+  </small>
+</div>
+
+<ng-template #modalTemplate>
+  <div class="current-media is-top" *ngIf="value?.media">
+    <div class="row align-items-center">
+      <div class="col-auto text-center">
+        <ng-container *ngIf="isImage(value.media.mimeType); else noImage"><img [src]="value.media.thumb" class="img-fluid"/>
+        </ng-container>
+        <ng-template #noImage class="media-container"><i [class]="'fa fa-2x fa-fw ' + mimeTypeIcon(value.media.mimeType)"></i>
+        </ng-template>
+      </div>
+      <div class="col">
+        <b>Current File:</b><br>
+        {{ value.media.filename }}
+      </div>
+    </div>
+  </div>
+  <ixo-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></ixo-media-list>
+</ng-template>
+
+<ng-template #imageAnnotatorModalTemplate>
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="annotation-container">
+        <img [src]="value.media.original" id="pointer_div" (click)="annotateImage($event)">
+        <div class="tag" *ngFor="let annotation of value.annotations; let i = index"
+             (click)="selectAnnotation(i)"
+             [ngClass]="{selected: selectedAnnotationIndex == i}"
+             [ngStyle]="{left: (annotation.x * 100) + '%', top: (annotation.y * 100) + '%'}">
+          <span>{{ i + 1 }}</span>
+        </div>
+      </div>
+      <div class="p-3">
+        <div *ngIf="value.annotations" class="alert alert-info">
+          <div *ngIf="!selectedAnnotation">
+            Click on a tag to edit its position.
+          </div>
+          <div *ngIf="selectedAnnotation">
+            Click on the image to set the tag's new position.
+          </div>
+          <!--{{ value.annotations.length  }} Annotation{{ value.annotations.length != 1 ? 's' : '' }}-->
+          <!--{{ value.annotations | json }}-->
+        </div>
+        <div *ngIf="!value.annotations" class="alert alert-info">
+          Add new annotations below.
+        </div>
+        <div *ngIf="value">
+          <formly-form [form]="annotationsForm" [fields]="annotationsFields" [model]="value" class="ixo-form ixo-form-inline">
+          </formly-form>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="row align-items-center">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm text-right">
+          <ixo-button color="success" icon="check" (click)="close()">Done</ixo-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

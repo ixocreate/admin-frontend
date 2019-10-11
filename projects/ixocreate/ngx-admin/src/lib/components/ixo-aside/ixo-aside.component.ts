@@ -8,7 +8,7 @@ export class IxoAsideComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.aside-menu') asideMenu = true;
 
-  @Input() display: any = 'lg';
+  @Input() display = 'lg';
 
   @Input() set visible(visible: boolean) {
     if (visible) {
@@ -37,16 +37,16 @@ export class IxoAsideComponent implements OnInit, OnDestroy {
     document.querySelector('body').classList.remove('aside-menu-lg-show');
   }
 
-  show(): void {
-    if (this.display !== false) {
+  show() {
+    if (this.display) {
       let cssClass;
       this.display ? cssClass = `aside-menu-${this.display}-show` : cssClass = this.asideMenuCssClasses[0];
       document.querySelector('body').classList.add(cssClass);
     }
   }
 
-  hide(): void {
-    if (this.display !== false) {
+  hide() {
+    if (this.display) {
       let cssClass;
       this.display ? cssClass = `aside-menu-${this.display}-show` : cssClass = this.asideMenuCssClasses[0];
       document.querySelector('body').classList.remove(cssClass);
