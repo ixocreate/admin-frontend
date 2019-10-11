@@ -1,8 +1,8 @@
 import { Component, TemplateRef } from '@angular/core';
-import { MediaHelper } from '../../../helpers/media.helper';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CustomFieldTypeAbstract } from '../custom-field-type.abstract';
+import { MediaHelper } from '../../../helpers/media.helper';
 import { Media } from '../../../interfaces/media.interface';
+import { CustomFieldTypeAbstract } from '../custom-field-type.abstract';
 
 @Component({
   selector: 'formly-field-media',
@@ -31,4 +31,9 @@ export class FormlyFieldMediaComponent extends CustomFieldTypeAbstract {
     this.modalRef.hide();
     super.setValue(value);
   }
+
+  close() {
+    this.modalRef.hide();
+  }
+
 }
