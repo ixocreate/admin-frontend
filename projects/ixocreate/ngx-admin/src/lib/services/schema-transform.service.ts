@@ -40,10 +40,11 @@ export class SchemaTransformService {
 
     this.registerTransform('annotated-image', this.handleDefault('annotated-image'));
 
-    this.registerTransform('media', this.handleDefault('media', {centerLabel: true, type: ''}));
-    this.registerTransform('image', this.handleDefault('media', {centerLabel: true, type: 'image'}));
-    this.registerTransform('document', this.handleDefault('media', {centerLabel: true, type: 'document'}));
     this.registerTransform('audio', this.handleDefault('media', {centerLabel: true, type: 'audio'}));
+    this.registerTransform('document', this.handleDefault('media', {centerLabel: true, type: 'document'}));
+    this.registerTransform('image', this.handleDefault('media', {centerLabel: true, type: 'image'}));
+    this.registerTransform('imageAnnotated', this.handleDefault('mediaAnnotated', {centerLabel: true, type: 'imageAnnotated'}));
+    this.registerTransform('media', this.handleDefault('media', {centerLabel: true, type: ''}));
     this.registerTransform('video', this.handleDefault('media', {centerLabel: true, type: 'video'}));
   }
 
