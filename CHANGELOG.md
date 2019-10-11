@@ -4,7 +4,7 @@
 
 ## [v0.1.15 (2019-10-12)](https://github.com/ixocreate/admin-frontend/compare/0.1.14...0.1.15)
 ### Fixed
-- Aspect ratio of image in annotation modal
+- Preserve aspect ratio of image in annotation modal
 
 ## [v0.1.14 (2019-10-11)](https://github.com/ixocreate/admin-frontend/compare/0.1.12...0.1.14)
 ### Added
