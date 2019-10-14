@@ -116,7 +116,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         online: data.page.page.status === 'online',
       };
       data.schema = this.schemaTransform.transformForm(data.schema);
-      console.log(data);
       this.versionFields = data.schema ? data.schema : [];
       this.loadNavigationData(data.navigation);
       this.pageHasChildren = data.hasChildren;
@@ -132,7 +131,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
           this.versionForm = new FormGroup({});
           this.versionData = versionData;
-          console.log(versionData.content);
           this.savingVersion = false;
           return versionData;
         }).catch(() => this.savingVersion = false);
