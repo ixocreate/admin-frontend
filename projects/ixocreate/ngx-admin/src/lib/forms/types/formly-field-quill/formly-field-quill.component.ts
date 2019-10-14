@@ -41,6 +41,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
       /**
        * default to html value if no quill delta is set
        */
+      console.log(this.formControl.value);
       if(!this.formControl.value.quill || !this.formControl.value.quill.ops || this.formControl.value.quill.ops.length === 0) {
         if(this.formControl.value.html) {
           this.editor.quillEditor.clipboard.dangerouslyPasteHTML(this.formControl.value.html);
