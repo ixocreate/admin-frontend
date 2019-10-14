@@ -38,6 +38,14 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
     }
     setTimeout(() => {
       this.setValue(this.formControl.value || {html: '', quill: []});
+      /**
+       * default to html value if no quill delta is set
+       */
+      if(!this.formControl.value.quill || !this.formControl.value.quill.ops || this.formControl.value.quill.ops.length === 0) {
+        if(this.formControl.value.html) {
+          this.editor.quillEditor.clipboard.dangerouslyPasteHTML(this.formControl.value.html);
+        }
+      }
     });
     this.to.modules.keyboard = {
       bindings: {

@@ -1,10 +1,17 @@
 # Release Notes
 
-## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.15...develop)
+## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.16...develop)
+
+## [v0.1.16 (2019-10-14)](https://github.com/ixocreate/admin-frontend/compare/0.1.15...0.1.16)
+### Changed
+- Increase contrast for image annotation tags
+- Default to html if no quill delta was set in quill form type
+### Fixed
+- App header user account dropdown
 
 ## [v0.1.15 (2019-10-12)](https://github.com/ixocreate/admin-frontend/compare/0.1.14...0.1.15)
 ### Fixed
-- Aspect ratio of image in annotation modal
+- Preserve aspect ratio of image in annotation modal
 
 ## [v0.1.14 (2019-10-11)](https://github.com/ixocreate/admin-frontend/compare/0.1.12...0.1.14)
 ### Added

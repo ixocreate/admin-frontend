@@ -64,7 +64,7 @@
              (click)="selectAnnotation(i)"
              [ngClass]="{selected: selectedAnnotationIndex == i}"
              [ngStyle]="{left: (annotation.x * 100) + '%', top: (annotation.y * 100) + '%'}">
-          <span>{{ i + 1 }}</span>
+          {{ i + 1 }}
         </div>
       </div>
       <div class="p-3">
