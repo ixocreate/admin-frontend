@@ -51,6 +51,10 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.id = params.id;
+      if (this.id === 'undefined') {
+        this.router.navigateByUrl('/media').catch(() => null);
+        return;
+      }
       this.data$ = this.appData.getMediaDetail(this.id).then((response: any) => {
         if (response.isCropable) {
           this.image = response.media.original;

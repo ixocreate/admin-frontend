@@ -118,7 +118,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
             };
             if (op.attributes) {
               const filteredAttributes = {};
-              const allowedAttributes = ['header', 'linebreak'];
+              const allowedAttributes = ['header', 'linebreak', 'bold', 'italic'];
               for (const attribute of allowedAttributes) {
                 if (op.attributes[attribute]) {
                   filteredAttributes[attribute] = op.attributes[attribute];

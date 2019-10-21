@@ -14,10 +14,11 @@ export class IxoMediaListComponent implements OnInit {
 
   data$: Promise<Media>;
   uploader: FileUploader;
-  filterValue = '';
+  @Input() filterValue = '';
   itemsPerPage = 18;
-  currentPage = 1;
+  @Input() currentPage = 1;
   totalItems = 0;
+  renderPagination = false;
 
   types = [
     {
@@ -48,6 +49,11 @@ export class IxoMediaListComponent implements OnInit {
   private inputTimeout = null;
 
   @Output() select = new EventEmitter<Media>();
+  @Output() changeFilters = new EventEmitter<{
+    search: string,
+    mediaType: string,
+    page: number,
+  }>();
 
   isImage = MediaHelper.isImage;
   isSVG = MediaHelper.isSVG;
@@ -78,7 +84,12 @@ export class IxoMediaListComponent implements OnInit {
 
   updateMedia() {
     this.data$ = this.appData.getMediaIndex(this.itemsPerPage, this.currentPage, this.filterValue, this.selectedType).then((response: any) => {
+      console.log(this.itemsPerPage, this.currentPage, this.filterValue, this.selectedType);
       this.totalItems = response.count;
+      this.renderPagination = false;
+      setTimeout(() => {
+        this.renderPagination = true;
+      });
       return response;
     });
   }
@@ -94,19 +105,30 @@ export class IxoMediaListComponent implements OnInit {
     this.inputTimeout = setTimeout(() => {
       this.currentPage = 1;
       this.updateMedia();
+      this.emitChangeFilter();
     }, 500);
+  }
+
+  emitChangeFilter() {
+    this.changeFilters.emit({
+      page: this.currentPage,
+      search: this.filterValue,
+      mediaType: this.selectedType,
+    });
   }
 
   onPage(event) {
     if (this.currentPage !== event.page) {
       this.currentPage = event.page;
       this.updateMedia();
+      this.emitChangeFilter();
     }
   }
 
   onChangeType() {
     this.currentPage = 1;
     this.updateMedia();
+    this.emitChangeFilter();
   }
 
 }
