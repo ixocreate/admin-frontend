@@ -11,3 +11,17 @@ export interface Media {
   thumb: string;
   original: string;
 }
+
+export interface AnnotatedMedia {
+  media: Media;
+  annotations: Annotation[];
+}
+
+export interface Annotation {
+  content: any;
+}
+
+export interface ImageAnnotation extends Annotation {
+  x: number;
+  y: number;
+}

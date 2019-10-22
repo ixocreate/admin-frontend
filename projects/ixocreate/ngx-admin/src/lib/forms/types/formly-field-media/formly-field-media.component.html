@@ -1,21 +1,21 @@
 <div class="input-group" (click)="openModal(modalTemplate)" [class.cursor-pointer]="!to.disabled">
   <div class="input-group-prepend">
-        <span class="input-group-text p-0" [class.is-invalid]="showError">
-          <div class="input-media-preview" *ngIf="!value"><i class="fa fa-fw fa-file-o"></i></div>
-          <ng-container *ngIf="value">
-            <ng-container *ngIf="isImage(value.mimeType); else noImage">
-              <span class="transparent-img-bg">
-                <a [href]="value.original" target="_blank" class="input-media-preview"
-                   [style.backgroundImage]="'url(' + value.thumb + ')'" ixoClickStopPropagation></a>
-              </span>
-            </ng-container>
-            <ng-template #noImage class="media-container">
-              <a [href]="value.original" target="_blank" class="input-media-preview" ixoClickStopPropagation>
-                <i [class]="'fa fa-fw ' + mimeTypeIcon(value.mimeType)"></i>
-              </a>
-            </ng-template>
-          </ng-container>
-        </span>
+    <span class="input-group-text p-0" [class.is-invalid]="showError">
+      <div class="input-media-preview" *ngIf="!value"><i class="fa fa-fw fa-file-o"></i></div>
+      <ng-container *ngIf="value">
+        <ng-container *ngIf="isImage(value.mimeType); else noImage">
+          <span class="transparent-img-bg">
+            <a [href]="value.original" target="_blank" class="input-media-preview"
+               [style.backgroundImage]="'url(' + value.thumb + ')'" ixoClickStopPropagation></a>
+          </span>
+        </ng-container>
+        <ng-template #noImage class="media-container">
+          <a [href]="value.original" target="_blank" class="input-media-preview" ixoClickStopPropagation>
+            <i [class]="'fa fa-fw ' + mimeTypeIcon(value.mimeType)"></i>
+          </a>
+        </ng-template>
+      </ng-container>
+    </span>
   </div>
   <input type="text" class="form-control pointer-events-none" [value]="value?.filename" [placeholder]="to.placeholder"
          [class.is-invalid]="showError" [disabled]="to.disabled">
@@ -38,7 +38,7 @@
         </ng-template>
       </div>
       <div class="col">
-        <b>Current File:</b><br/>
+        <b>Current File:</b><br>
         {{ value.filename }}
       </div>
     </div>

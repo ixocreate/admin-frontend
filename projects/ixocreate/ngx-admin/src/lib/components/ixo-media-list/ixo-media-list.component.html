@@ -69,7 +69,7 @@
       </div>
     </ng-template>
   </div>
-  <div class="card-footer">
+  <div class="card-footer" *ngIf="renderPagination">
     <ixo-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [currentPage]="currentPage"
                      (pageChanged)="onPage($event)"></ixo-pagination>
   </div>

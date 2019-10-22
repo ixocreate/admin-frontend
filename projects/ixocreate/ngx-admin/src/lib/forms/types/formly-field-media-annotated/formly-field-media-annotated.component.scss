@@ -1,0 +1,31 @@
+.annotation-container {
+  position: relative;
+
+  img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .tag {
+    position: absolute;
+    z-index: 2;
+    background: #3E444E;
+    color: #FFFFFF;
+    border-radius: 50%;
+    margin-left: -11px;
+    margin-top: -11px;
+    cursor: pointer;
+    border: 4px solid #F30;
+    font-size: .8rem;
+    text-align: center;
+    padding: 0 6px;
+    font-weight: bold;
+
+    &.selected {
+      color: #3E444E;
+      background: #FFFFFF;
+      border: 3px solid #3F0;
+    }
+  }
+}

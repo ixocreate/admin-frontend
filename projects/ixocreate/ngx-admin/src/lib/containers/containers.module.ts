@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DirectivesModule } from '../directives/directives.module';
 import { DefaultLayoutComponent } from './default-layout/default-layout.component';
 import { AppFooterModule, AppHeaderModule, AppSidebarModule } from '@coreui/angular';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -21,7 +22,8 @@ const COMPONENTS = [
     AppHeaderModule,
     AppSidebarModule,
     PerfectScrollbarModule,
-    IxoComponentsModule
+    IxoComponentsModule,
+    DirectivesModule
   ],
   exports: COMPONENTS
 })
