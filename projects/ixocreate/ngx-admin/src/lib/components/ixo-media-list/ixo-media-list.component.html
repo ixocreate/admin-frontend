@@ -46,6 +46,10 @@
         <div *ngFor="let media of data.items" class="col-xl-2 col-sm-4 col-6">
           <div class="media-container" (click)="selectMedia(media)" [class.is-image]="isImage(media.mimeType)">
             <ng-container *ngIf="isImage(media.mimeType); else noImage">
+              <div class="media-button-container" ixoClickStopPropagation>
+                <button class="btn btn-sm btn-dark mr-1" (click)="openDetail(media)"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-sm btn-dark" (click)="openImage(media)"><i class="fa fa-expand"></i></button>
+              </div>
               <div class="media-image" [ngStyle]="{backgroundImage: 'url(' + media.thumb + ')'}"></div>
               <div class="media-image-title">
                 <div>{{ media.filename }}</div>

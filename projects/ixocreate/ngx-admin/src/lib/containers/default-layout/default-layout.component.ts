@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, HostListener, TemplateRef, ViewCh
 import { AccountDataService } from '../../services/data/account-data.service';
 import { IxoContentComponent } from '../../components/ixo-content/ixo-content.component';
 import { ConfigService } from '../../services/config.service';
+import { ImageHelper } from '../../helpers/image.helper';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +21,7 @@ export class DefaultLayoutComponent implements AfterViewInit {
   aside: TemplateRef<any>;
   headerButtons: TemplateRef<any>;
   ixoContent: IxoContentComponent;
+  lightBoxImage$: Observable<string>;
 
   paddingTop = 26;
 
@@ -35,6 +38,8 @@ export class DefaultLayoutComponent implements AfterViewInit {
       attributes: true,
     });
 
+    this.lightBoxImage$ = ImageHelper.getImage();
+
     this.navItems = this.config.navigation;
   }
 
@@ -45,6 +50,10 @@ export class DefaultLayoutComponent implements AfterViewInit {
       this.headerButtons = event.ixoContent.headerButtons;
       this.setHeaderHeight();
     }
+  }
+
+  closeLightboxImage() {
+    ImageHelper.setImage(null);
   }
 
   ngAfterViewInit() {

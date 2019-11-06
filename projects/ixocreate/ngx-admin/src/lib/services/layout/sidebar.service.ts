@@ -31,13 +31,13 @@ export class SidebarService {
    * Toggle sidebar and return it's state
    */
   toggleSidebar(): Possibilities {
-    if (document.body.classList.contains('aside-menu-lg-show')) {
-      document.body.classList.remove('aside-menu-lg-show');
-      document.body.classList.add('aside-menu-lg-hide');
+    if (document.body.classList.contains('aside-menu-show')) {
+      document.body.classList.remove('aside-menu-show');
+      document.body.classList.add('aside-menu-hide');
       return this.status;
     } else {
-      document.body.classList.remove('aside-menu-lg-hide');
-      document.body.classList.add('aside-menu-lg-show');
+      document.body.classList.remove('aside-menu-hide');
+      document.body.classList.add('aside-menu-show');
       return this.status;
     }
   }

@@ -5,7 +5,7 @@
       <ng-container *ngIf="value && value.media">
         <ng-container *ngIf="isImage(value.media.mimeType); else isNotImage">
           <span class="transparent-img-bg">
-            <a [href]="value.media.original" target="_blank" class="input-media-preview"
+            <a href="javascript:void(0)" (click)="openLightbox(value.media)" class="input-media-preview"
                [style.backgroundImage]="'url(' + value.media.thumb + ')'" ixoClickStopPropagation></a>
           </span>
         </ng-container>

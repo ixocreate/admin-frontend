@@ -5,6 +5,8 @@ import { ConfigService } from '../../services/config.service';
 import { Media } from '../../interfaces/media.interface';
 import { AppDataService } from '../../services/data/app-data.service';
 import { MediaHelper } from '../../helpers/media.helper';
+import { Router } from '@angular/router';
+import { ImageHelper } from '../../helpers/image.helper';
 
 @Component({
   selector: 'ixo-media-list',
@@ -59,7 +61,7 @@ export class IxoMediaListComponent implements OnInit {
   isSVG = MediaHelper.isSVG;
   mimeTypeIcon = MediaHelper.mimeTypeIcon;
 
-  constructor(private config: ConfigService, private appData: AppDataService) {
+  constructor(private config: ConfigService, private appData: AppDataService, private router: Router) {
   }
 
   ngOnInit() {
@@ -84,7 +86,6 @@ export class IxoMediaListComponent implements OnInit {
 
   updateMedia() {
     this.data$ = this.appData.getMediaIndex(this.itemsPerPage, this.currentPage, this.filterValue, this.selectedType).then((response: any) => {
-      console.log(this.itemsPerPage, this.currentPage, this.filterValue, this.selectedType);
       this.totalItems = response.count;
       this.renderPagination = false;
       setTimeout(() => {
@@ -96,6 +97,14 @@ export class IxoMediaListComponent implements OnInit {
 
   selectMedia(media: Media) {
     this.select.emit(media);
+  }
+
+  openDetail(media: Media) {
+    window.open('/media/' + media.id + '/edit', '_blank');
+  }
+
+  openImage(media: Media) {
+    ImageHelper.setImage(media.original);
   }
 
   applyFilter() {
