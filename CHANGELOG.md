@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.16...develop)
+## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.21...develop)
+
+## [v0.1.21 (2019-11-06)](https://github.com/ixocreate/admin-frontend/compare/0.1.20...0.1.21)
+### Changed
+- Fetch link types from config
+### Fixed
+- Url parameter not being used in AppDataService::getByUrl()
 
 ## [v0.1.16 (2019-10-14)](https://github.com/ixocreate/admin-frontend/compare/0.1.15...0.1.16)
 ### Changed
