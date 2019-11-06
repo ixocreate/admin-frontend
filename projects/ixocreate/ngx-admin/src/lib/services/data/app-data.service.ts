@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/observable';
-import { DataServiceAbstract } from './data.service.abstract';
-import { Config } from '../../interfaces/config.interface';
-import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.state';
-import { DefaultStore } from '../../store/default.store';
-import { DefaultHelper } from '../../helpers/default.helper';
-import { ConfigService } from '../config.service';
 import { tap } from 'rxjs/internal/operators/tap';
-import { parseParams } from '../../shared/parseParams';
+import { Observable } from 'rxjs/observable';
+import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
+import { DefaultHelper } from '../../helpers/default.helper';
+import { Config } from '../../interfaces/config.interface';
+import { Page } from '../../interfaces/page.interface';
 import { ResourceList } from '../../interfaces/resource-list.interface';
 import { Resource } from '../../interfaces/resource.interface';
-import { Page } from '../../interfaces/page.interface';
-import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
+import { parseParams } from '../../shared/parseParams';
+import { AppState } from '../../store/app.state';
+import { DefaultStore } from '../../store/default.store';
+import { ApiService } from '../api.service';
+import { ConfigService } from '../config.service';
+import { DataServiceAbstract } from './data.service.abstract';
 
 @Injectable({
   providedIn: 'root'
@@ -56,11 +56,7 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
-  getByUrl(url, locale: string): Promise<any> {
-    const data: any = {};
-    if (locale) {
-      data.locale = locale;
-    }
+  getByUrl(url, data: { id?: string, term?: string, locale?: string }): Promise<any> {
     return this.api.get(url, data);
   }
 

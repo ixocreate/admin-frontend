@@ -1,16 +1,29 @@
 import { Routes } from './routes.interface';
 
 export interface Config {
+  cms?: Cms;
   environment?: {
     production: boolean;
   };
-  project?: Project;
-  media?: Media[];
-  navigation?: Navigation[];
-  routes?: Routes;
-  resources?: ResourceConfig[];
   googleApiKey?: string;
   intl?: { default: string, locales: Locale[] };
+  media?: Media[];
+  navigation?: Navigation[];
+  project?: Project;
+  resources?: ResourceConfig[];
+  routes?: Routes;
+}
+
+export interface Cms {
+  preview: string;
+  linkTypes: LinkType[];
+}
+
+export interface LinkType {
+  type: string;
+  label: string;
+  hasLocales?: boolean;
+  listUrl?: string;
 }
 
 export interface Media {
