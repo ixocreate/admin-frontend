@@ -61,7 +61,7 @@ export class AppDataService extends DataServiceAbstract {
     if (locale) {
       data.locale = locale;
     }
-    return this.api.get(this.config.config.routes.pageList, data);
+    return this.api.get(url, data);
   }
 
   getSitemap(locale: string, pageType?: string): Promise<any> {
