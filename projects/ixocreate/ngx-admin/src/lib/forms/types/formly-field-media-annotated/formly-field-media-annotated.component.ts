@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormHelper } from '../../../helpers/form.helper';
 import { MediaHelper } from '../../../helpers/media.helper';
-import { AnnotatedMedia } from '../../../interfaces/media.interface';
+import { AnnotatedMedia, Media } from '../../../interfaces/media.interface';
 import { SchemaTransformService } from '../../../services/schema-transform.service';
 import { CustomFieldTypeAbstract } from '../custom-field-type.abstract';
+import { ImageHelper } from '../../../helpers/image.helper';
 
 @Component({
   selector: 'formly-field-media-annotated',
@@ -85,11 +86,15 @@ export class FormlyFieldMediaAnnotatedComponent extends CustomFieldTypeAbstract 
     super();
   }
 
+  openLightbox(media: Media) {
+    ImageHelper.setImage(media.original);
+  }
+
   openModal(template: TemplateRef<any>) {
     if (this.to.disabled) {
       return;
     }
-    this.modalRef = this.modalService.show(template, {class: 'modal-lg modal-empty'});
+    this.modalRef = this.modalService.show(template, {class: 'modal-xl modal-empty'});
 
     if (this.to.metadata.annotationSchema) {
       this.annotationsFields[0].fieldGroups[0].fieldGroup[2].fieldGroups = [

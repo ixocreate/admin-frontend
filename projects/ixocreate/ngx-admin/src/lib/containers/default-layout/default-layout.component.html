@@ -4,7 +4,7 @@
   [navbarBrandMinimized]="{src: config.config.project.icon, width: 35, height: 35, alt: config.config.project.name }"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="false"
-  [mobileAsideMenuToggler]="false">
+  [mobileAsideMenuToggler]="!!aside">
   <ul class="nav navbar-nav ml-auto pr-2">
     <li class="nav-item dropdown" ixoDropdown *ngIf="accountData.user$ | async as user">
       <button class="nav-link dropdown-btn py-2">
@@ -58,3 +58,9 @@
     powered by <a href="https://github.com/ixocreate" target="_blank">IXOCREATE</a>
   </div>
 </app-footer>
+
+<div class="img-lightbox" *ngIf="lightBoxImage$ | async as lightBoxImage">
+  <button class="img-lightbox-close" (click)="closeLightboxImage()"><i class="fa fa-times"></i></button>
+  <div class="img-lightbox-bg" (click)="closeLightboxImage()"></div>
+  <img [src]="lightBoxImage" class="img-lightbox-img" />
+</div>

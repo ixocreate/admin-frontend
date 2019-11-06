@@ -100,6 +100,13 @@
     }
   }
 
+  .media-button-container {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 1;
+  }
+
   .media-image {
     position: absolute;
     top: 0;
