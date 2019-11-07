@@ -100,7 +100,7 @@ export class IxoMediaListComponent implements OnInit {
   }
 
   openDetail(media: Media) {
-    window.open('/media/' + media.id + '/edit', '_blank');
+    window.open(window.location.href.split('#')[0] + '#/media/' + media.id + '/edit', '_blank');
   }
 
   openImage(media: Media) {
