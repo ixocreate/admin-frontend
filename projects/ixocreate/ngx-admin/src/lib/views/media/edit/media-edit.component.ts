@@ -97,7 +97,9 @@ export class MediaEditComponent extends ViewAbstractComponent implements OnInit 
     } else {
       this.maintainAspectRatio = false;
     }
-    this.cropper.setCropperPosition(entity.unsavedCrop || entity.crop);
+    setTimeout(() => {
+      this.cropper.setCropperPosition(entity.unsavedCrop || entity.crop);
+    });
   }
 
   saveCrop(entity: Entity) {
