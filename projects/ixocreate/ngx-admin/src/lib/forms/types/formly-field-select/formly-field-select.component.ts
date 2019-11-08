@@ -25,7 +25,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
   @ViewChild('modalTemplate') modal;
 
   addTagNowRef: (name) => void;
-  selectOptions: any;
+  selectOptions: any[];
   modalRef: BsModalRef;
 
   public constructor(private appData: AppDataService, protected modalService: BsModalService) {
@@ -60,9 +60,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
      * TODO: move this to some load() method so it can be reloaded after non-deferred entry creation
      */
     if (this.resourceKey) {
-      this.appData.getResourceSelect(this.resourceKey).then((options) => {
-        this.selectOptions = options;
-      });
+      this.loadOptions();
     } else {
       this.setOptionsFromTemplateOptions(this.to.options);
     }
@@ -70,6 +68,22 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
     if (this.createNew) {
       this.addTagNowRef = (name) => this.addTag(name);
     }
+  }
+
+  loadOptions() {
+    this.appData.getResourceSelect(this.resourceKey).then((options) => {
+      this.selectOptions = options;
+      /**
+       * filter out selected items that are not present in the options list
+       * makes deleted selected tags disappear
+       */
+      if(this.value && this.multiple) {
+        const values = this.value.filter((value) => {
+          return this.selectOptions.findIndex(option => option.tag === value) >= 0;
+        });
+        this.setValue(values);
+      }
+    });
   }
 
   setOptionsFromTemplateOptions(toOptions) {
