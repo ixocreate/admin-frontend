@@ -197,10 +197,7 @@ export class AppDataService extends DataServiceAbstract {
   }
 
   getResourceSelect(resource: string): Promise<any[]> {
-    if (!this.savedResourceSelects[resource]) {
-      this.savedResourceSelects[resource] = this.getResourceIndex(resource, 500);
-    }
-    return this.savedResourceSelects[resource].then((response) => {
+    return this.getResourceIndex(resource, 500).then((response) => {
       return response.items;
     });
   }
