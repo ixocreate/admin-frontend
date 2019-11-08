@@ -131,7 +131,9 @@ export class IxoLinkSelectModalComponent implements OnInit {
      * add currently selected item id to request params to let the server know that it should
      * try to include that item. otherwise ng-select will assume that
      */
-    params.id = this.innerValue.value.id;
+    if (this.innerValue && this.innerValue.value && this.innerValue.value.id) {
+      params.id = this.innerValue.value.id;
+    }
 
     /**
      * add locale param if applicable
