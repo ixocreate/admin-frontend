@@ -79,7 +79,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
        */
       if(this.value && this.multiple) {
         const values = this.value.filter((value) => {
-          return this.selectOptions.findIndex(option => option.tag === value) >= 0;
+          return this.selectOptions.findIndex(option => (option.id === value || option.tag === value)) >= 0;
         });
         this.setValue(values);
       }
