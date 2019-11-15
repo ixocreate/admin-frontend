@@ -56,8 +56,8 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
-  getByUrl(url, data: { id?: string, term?: string, locale?: string }): Promise<any> {
-    return this.api.get(url, data);
+  getByUrl(url, params: { id?: string, term?: string, locale?: string }): Promise<any> {
+    return this.api.get(url, params);
   }
 
   getSitemap(locale: string, pageType?: string): Promise<any> {
@@ -196,17 +196,18 @@ export class AppDataService extends DataServiceAbstract {
     }
   }
 
-  getResourceSelect(resource: string): Promise<any[]> {
-    return this.getResourceIndex(resource, 500).then((response) => {
+  getResourceSelect(resource: string, search: string = null, params = {}): Promise<any[]> {
+    /**
+     * Note: the limit not applies to search results, not preselected items which will always be prepended
+     */
+    return this.getResourceIndex(resource, 100, 1, search, params).then((response) => {
       return response.items;
     });
   }
 
-  getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null): Promise<ResourceList> {
-    const params: any = {
-      offset: (pageNumber - 1) * limit,
-      limit,
-    };
+  getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null, params: any = {}): Promise<ResourceList> {
+    params.offset = (pageNumber - 1) * limit;
+    params.limit = limit;
     if (search && search !== '') {
       params.search = search;
     }

@@ -1,22 +1,25 @@
-<ng-container *ngIf="selectOptions">
+<ng-container>
   <div class="input-group">
     <ng-select
-        #select
-        (open)="onOpen()"
-        (search)="onOpen()"
-        (change)="onSelect($event)"
-        [class.is-invalid]="showError"
-        [items]="selectOptions"
-        [placeholder]="to.placeholder"
-        [searchable]="!to.extendedSelect"
-        [bindValue]="valueProp"
-        [bindLabel]="labelProp"
-        [virtualScroll]="true"
-        [addTag]="addTagNowRef"
-        [clearable]="false"
-        [multiple]="multiple"
-        [formControl]="formControl">
+      #select
+      [class.is-invalid]="showError"
+      (open)="onOpen()"
+      (search)="onOpen()"
+      (change)="onSelect($event)"
+      [items]="options$ | async"
+      [typeahead]="optionInput$"
+      [loading]="optionsLoading"
+      [placeholder]="to.placeholder"
+      [searchable]="!to.extendedSelect"
+      [bindValue]="valueProp"
+      [bindLabel]="labelProp"
+      [virtualScroll]="true"
+      [addTag]="addTagNowRef"
+      [clearable]="false"
+      [multiple]="multiple"
+      [formControl]="formControl">
     </ng-select>
+
     <div class="input-group-append" *ngIf="clearable">
       <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError"
               (click)="remove()">
