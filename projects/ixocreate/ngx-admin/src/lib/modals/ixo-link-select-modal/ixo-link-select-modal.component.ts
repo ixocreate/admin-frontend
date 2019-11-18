@@ -125,14 +125,15 @@ export class IxoLinkSelectModalComponent implements OnInit {
     /**
      * params to send with the initial request but also with subsequent typeahead async requests
      */
-    let params: { id?: string, term?: string, locale?: string } = {};
+    let params: { preselectFilter?: string, preselectFilterValues?: any, term?: string, locale?: string } = {};
 
     /**
      * add currently selected item id to request params to let the server know that it should
      * try to include that item. otherwise ng-select will assume that
      */
     if (this.innerValue && this.innerValue.value && this.innerValue.value.id) {
-      params.id = this.innerValue.value.id;
+      params.preselectFilter = 'id';
+      params.preselectFilterValues = this.innerValue.value.id;
     }
 
     /**

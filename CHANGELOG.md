@@ -1,6 +1,15 @@
 # Release Notes
 
-## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.21...develop)
+## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.23...develop)
+
+## [v0.1.21 (2019-11-18)](https://github.com/ixocreate/admin-frontend/compare/0.1.23...0.1.28)
+### Changed
+- improve select element's handling of resource typeahead results
+
+## [v0.1.23 (2019-11-08)](https://github.com/ixocreate/admin-frontend/compare/0.1.21...0.1.23)
+### Fixed
+- media cropper ratio for new crops
+- media edit link
 
 ## [v0.1.21 (2019-11-06)](https://github.com/ixocreate/admin-frontend/compare/0.1.20...0.1.21)
 ### Changed
