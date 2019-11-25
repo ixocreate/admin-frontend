@@ -47,12 +47,17 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         }
       }
     });
+    // this.to.modules.toolbar = {
+    //   container: [
+    //     ['bold', 'italic', 'underline', 'strike'],
+    //   ],
+    // };
     this.to.modules.keyboard = {
       bindings: {
         smartbreak: {
           key: 13,
           shiftKey: true,
-          handler(range, context) {
+          handler(range) {
             this.quill.setSelection(range.index, 'silent');
             this.quill.insertText(range.index, '\n', 'user');
             this.quill.setSelection(range.index + 1, 'silent');
@@ -61,7 +66,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         },
         paragraph: {
           key: 13,
-          handler(range, context) {
+          handler(range) {
             this.quill.setSelection(range.index, 'silent');
             this.quill.insertText(range.index, '\n', 'user');
             this.quill.setSelection(range.index + 1, 'silent');
@@ -105,7 +110,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
               index: range.index - offset,
               length: link.length(),
             });
-            // workaround for modal not workin when called here
+            // workaround for modal not working when called here
             const event = new CustomEvent('open-modal', {detail: {value: link.getData()}});
             this.element.nativeElement.dispatchEvent(event);
             return;
@@ -137,6 +142,12 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         this.openLinkModal(event.detail.value);
       }, false);
     });
+
+    /**
+     * The toolbar of the quill WYSIWYG Editor should be changed to by what the backend gives us
+     * So we override the globally defined toolbar
+     */
+    // this.to.modules.toolbar = undefined;
   }
 
   openLinkModal(value: any = null) {
