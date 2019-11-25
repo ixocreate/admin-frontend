@@ -30,13 +30,11 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
   }
 
   ngOnInit() {
-    console.log(this.to);
     if (this.to.required) {
       this.formControl.setValidators([CustomValidators.quillRequired]);
     }
     if (this.formControl.value && this.formControl.value.quill) {
       this.quillDelta = this.formControl.value.quill;
-      console.log(this.quillDelta);
     }
     setTimeout(() => {
       this.setValue(this.formControl.value || {html: '', quill: []});
@@ -101,7 +99,6 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
 
     setTimeout(() => {
       const quill = this.editor.quillEditor;
-      console.log(this.editor);
       quill.on('selection-change', (range, oldRange, source) => {
         if (range === null) {
           return;

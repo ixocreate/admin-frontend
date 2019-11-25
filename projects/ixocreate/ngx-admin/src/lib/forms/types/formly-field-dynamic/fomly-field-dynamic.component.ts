@@ -36,8 +36,6 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
      */
     this.field.fieldGroup = [];
 
-    console.log(this.model);
-
     const modelClone = clone(this.model);
 
     for (let i = modelClone.length - 1; i >= 0; i--) {

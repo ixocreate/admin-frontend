@@ -129,7 +129,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.versionData = null;
         this.currentPageVersion = data.page.version.head;
         this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
-          console.log(data);
           this.versionForm = new FormGroup({});
           this.versionData = versionData;
           this.savingVersion = false;
