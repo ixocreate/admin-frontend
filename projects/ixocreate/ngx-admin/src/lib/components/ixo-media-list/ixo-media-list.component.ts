@@ -5,6 +5,8 @@ import { ConfigService } from '../../services/config.service';
 import { Media } from '../../interfaces/media.interface';
 import { AppDataService } from '../../services/data/app-data.service';
 import { MediaHelper } from '../../helpers/media.helper';
+import { Router } from '@angular/router';
+import { ImageHelper } from '../../helpers/image.helper';
 
 @Component({
   selector: 'ixo-media-list',
@@ -14,10 +16,11 @@ export class IxoMediaListComponent implements OnInit {
 
   data$: Promise<Media>;
   uploader: FileUploader;
-  filterValue = '';
+  @Input() filterValue = '';
   itemsPerPage = 18;
-  currentPage = 1;
+  @Input() currentPage = 1;
   totalItems = 0;
+  renderPagination = false;
 
   types = [
     {
@@ -48,12 +51,17 @@ export class IxoMediaListComponent implements OnInit {
   private inputTimeout = null;
 
   @Output() select = new EventEmitter<Media>();
+  @Output() changeFilters = new EventEmitter<{
+    search: string,
+    mediaType: string,
+    page: number,
+  }>();
 
   isImage = MediaHelper.isImage;
   isSVG = MediaHelper.isSVG;
   mimeTypeIcon = MediaHelper.mimeTypeIcon;
 
-  constructor(private config: ConfigService, private appData: AppDataService) {
+  constructor(private config: ConfigService, private appData: AppDataService, private router: Router) {
   }
 
   ngOnInit() {
@@ -79,12 +87,24 @@ export class IxoMediaListComponent implements OnInit {
   updateMedia() {
     this.data$ = this.appData.getMediaIndex(this.itemsPerPage, this.currentPage, this.filterValue, this.selectedType).then((response: any) => {
       this.totalItems = response.count;
+      this.renderPagination = false;
+      setTimeout(() => {
+        this.renderPagination = true;
+      });
       return response;
     });
   }
 
   selectMedia(media: Media) {
     this.select.emit(media);
+  }
+
+  openDetail(media: Media) {
+    window.open(window.location.href.split('#')[0] + '#/media/' + media.id + '/edit', '_blank');
+  }
+
+  openImage(media: Media) {
+    ImageHelper.setImage(media.original);
   }
 
   applyFilter() {
@@ -94,19 +114,30 @@ export class IxoMediaListComponent implements OnInit {
     this.inputTimeout = setTimeout(() => {
       this.currentPage = 1;
       this.updateMedia();
+      this.emitChangeFilter();
     }, 500);
+  }
+
+  emitChangeFilter() {
+    this.changeFilters.emit({
+      page: this.currentPage,
+      search: this.filterValue,
+      mediaType: this.selectedType,
+    });
   }
 
   onPage(event) {
     if (this.currentPage !== event.page) {
       this.currentPage = event.page;
       this.updateMedia();
+      this.emitChangeFilter();
     }
   }
 
   onChangeType() {
     this.currentPage = 1;
     this.updateMedia();
+    this.emitChangeFilter();
   }
 
 }

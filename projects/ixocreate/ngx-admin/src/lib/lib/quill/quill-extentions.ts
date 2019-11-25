@@ -1,4 +1,5 @@
 import Quill from 'quill';
+
 const Inline = Quill.import('blots/inline');
 
 export function registerQillExtentions() {
@@ -16,7 +17,6 @@ export class IxoLinkType extends Inline {
   static blotName = 'ixolink';
   static tagName = 'a';
   domNode: any;
-
 
   static create(options: any) {
     let href = '';

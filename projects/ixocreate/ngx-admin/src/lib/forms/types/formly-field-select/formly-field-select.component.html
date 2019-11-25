@@ -1,0 +1,38 @@
+<ng-container>
+  <div class="input-group">
+    <ng-select
+      #select
+      [class.is-invalid]="showError"
+      (open)="onOpen()"
+      (search)="onOpen()"
+      (change)="onSelect($event)"
+      [items]="options$ | async"
+      [typeahead]="optionInput$"
+      [loading]="optionsLoading"
+      [placeholder]="to.placeholder"
+      [searchable]="!to.extendedSelect"
+      [bindValue]="valueProp"
+      [bindLabel]="labelProp"
+      [virtualScroll]="true"
+      [addTag]="addTagNowRef"
+      [clearable]="false"
+      [multiple]="multiple"
+      [formControl]="formControl">
+    </ng-select>
+
+    <div class="input-group-append" *ngIf="clearable">
+      <button type="button" class="btn" [class.btn-outline-input]="!showError" [class.btn-outline-danger]="showError"
+              (click)="remove()">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+  </div>
+  <ng-template #modalTemplate>
+    <ixo-datatable [resource]="resourceKey" [advancedSearch]="true" type="select"
+                   [selectedElements]="multiple ? value : []"
+                   (select)="onSelect($event)" (deSelect)="onDeSelect($event)"></ixo-datatable>
+    <div class="bg-white text-center p-2" *ngIf="multiple">
+      <button class="btn btn-primary" (click)="closeModal()">Close</button>
+    </div>
+  </ng-template>
+</ng-container>

@@ -6,7 +6,9 @@ export interface Schema {
   templateOptions: { [key: string]: any };
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SchemaTransformService {
 
   private transformers: { [inputType: string]: (value: any, transformer: SchemaTransformService) => any } = {};
@@ -36,10 +38,13 @@ export class SchemaTransformService {
 
     this.registerTransform('html', this.handleDefault('wysiwyg'));
 
-    this.registerTransform('media', this.handleDefault('media', {centerLabel: true, type: ''}));
-    this.registerTransform('image', this.handleDefault('media', {centerLabel: true, type: 'image'}));
-    this.registerTransform('document', this.handleDefault('media', {centerLabel: true, type: 'document'}));
+    this.registerTransform('annotated-image', this.handleDefault('annotated-image'));
+
     this.registerTransform('audio', this.handleDefault('media', {centerLabel: true, type: 'audio'}));
+    this.registerTransform('document', this.handleDefault('media', {centerLabel: true, type: 'document'}));
+    this.registerTransform('image', this.handleDefault('media', {centerLabel: true, type: 'image'}));
+    this.registerTransform('imageAnnotated', this.handleDefault('mediaAnnotated', {centerLabel: true, type: 'imageAnnotated'}));
+    this.registerTransform('media', this.handleDefault('media', {centerLabel: true, type: ''}));
     this.registerTransform('video', this.handleDefault('media', {centerLabel: true, type: 'video'}));
   }
 
@@ -71,17 +76,14 @@ export class SchemaTransformService {
         templateOptions: {
           label: value.label,
           description: value.description,
-          placeholder: value.placeholder || value.label + '...',
+          placeholder: value.placeholder || (value.label ? value.label + '...' : ''),
           required: value.required,
           disabled: value.disabled,
           ...templateOptions,
         },
       };
-      if(value.metadata) {
+      if (value.metadata) {
         data.templateOptions.metadata = {...value.metadata};
-        // if(data.templateOptions.metadata.default) {
-        //   data.default = data.templateOptions.metadata.default;
-        // }
       }
       keysToTemplateOptions.forEach((key) => {
         data.templateOptions[key] = value[key];

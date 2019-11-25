@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { IxoDashboardCounterComponent } from '../dashboard/ixo-counter/ixo-counter.component';
-import { IxoDashboardSlideshowComponent } from '../dashboard/ixo-slideshow/ixo-slideshow.component';
+import { IxoDashboardCounterComponent } from '../dashboard/ixo-dashboard-counter/ixo-dashboard-counter.component';
+import { IxoDashboardSlideshowComponent } from '../dashboard/ixo-dashboard-slideshow/ixo-dashboard-slideshow.component';
 import { IxoDashboardStatisticsOverviewComponent } from '../dashboard/ixo-statistics-overview/ixo-statistics-overview.component';
-import { IxoDashboardGalleryComponent } from '../dashboard/ixo-gallery/ixo-gallery.component';
-import { IxoDashboardGraphComponent } from '../dashboard/ixo-graph/ixo-graph.component';
+import { IxoDashboardGalleryComponent } from '../dashboard/ixo-dashboard-gallery/ixo-dashboard-gallery.component';
+import { IxoDashboardGraphComponent } from '../dashboard/ixo-dashboard-graph/ixo-dashboard-graph.component';
 import { IxoDashboardTableComponent } from '../dashboard/ixo-dashboard-table/ixo-dashboard-table.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DashboardService {
 
   private components: { [key: string]: any } = {};

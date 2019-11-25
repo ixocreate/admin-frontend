@@ -1,3 +1,9 @@
 <ixo-content>
-  <ixo-media-list (select)="onSelect($event)"></ixo-media-list>
+  <ixo-media-list
+    [filterValue]="search"
+    [currentPage]="page"
+    [selectedType]="mediaType"
+    (changeFilters)="onChangeFilters($event)"
+    (select)="onSelect($event)"
+  ></ixo-media-list>
 </ixo-content>

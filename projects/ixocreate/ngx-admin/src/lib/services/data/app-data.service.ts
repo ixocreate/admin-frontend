@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/observable';
-import { DataServiceAbstract } from './data.service.abstract';
-import { Config } from '../../interfaces/config.interface';
-import { ApiService } from '../api.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/app.state';
-import { DefaultStore } from '../../store/default.store';
-import { DefaultHelper } from '../../helpers/default.helper';
-import { ConfigService } from '../config.service';
 import { tap } from 'rxjs/internal/operators/tap';
-import { parseParams } from '../../shared/parseParams';
+import { Observable } from 'rxjs/observable';
+import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
+import { DefaultHelper } from '../../helpers/default.helper';
+import { Config } from '../../interfaces/config.interface';
+import { Page } from '../../interfaces/page.interface';
 import { ResourceList } from '../../interfaces/resource-list.interface';
 import { Resource } from '../../interfaces/resource.interface';
-import { Page } from '../../interfaces/page.interface';
-import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
+import { parseParams } from '../../shared/parseParams';
+import { AppState } from '../../store/app.state';
+import { DefaultStore } from '../../store/default.store';
+import { ApiService } from '../api.service';
+import { ConfigService } from '../config.service';
+import { DataServiceAbstract } from './data.service.abstract';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AppDataService extends DataServiceAbstract {
 
   config$: Observable<Config>;
@@ -54,12 +56,8 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
-  getByUrl(url, locale: string): Promise<any> {
-    const data: any = {};
-    if (locale) {
-      data.locale = locale;
-    }
-    return this.api.get(this.config.config.routes.pageList, data);
+  getByUrl(url, params: { id?: string, term?: string, locale?: string }): Promise<any> {
+    return this.api.get(url, params);
   }
 
   getSitemap(locale: string, pageType?: string): Promise<any> {
@@ -115,10 +113,21 @@ export class AppDataService extends DataServiceAbstract {
     });
   }
 
+  /**
+   * Get general data about a page, like its schema, localizedPages, navigation, page, pageType, sitemap
+   *
+   * @param pageId UUID of the page to load
+   */
   getPageDetail(pageId: string): Promise<any> {
     return this.api.get(this.config.config.routes.pageDetail.replace('{id}', pageId));
   }
 
+  /**
+   * Get the specific content of a page and its version, the backend decides how the structure looks like, this is why we have <any> here
+   *
+   * @param pageId UUID of the page to get
+   * @param pageVersionId UUID of its content version to get
+   */
   getPageVersionDetail(pageId: string, pageVersionId: string): Promise<any> {
     return this.api.get(this.config.config.routes.pageVersionDetail.replace('{pageId}', pageId).replace('{id}', pageVersionId));
   }
@@ -187,20 +196,18 @@ export class AppDataService extends DataServiceAbstract {
     }
   }
 
-  getResourceSelect(resource: string): Promise<any[]> {
-    if (!this.savedResourceSelects[resource]) {
-      this.savedResourceSelects[resource] = this.getResourceIndex(resource, 500);
-    }
-    return this.savedResourceSelects[resource].then((response) => {
+  getResourceSelect(resource: string, search: string = null, params = {}): Promise<any[]> {
+    /**
+     * Note: the limit not applies to search results, not preselected items which will always be prepended
+     */
+    return this.getResourceIndex(resource, 100, 1, search, params).then((response) => {
       return response.items;
     });
   }
 
-  getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null): Promise<ResourceList> {
-    const params: any = {
-      offset: (pageNumber - 1) * limit,
-      limit,
-    };
+  getResourceIndex(resource: string, limit: number = 10, pageNumber: number = 1, search: string = null, params: any = {}): Promise<ResourceList> {
+    params.offset = (pageNumber - 1) * limit;
+    params.limit = limit;
     if (search && search !== '') {
       params.search = search;
     }
