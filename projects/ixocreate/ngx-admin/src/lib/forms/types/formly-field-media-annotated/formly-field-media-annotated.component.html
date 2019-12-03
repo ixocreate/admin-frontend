@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-  <ixo-media-list (select)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></ixo-media-list>
+  <ixo-media-list (selectedMedia)="onSelect($event)" [showTypeFilter]="!to.type" [selectedType]="to.type"></ixo-media-list>
 </ng-template>
 
 <ng-template #imageAnnotatorModalTemplate>

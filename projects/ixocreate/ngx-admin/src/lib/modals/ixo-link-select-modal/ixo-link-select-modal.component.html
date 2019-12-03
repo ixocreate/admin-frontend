@@ -49,7 +49,7 @@
       </div>
     </div>
   </div>
-  <ixo-media-list class="media-inline" (select)="onSelectType($event)"></ixo-media-list>
+  <ixo-media-list class="media-inline" (selectedMedia)="onSelectType($event)"></ixo-media-list>
 </ng-container>
 
 <ng-container *ngIf="selectedType === 'external'">

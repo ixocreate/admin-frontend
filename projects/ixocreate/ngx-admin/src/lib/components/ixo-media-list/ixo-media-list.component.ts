@@ -50,7 +50,7 @@ export class IxoMediaListComponent implements OnInit {
 
   private inputTimeout = null;
 
-  @Output() select = new EventEmitter<Media>();
+  @Output() selectedMedia = new EventEmitter<Media>();
   @Output() changeFilters = new EventEmitter<{
     search: string,
     mediaType: string,
@@ -96,7 +96,7 @@ export class IxoMediaListComponent implements OnInit {
   }
 
   selectMedia(media: Media) {
-    this.select.emit(media);
+    this.selectedMedia.emit(media);
   }
 
   openDetail(media: Media) {
