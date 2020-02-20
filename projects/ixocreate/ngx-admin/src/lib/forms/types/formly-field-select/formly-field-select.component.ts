@@ -228,8 +228,6 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
      * reset options observable after each type change
      */
     this.options$ = of(this.optionsFromTemplateOptions(toOptions));
-
-    console.log(toOptions);
   }
 
   optionsFromTemplateOptions(toOptions) {
