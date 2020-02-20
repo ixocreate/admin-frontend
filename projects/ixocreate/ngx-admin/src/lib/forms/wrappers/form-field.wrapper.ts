@@ -14,12 +14,12 @@ import { FieldWrapper } from '@ngx-formly/core';
               <!--{{ to | json }}-->
               <div class="input-group">
                   <div class="input-group-prepend" *ngIf="prependIcon || prependText">
-            <span class="input-group-text">
-              <i *ngIf="prependIcon" class="fa fa-fw" [ngClass]="prependIconClass"></i>
-              <div *ngIf="prependText" style="min-width: 1.28571429em">
-                <small><b>{{ prependText }}</b></small>
-              </div>
-            </span>
+                      <span class="input-group-text">
+                        <i *ngIf="prependIcon" class="fa fa-fw" [ngClass]="prependIconClass"></i>
+                        <div *ngIf="prependText" style="min-width: 1.28571429em">
+                          <small><b>{{ prependText }}</b></small>
+                        </div>
+                      </span>
                   </div>
                   <div style="flex-grow: 1">
                       <ng-template #fieldComponent></ng-template>

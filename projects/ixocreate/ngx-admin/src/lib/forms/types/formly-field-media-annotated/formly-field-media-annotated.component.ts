@@ -128,7 +128,6 @@ export class FormlyFieldMediaAnnotatedComponent extends CustomFieldTypeAbstract 
     }
 
     this.value.media = media;
-    console.log(this.value);
     super.setValue(this.value);
   }
 

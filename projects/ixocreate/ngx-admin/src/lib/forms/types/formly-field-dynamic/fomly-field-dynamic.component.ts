@@ -176,7 +176,7 @@ export class FormlyFieldDynamicComponent extends FormlyFieldRepeatableComponent 
     });
 
     /**
-     * if there is no type defintion remove control
+     * if there is no type definition remove control
      * might be from a stored element which was removed since then
      */
     if (!typeDefinition) {

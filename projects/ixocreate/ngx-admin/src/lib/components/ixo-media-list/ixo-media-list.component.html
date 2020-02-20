@@ -28,6 +28,11 @@
     </div>
 
     <ng-container *ngIf="data$ | async as data; else isLoading">
+
+      <div *ngIf="data.items.length === 0" class="mt-4 mb-3 text-center">
+        No Files found.
+      </div>
+
       <div class="row no-gutters media-grid">
         <div *ngFor="let item of uploader.queue" class="col-xl-2 col-sm-4 col-6">
           <div class="media-container">
