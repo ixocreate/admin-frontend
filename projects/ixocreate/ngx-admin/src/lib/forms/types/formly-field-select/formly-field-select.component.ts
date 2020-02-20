@@ -49,7 +49,7 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
     /**
      * reset options observable after each type change
      */
-    this.options$ = of(this.optionsFromTemplateOptions);
+    this.setOptionsFromTemplateOptions(this.to.options);
 
     /**
      * return here if there's nothing to load dynamically
@@ -223,8 +223,16 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
     return this.to.createNewDeferred || false;
   }
 
-  get optionsFromTemplateOptions() {
-    const toOptions = this.to.options;
+  setOptionsFromTemplateOptions(toOptions) {
+    /**
+     * reset options observable after each type change
+     */
+    this.options$ = of(this.optionsFromTemplateOptions(toOptions));
+
+    console.log(toOptions);
+  }
+
+  optionsFromTemplateOptions(toOptions) {
     const options: SelectOption[] = [];
     const groups: { [key: string]: SelectOption[] } = {};
     if (Array.isArray(toOptions)) {
