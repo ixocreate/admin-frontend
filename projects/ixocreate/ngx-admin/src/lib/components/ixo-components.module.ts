@@ -25,7 +25,6 @@ import { DirectivesModule } from '../directives/directives.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -55,7 +54,6 @@ const COMPONENTS = [
     AlertModule.forRoot(),
     ProgressbarModule.forRoot(),
     ModalModule.forRoot(),
-    TypeaheadModule.forRoot(),
     ToastrModule.forRoot({
       autoDismiss: true,
       closeButton: true,

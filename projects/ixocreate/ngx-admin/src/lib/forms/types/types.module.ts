@@ -13,7 +13,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { QuillModule } from 'ngx-quill';
 import { CalendarModule } from 'primeng/components/calendar/calendar';
@@ -79,7 +78,6 @@ const COMPONENTS = [
     ProgressbarModule.forRoot(),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
-    TypeaheadModule.forRoot(),
     CarouselModule.forRoot()
   ],
   exports: COMPONENTS
