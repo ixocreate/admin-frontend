@@ -111,7 +111,11 @@ export class FormlyFieldSelectComponent extends CustomFieldTypeAbstract implemen
                    * add the typeahead search term to the request parameters
                    */
                   params = {...params};
-                  params.preselectFilterValues = this.value;
+
+                  if(this.value) {
+                    params.preselectFilter = this.valueProp;
+                    params.preselectFilterValues = this.value;
+                  }
 
                   return this.appData.getResourceSelect(this.resourceKey, term, params)
                     .then(data => {
