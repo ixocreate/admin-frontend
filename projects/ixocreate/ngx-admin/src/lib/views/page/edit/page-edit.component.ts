@@ -23,7 +23,9 @@ import Split from 'split.js';
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   versionIndex$: Promise<any>;
-  versionData: any;
+  versionData: any = {
+    content: {},
+  };
   data$: Promise<any>;
 
   id: string;
@@ -65,6 +67,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   keepPreviewOpen = false;
   private split: Split;
 
+  aboveWidgetData$: Promise<any>;
+  belowWidgetData$: Promise<any>;
+
   constructor(protected route: ActivatedRoute,
               protected router: Router,
               protected config: ConfigService,
@@ -85,6 +90,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         this.id = params.id;
         this.loadDetailData();
         this.updateVersionIndex();
+
+        this.aboveWidgetData$ = this.appData.getPageWidgets('above', this.id);
+        this.belowWidgetData$ = this.appData.getPageWidgets('below', this.id);
       });
   }
 
@@ -121,9 +129,6 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       this.pageHasChildren = data.hasChildren;
 
       if (data.page.version.head === null) {
-        this.versionData = {
-          content: {},
-        };
         this.savingVersion = false;
       } else if (this.currentPageVersion !== data.page.version.head) {
         this.versionData = null;

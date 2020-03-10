@@ -310,6 +310,16 @@ export class AppDataService extends DataServiceAbstract {
     return this.api.get(this.config.config.routes.dashboardIndex);
   }
 
+  getPageWidgets(position: string, id: string): Promise<any> {
+    if (!this.config.config.routes.pageWidgets) {
+      return Promise.resolve([]);
+    }
+    return this.api.get(this.config.config.routes.pageWidgets
+      .replace('{position}', position)
+      .replace('{id}', id)
+    );
+  }
+
   getResourceWidgets(resource: string, position: string, type: string, id: string = null): Promise<any> {
     if (!this.config.config.routes.resourceWidgets) {
       return Promise.resolve([]);
