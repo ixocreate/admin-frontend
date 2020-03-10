@@ -11,16 +11,22 @@
   </ng-template>
 
   <ng-container *ngIf="versionData && versionForm && versionFields; else isLoading">
-    <ng-container *ngIf="aboveWidgetData$ | async as data">
-      <ixo-dashboard [data]="data"></ixo-dashboard>
-    </ng-container>
+
     <div [class.content]="previewIsOpen">
+
+
       <div [class.split]="previewIsOpen" [class.page-edit-left-panel]="previewIsOpen" id="formly-container">
+        <ng-container *ngIf="aboveWidgetData$ | async as data">
+          <ixo-dashboard [data]="data"></ixo-dashboard>
+        </ng-container>
         <formly-form [form]="versionForm"
                      [fields]="versionFields"
                      [model]="versionData.content"
                      class="ixo-form ixo-form-inline">
         </formly-form>
+        <ng-container *ngIf="belowWidgetData$ | async as data">
+          <ixo-dashboard [data]="data"></ixo-dashboard>
+        </ng-container>
       </div>
       <div class="split page-edit-right-panel" [hidden]="!previewIsOpen">
         <app-iframe [height]="iframeHeight"></app-iframe>
@@ -32,9 +38,7 @@
       </div>
 
     </div>
-    <ng-container *ngIf="belowWidgetData$ | async as data">
-      <ixo-dashboard [data]="data"></ixo-dashboard>
-    </ng-container>
+
   </ng-container>
   <ng-template #isLoading>
     <div class="text-center my-3 loading">
