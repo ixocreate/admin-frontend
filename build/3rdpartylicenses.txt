@@ -286,8 +286,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-ngx-bootstrap/utils
-
 ngx-perfect-scrollbar
 MIT
 The MIT License
@@ -1731,7 +1729,7 @@ ngx-bootstrap/progressbar
 
 ngx-bootstrap/tabs
 
-ngx-bootstrap/typeahead
+ngx-bootstrap/utils
 
 ngx-color-picker
 MIT
