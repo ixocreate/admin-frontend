@@ -9,6 +9,7 @@ import { IxoDashboardStatisticsOverviewComponent } from './ixo-statistics-overvi
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { IxoComponentsModule } from '../components/ixo-components.module';
+import {IxoDashboardHtmlComponent} from "./ixo-dashboard-html/ixo-dashboard-html.component";
 
 const COMPONENTS = [
   IxoDashboardCounterComponent,
@@ -16,6 +17,7 @@ const COMPONENTS = [
   IxoDashboardGraphComponent,
   IxoDashboardSlideshowComponent,
   IxoDashboardTableComponent,
+  IxoDashboardHtmlComponent,
   IxoDashboardStatisticsOverviewComponent
 ];
 

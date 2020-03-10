@@ -5,6 +5,7 @@ import { IxoDashboardStatisticsOverviewComponent } from '../dashboard/ixo-statis
 import { IxoDashboardGalleryComponent } from '../dashboard/ixo-dashboard-gallery/ixo-dashboard-gallery.component';
 import { IxoDashboardGraphComponent } from '../dashboard/ixo-dashboard-graph/ixo-dashboard-graph.component';
 import { IxoDashboardTableComponent } from '../dashboard/ixo-dashboard-table/ixo-dashboard-table.component';
+import {IxoDashboardHtmlComponent} from "../dashboard/ixo-dashboard-html/ixo-dashboard-html.component";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class DashboardService {
     this.registerComponent('gallery', IxoDashboardGalleryComponent);
     this.registerComponent('graph', IxoDashboardGraphComponent);
     this.registerComponent('table', IxoDashboardTableComponent);
+    this.registerComponent('html', IxoDashboardHtmlComponent);
   }
 
   registerComponent(key: string, component: any) {
