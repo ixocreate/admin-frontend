@@ -183,6 +183,29 @@
   }
 }
 
+.ql-undo,
+.ql-redo {
+  position: relative;
+
+  &:after {
+    display: inline-block;
+    font-family: FontAwesome;
+    content: '\f01e';
+    position: absolute;
+    left: 7px;
+    top: 2px;
+    font-size: 15px;
+  }
+}
+
+.ql-undo {
+  position: relative;
+
+  &:after {
+    content: '\f0e2';
+  }
+}
+
 .ql-container {
   height: auto;
 }

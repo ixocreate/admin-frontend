@@ -9,7 +9,7 @@ import { IxoLinkType } from '../../../lib/quill/quill-extentions';
 
 @Component({
   selector: 'formly-field-quill',
-  templateUrl: './formly-field-quill.component.html'
+  templateUrl: './formly-field-quill.component.html',
 })
 export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
 
@@ -38,11 +38,12 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
     }
     setTimeout(() => {
       this.setValue(this.formControl.value || {html: '', quill: []});
+      this.editor.quillEditor.history.clear();
       /**
        * default to html value if no quill delta is set
        */
-      if(!this.formControl.value.quill || !this.formControl.value.quill.ops || this.formControl.value.quill.ops.length === 0) {
-        if(this.formControl.value.html) {
+      if (!this.formControl.value.quill || !this.formControl.value.quill.ops || this.formControl.value.quill.ops.length === 0) {
+        if (this.formControl.value.html) {
           this.editor.quillEditor.clipboard.dangerouslyPasteHTML(this.formControl.value.html);
         }
       }
@@ -95,6 +96,14 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
       } else {
         this.editor.quillEditor.format('ixolink', false, 'user');
       }
+    };
+
+    this.to.modules.toolbar.handlers.undo = (value) => {
+      this.editor.quillEditor.history.undo();
+    };
+
+    this.to.modules.toolbar.handlers.redo = (value) => {
+      this.editor.quillEditor.history.redo();
     };
 
     setTimeout(() => {
