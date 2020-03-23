@@ -142,16 +142,16 @@
     background: $input-border-color;
     font-size: .85em;
     padding: 0 5px;
-    height: 25px;
+    min-height: 25px;
     display: flex;
     align-items: center;
+    overflow: hidden;
+    max-height: 80%;
 
     & > div {
       width: 100%;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      word-wrap: break-word;
     }
   }
 }
