@@ -54,6 +54,10 @@ export class IxoSitemapComponent implements OnInit {
     this.loadPages();
   }
 
+  addRootPage() {
+    this.loadPages();
+  }
+
   cancelCopy() {
     this.copy.setCopyPage(null, null);
   }
