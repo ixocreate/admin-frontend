@@ -345,3 +345,66 @@
 //.date {
 //  font-family: monospace;
 //}
+
+.input-table {
+  margin: 0;
+
+  .heading {
+    background: #f6f6f6;
+    font-weight: bold;
+
+    .table-input {
+      font-weight: bold;
+    }
+  }
+
+  .table-input {
+    resize: none;
+
+    &.is-link {
+      color: $primary;
+    }
+  }
+
+  th, td {
+    border-color: #e4e7ea;
+    padding: 3px;
+    position: relative;
+
+    &:hover .table-edit {
+      display: flex;
+    }
+  }
+
+  .table-edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    display: none;
+  }
+
+  .table-button {
+    cursor: pointer;
+    border: 0;
+    padding: 1px 5px;
+    margin-left: 1px;
+    background: #e4e7ea;
+    color: #333;
+    font-size: 12px;
+    display: block;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.active {
+      background: #333;
+      color: #e4e7ea;
+    }
+
+    &:first-child {
+      border-radius: 0 0 0 3px;
+    }
+  }
+}

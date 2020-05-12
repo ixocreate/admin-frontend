@@ -18,6 +18,7 @@ import { FormlyWrapperFormFieldComponent } from './wrappers/form-field.wrapper';
 import { FormlyWrapperSectionComponent } from './wrappers/section.wrapper';
 import { FormlyWrapperTabComponent } from './wrappers/tab.wrapper';
 import { FormlyWrapperTabsetComponent } from './wrappers/tabset.wrapper';
+import { FormlyFieldTableComponent } from './types/formly-field-table/formly-field-table.component';
 
 export function renderCustomError(error) {
   return error;
@@ -54,6 +55,11 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'datetime',
       component: FormlyFieldDateTimeComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'table',
+      component: FormlyFieldTableComponent,
       wrappers: ['form-field'],
     },
     {

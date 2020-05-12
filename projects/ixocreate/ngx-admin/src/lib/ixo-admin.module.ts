@@ -76,10 +76,10 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
       ],
     }),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-    NgrxHelperModule.forRoot()
+    NgrxHelperModule.forRoot(),
   ],
   declarations: [
-    AdminComponent
+    AdminComponent,
   ],
   exports: [
     IxoComponentsModule,
@@ -89,7 +89,7 @@ export function initConfig(appData: AppDataService, injector: Injector): () => P
     FormlyBootstrapModule,
     PipesModule,
     RouterModule,
-    AdminComponent
+    AdminComponent,
   ],
 })
 export class IxoAdminModule {

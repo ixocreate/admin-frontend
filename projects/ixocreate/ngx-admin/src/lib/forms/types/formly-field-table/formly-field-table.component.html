@@ -1,0 +1,55 @@
+<table class="table table-bordered input-table">
+  <tr *ngFor="let row of tableData; index as i">
+    <td [class.heading]="col.heading" *ngFor="let col of row; index as j">
+      <textarea
+        ixoAutosize
+        [minRows]="1"
+        class="table-input form-control"
+        [class.is-link]="!!col.link"
+        [(ngModel)]="col.text"
+        (ngModelChange)="onChange($event)"
+      ></textarea>
+      <div class="table-edit">
+        <button
+          class="table-button"
+          [class.active]="col.heading"
+          (click)="onChangeColHeading(col)"
+        >
+          <i class="fa fa-header"></i>
+        </button>
+        <button
+          class="table-button"
+          (click)="openLinkModal(col)"
+        >
+          <i class="fa fa-link"></i>
+        </button>
+      </div>
+    </td>
+    <td style="width: 44px">
+      <button class="btn btn-danger" (click)="removeRow(i)">
+        <i class="fa fa-times"></i>
+      </button>
+    </td>
+  </tr>
+</table>
+
+<div
+  *ngIf="!tableData.length"
+  style="color: #ccc; border: 1px solid #e4e7ea; padding: 6px .75rem; border-radius: .25rem"
+>
+  No rows. Start by adding at least 1 row...
+</div>
+
+<div class="row" style="margin-top: 3px">
+  <div class="col">
+    <select [(ngModel)]="colums" (ngModelChange)="onChangeCols($event)" class="form-control">
+      <option *ngFor="let column of columData" [value]="column.value">{{ column.label }}</option>
+    </select>
+  </div>
+  <div class="col text-right">
+    <button class="btn btn-success" (click)="addRow()">
+      <i class="fa fa-plus"></i>
+      Add Row
+    </button>
+  </div>
+</div>

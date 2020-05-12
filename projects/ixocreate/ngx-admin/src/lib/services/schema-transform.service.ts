@@ -25,6 +25,7 @@ export class SchemaTransformService {
     this.registerTransform('checkbox', this.handleDefault('checkbox'));
     this.registerTransform('multiCheckbox', this.handleDefaultMulti('multiCheckbox'));
     this.registerTransform('radio', this.handleDefaultMulti('radio'));
+    this.registerTransform('table', this.handleDefault('table'));
 
     this.registerTransform('date', this.handleDefault('date'));
     this.registerTransform('datetime', this.handleDefault('datetime'));

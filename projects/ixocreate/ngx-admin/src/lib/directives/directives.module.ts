@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ClickStopPropagationDirective } from './click-stop-propagation.directive';
 import { DropdownDirective } from './dropdown.directive';
 import { PermissionDirective } from './permission.directive';
+import { AutosizeDirective } from './autosize.directive';
 
 const DIRECTIVES = [
   ClickStopPropagationDirective,
   DropdownDirective,
-  PermissionDirective
+  PermissionDirective,
+  AutosizeDirective,
 ];
 
 @NgModule({

@@ -35,6 +35,7 @@ import { FormlyFieldQuillComponent } from './formly-field-quill/formly-field-qui
 import { FormlyFieldRepeatableComponent } from './formly-field-repeatable/formly-field-repeatable.component';
 import { FormlyFieldSelectComponent } from './formly-field-select/formly-field-select.component';
 import { FormlyFieldYouTubeComponent } from './formly-field-youtube/formly-field-youtube.component';
+import { FormlyFieldTableComponent } from './formly-field-table/formly-field-table.component';
 
 const COMPONENTS = [
   FormlyFieldCheckboxComponent,
@@ -51,6 +52,7 @@ const COMPONENTS = [
   FormlyFieldRepeatableComponent,
   FormlyFieldSelectComponent,
   FormlyFieldYouTubeComponent,
+  FormlyFieldTableComponent,
 ];
 
 @NgModule({
