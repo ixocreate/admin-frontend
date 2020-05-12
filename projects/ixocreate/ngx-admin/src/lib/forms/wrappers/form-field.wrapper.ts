@@ -21,7 +21,7 @@ import { FieldWrapper } from '@ngx-formly/core';
                         </div>
                       </span>
                   </div>
-                  <div style="flex-grow: 1">
+                  <div style="flex-grow: 1; min-width: 0">
                       <ng-template #fieldComponent></ng-template>
                   </div>
               </div>

@@ -367,12 +367,18 @@
   }
 
   th, td {
+    min-width: 150px;
     border-color: #e4e7ea;
     padding: 3px;
     position: relative;
 
     &:hover .table-edit {
       display: flex;
+    }
+
+    &.delete {
+      width: 44px;
+      min-width: 44px;
     }
   }
 
