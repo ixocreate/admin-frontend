@@ -1,5 +1,9 @@
 <div class="table-responsive">
   <table class="table table-bordered input-table">
+    <tr *ngIf="header">
+      <th *ngFor="let title of header">{{title}}</th>
+      <th class="delete-col"></th>
+    </tr>
     <tr *ngFor="let row of tableData; index as i">
       <td [class.heading]="col.heading" *ngFor="let col of row; index as j">
       <textarea
@@ -26,8 +30,8 @@
           </button>
         </div>
       </td>
-      <td class="delete">
-        <button class="btn btn-danger" (click)="removeRow(i)">
+      <td class="delete-col">
+        <button *ngIf="!minRows || minRows < tableData.length" class="btn btn-danger" (click)="removeRow(i)">
           <i class="fa fa-times"></i>
         </button>
       </td>
@@ -44,12 +48,17 @@
 
 <div class="row" style="margin-top: 3px">
   <div class="col">
-    <select [(ngModel)]="colums" (ngModelChange)="onChangeCols($event)" class="form-control">
+    <select
+      [(ngModel)]="colums"
+      (ngModelChange)="onChangeCols($event)"
+      class="form-control"
+      *ngIf="minCols !== maxCols"
+    >
       <option *ngFor="let column of columData" [value]="column.value">{{ column.label }}</option>
     </select>
   </div>
   <div class="col text-right">
-    <button class="btn btn-success" (click)="addRow()">
+    <button *ngIf="!maxRows || maxRows > tableData.length" class="btn btn-success" (click)="addRow()">
       <i class="fa fa-plus"></i>
       Add Row
     </button>

@@ -20,19 +20,15 @@ interface ColType {
 })
 export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
 
+  header: string[] | null = null;
+
+  minCols = 1;
+  maxCols = 9;
+  minRows = null;
+  maxRows = null;
   colums = 3;
 
-  columData = [
-    {value: 1, label: '1 Colum'},
-    {value: 2, label: '2 Colums'},
-    {value: 3, label: '3 Colums'},
-    {value: 4, label: '4 Colums'},
-    {value: 5, label: '5 Colums'},
-    {value: 6, label: '6 Colums'},
-    {value: 7, label: '7 Colums'},
-    {value: 8, label: '8 Colums'},
-    {value: 9, label: '9 Colums'},
-  ];
+  columData = [];
 
   tableData: ColType[][] = [];
 
@@ -40,60 +36,59 @@ export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implement
     super();
   }
 
+  setColsSelect(min: number, max: number) {
+    this.minCols = min;
+    this.maxCols = max;
+    const temp: any[] = [];
+    for (let i = min; i <= max; i++) {
+      temp.push({value: i, label: `${i} ${i === 1 ? 'Colum' : 'Colums'}`});
+    }
+    if (this.colums < min) {
+      this.onChangeCols(min);
+    }
+    if (this.colums > max) {
+      this.onChangeCols(max);
+    }
+    this.columData = temp;
+  }
+
   ngOnInit() {
-    console.log(this.formControl.value);
+    this.minRows = this.to.minRows || this.minRows;
+    this.maxRows = this.to.maxRows || this.maxRows;
+
+    if (this.to.header && !!this.to.header.length) {
+      this.header = this.to.header;
+    }
+
+    if (this.formControl.value) {
+      this.tableData = [...this.formControl.value];
+    }
+
     if (this.tableData[0]) {
       this.colums = this.tableData[0].length;
     }
 
-    if (false) {
-      this.tableData = [
-        [
-          {
-            text: 'Heading 1',
-            heading: true,
-            link: {
-              type: 'external',
-              target: '_self',
-              value: 'fdsafdsa',
-            },
-          },
-          {
-            text: 'Heading 2',
-            heading: true,
-            link: null,
-          },
-          {
-            text: 'Heading 3',
-            heading: true,
-            link: null,
-          },
-        ],
-        [
-          {
-            text: 'Col 1',
-            heading: false,
-            link: null,
-          },
-          {
-            text: 'Col 2',
-            heading: false,
-            link: null,
-          },
-          {
-            text: 'Col 3',
-            heading: false,
-            link: null,
-          },
-        ],
-      ];
+    if (this.tableData.length < this.minRows) {
+      this.onChangeRows(this.minRows);
     }
 
-    // this.tableData = { ...this.formControl.value };
+    this.setColsSelect(this.to.minCols || this.minCols, this.to.maxCols || this.maxCols);
+    this.setHeader();
   }
 
-  onChangeCols(cols: string) {
-    const newCols = parseInt(cols, 10);
+  setHeader() {
+    if (this.to.header) {
+      const newHeader = [];
+      for (let i = 0; i < this.colums; i++) {
+        newHeader.push(this.to.header[i] || '');
+      }
+      this.header = newHeader;
+    }
+  }
+
+  onChangeCols(cols: string | number) {
+    const newCols = parseInt(cols.toString(), 10);
+    this.colums = newCols;
     const newData = [];
     for (const data of this.tableData) {
       const newRow = [];
@@ -106,7 +101,26 @@ export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implement
       }
       newData.push(newRow);
     }
+    this.setHeader();
     this.tableData = newData;
+    this.onContentChanged();
+  }
+
+  onChangeRows(rows: number) {
+    const newData = [];
+    for (let i = 0; i < rows; i++) {
+      if (this.tableData[i]) {
+        newData.push(this.tableData[i]);
+      } else {
+        const newRow = [];
+        for (let j = 0; j < this.colums; j++) {
+          newRow.push({text: '', heading: false, link: null});
+        }
+        newData.push(newRow);
+      }
+    }
+    this.tableData = newData;
+    this.onContentChanged();
   }
 
   addRow() {
