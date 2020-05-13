@@ -12,13 +12,13 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { ConfigService } from '../../../services/config.service';
 import { DisplayTypes, FOOTER_HEIGHT, HEADING_HEIGHT, screensInPixels } from './page-edit.component.model';
 import { Observable } from 'rxjs';
-import { debounceTime, take, takeWhile } from 'rxjs/operators';
+import { debounceTime, takeWhile } from 'rxjs/operators';
 import { SidebarService } from '../../../services/layout/sidebar.service';
 import Split from 'split.js';
 
 @Component({
   templateUrl: './page-edit.component.html',
-  styleUrls: ['./page-edit.component.scss']
+  styleUrls: ['./page-edit.component.scss'],
 })
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
@@ -85,14 +85,15 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     this.updateIFrameHeight();
 
     this.route.params
-      .pipe(take(1))
       .subscribe((params) => {
-        this.id = params.id;
-        this.loadDetailData();
-        this.updateVersionIndex();
+        if (this.id !== params.id) {
+          this.id = params.id;
+          this.loadDetailData();
+          this.updateVersionIndex();
 
-        this.aboveWidgetData$ = this.appData.getPageWidgets('above', this.id);
-        this.belowWidgetData$ = this.appData.getPageWidgets('below', this.id);
+          this.aboveWidgetData$ = this.appData.getPageWidgets('above', this.id);
+          this.belowWidgetData$ = this.appData.getPageWidgets('below', this.id);
+        }
       });
   }
 
@@ -368,9 +369,9 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
           'border-radius': '10px',
           'margin-left': '7px',
           'margin-right': '7px',
-          'cursor': 'col-resize'
-        })
-      })
+          'cursor': 'col-resize',
+        }),
+      }),
     );
   }
 }
