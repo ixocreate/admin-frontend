@@ -1,6 +1,16 @@
 # Release Notes
 
-## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.23...develop)
+## [Unreleased](https://github.com/ixocreate/admin-frontend/compare/0.1.34...develop)
+
+## [v0.1.34 (2019-05-13)](https://github.com/ixocreate/admin-frontend/compare/0.1.33...0.1.34)
+### Added
+- add table element
+### Fixed
+- fix page language switch
+
+## [v0.1.33 (2019-04-14)](https://github.com/ixocreate/admin-frontend/compare/0.1.33...0.1.34)
+### Fixed
+- fix add root page
 
 ## [v0.1.21 (2019-11-18)](https://github.com/ixocreate/admin-frontend/compare/0.1.23...0.1.28)
 ### Changed
