@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PipesModule } from '../pipes/pipes.module';
 import { IxoDashboardCounterComponent } from './ixo-dashboard-counter/ixo-dashboard-counter.component';
 import { IxoDashboardTableComponent } from './ixo-dashboard-table/ixo-dashboard-table.component';
 import { IxoDashboardGraphComponent } from './ixo-dashboard-graph/ixo-dashboard-graph.component';
@@ -27,7 +28,8 @@ const COMPONENTS = [
     CarouselModule.forRoot(),
     IxoComponentsModule,
     NgxChartsModule,
-    CommonModule
+    CommonModule,
+    PipesModule
   ],
   entryComponents: COMPONENTS,
   exports: COMPONENTS
