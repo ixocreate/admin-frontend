@@ -45,6 +45,8 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
       if (!this.formControl.value.quill || !this.formControl.value.quill.ops || this.formControl.value.quill.ops.length === 0) {
         if (this.formControl.value.html) {
           this.editor.quillEditor.clipboard.dangerouslyPasteHTML(this.formControl.value.html);
+        } else if (this.formControl.value) {
+          this.editor.quillEditor.clipboard.dangerouslyPasteHTML(this.formControl.value);
         }
       }
     });
