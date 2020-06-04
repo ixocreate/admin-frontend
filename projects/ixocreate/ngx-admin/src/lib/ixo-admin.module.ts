@@ -28,6 +28,7 @@ import { ModalsModule } from './modals/modals.module';
 import { TypesModule } from './forms/types/types.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { FormsModule } from './forms/forms.module';
+import { QuillModule } from 'ngx-quill';
 
 /**
  * TODO: move to a dynamic approach to support more locales

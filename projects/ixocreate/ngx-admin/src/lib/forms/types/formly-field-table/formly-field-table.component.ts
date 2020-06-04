@@ -3,10 +3,13 @@ import { CustomFieldTypeAbstract } from '../custom-field-type.abstract';
 import { LinkSelectModalData } from '../../../modals/ixo-link-select-modal/ixo-link-select-modal.component.model';
 import { IxoLinkSelectModalComponent } from '../../../modals/ixo-link-select-modal/ixo-link-select-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { IxoWysiwigModalComponent } from '../../../modals/ixo-wysiwig-modal/ixo-wysiwig-modal.component';
+import { QuillData, WysiwigModalData } from '../../../modals/ixo-wysiwig-modal/ixo-wysiwig-modal.component.model';
 
 interface ColType {
   text: string;
   heading: boolean;
+  quill: QuillData;
   link: {
     target: string
     type: string
@@ -96,7 +99,7 @@ export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implement
         if (data[i]) {
           newRow.push(data[i]);
         } else {
-          newRow.push({text: '', heading: false, link: null});
+          newRow.push({text: '', heading: false, link: null, quill: null});
         }
       }
       newData.push(newRow);
@@ -114,7 +117,7 @@ export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implement
       } else {
         const newRow = [];
         for (let j = 0; j < this.colums; j++) {
-          newRow.push({text: '', heading: false, link: null});
+          newRow.push({text: '', heading: false, link: null, quill: null});
         }
         newData.push(newRow);
       }
@@ -126,7 +129,7 @@ export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implement
   addRow() {
     const newRow = [];
     for (let i = 0; i < this.colums; i++) {
-      newRow.push({text: '', heading: false, link: null});
+      newRow.push({text: '', heading: false, link: null, quill: null});
     }
     this.tableData.push(newRow);
     this.onContentChanged();
@@ -155,6 +158,18 @@ export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implement
       },
     };
     this.modalService.show(IxoLinkSelectModalComponent, {class: 'modal-lg', initialState});
+  }
+
+  openWysiwig(col: ColType) {
+    const initialState: WysiwigModalData = {
+      value: col.quill,
+      onConfirm: (data) => {
+        col.text = '';
+        col.quill = data;
+        this.onContentChanged();
+      },
+    };
+    this.modalService.show(IxoWysiwigModalComponent, {class: 'modal-lg', initialState});
   }
 
   onContentChanged() {

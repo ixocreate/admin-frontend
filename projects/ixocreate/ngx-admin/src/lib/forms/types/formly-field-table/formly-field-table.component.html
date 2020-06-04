@@ -6,14 +6,17 @@
     </tr>
     <tr *ngFor="let row of tableData; index as i">
       <td [class.heading]="col.heading" *ngFor="let col of row; index as j">
-      <textarea
-        ixoAutosize
-        [minRows]="1"
-        class="table-input form-control"
-        [class.is-link]="!!col.link"
-        [(ngModel)]="col.text"
-        (ngModelChange)="onChange($event)"
-      ></textarea>
+        <div *ngIf="col.quill" [innerHTML]="col.quill.html"></div>
+        <div *ngIf="!col.quill">
+          <textarea
+            ixoAutosize
+            [minRows]="1"
+            class="table-input form-control"
+            [class.is-link]="!!col.link"
+            [(ngModel)]="col.text"
+            (ngModelChange)="onChange($event)"
+          ></textarea>
+        </div>
         <div class="table-edit">
           <button
             class="table-button"
@@ -27,6 +30,12 @@
             (click)="openLinkModal(col)"
           >
             <i class="fa fa-link"></i>
+          </button>
+          <button
+            class="table-button"
+            (click)="openWysiwig(col)"
+          >
+            <i class="fa fa-code"></i>
           </button>
         </div>
       </td>

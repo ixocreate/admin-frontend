@@ -1,56 +1,51 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CustomFieldTypeAbstract } from '../custom-field-type.abstract';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { QuillEditorComponent } from 'ngx-quill';
-import { CustomValidators } from '../../../validators/custom-validators';
-import { LinkSelectModalData } from '../../../modals/ixo-link-select-modal/ixo-link-select-modal.component.model';
-import { IxoLinkSelectModalComponent } from '../../../modals/ixo-link-select-modal/ixo-link-select-modal.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { IxoLinkType } from '../../../lib/quill/quill-extentions';
-import { handleQuillModules } from './handle-quill-modules';
+import { QuillData } from './ixo-wysiwig-modal.component.model';
+import { IxoLinkType } from '../../lib/quill/quill-extentions';
+import { LinkSelectModalData } from '../ixo-link-select-modal/ixo-link-select-modal.component.model';
+import { IxoLinkSelectModalComponent } from '../ixo-link-select-modal/ixo-link-select-modal.component';
+import { handleQuillModules } from '../../forms/types/formly-field-quill/handle-quill-modules';
+import { quillModules } from '../../forms/quill-modules.config';
 
 @Component({
-  selector: 'formly-field-quill',
-  templateUrl: './formly-field-quill.component.html',
+  selector: 'ixo-wysiswig-modal',
+  templateUrl: './ixo-wysiwig-modal.component.html',
 })
-export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
-
-  quillDelta = {};
+export class IxoWysiwigModalComponent implements OnInit {
 
   @ViewChild('editor') editor: QuillEditorComponent;
+  value: QuillData | null = null;
 
-  constructor(private element: ElementRef, private modalService: BsModalService) {
-    super();
+  quillDelta = {ops: [{retain: 2}, {retain: 10, attributes: {bold: true}}]};
+  public modules: any;
+  public showBackdrop = false;
+  public editorVisible = false;
+
+  public currentQuill: QuillData = {
+    html: '',
+    quill: {},
+  };
+
+  onConfirm = (data: QuillData) => {
+  };
+
+  constructor(private element: ElementRef, private modalService: BsModalService, public bsModalRef: BsModalRef) {
   }
 
-  get modules() {
-    return this.to.modules;
-  }
-
-  get height() {
-    return this.to.height + 'px';
+  public onContentChanged(event) {
+    this.currentQuill = {
+      html: event.html,
+      quill: event.content,
+    };
   }
 
   ngOnInit() {
-    if (this.to.required) {
-      this.formControl.setValidators([CustomValidators.quillRequired]);
-    }
-    if (this.formControl.value && this.formControl.value.quill) {
-      this.quillDelta = this.formControl.value.quill;
-    }
-    setTimeout(() => {
-      this.setValue(this.formControl.value || {html: '', quill: []});
-      this.editor.quillEditor.history.clear();
-      /**
-       * default to html value if no quill delta is set
-       */
-      if (!this.formControl.value.quill || !this.formControl.value.quill.ops || this.formControl.value.quill.ops.length === 0) {
-        if (this.formControl.value.html) {
-          this.editor.quillEditor.clipboard.dangerouslyPasteHTML(this.formControl.value.html);
-        }
-      }
-    });
+    this.modules = handleQuillModules(quillModules, () => this.editor, this.openLinkModal.bind(this));
 
-    handleQuillModules(this.to.modules, () => this.editor, this.openLinkModal.bind(this));
+    if (this.value) {
+      this.quillDelta = this.value.quill;
+    }
 
     setTimeout(() => {
       const quill = this.editor.quillEditor;
@@ -109,6 +104,7 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
     const initialState: LinkSelectModalData = {
       value,
       onConfirm: (data) => {
+        this.showBackdrop = false;
         if (data) {
           this.editor.quillEditor.format('ixolink', data, 'user');
         } else {
@@ -116,12 +112,19 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
         }
       },
     };
+    this.showBackdrop = true;
     this.modalService.show(IxoLinkSelectModalComponent, {class: 'modal-lg', initialState});
+    this.modalService.onHide.subscribe(() => {
+      this.showBackdrop = false;
+    });
   }
 
-  onContentChanged(data: any) {
-    this.formControl.markAsTouched();
-    this.setValue({html: data.html, quill: data.content});
+  confirm() {
+    if (!this.currentQuill.html || this.currentQuill.html === '') {
+      this.onConfirm(null);
+    } else {
+      this.onConfirm(this.currentQuill);
+    }
+    this.bsModalRef.hide();
   }
-
 }
