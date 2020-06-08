@@ -4,6 +4,7 @@
   "description": "IXOCREATE admin frontend",
   "scripts": {
     "ng": "ng",
+    "build-just": "ng build --prod --extra-webpack-config webpack.partial.js --output-path=build-just/",
     "serve": "ng serve --proxy-config proxy.config.json --extra-webpack-config webpack.partial.js",
     "build": "ng build --prod --extra-webpack-config webpack.partial.js --output-path=build/ && rm build/index.html",
     "build-with-stats": "ng build --prod --extra-webpack-config webpack.partial.js --output-path=build/ --stats-json && rm build/index.html && yarn run bundle-report",
