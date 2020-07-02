@@ -113,11 +113,15 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
   }
 
   onChange(event: any) {
-    const date = moment(event.target.value, this.inputFormat);
-    if (date.isValid()) {
-      this.dateValue = date.toDate();
+    if (event.target.value) {
+      const date = moment(event.target.value, this.inputFormat);
+      if (date.isValid()) {
+        this.dateValue = date.toDate();
+      } else {
+        this.notification.error('Invalid Date');
+        this.dateValue = null;
+      }
     } else {
-      this.notification.error('Invalid Date');
       this.dateValue = null;
     }
   }
@@ -141,30 +145,32 @@ export class FormlyFieldDateTimeComponent extends CustomFieldTypeAbstract implem
      * the shifted date in the datepicker
      */
     this._date = value;
+    if (!!value) {
+      if (this.calendarConfig.showTime) {
+        /**
+         * reverse the timezone truncation
+         * calendar always displays browser's timezone
+         * disregard that and assume that the time entered is the configured timezone
+         */
+        const userOffset = moment(value).tz(this.config.timezone).format('Z');
 
-    if (this.calendarConfig.showTime) {
-      /**
-       * reverse the timezone truncation
-       * calendar always displays browser's timezone
-       * disregard that and assume that the time entered is the configured timezone
-       */
-      const userOffset = moment(value).tz(this.config.timezone).format('Z');
+        const userDate = moment(moment(value).format('YYYY-MM-DD HH:mm:00') + userOffset);
 
-      const userDate = moment(moment(value).format('YYYY-MM-DD HH:mm:00') + userOffset);
-
-      /**
-       * the utcDate to be used as value internalle
-       */
-      utcDate = moment(userDate).utc().toISOString();
-    } else {
-      /**
-       * interpret as utc for dates without time
-       */
-      utcDate = moment.utc(moment(value).format('YYYY-MM-DD')).toISOString();
+        /**
+         * the utcDate to be used as value internalle
+         */
+        utcDate = moment(userDate).utc().toISOString();
+      } else {
+        /**
+         * interpret as utc for dates without time
+         */
+        utcDate = moment.utc(moment(value).format('YYYY-MM-DD')).toISOString();
+      }
     }
     this.setValue(utcDate);
-
-    this.formattedDate = moment.utc(utcDate).tz(this.config.timezone).format(this.inputFormat);
+    this.formattedDate = !!utcDate ?
+                         moment.utc(utcDate).tz(this.config.timezone).format(this.inputFormat) :
+                         '';
   }
 
   get dateValue() {
