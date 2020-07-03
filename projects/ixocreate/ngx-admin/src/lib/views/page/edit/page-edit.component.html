@@ -64,16 +64,17 @@
                   <input type="hidden" name="preview" value="{{ versionForm.getRawValue() | json }}">
                   <button type="submit" class="btn btn-primary btn-block"
                           id="update-preview">
-                    <i class="fa fa-eye"></i> Preview
+                    <i class="fa fa-eye"></i> Preview inline
                   </button>
                 </form>
               </div>
-              <div class="col-auto">
-                <button class="btn btn-danger" (click)="doDelete()">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>
             </div>
+            <button class="btn btn-primary btn-block mb-3" (click)="doPreviewFullscreen()">
+              <i class="fa fa-eye"></i> Preview fullscreen
+            </button>
+            <button class="btn btn-danger btn-block mb-3" (click)="doDelete()">
+              <i class="fa fa-trash"></i>
+            </button>
           </ng-container>
 
           <ixo-button [loading]="savingVersion || savingPageData"
@@ -81,7 +82,7 @@
                       [block]="true"
                       icon="expand"
                       class="mb-3"
-                      (click)="openPreviewInNewTab()">
+                      (click)="openPageInNewTab()">
             Open Page
           </ixo-button>
 
