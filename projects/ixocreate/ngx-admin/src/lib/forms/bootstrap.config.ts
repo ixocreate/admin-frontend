@@ -19,6 +19,7 @@ import { FormlyWrapperSectionComponent } from './wrappers/section.wrapper';
 import { FormlyWrapperTabComponent } from './wrappers/tab.wrapper';
 import { FormlyWrapperTabsetComponent } from './wrappers/tabset.wrapper';
 import { FormlyFieldTableComponent } from './types/formly-field-table/formly-field-table.component';
+import { quillModules } from './quill-modules.config';
 
 export function renderCustomError(error) {
   return error;
@@ -114,18 +115,7 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
       defaultOptions: {
         templateOptions: {
           height: 200,
-          modules: {
-            toolbar: {
-              container: [
-                ['undo', 'redo'],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{list: 'ordered'}, {list: 'bullet'}],
-                [{header: [1, 2, 3, 4, 5, 6, false]}],
-                ['clean'],
-                ['ixolink'], // TODO: Enable IxoLink: ['ixolink']
-              ],
-            },
-          },
+          modules: quillModules,
         },
       },
     },
