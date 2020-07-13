@@ -1,7 +1,5 @@
-import { Observable } from 'rxjs/observable';
-import { filter } from 'rxjs/internal/operators/filter';
-import { first } from 'rxjs/internal/operators/first';
-import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs';
+import { filter, first, map } from 'rxjs/operators';
 
 export class RxService {
 

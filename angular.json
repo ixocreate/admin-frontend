@@ -60,6 +60,9 @@
             "browserTarget": "ng:build"
           },
           "configurations": {
+            "development": {
+              "sourceMap": true
+            },
             "production": {
               "browserTarget": "ng:build:production"
             }

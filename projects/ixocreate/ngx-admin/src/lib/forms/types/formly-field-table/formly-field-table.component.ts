@@ -18,7 +18,7 @@ interface ColType {
 }
 
 @Component({
-  selector: 'formly-field-quill',
+  selector: 'formly-field-table',
   templateUrl: './formly-field-table.component.html',
 })
 export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {

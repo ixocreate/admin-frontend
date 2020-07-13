@@ -43,6 +43,14 @@
               <div [innerHtml]="pageName(row.pages)"></div>
             </ng-template>
           </ngx-datatable-column>
+          <ngx-datatable-column name="pageType">
+            <ng-template ngx-datatable-header-template>
+              <span>Type</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <div>{{ row.pageType?.label }}</div>
+            </ng-template>
+          </ngx-datatable-column>
 
           <ngx-datatable-column name="edit">
             <ng-template ngx-datatable-header-template>

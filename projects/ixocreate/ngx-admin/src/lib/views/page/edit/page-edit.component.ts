@@ -1,30 +1,30 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ViewAbstractComponent } from '../../../components/view.abstract.component';
-import { AppDataService } from '../../../services/data/app-data.service';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { NotificationService } from '../../../services/notification.service';
-import { SchemaTransformService } from '../../../services/schema-transform.service';
-import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
-import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { ConfigService } from '../../../services/config.service';
-import { DisplayTypes, FOOTER_HEIGHT, HEADING_HEIGHT, screensInPixels } from './page-edit.component.model';
 import { Observable } from 'rxjs';
 import { debounceTime, takeWhile } from 'rxjs/operators';
-import { SidebarService } from '../../../services/layout/sidebar.service';
 import Split from 'split.js';
+import { ViewAbstractComponent } from '../../../components/view.abstract.component';
+import { IxoConfirmModalComponent } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component';
+import { ConfirmModalData } from '../../../modals/ixo-confirm-modal/ixo-confirm-modal.component.model';
+import { ConfigService } from '../../../services/config.service';
+import { AppDataService } from '../../../services/data/app-data.service';
+import { SidebarService } from '../../../services/layout/sidebar.service';
+import { NotificationService } from '../../../services/notification.service';
+import { SchemaTransformService } from '../../../services/schema-transform.service';
+import { DisplayTypes, FOOTER_HEIGHT, HEADING_HEIGHT, screensInPixels } from './page-edit.component.model';
 
 @Component({
   templateUrl: './page-edit.component.html',
-  styleUrls: ['./page-edit.component.scss'],
+  styleUrls: ['./page-edit.component.scss']
 })
 export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   versionIndex$: Promise<any>;
   versionData: any = {
-    content: {},
+    content: {}
   };
   data$: Promise<any>;
 
@@ -70,14 +70,16 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   aboveWidgetData$: Promise<any>;
   belowWidgetData$: Promise<any>;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected config: ConfigService,
-              protected appData: AppDataService,
-              protected notification: NotificationService,
-              protected schemaTransform: SchemaTransformService,
-              protected modal: BsModalService,
-              private sidebar: SidebarService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected config: ConfigService,
+    protected appData: AppDataService,
+    protected notification: NotificationService,
+    protected schemaTransform: SchemaTransformService,
+    protected modal: BsModalService,
+    private sidebar: SidebarService
+  ) {
     super();
   }
 
@@ -91,8 +93,14 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
           this.loadDetailData();
           this.updateVersionIndex();
 
-          this.aboveWidgetData$ = this.appData.getPageWidgets('above', this.id);
-          this.belowWidgetData$ = this.appData.getPageWidgets('below', this.id);
+          this.aboveWidgetData$ = this.appData.getPageWidgets(
+            'above',
+            this.id
+          );
+          this.belowWidgetData$ = this.appData.getPageWidgets(
+            'below',
+            this.id
+          );
         }
       });
   }
@@ -106,53 +114,65 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   }
 
   private loadDetailData() {
-    this.data$ = this.appData.getPageDetail(this.id).then((data) => {
-      this.setPageLocales(data);
+    this.data$ = this.appData.getPageDetail(this.id)
+      .then((data) => {
+        this.setPageLocales(data);
 
-      this.appData.getSitemap(data.page.page.locale, data.pageType.name).then((response) => {
-        this.selectedPageWithPageType = null;
-        this.otherPagesWithPageType = response;
-      });
+        this.appData.getSitemap(
+          data.page.page.locale,
+          data.pageType.name
+          )
+          .then((response) => {
+            this.selectedPageWithPageType = null;
+            this.otherPagesWithPageType = response;
+          });
 
-      this.replacePageLocales = this.pageLocales.filter((a) => a.page);
-      this.pageData = {
-        id: data.page.page.id,
-        name: data.page.page.name,
-        publishedFrom: data.page.page.publishedFrom,
-        publishedUntil: data.page.page.publishedUntil,
-        slug: data.page.page.slug,
-        sitemapId: data.page.page.sitemapId,
-        online: data.page.page.status === 'online',
-      };
-      data.schema = this.schemaTransform.transformForm(data.schema);
-      this.versionFields = data.schema ? data.schema : [];
-      this.loadNavigationData(data.navigation);
-      this.pageHasChildren = data.hasChildren;
+        this.replacePageLocales = this.pageLocales.filter((a) => a.page);
+        this.pageData = {
+          id: data.page.page.id,
+          name: data.page.page.name,
+          publishedFrom: data.page.page.publishedFrom,
+          publishedUntil: data.page.page.publishedUntil,
+          slug: data.page.page.slug,
+          sitemapId: data.page.page.sitemapId,
+          online: data.page.page.status === 'online'
+        };
+        data.schema = this.schemaTransform.transformForm(data.schema);
+        this.versionFields = data.schema ? data.schema : [];
+        this.loadNavigationData(data.navigation);
+        this.pageHasChildren = data.hasChildren;
 
-      if (data.page.version.head === null) {
-        this.savingVersion = false;
-      } else if (this.currentPageVersion !== data.page.version.head) {
-        this.versionData = null;
-        this.currentPageVersion = data.page.version.head;
-        this.appData.getPageVersionDetail(this.id, data.page.version.head).then((versionData) => {
-          this.versionForm = new FormGroup({});
-          this.versionData = versionData;
+        if (data.page.version.head === null) {
           this.savingVersion = false;
-          return versionData;
-        }).catch(() => this.savingVersion = false);
-      }
-      return data;
-    }).catch(() => this.savingVersion = false);
+        } else if (this.currentPageVersion !== data.page.version.head) {
+          this.versionData = null;
+          this.currentPageVersion = data.page.version.head;
+          this.appData.getPageVersionDetail(
+            this.id,
+            data.page.version.head
+            )
+            .then((versionData) => {
+              this.versionForm = new FormGroup({});
+              this.versionData = versionData;
+              this.savingVersion = false;
+              return versionData;
+            })
+            .catch(() => this.savingVersion = false);
+        }
+        return data;
+      })
+      .catch(() => this.savingVersion = false);
   }
 
   private loadNavigationData(navigation) {
     this.navigationOptions = navigation;
-    this.selectedNavigationOptions = navigation.filter((element) => element.active).map((element) => element.name);
+    this.selectedNavigationOptions = navigation.filter((element) => element.active)
+      .map((element) => element.name);
   }
 
   goToOtherLanguage(data) {
     if (data.page) {
-      this.router.navigateByUrl(`/page/${data.page.id}/edit`);
+      this.router.navigateByUrl(`/page/${ data.page.id }/edit`);
     } else {
       const initialState: ConfirmModalData = {
         title: 'Create Content?',
@@ -161,13 +181,24 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         confirmBtnTitle: 'Create',
         text: 'Page in this language doesn\'t exist yet. Do you want to create it and copy the content of this page?',
         onConfirm: () => {
-          this.appData.postPageCopyToSitemapId(this.pageData.id, this.pageData.sitemapId, data.locale).then((response) => {
-            this.notification.success('Page Data successfully copied', 'Success');
-            this.router.navigateByUrl(`/page/${response.toPageId}/edit`);
-          });
-        },
+          this.appData.postPageCopyToSitemapId(
+            this.pageData.id,
+            this.pageData.sitemapId,
+            data.locale
+            )
+            .then((response) => {
+              this.notification.success(
+                'Page Data successfully copied',
+                'Success'
+              );
+              this.router.navigateByUrl(`/page/${ response.toPageId }/edit`);
+            });
+        }
       };
-      this.modal.show(IxoConfirmModalComponent, {initialState});
+      this.modal.show(
+        IxoConfirmModalComponent,
+        { initialState }
+      );
     }
   }
 
@@ -179,14 +210,24 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
       confirmBtnTitle: 'Replace',
       text: 'Do you really want to replace the Content of this Page?',
       onConfirm: () => {
-        this.appData.postPageCopyToPageId(fromPageId, this.pageData.id).then(() => {
-          this.loadDetailData();
-          this.updateVersionIndex();
-          this.notification.success('Page Data successfully copied', 'Success');
-        });
-      },
+        this.appData.postPageCopyToPageId(
+          fromPageId,
+          this.pageData.id
+          )
+          .then(() => {
+            this.loadDetailData();
+            this.updateVersionIndex();
+            this.notification.success(
+              'Page Data successfully copied',
+              'Success'
+            );
+          });
+      }
     };
-    this.modal.show(IxoConfirmModalComponent, {initialState});
+    this.modal.show(
+      IxoConfirmModalComponent,
+      { initialState }
+    );
   }
 
   onSubmit(): void {
@@ -195,7 +236,10 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     } else {
       this.savingVersion = true;
       const content = this.versionForm.getRawValue();
-      this.appData.createPageVersion(this.id, {content})
+      this.appData.createPageVersion(
+        this.id,
+        { content }
+        )
         .then(() => this.pageVersionCreated())
         .catch((error) => {
           this.savingVersion = false;
@@ -207,7 +251,10 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
   private pageVersionCreated() {
     this.loadDetailData();
     this.updateVersionIndex();
-    this.notification.success('Page Version successfully created', 'Success');
+    this.notification.success(
+      'Page Version successfully created',
+      'Success'
+    );
     this.savingVersion = false;
     this.previewIsOpen = false;
     if (this.previewIsOpen) {
@@ -217,37 +264,61 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
 
   doDelete(): void {
     if (this.pageHasChildren) {
-      this.notification.error('You can\'t delete a page having child pages', 'Error');
+      this.notification.error(
+        'You can\'t delete a page having child pages',
+        'Error'
+      );
       return;
     }
     const initialState: ConfirmModalData = {
       title: 'Delete this Page?',
       text: 'Do you really want to delete this Page?',
       onConfirm: () => {
-        this.appData.pageDelete(this.id).then(() => {
-          this.notification.success('Page successfully deleted', 'Success');
-          this.router.navigateByUrl('/page');
-        }).catch((error) => this.notification.apiError(error));
-      },
+        this.appData.pageDelete(this.id)
+          .then(() => {
+            this.notification.success(
+              'Page successfully deleted',
+              'Success'
+            );
+            this.router.navigateByUrl('/page');
+          })
+          .catch((error) => this.notification.apiError(error));
+      }
     };
-    this.modal.show(IxoConfirmModalComponent, {initialState});
+    this.modal.show(
+      IxoConfirmModalComponent,
+      { initialState }
+    );
+  }
+
+  doPreviewFullscreen() {
+    const url = this.previewUrl + '?pageId=' + this.pageData.id + '&versionId=' + this.versionData.id;
+    window.open(url);
   }
 
   savePageData(key: string, value: any) {
     this.savingPageData = true;
     const postData = {};
     postData[key] = value;
-    this.appData.updatePage(this.id, postData).then(() => {
-      this.loadDetailData();
-      this.savingPageData = false;
-      this.notification.success(key + ' successfully saved', 'Success');
-    }).catch((error) => {
-      this.notification.apiError(error);
-      this.savingPageData = false;
-    });
+    this.appData.updatePage(
+      this.id,
+      postData
+      )
+      .then(() => {
+        this.loadDetailData();
+        this.savingPageData = false;
+        this.notification.success(
+          key + ' successfully saved',
+          'Success'
+        );
+      })
+      .catch((error) => {
+        this.notification.apiError(error);
+        this.savingPageData = false;
+      });
   }
 
-  openPreviewInNewTab() {
+  openPageInNewTab() {
     this.data$.then((data) => {
       window.open(data.page.url);
     });
@@ -264,7 +335,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         if (data.localizedPages.hasOwnProperty(locale)) {
           responseData.push({
             locale,
-            page: data.localizedPages[locale].page,
+            page: data.localizedPages[locale].page
           });
         }
       }
@@ -274,7 +345,7 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
         if (locale.locale !== data.page.page.locale) {
           responseData.push({
             locale: locale.locale,
-            page: null,
+            page: null
           });
         }
       }
@@ -287,14 +358,18 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
    */
   private updatePreviewIFrame() {
     this.keepPreviewOpen = true;
-    document.getElementById('update-preview').click();
+    document.getElementById('update-preview')
+      .click();
     this.keepPreviewOpen = false;
   }
 
   /**
    * React to changes in the screen-size and update the height of the preview iframe
    */
-  @HostListener('window:resize', ['$event'])
+  @HostListener(
+    'window:resize',
+    ['$event']
+  )
   updateIFrameHeight() {
     this.iframeHeight = window.innerHeight - HEADING_HEIGHT - FOOTER_HEIGHT;
   }
@@ -322,7 +397,8 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
          */
         this.formChanges = this.versionForm.valueChanges.pipe(
           takeWhile(() => this.previewIsOpen),
-          debounceTime(700));
+          debounceTime(700)
+        );
 
         this.formChanges
           .subscribe(() => this.updatePreviewIFrame());
@@ -350,28 +426,32 @@ export class PageEditComponent extends ViewAbstractComponent implements OnInit {
     const iframePixels = screensInPixels(size);
 
     if (this.split) {
-      const oldGutter = document.getElementsByClassName('gutter gutter-horizontal').item(0);
+      const oldGutter = document.getElementsByClassName('gutter gutter-horizontal')
+        .item(0);
       if (oldGutter) {
         oldGutter.remove();
       }
     }
 
     setTimeout(() =>
-      this.split = Split(['.page-edit-left-panel', '.page-edit-right-panel'], {
-        dragInterval: 50,
-        sizes: [99, 1],
-        minSize: [300, iframePixels],
-        expandToMin: true,
-        gutterStyle: () => ({
-          'width': '5px',
-          'height': 'calc(100vh - ' + gutterHeight + 'px)',
-          'background-color': 'rgba(0,0,0,0.06)',
-          'border-radius': '10px',
-          'margin-left': '7px',
-          'margin-right': '7px',
-          'cursor': 'col-resize',
-        }),
-      }),
+      this.split = Split(
+        ['.page-edit-left-panel', '.page-edit-right-panel'],
+        {
+          dragInterval: 50,
+          sizes: [99, 1],
+          minSize: [300, iframePixels],
+          expandToMin: true,
+          gutterStyle: () => ({
+            'width': '5px',
+            'height': 'calc(100vh - ' + gutterHeight + 'px)',
+            'background-color': 'rgba(0,0,0,0.06)',
+            'border-radius': '10px',
+            'margin-left': '7px',
+            'margin-right': '7px',
+            'cursor': 'col-resize'
+          })
+        }
+      )
     );
   }
 }

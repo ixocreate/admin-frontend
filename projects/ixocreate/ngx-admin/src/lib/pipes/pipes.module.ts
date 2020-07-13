@@ -5,6 +5,7 @@ import { IxoFileSizePipe } from './ixo-file-size.pipe';
 import { IxoNumberPipe } from './ixo-number.pipe';
 import { IxoTimePipe } from './ixo-time.pipe';
 import { KeyValuePipe } from './keyvalue.pipe';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 const COMPONENTS = [
   KeyValuePipe,
@@ -12,7 +13,8 @@ const COMPONENTS = [
   IxoDateTimePipe,
   IxoFileSizePipe,
   IxoNumberPipe,
-  IxoTimePipe
+  IxoTimePipe,
+  SafeHtmlPipe
 ];
 
 @NgModule({

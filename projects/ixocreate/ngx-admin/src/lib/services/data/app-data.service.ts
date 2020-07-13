@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs/internal/operators/tap';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { CropperPosition } from '../../components/ixo-image-cropper/ixo-image-cropper.component';
 import { DefaultHelper } from '../../helpers/default.helper';
 import { Config } from '../../interfaces/config.interface';
