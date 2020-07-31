@@ -31,6 +31,7 @@ export class SchemaTransformService {
     this.registerTransform('datetime', this.handleDefault('datetime'));
     this.registerTransform('link', this.handleDefault('link'));
     this.registerTransform('youtube', this.handleDefault('youtube', {centerLabel: true}));
+    this.registerTransform('vimeo', this.handleDefault('vimeo', {centerLabel: true}));
     this.registerTransform('color', this.handleDefault('color'));
     this.registerTransform('select', this.handleSelect);
     this.registerTransform('multiselect', this.handleMultiSelect);

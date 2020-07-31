@@ -20,6 +20,7 @@ import { FormlyWrapperTabComponent } from './wrappers/tab.wrapper';
 import { FormlyWrapperTabsetComponent } from './wrappers/tabset.wrapper';
 import { FormlyFieldTableComponent } from './types/formly-field-table/formly-field-table.component';
 import { quillModules } from './quill-modules.config';
+import { FormlyFieldVimeoComponent } from './types/formly-field-vimeo/formly-field-vimeo.component';
 
 export function renderCustomError(error) {
   return error;
@@ -122,6 +123,11 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {
       name: 'youtube',
       component: FormlyFieldYouTubeComponent,
+      wrappers: ['form-field'],
+    },
+    {
+      name: 'vimeo',
+      component: FormlyFieldVimeoComponent,
       wrappers: ['form-field'],
     },
   ],

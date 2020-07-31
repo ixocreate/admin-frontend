@@ -36,6 +36,7 @@ import { FormlyFieldRepeatableComponent } from './formly-field-repeatable/formly
 import { FormlyFieldSelectComponent } from './formly-field-select/formly-field-select.component';
 import { FormlyFieldYouTubeComponent } from './formly-field-youtube/formly-field-youtube.component';
 import { FormlyFieldTableComponent } from './formly-field-table/formly-field-table.component';
+import { FormlyFieldVimeoComponent } from './formly-field-vimeo/formly-field-vimeo.component';
 
 const COMPONENTS = [
   FormlyFieldCheckboxComponent,
@@ -52,6 +53,7 @@ const COMPONENTS = [
   FormlyFieldRepeatableComponent,
   FormlyFieldSelectComponent,
   FormlyFieldYouTubeComponent,
+  FormlyFieldVimeoComponent,
   FormlyFieldTableComponent,
 ];
 
