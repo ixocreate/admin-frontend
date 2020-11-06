@@ -83,7 +83,10 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
 
   writeValue(value: any) {
     if (value !== this.innerValue) {
-      this.innerValue = value;
+      const date = moment(value);
+      if (date.isValid()) {
+        this.dateValue = date.toDate();
+      }
     }
   }
 
