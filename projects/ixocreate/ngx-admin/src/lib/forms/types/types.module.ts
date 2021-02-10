@@ -37,6 +37,7 @@ import { FormlyFieldSelectComponent } from './formly-field-select/formly-field-s
 import { FormlyFieldYouTubeComponent } from './formly-field-youtube/formly-field-youtube.component';
 import { FormlyFieldTableComponent } from './formly-field-table/formly-field-table.component';
 import { FormlyFieldVimeoComponent } from './formly-field-vimeo/formly-field-vimeo.component';
+import { FormlyFieldTextareaComponent } from './formly-field-textarea/formly-field-textarea.component'
 
 const COMPONENTS = [
   FormlyFieldCheckboxComponent,
@@ -54,6 +55,7 @@ const COMPONENTS = [
   FormlyFieldSelectComponent,
   FormlyFieldYouTubeComponent,
   FormlyFieldVimeoComponent,
+  FormlyFieldTextareaComponent,
   FormlyFieldTableComponent,
 ];
 

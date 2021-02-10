@@ -21,7 +21,7 @@ export class SchemaTransformService {
 
     this.registerTransform('text', this.handleDefault('input'));
     this.registerTransform('number', this.handleDefault('input', {type: 'number'}));
-    this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}));
+    this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}, ['characterBoundaries', 'characterCount']));
     this.registerTransform('checkbox', this.handleDefault('checkbox'));
     this.registerTransform('multiCheckbox', this.handleDefaultMulti('multiCheckbox'));
     this.registerTransform('radio', this.handleDefaultMulti('radio'));

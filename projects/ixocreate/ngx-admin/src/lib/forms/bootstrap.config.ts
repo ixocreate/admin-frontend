@@ -21,6 +21,7 @@ import { FormlyWrapperTabsetComponent } from './wrappers/tabset.wrapper';
 import { FormlyFieldTableComponent } from './types/formly-field-table/formly-field-table.component';
 import { quillModules } from './quill-modules.config';
 import { FormlyFieldVimeoComponent } from './types/formly-field-vimeo/formly-field-vimeo.component';
+import { FormlyFieldTextareaComponent } from './types/formly-field-textarea/formly-field-textarea.component'
 
 export function renderCustomError(error) {
   return error;
@@ -32,6 +33,11 @@ export const IXO_BOOTSTRAP_FORMLY_CONFIG: ConfigOption = {
     {name: 'custom', message: renderCustomError},
   ],
   types: [
+    {
+      name: 'textarea',
+      component: FormlyFieldTextareaComponent,
+      wrappers: ['form-field'],
+    },
     {
       name: 'checkbox',
       component: FormlyFieldCheckboxComponent,

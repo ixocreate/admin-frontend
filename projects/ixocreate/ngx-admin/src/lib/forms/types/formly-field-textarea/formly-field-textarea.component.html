@@ -1,0 +1,19 @@
+<div>
+  <textarea
+    class="form-control"
+    rows="3"
+    [(ngModel)]="value"
+    [rows]="to.rows"
+    [class.is-invalid]="showError"
+    [placeholder]="to.placeholder"
+    [disabled]="to.disabled"
+    (change)="onChange($event)"
+  ></textarea>
+  <div
+    *ngIf="characterCount"
+    [ngClass]="{'text-warning': minCharCount && valueLength() < minCharCount, 'text-danger': maxCharCount && valueLength() > maxCharCount}"
+    class="text-char-count"
+  >
+    {{ valueLength() }}<span *ngIf="maxCharCount">/{{ maxCharCount }}</span>
+  </div>
+</div>
