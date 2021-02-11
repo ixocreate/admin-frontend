@@ -19,7 +19,7 @@ export class SchemaTransformService {
     this.registerTransform('blockContainer', this.handleBlockContainer);
     this.registerTransform('collection', this.handleDynamic);
 
-    this.registerTransform('text', this.handleDefault('input'));
+    this.registerTransform('text', this.handleDefault('input', {}, ['characterBoundaries', 'characterCount']));
     this.registerTransform('number', this.handleDefault('input', {type: 'number'}));
     this.registerTransform('textarea', this.handleDefault('textarea', {rows: 3}, ['characterBoundaries', 'characterCount']));
     this.registerTransform('checkbox', this.handleDefault('checkbox'));

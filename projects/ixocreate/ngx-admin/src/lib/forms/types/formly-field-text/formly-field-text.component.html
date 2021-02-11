@@ -1,13 +1,13 @@
 <div>
-  <textarea
+  <input
     class="form-control"
     [(ngModel)]="value"
-    [rows]="to.rows"
+    [type]="type"
     [class.is-invalid]="showError"
     [placeholder]="to.placeholder"
     [disabled]="to.disabled"
     (change)="onChange($event)"
-  ></textarea>
+  />
   <div
     *ngIf="characterCount"
     [ngClass]="{'text-warning': minCharCount && valueLength() < minCharCount, 'text-danger': maxCharCount && valueLength() > maxCharCount}"
