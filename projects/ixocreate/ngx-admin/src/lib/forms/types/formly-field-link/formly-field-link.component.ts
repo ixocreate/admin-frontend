@@ -56,6 +56,7 @@ export class FormlyFieldLinkComponent extends CustomFieldTypeAbstract implements
     }
     const initialState: LinkSelectModalData = {
       value: this.value,
+      allowedLinkTypes: this.to.allowedLinkTypes,
       onConfirm: (data) => {
         this.onSelect(data);
       },

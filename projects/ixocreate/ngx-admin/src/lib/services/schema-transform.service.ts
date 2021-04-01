@@ -29,7 +29,7 @@ export class SchemaTransformService {
 
     this.registerTransform('date', this.handleDefault('date'));
     this.registerTransform('datetime', this.handleDefault('datetime'));
-    this.registerTransform('link', this.handleDefault('link'));
+    this.registerTransform('link', this.handleDefault('link', {}, ['allowedLinkTypes']));
     this.registerTransform('youtube', this.handleDefault('youtube', {centerLabel: true}));
     this.registerTransform('vimeo', this.handleDefault('vimeo', {centerLabel: true}));
     this.registerTransform('color', this.handleDefault('color'));

@@ -26,6 +26,8 @@ export class IxoLinkSelectModalComponent implements OnInit {
   isImage = MediaHelper.isImage;
   mimeTypeIcon = MediaHelper.mimeTypeIcon;
 
+  allowedLinkTypes = null;
+
   value = null;
   innerValue = null;
 
@@ -52,6 +54,12 @@ export class IxoLinkSelectModalComponent implements OnInit {
 
   ngOnInit() {
     this.linkTypes = this.config.config.cms.linkTypes;
+    if (this.allowedLinkTypes) {
+      this.linkTypes = this.linkTypes.filter((type) => this.allowedLinkTypes.includes(type.type));
+      if (this.linkTypes[0]) {
+        this.selectedType = this.linkTypes[0].type;
+      }
+    }
     this.innerValue = JSON.parse(JSON.stringify(this.value));
     if (this.innerValue && this.innerValue.type) {
       this.selectedType = this.innerValue.type;
