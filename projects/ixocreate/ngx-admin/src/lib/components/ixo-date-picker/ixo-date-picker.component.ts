@@ -86,6 +86,8 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
       const date = moment(value);
       if (date.isValid()) {
         this.dateValue = date.toDate();
+      } else {
+        this.dateValue = null;
       }
     }
   }
@@ -175,11 +177,15 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   onChange(event: any) {
-    const date = moment(event.target.value, this.inputFormat);
-    if (date.isValid()) {
-      this.dateValue = date.toDate();
+    if (event.target.value.length > 0) {
+      const date = moment(event.target.value, this.inputFormat);
+      if (date.isValid()) {
+        this.dateValue = date.toDate();
+      } else {
+        this.notification.error('Invalid Date');
+        this.dateValue = null;
+      }
     } else {
-      this.notification.error('Invalid Date');
       this.dateValue = null;
     }
   }
@@ -196,6 +202,13 @@ export class IxoDatePickerComponent implements ControlValueAccessor, OnInit {
     // this._date = value;
     // const dateForFormat = moment(this.dateValue);
     // this.formattedDate = dateForFormat.isValid() ? dateForFormat.format(this.inputFormat) : '';
+    if (!value) {
+      this._date = null;
+      this.value = null;
+      this.formattedDate = '';
+      return;
+    }
+
     let utcDate = null;
 
     /**
