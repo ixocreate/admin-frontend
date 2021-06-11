@@ -65,7 +65,7 @@
 </ng-container>
 
 <ng-container *ngFor="let linkType of linkTypes">
-  <ng-container *ngIf="selectedType === linkType.type">
+  <ng-container *ngIf="selectedType === linkType.type && linkType.listUrl">
     <div class="modal-body">
       <div class="row align-items-center">
         <div class="col-sm">
