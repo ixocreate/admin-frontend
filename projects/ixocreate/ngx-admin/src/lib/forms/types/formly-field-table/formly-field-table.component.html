@@ -1,10 +1,18 @@
 <div class="table-responsive">
   <table class="table table-bordered input-table">
-    <tr *ngIf="header">
+    <thead *ngIf="header">
+    <tr>
       <th *ngFor="let title of header">{{title}}</th>
       <th class="delete-col"></th>
     </tr>
-    <tr *ngFor="let row of tableData; index as i">
+    </thead>
+    <tbody style="border: 0;" ngxDroppable [model]="tableData" (drop)="onDrop()">
+    <tr ngxDraggable [model]="row" *ngFor="let row of tableData; index as i">
+      <td style="width: 44px; min-width: 0;">
+        <button class="btn btn-link text-muted" type="button" ngxDragHandle title="Move">
+          <i class="fa fa-bars"></i>
+        </button>
+      </td>
       <td [class.heading]="col.heading" *ngFor="let col of row; index as j">
         <div *ngIf="col.quill" [innerHTML]="col.quill.html"></div>
         <div *ngIf="!col.quill">
@@ -45,6 +53,7 @@
         </button>
       </td>
     </tr>
+    </tbody>
   </table>
 </div>
 

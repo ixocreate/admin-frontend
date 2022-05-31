@@ -39,6 +39,10 @@ export class FormlyFieldTableComponent extends CustomFieldTypeAbstract implement
     super();
   }
 
+  onDrop() {
+    this.onContentChanged();
+  }
+
   setColsSelect(min: number, max: number) {
     this.minCols = min;
     this.maxCols = max;

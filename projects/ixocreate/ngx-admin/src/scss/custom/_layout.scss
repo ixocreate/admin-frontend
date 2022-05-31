@@ -346,6 +346,12 @@
 //  font-family: monospace;
 //}
 
+body > tr {
+  .table-edit {
+    display: none !important;
+  }
+}
+
 .input-table {
   margin: 0;
 
