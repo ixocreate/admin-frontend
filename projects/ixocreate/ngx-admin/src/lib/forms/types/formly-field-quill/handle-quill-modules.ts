@@ -39,11 +39,7 @@ export const handleQuillModules = (modules, getEditor: () => QuillEditorComponen
   }
 
   modules.toolbar.handlers.ixolink = (value) => {
-    if (value) {
-      openLinkModal();
-    } else {
-      getEditor().quillEditor.format('ixolink', false, 'user');
-    }
+    openLinkModal();
   };
 
   modules.toolbar.handlers.undo = () => {

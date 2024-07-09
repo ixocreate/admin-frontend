@@ -15,6 +15,7 @@ import { handleQuillModules } from './handle-quill-modules';
 export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implements OnInit, OnDestroy {
 
   quillDelta = {};
+  quillEditor: any = null;
 
   @ViewChild('editor') editor: QuillEditorComponent;
 
@@ -54,22 +55,10 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
 
     setTimeout(() => {
       const quill = this.editor.quillEditor;
+      this.quillEditor = quill;
       quill.on('selection-change', (range, oldRange, source) => {
         if (range === null) {
           return;
-        }
-        if (range.length === 0 && source === 'user') {
-          const [link, offset] = quill.scroll.descendant(IxoLinkType, range.index);
-          if (link !== null) {
-            quill.setSelection({
-              index: range.index - offset,
-              length: link.length(),
-            });
-            // workaround for modal not working when called here
-            const event = new CustomEvent('open-modal', {detail: {value: link.getData()}});
-            this.element.nativeElement.dispatchEvent(event);
-            return;
-          }
         }
         quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
           delta.ops = delta.ops.map((op) => {
@@ -93,9 +82,6 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
           return delta;
         });
       });
-      this.element.nativeElement.addEventListener('open-modal', (event: CustomEvent) => {
-        this.openLinkModal(event.detail.value);
-      }, false);
     });
 
     /**
@@ -105,7 +91,18 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
     // this.to.modules.toolbar = undefined;
   }
 
-  openLinkModal(value: any = null) {
+  openLinkModal() {
+    let value = null;
+    const selection = this.quillEditor.getSelection();
+    const [link, offset] = this.quillEditor.scroll.descendant(IxoLinkType, selection.index);
+    if (link !== null) {
+      this.quillEditor.setSelection({
+        index: selection.index - offset,
+        length: link.length(),
+      });
+      value = link.getData();
+    }
+
     const initialState: LinkSelectModalData = {
       value,
       onConfirm: (data) => {
