@@ -1,12 +1,15 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CustomFieldTypeAbstract } from '../custom-field-type.abstract';
 import { QuillEditorComponent } from 'ngx-quill';
+import * as Quill from 'quill';
 import { CustomValidators } from '../../../validators/custom-validators';
 import { LinkSelectModalData } from '../../../modals/ixo-link-select-modal/ixo-link-select-modal.component.model';
 import { IxoLinkSelectModalComponent } from '../../../modals/ixo-link-select-modal/ixo-link-select-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { IxoLinkType } from '../../../lib/quill/quill-extentions';
 import { handleQuillModules } from './handle-quill-modules';
+
+const Delta = Quill.import('delta');
 
 @Component({
   selector: 'formly-field-quill',
@@ -46,6 +49,20 @@ export class FormlyFieldQuillComponent extends CustomFieldTypeAbstract implement
        */
       if (!this.formControl.value.quill || !this.formControl.value.quill.ops || this.formControl.value.quill.ops.length === 0) {
         if (this.formControl.value.html) {
+          this.editor.quillEditor.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+            if (node.tagName === 'A') {
+              const href = node.getAttribute('href');
+              const target = node.getAttribute('target');
+              return delta.compose(new Delta().retain(delta.length(), {
+                ixolink: {
+                  type: 'external',
+                  target,
+                  value: href,
+                }
+              }));
+            }
+            return delta;
+          });
           this.editor.quillEditor.clipboard.dangerouslyPasteHTML(this.formControl.value.html);
         }
       }
